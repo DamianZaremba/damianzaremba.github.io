@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - 5min hack in python</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="revisit" content="7 days" />
+
+    <!-- M$ meta data -->
+    <meta name="classification" content="GENERAL" />
+    <meta name="distribution" content="GLOBAL" />
+    <meta name="audience" content="all" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+
+    <!-- CSS files -->
+    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+        /* hover.htc fixes a bunch of issues with hovering objects in IE */
+        body {
+            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+        }
+    <![endif]-->
+
+    <!--
+    Site rendered at:  2012-08-17 22:13:24 +0100 by Jekyll.
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+
+        <nav class="menu">
+            <ul class="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="right">
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q" results="0">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+
+            <div class="social">
+                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
+                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
+                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
+           </div>
+        </div>
+</header>
+
+<div id="content">
+<div id="post">
+<p>So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled >.>) anyway I got bored of this for about 5min then spent the next 5min writing this:</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">bannedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ignoredIPs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failLimit</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Better change this</span>
+<span class="n">bannedChain</span> <span class="o">=</span> <span class="s">&quot;Hackor&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -N </span><span class="si">%s</span><span class="s"> &amp;&gt;/dev/null&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">))</span>
+<span class="n">iptables</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;iptables --list </span><span class="si">%s</span><span class="s"> -n | egrep -v </span><span class="se">\&quot;</span><span class="s">target.+prot.+opt.+source.+destination</span><span class="se">\&quot;</span><span class="s"> | egrep -v </span><span class="se">\&quot;</span><span class="s">Chain </span><span class="si">%s</span><span class="s"> .+ references</span><span class="se">\&quot;</span><span class="s"> | awk &#39;{print $4}&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">bannedChain</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">bannedIP</span> <span class="ow">in</span> <span class="n">iptables</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="n">bannedHosts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bannedIP</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+
+<span class="n">loginFailures</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;grep failure /var/log/secure | grep pam | awk -F </span><span class="se">\&quot;</span><span class="s">rhost=</span><span class="se">\&quot;</span><span class="s"> &#39;{print $2}&#39; | awk &#39;{print $1}&#39; | uniq --count&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">loginFailures</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+ <span class="k">try</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="n">host</span><span class="p">)[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+ <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">host</span>
+
+<span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">failLimit</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently over fail limit, processing&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">bannedHosts</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is allready banned, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">ignoredIPs</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is an ingored ip, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+ <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+ <span class="k">else</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</code></pre>
+</div>
+
+
+<p>Which happens to nicely do the job as can be seen below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./die_hackorz.py</span>
+213.225.207.41 is currently over fail limit, processing
+mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1317 failed attempts
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 failed attempts
+114.207.245.128 is currently over fail limit, processing
+114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
+62.182.30.165 is currently over fail limit, processing
+30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
+</code></pre>
+</div>
+
+
+<p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
+
+<div class="highlight"><pre><code class="bash">iptables -I INPUT -j Hackor
+iptables -I OUTPUT -j Hackor
+iptables -I FORWARD -j Hackor
+</code></pre>
+</div>
+
+
+<p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>
+
+</div>
+
+<section id="related">
+	<h1>Comments</h1>
+	<ul class="posts">
+	
+		<li><span>07 Dec 2010</span> &raquo; <a href="/2010/12/system-activity-reporter">System activity reporter</a></li>
+	
+		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server">virt-install is a life server</a></li>
+	
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+	
+	</ul>
+</section>
+
+<section id="comment">
+	<h1>Comments</h1>
+	<div id="disqus_thread" aria-live="polite">
+		<noscript>Please enable JavaScript to view the comments</noscript>
+	</div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'damianzaremba';
+    var disqus_identifier = '';
+    var disqus_url = '';
+    var disqus_script = 'embed.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</div>
+
+<footer>
+    <p>Copyright 2009-2012 Damian Zaremba</p>
+    <p>
+        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
+        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    </p>
+</footer>
+
+<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>

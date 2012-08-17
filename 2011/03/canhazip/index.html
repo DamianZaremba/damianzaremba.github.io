@@ -1,0 +1,301 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - canhazip</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="revisit" content="7 days" />
+
+    <!-- M$ meta data -->
+    <meta name="classification" content="GENERAL" />
+    <meta name="distribution" content="GLOBAL" />
+    <meta name="audience" content="all" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+
+    <!-- CSS files -->
+    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+        /* hover.htc fixes a bunch of issues with hovering objects in IE */
+        body {
+            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+        }
+    <![endif]-->
+
+    <!--
+    Site rendered at:  2012-08-17 22:13:32 +0100 by Jekyll.
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+
+        <nav class="menu">
+            <ul class="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="right">
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q" results="0">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+
+            <div class="social">
+                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
+                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
+                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
+           </div>
+        </div>
+</header>
+
+<div id="content">
+<div id="post">
+<p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p>
+
+<h4>Basic Usage</h4>
+
+<p><a href="http://canhazip.info/">http://canhazip.info/</a></p>
+
+<p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p>
+
+<h4>Specific IP type</h4>
+
+<p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p>
+
+<p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p>
+
+<p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p>
+
+<p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p>
+
+<h4>Output format</h4>
+
+<p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format>
+to the end of the URL.</p>
+
+<p>Accepted formats are:</p>
+
+<ul>
+<li><p>xml</p></li>
+<li><p>json</p></li>
+<li><p>yaml</p></li>
+<li><p>php (serialize of an array)</p></li>
+<li><p>plain</p></li>
+</ul>
+
+
+<p>Example usage:</p>
+
+<p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p>
+
+<h4>FAQ</h4>
+
+<h5>icanhazip exists, why another service that does the same thing?</h5>
+
+<ol>
+<li><p>Because I can</p></li>
+<li><p>Because .info domains were on special offer ($1.87!)</p></li>
+<li><p>The servers hosting the site are in London and Manchester not the US (latency)</p></li>
+<li><p>The secondary service I was using previously no longer exists (I like basic redundancy)</p></li>
+</ol>
+
+
+<h5>Do you keep logs</h5>
+
+<p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p>
+
+<h5>Why different formats?</h5>
+
+<p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p>
+
+<h5>Is this reliable</h5>
+
+<p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p>
+
+<h5>Example usage</h5>
+
+<p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p>
+
+<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<span class="cp">&lt;?php</span>
+ <span class="nv">$PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$TUNNELID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="nv">$USERID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+ <span class="nv">$return</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=&quot;</span> <span class="o">.</span> <span class="nv">$currentIP</span> <span class="o">.</span> <span class="s2">&quot;&amp;pass=&quot;</span> <span class="o">.</span> <span class="nv">$PASSWORD</span> <span class="o">.</span> <span class="s2">&quot;&amp;user_id=&quot;</span> <span class="o">.</span> <span class="nv">$USERID</span> <span class="o">.</span> <span class="s2">&quot;&amp;tunnel_id=&quot;</span> <span class="o">.</span> <span class="nv">$TUNNELID</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;That IPv4 endpoint is already in use.&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
+ <span class="k">print</span> <span class="s2">&quot;IP has not changed&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;Your tunnel endpoint has been updated to:&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
+ <span class="k">print</span> <span class="s2">&quot;Tunnel endpoint has been updated&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+ <span class="k">print</span> <span class="s2">&quot;Unknown return!?!?!&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre>
+</div>
+
+
+<h5>Another example</h5>
+
+<p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p>
+
+<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<span class="cp">&lt;?php</span>
+ <span class="nv">$ACCESSKEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$NODENAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+ <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl&#39;</span><span class="p">);</span>
+ <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;table border=6 class=\&quot;wikitable sortable\&quot;&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+ <span class="nv">$nodes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$bnlTable</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">){</span>
+ <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;td align=center&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+ <span class="nv">$nodes</span><span class="p">[</span><span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+ <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+ <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+ <span class="s1">&#39;ipv6′ =&gt; trim($entry[4]),</span>
+<span class="s1"> &#39;</span><span class="nx">port</span><span class="s1">&#39; =&gt; trim($entry[5]),</span>
+<span class="s1"> &#39;</span><span class="nx">ipv6pref</span><span class="s1">&#39; =&gt; trim($entry[6]),</span>
+<span class="s1"> &#39;</span><span class="nx">subnet</span><span class="s1">&#39; =&gt; trim($entry[7]),</span>
+<span class="s1"> );</span>
+<span class="s1"> }</span>
+
+<span class="s1">$currentVPNIP = $nodes[$NODENAME][&#39;</span><span class="nx">ip</span><span class="s1">&#39;];</span>
+<span class="s1"> if($currentIP != $currentVPNIP){</span>
+<span class="s1"> /* Update IP */</span>
+<span class="s1"> $ch = curl_init (&quot;http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle&quot;);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_COOKIE, &#39;</span><span class="nx">clueauth_tokenstack</span><span class="o">=</span><span class="s1">&#39;.$ACCESSKEY);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_POSTFIELDS, &#39;</span><span class="nx">nodename</span><span class="o">=</span><span class="s1">&#39;.$NODENAME.&#39;</span><span class="o">&amp;</span><span class="nx">newip</span><span class="o">=</span><span class="s1">&#39;.$currentIP.&#39;</span><span class="o">&amp;</span><span class="nx">newport</span><span class="o">=</span><span class="mi">3406</span><span class="o">&amp;</span><span class="nx">submit</span><span class="o">=</span><span class="nx">Change</span><span class="s1">&#39;);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_POST, 1);</span>
+<span class="s1"> curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);</span>
+<span class="s1"> $output = curl_exec ($ch);</span>
+
+<span class="s1">if(strpos($output, &#39;</span><span class="nx">Success</span><span class="o">.</span><span class="s1">&#39;) != 0){</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
+<span class="s1"> }else{</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="k">Not</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
+<span class="s1"> }</span>
+<span class="s1"> }else{</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre>
+</div>
+
+
+
+
+</div>
+
+<section id="related">
+	<h1>Comments</h1>
+	<ul class="posts">
+	
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+	
+		<li><span>07 Dec 2010</span> &raquo; <a href="/2010/12/system-activity-reporter">System activity reporter</a></li>
+	
+		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server">virt-install is a life server</a></li>
+	
+	</ul>
+</section>
+
+<section id="comment">
+	<h1>Comments</h1>
+	<div id="disqus_thread" aria-live="polite">
+		<noscript>Please enable JavaScript to view the comments</noscript>
+	</div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'damianzaremba';
+    var disqus_identifier = '';
+    var disqus_url = '';
+    var disqus_script = 'embed.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</div>
+
+<footer>
+    <p>Copyright 2009-2012 Damian Zaremba</p>
+    <p>
+        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
+        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    </p>
+</footer>
+
+<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>

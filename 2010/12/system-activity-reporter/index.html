@@ -1,0 +1,463 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - System activity reporter</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="revisit" content="7 days" />
+
+    <!-- M$ meta data -->
+    <meta name="classification" content="GENERAL" />
+    <meta name="distribution" content="GLOBAL" />
+    <meta name="audience" content="all" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+
+    <!-- CSS files -->
+    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+        /* hover.htc fixes a bunch of issues with hovering objects in IE */
+        body {
+            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+        }
+    <![endif]-->
+
+    <!--
+    Site rendered at:  2012-08-17 22:13:31 +0100 by Jekyll.
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+
+        <nav class="menu">
+            <ul class="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="right">
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q" results="0">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+
+            <div class="social">
+                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
+                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
+                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
+           </div>
+        </div>
+</header>
+
+<div id="content">
+<div id="post">
+<p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p>
+
+<p>A nice simple program is the system activity reporter or SAR.</p>
+
+<p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c"># Make sure the system is up to date</span>
+yum update
+
+<span class="c"># Install the sysstat program (includes sar and iostat)</span>
+sudo yum install sysstat
+
+<span class="c"># Make sure sysstat is enabled</span>
+chkconfig sysstat on
+
+<span class="c"># Start sysstat – this starts the system activity data collector</span>
+service sysstat start
+</code></pre>
+</div>
+
+
+<p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
+
+<p><strong>IOStat</strong></p>
+
+<p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
+</code></pre>
+</div>
+
+
+<p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+</code></pre>
+</div>
+
+
+<p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+</code></pre>
+</div>
+
+
+<p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
+
+<div class="highlight"><pre><code class="bash">root@xxx:~# iostat -d 2 2
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 _x86_64_
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+sda 31.14 411.84 757.85 1890371422 3478544478
+sda1 31.01 409.90 755.62 1881435002 3468289496
+sdb 9.97 88.27 303.57 405165646 1393372152
+sdb1 9.97 88.27 303.57 405164878 1393372152
+sdc 7.54 57.13 131.10 262215600 601759006
+sdc1 7.54 57.13 131.10 262214832 601759006
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+sda 269.00 4.00 5968.00 8 11936
+sda1 269.00 4.00 5968.00 8 11936
+sdb 15.00 8.00 416.00 16 832
+sdb1 15.00 8.00 416.00 16 832
+sdc 71.00 12.00 752.00 24 1504
+sdc1 71.00 12.00 752.00 24 1504
+</code></pre>
+</div>
+
+
+<p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
+
+<p><strong>System activity reporter (Sar)</strong>
+As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p>
+
+<ul>
+<li><p>CPU</p></li>
+<li><p>Load avg</p></li>
+<li><p>Memory usage</p></li>
+<li><p>Inode/file/kernel table usage</p></li>
+<li><p>Swapping stats</p></li>
+<li><p>Process statistics</p></li>
+<li><p>TTY device activity</p></li>
+<li><p>Much much more....</p></li>
+</ul>
+
+
+<p>Some common things your probably want to look at;
+CPU usage:</p>
+
+<div class="highlight"><pre><code class="bash">sar -u
+</code></pre>
+</div>
+
+
+<p>Memory usage:</p>
+
+<div class="highlight"><pre><code class="bash">sar -r
+</code></pre>
+</div>
+
+
+<p>Load avg (and queue length):</p>
+
+<div class="highlight"><pre><code class="bash">sar -q
+</code></pre>
+</div>
+
+
+<p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
+
+<p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
+
+<div class="highlight"><pre><code class="bash">sar -s -f /var/log/sa/sa06
+</code></pre>
+</div>
+
+
+<p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+
+08:00:01 CPU %user %nice %system %iowait %steal %idle
+08:10:01 all 0.61 0.00 0.40 0.14 0.08 98.78
+08:20:01 all 0.29 0.00 0.28 0.01 0.01 99.41
+08:30:01 all 0.23 0.00 0.25 0.01 0.01 99.50
+08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
+08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
+09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57
+</code></pre>
+</div>
+
+
+<p><strong>But I want some graphs!</strong>
+Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
+You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
+
+<div class="highlight"><pre><code class="bash">sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
+</code></pre>
+</div>
+
+
+<p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c"># Make a tmp file</span>
+<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span>;
+<span class="c"># Fill the file with stuff</span>
+sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
+<span class="c"># Make a pretty graph</span>
+<span class="nb">echo</span> <span class="s2">&quot;set terminal dump;</span>
+<span class="s2">set title &#39;CPU usage&#39;;</span>
+<span class="s2">set xdata time;</span>
+<span class="s2">set timefmt &#39;%s&#39;;</span>
+<span class="s2">set xlabel &#39;Time&#39;;</span>
+<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> | gnuplot
+<span class="c"># Remove tmp file</span>
+rm -f <span class="nv">$cpu_data_file</span>
+</code></pre>
+</div>
+
+
+<p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
+
+<p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c">#!/bin/bash</span>
+<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
+<span class="c"># sar_graph.sh - Makes pretty web pages from sar</span>
+<span class="c"># Written by Damian Zaremba - Released under GPLv3</span>
+<span class="c">#</span>
+<span class="c"># Please note this is a quick hack to demonstrate it can be done</span>
+<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
+
+<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">GRAPH_TYPE</span><span class="o">=</span><span class="s2">&quot;image&quot;</span>
+<span class="c">#GRAPH_TYPE=&quot;ascii&quot;</span>
+<span class="nv">HTML_DST</span><span class="o">=</span><span class="s2">&quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&quot;</span>
+<span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span>
+
+<span class="c"># Check gnuplot is all good</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span>;
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Check sadf is all good</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Check graph type</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
+<span class="k">function </span>make_header <span class="o">{</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span>;
+<span class="o">}</span>
+
+<span class="k">function </span>make_footer <span class="o">{</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>;
+<span class="o">}</span>
+
+<span class="k">function </span>make_graph <span class="o">{</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span>; <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span>; <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span>; <span class="k">fi</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> | sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
+ <span class="k">else</span>
+<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;dumb&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.txt&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> fi</span>
+
+<span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
+ <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Data file: $dat_file&quot;</span>
+ <span class="nv">$SADF</span> -- <span class="nv">$format</span> | awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
+<span class="s2"> set title &#39;$title&#39;;</span>
+<span class="s2"> set xdata time;</span>
+<span class="s2"> set timefmt &#39;%s&#39;;</span>
+<span class="s2"> set xlabel &#39;Time&#39;;</span>
+<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> | <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
+ <span class="k">else</span>
+<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;iframe src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; width=&quot;650px&quot; height=&quot;350px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&#39;</span>
+ <span class="k">fi</span>
+<span class="k"> fi</span>
+<span class="o">}</span>
+
+<span class="c"># Main script stuff</span>
+<span class="nb">test</span> -d <span class="s2">&quot;$HTML_DST&quot;</span> <span class="o">||</span> mkdir -p <span class="s2">&quot;$HTML_DST&quot;</span>
+<span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+<span class="c"># CPU stuff</span>
+make_graph <span class="s2">&quot;CPU usage&quot;</span> <span class="s2">&quot;-u&quot;</span> <span class="s2">&quot;%idle&quot;</span>
+
+<span class="c"># Swap stuff</span>
+make_graph <span class="s2">&quot;Swap usage&quot;</span> <span class="s2">&quot;-r&quot;</span> <span class="s2">&quot;kbbuffers&quot;</span>
+
+<span class="c"># 1min load avg</span>
+make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&quot;-q&quot;</span> <span class="s2">&quot;ldavg-1&quot;</span>
+
+<span class="c"># Make the html index</span>
+<span class="nb">echo</span> <span class="s2">&quot;Writing $HTML_DST/index.html&quot;</span>
+make_header; make_footer
+<span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span>
+
+<span class="c"># Post stuff</span>
+<span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
+
+<span class="c"># Tidy</span>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span>
+</code></pre>
+</div>
+
+
+
+
+</div>
+
+<section id="related">
+	<h1>Comments</h1>
+	<ul class="posts">
+	
+		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server">virt-install is a life server</a></li>
+	
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/meth-stove">Meth stove</a></li>
+	
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+	
+	</ul>
+</section>
+
+<section id="comment">
+	<h1>Comments</h1>
+	<div id="disqus_thread" aria-live="polite">
+		<noscript>Please enable JavaScript to view the comments</noscript>
+	</div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'damianzaremba';
+    var disqus_identifier = '';
+    var disqus_url = '';
+    var disqus_script = 'embed.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</div>
+
+<footer>
+    <p>Copyright 2009-2012 Damian Zaremba</p>
+    <p>
+        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
+        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    </p>
+</footer>
+
+<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>

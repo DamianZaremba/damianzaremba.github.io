@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - Example of building nagios configs from LDAP</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+    <meta name="revisit" content="7 days" />
+
+    <!-- M$ meta data -->
+    <meta name="classification" content="GENERAL" />
+    <meta name="distribution" content="GLOBAL" />
+    <meta name="audience" content="all" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+
+    <!-- CSS files -->
+    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+        /* hover.htc fixes a bunch of issues with hovering objects in IE */
+        body {
+            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+        }
+    <![endif]-->
+
+    <!--
+    Site rendered at:  2012-08-17 22:13:33 +0100 by Jekyll.
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+
+<body>
+
+    <header>
+        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+
+        <nav class="menu">
+            <ul class="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+
+        <div class="right">
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q" results="0">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+
+            <div class="social">
+                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
+                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
+                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
+           </div>
+        </div>
+</header>
+
+<div id="content">
+<div id="post">
+<p>Over at ClueNet we have a bunch of servers all stored in LDAP with owners and admins linked to user accounts also stored in LDAP! One thing we wanted to implement (as well as graphing, but cacti sorts that out) was service monitoring.</p>
+
+<p>After getting a box up and a bot in IRC to relay stuff I set about hacking up a script to add in servers and add owners/admins as contacts (so they can get notifications and access the Nagios web interface to disable checks and stuff (it uses mod_auth_krb to let people login over HTTPS)).</p>
+
+<p>Some notes about this script:</p>
+
+<ul>
+<li><p>Currently we don't store attributes in the servers entry relating to what services to monitor, this is something I'm looking at implimenting</p></li>
+<li><p>IP addresses and SSH ports are stored in LDAP</p></li>
+<li><p>Server owners AND admins should have access to update the server in Nagios (they do in LDAP!)</p></li>
+<li><p>There is no attribute under the users entry to determine if we <em>should</em> notify them about alerts so we don't atm!</p></li>
+<li><p>The only way people know about alerts is the relay channel on IRC or the web interface</p></li>
+</ul>
+
+
+<p>The main thing I want to implement that would improve this script is per service attributes in the servers entry following the standard for ClueNet.</p>
+
+<p>I propose the attribute clueServiceMonitoring be added into the ldap scheme and added to the servers entries.</p>
+
+<p>An example is as below:
+Server: hex
+Services to be monitored:</p>
+
+<ul>
+<li><p>ping (via ICMP)</p></li>
+<li><p>ssh (will use port listed in LDAP)</p></li>
+<li><p>http (port 8080)</p></li>
+<li><p>ldap</p></li>
+<li><p>kerberos</p></li>
+</ul>
+
+
+<p>This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.</p>
+
+<p>Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.</p>
+
+<div class="highlight"><pre><code class="perl"><span class="c1">#!/usr/bin/env perl</span>
+<span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">File::</span><span class="n">Path</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+
+<span class="c1"># Config stuff</span>
+<span class="k">my</span> <span class="nv">$base_dir</span> <span class="o">=</span> <span class="s">&quot;/usr/local/nagios/etc/cluenet/&quot;</span><span class="p">;</span>
+
+<span class="c1"># Main code</span>
+<span class="k">my</span> <span class="nv">$ldap</span> <span class="o">=</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">&quot;ldap.cluenet.org&quot;</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=&gt;</span> <span class="mi">30</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ldap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s">&quot;Could not connect to ldap\n&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">print</span> <span class="s">&quot;Clearing current configs\n&quot;</span><span class="p">;</span>
+<span class="n">rmtree</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
+<span class="nb">mkdir</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
+
+<span class="k">my</span> <span class="nv">@admins</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">@owners</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">$mesg</span> <span class="o">=</span> <span class="nv">$ldap</span><span class="o">-&gt;</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=server)(isActive=TRUE))&quot;</span><span class="p">,</span>
+    <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=servers,dc=cluenet,dc=org&quot;</span>
+<span class="p">);</span>
+<span class="k">my</span> <span class="nv">@entries</span> <span class="o">=</span> <span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Starting server configs\n&quot;</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">@entries</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s">&quot;Starting &quot;</span> <span class="o">.</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$hostname</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$hostname</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing hostname\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$servername</span> <span class="o">=</span> <span class="nv">$hostname</span><span class="p">;</span>
+    <span class="nv">$servername</span> <span class="o">=~</span> <span class="sr">s/\.cluenet\.org$//</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$owner</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;owner&#39;</span><span class="p">);</span>
+    <span class="nv">$owner</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$owner</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing owner\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$ip_address</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;ipAddress&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ip_address</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing ip address\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$ssh_port</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;sshPort&#39;</span><span class="p">);</span>
+
+    <span class="k">my</span> <span class="nv">$description</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;description&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$description</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$os</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;operatingSystem&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$os</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$os</span> <span class="o">=</span> <span class="s">&#39;linux&#39;</span><span class="p">;</span> <span class="c1"># windows sux</span>
+    <span class="p">}</span>
+
+    <span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/$hostname.cfg&quot;</span><span class="p">);</span>
+    <span class="c1"># Write the host out</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">host</span> <span class="p">{</span>
+    <span class="n">host_name</span> <span class="nv">$hostname</span>
+    <span class="n">alias</span> <span class="nv">$servername</span>
+    <span class="n">address</span> <span class="nv">$ip_address</span>
+    <span class="n">hostgroups</span> <span class="nv">$owner</span><span class="o">\</span><span class="n">_servers</span>
+    <span class="n">max_check_attempts</span> <span class="mi">5</span>
+    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">contacts</span> <span class="nv">$owner</span>
+    <span class="n">contact_groups</span> <span class="nv">$servername</span><span class="o">\</span><span class="n">_admins</span>
+    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+<span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+
+    <span class="c1"># Write out the services</span>
+    <span class="c1"># - I&#39;d like these to be ldap attributes but I&#39;m not sure how we can do shit for now so hardcoding</span>
+    <span class="k">print</span> <span class="s">&quot;Adding ping check\n&quot;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">service</span> <span class="p">{</span>
+    <span class="n">host_name</span> <span class="nv">$hostname</span>
+    <span class="n">service_description</span> <span class="n">PING</span> <span class="n">check</span>
+    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">max_check_attempts</span> <span class="mi">3</span>
+    <span class="n">normal_check_interval</span> <span class="mi">5</span>
+    <span class="n">retry_check_interval</span> <span class="mi">1</span>
+    <span class="n">notification_interval</span> <span class="mi">30</span>
+    <span class="n">notification_options</span> <span class="n">w</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">s</span>
+    <span class="n">check_command</span> <span class="n">check_ping</span><span class="o">!</span><span class="mf">100.0</span><span class="p">,</span><span class="mi">20</span><span class="nv">%</span><span class="err">!</span><span class="nv">500</span><span class="mf">.00</span><span class="p">,</span><span class="mi">60</span><span class="nv">%</span>
+<span class="err">}</span>
+
+<span class="nv">EOS</span>
+<span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/windows/i</span><span class="p">,</span> <span class="nv">$os</span><span class="p">))</span> <span class="p">{</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$ssh_port</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="s">&quot;Adding SSH check on port $ssh_port\n&quot;</span><span class="p">;</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;authorizedAdministrator&#39;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+        <span class="nv">$user</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
+        <span class="nv">$members</span> <span class="o">=</span> <span class="nv">$members</span> <span class="o">.</span> <span class="s">&quot;, &quot;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/$user/</span><span class="p">,</span> <span class="nv">@admins</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nb">push</span><span class="p">(</span><span class="nv">@admins</span><span class="p">,</span> <span class="nv">$user</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">print</span> <span class="s">&quot;Finished server configs\n&quot;</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Starting user config\n&quot;</span><span class="p">;</span>
+<span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/users.cfg&quot;</span><span class="p">);</span>
+<span class="k">print</span> <span class="s">&quot;Adding __nagiosbot__\n&quot;</span><span class="p">;</span>
+<span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">contact</span> <span class="p">{</span>
+    <span class="n">contact_name</span> <span class="n">__nagiosbot__</span>
+    <span class="n">alias</span> <span class="n">General</span> <span class="n">nagios</span> <span class="n">bot</span>
+    <span class="n">host_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">service_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">host_notification_commands</span> <span class="n">host</span><span class="o">-</span><span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
+    <span class="n">service_notification_commands</span> <span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
+
+<span class="p">}</span>
+<span class="n">EOS</span>
+<span class="p">;</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">@admins</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s">&quot;Adding user $_ \n&quot;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=person)(uid=&quot;</span> <span class="o">.</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&quot;))&quot;</span><span class="p">,</span>
+        <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=people,dc=cluenet,dc=org&quot;</span>
+    <span class="p">);</span>
+
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+
+        <span class="k">my</span> <span class="nv">$gecos</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;gecos&#39;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$gecos</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;\talias $gecos\n&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">my</span> <span class="nv">$mail</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;mail&#39;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$mail</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;#\temail $mail\n&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">@owners</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">hostgroup</span> <span class="p">{</span>
+    <span class="n">hostgroup_name</span> <span class="nv">$_</span><span class="o">\</span><span class="n">_servers</span>
+    <span class="n">alias</span> <span class="nv">$_</span><span class="o">\</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">servers</span>
+<span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">close</span><span class="p">(</span><span class="n">FH</span><span class="p">);</span>
+<span class="k">print</span> <span class="s">&quot;Finished user config\n&quot;</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Reloading\n&quot;</span><span class="p">;</span>
+<span class="sb">`/etc/init.d/nagios reload`</span>
+</code></pre>
+</div>
+
+
+
+
+</div>
+
+<section id="related">
+	<h1>Comments</h1>
+	<ul class="posts">
+	
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+	
+		<li><span>07 Dec 2010</span> &raquo; <a href="/2010/12/system-activity-reporter">System activity reporter</a></li>
+	
+		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server">virt-install is a life server</a></li>
+	
+	</ul>
+</section>
+
+<section id="comment">
+	<h1>Comments</h1>
+	<div id="disqus_thread" aria-live="polite">
+		<noscript>Please enable JavaScript to view the comments</noscript>
+	</div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'damianzaremba';
+    var disqus_identifier = '';
+    var disqus_url = '';
+    var disqus_script = 'embed.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</div>
+
+<footer>
+    <p>Copyright 2009-2012 Damian Zaremba</p>
+    <p>
+        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
+        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    </p>
+</footer>
+
+<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>
