@@ -71,24 +71,30 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-18 19:13:11 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 00:37:20 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
 
 <body>
     <header>
-        <h1><a href="/">Damian Zaremba</a></h1>
+        <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1>
 
-        <nav class="menu">
-            <ul class="main">
+        <nav>
+            <ul id="main">
                <li><a href="/">Blog</a></li>
                <li><a href="/archives">Archives</a></li>
                <li><a href="/about">About</a></li>
+               <li><a href="/cv">CV</a></li>
             </ul>
         </nav>
 
-        <div class="right">
+        <div id="right">
+            <p>
+                <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
+                <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
+            </p>
             <form class="search" action="http://google.com/search" method="get">
                 <input class="left" type="text" name="q" results="0">
                 <input type="hidden" name="q" value="site:damianzaremba.co.uk">
@@ -101,6 +107,14 @@
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/">NTP on a HP GbE2c L2/L3 Blade Switch</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />18 Mar 2012</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='How-to'>How-to</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem, you need to use NTP with the following syntax.</p>
 
@@ -195,6 +209,14 @@ Switch# logout
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2011/11/restricting-access-to-edgecast-nodes/">Restricting access to EdgeCast nodes</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />02 Nov 2011</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2011/11/restricting-access-to-edgecast-nodes/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='Apache'>Apache</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.</p>
 
@@ -392,6 +414,14 @@ RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span c
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2011/08/changing-wordpress-tag-to-category/">Changing WordPress tag to category?</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />25 Aug 2011</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2011/08/changing-wordpress-tag-to-category/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='FOSS'>FOSS</a></li><li><a href='How-to'>How-to</a></li><li><a href='Software'>Software</a></li><li><a href='Wordpress'>Wordpress</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.</p>
 
@@ -462,32 +492,19 @@ Rows matched: 1 Changed: 1 Warnings: 0
     <a href="/page/3/" class="next">Next</a>
     
 </nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2012 Damian Zaremba</p>
+    <p class="copyright">Copyright 2009-2012 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <p class="ads">
-        <ul class="ads">
+        <ul id="ads">
             <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
             <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+            <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
         </ul>
     </p>
 </footer>
 
-<script src="/assests/js/jquery.fancybox.pack.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -498,6 +515,17 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 <script type="text/javascript">
     !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
 </script>
 </body>
 </html>

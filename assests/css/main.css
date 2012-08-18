@@ -14,6 +14,11 @@ p {
     padding: 5px;
 }
 
+ul li {
+    list-style: circle;
+    margin-left: 20px;
+}
+
 body {
     font-size: 14px;
     background: #FCFCFC;
@@ -29,16 +34,19 @@ div#content {
 h1 {
     font-size: 1.8em;
     color: #258FB8;
+    margin-top: 10px;
 }
 
 h2 {
     font-size: 1.5em;
     color: #258FB8;
+    margin-top: 10px;
 }
 
 h3 {
     font-size: 1.3em;
     color: #258FB8;
+    margin-top: 10px;
 }
 
 /* Header stuff */
@@ -50,11 +58,13 @@ header {
     line-height: 40px;
     position: relative;
     border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
 }
 
-header > .right {
+header #right {
     position: absolute;
-    top: 30px;
+    top: 5px;
+    margin-right: 10px;
     right: 0;
 }
 
@@ -82,15 +92,22 @@ header h1 a {
     color: #258FB8;
 }
 
+header h1 span {
+    color: #585858;
+    font-size: 14px;
+    margin-left: -2px;
+}
+
 /* Header nav stuff */
 header nav {
-    margin-top: 20px;
-    margin-left: 10px;
+    margin-top: 28px;
+    margin-left: 5px;
     float: left;
 }
 
-header nav > ul > li {
-    margin-right: 20px;
+ul#main li {
+    margin-left: 0px;
+    margin-right: 10px;
     display: -moz-inline-box;
     -moz-box-orient: vertical;
     display: inline-block;
@@ -98,32 +115,16 @@ header nav > ul > li {
     *vertical-align: auto;
 }
 
-header nav > ul > li {
+ul#main li {
     *display: inline;
 }
 
-header nav > ul > li: last-of-type {
+ul#main li: last-of-type {
     margin-right: 0;
 }
 
-header nav > ul > li: hover > a {
+ul#main li: hover > a {
     color: #258fb8;
-}
-
-header nav > ul ul {
-    position: absolute;
-    top: 60px;
-    left: -15px;
-    z-index: 10;
-    white-space: nowrap;
-    background: #ddd;
-    border: 1px solid #ccc;
-    list-style: none;
-    display: none;
-}
-
-header nav > ul ul li > a: hover {
-    color: #000;
 }
 
 /* Header search styles */
@@ -132,16 +133,11 @@ header nav select {
     margin-bottom: 10px;
 }
 
-header .search {
-    margin-top: 7px;
-    margin-right: 10px;
-}
-
 header .search input[type="text"] {
     background: url('/assests/images/search.png') 10px center no-repeat #FCFCFC;
     border: 1px solid #ddd;
-    padding: 6px 15px 6px 35px;
-    width: 100px;
+    padding: 6px 15px 6px 30px;
+    width: 150px;
     -moz-transition: 0.3s;
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
@@ -166,12 +162,8 @@ footer {
 }
 
 /* Footer ads stuff */
-footer p.ads {
-    margin-top: 5px;
-}
-
-footer ul.ads li {
-    margin-right: 2px;
+ul#ads li {
+    margin-left: 0px;
     display: -moz-inline-box;
     -moz-box-orient: vertical;
     display: inline-block;
@@ -179,8 +171,16 @@ footer ul.ads li {
     *vertical-align: auto;
 }
 
-footer ul.ads li {
+ul#ads li {
     *display: inline;
+}
+
+ul#ads li:after {
+    content: " | ";
+}
+
+ul#ads li:last-of-type:after {
+    content: "";
 }
 
 /* Page nav styles */
@@ -260,7 +260,7 @@ article pre code {
 }
 
 /* Post styles */
-ul#related_posts {
+ul#related_posts li {
     list-style: none;
 }
 
@@ -279,4 +279,80 @@ article:last-of-type {
 /* Realted/Comment styles */
 section#related, section#comment {
     margin-top: 10px;
+}
+
+/* Archive styles */
+ul#archives li {
+    list-style: none;
+    margin-left: 5px;
+}
+
+ul#archives h2 {
+    margin-top: 10px;
+}
+
+ul#archives h2:first-of-type {
+    margin-top: 0px;
+}
+
+/* Post meta style stuff */
+article.post .meta {
+    margin-left: 5px;
+}
+
+article.post .meta img {
+    margin-right: 5px;
+}
+
+article.post .meta span {
+    margin-right: 5px;
+}
+
+article.post .meta span:last-of-type {
+    margin-right: 0px;
+}
+
+article.post .meta ul#categories {
+    background: url('/assests/images/categories.png') left top no-repeat;
+    padding-left : 20px;
+    margin-left: 5px;
+    display: inline;
+}
+
+article.post .meta ul#categories li {
+    display: inline;
+    list-style: none;
+    margin-left: 0px;
+}
+
+article.post .meta ul#categories li:after {
+    content: ", ";
+}
+
+article.post .meta ul#categories li:last-of-type:after {
+    content: "";
+}
+
+/* Social style stuff */
+header div#right p {
+    top: 3px;
+    margin-bottom: -10px;
+    padding: 0px;
+    text-align: center;
+}
+
+header div#right p a {
+    margin-right: 10px;
+}
+
+header div#right p a:last-of-type {
+    margin-right: 0px;
+}
+
+header div#right p a img {
+    border: 0px;
+}
+
+header div#right p a:hover {
+    text-decoration: none;
 }

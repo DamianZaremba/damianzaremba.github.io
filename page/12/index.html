@@ -71,24 +71,30 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-18 19:13:11 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 00:37:20 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
 
 <body>
     <header>
-        <h1><a href="/">Damian Zaremba</a></h1>
+        <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1>
 
-        <nav class="menu">
-            <ul class="main">
+        <nav>
+            <ul id="main">
                <li><a href="/">Blog</a></li>
                <li><a href="/archives">Archives</a></li>
                <li><a href="/about">About</a></li>
+               <li><a href="/cv">CV</a></li>
             </ul>
         </nav>
 
-        <div class="right">
+        <div id="right">
+            <p>
+                <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
+                <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
+            </p>
             <form class="search" action="http://google.com/search" method="get">
                 <input class="left" type="text" name="q" results="0">
                 <input type="hidden" name="q" value="site:damianzaremba.co.uk">
@@ -101,6 +107,14 @@
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2011/03/canhazip/">canhazip</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />30 Mar 2011</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='Fun'>Fun</a></li><li><a href='Work'>Work</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p>
 
@@ -266,6 +280,14 @@ to the end of the URL.</p>
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />12 Dec 2010</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='FOSS'>FOSS</a></li><li><a href='Knowledge Base'>Knowledge Base</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p>
 
@@ -302,6 +324,14 @@ bob: Mon Nov 15 17:34:18 CET 2010
 	
 	<article class="post">
 	    <h1 class="title"><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1>
+	    <div class="meta">
+        	<span><img src="/assests/images/date.png" />07 Dec 2010</span>
+        	<span><img src="/assests/images/comments.png" /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span>
+ 			
+	        	<ul id="categories">
+	        	<li><a href='FOSS'>FOSS</a></li></ul>
+	    	
+	    </div>
 	    <div class="entry">
 	        <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p>
 
@@ -640,32 +670,19 @@ rm -rf <span class="s2">&quot;$base_dir&quot;</span>
     <a href="/page/13/" class="next">Next</a>
     
 </nav>
-
-<script type="text/javascript">
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2012 Damian Zaremba</p>
+    <p class="copyright">Copyright 2009-2012 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <p class="ads">
-        <ul class="ads">
+        <ul id="ads">
             <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
             <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+            <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
         </ul>
     </p>
 </footer>
 
-<script src="/assests/js/jquery.fancybox.pack.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -676,6 +693,17 @@ rm -rf <span class="s2">&quot;$base_dir&quot;</span>
 
 <script type="text/javascript">
     !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
 </script>
 </body>
 </html>

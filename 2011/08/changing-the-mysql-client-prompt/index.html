@@ -71,24 +71,30 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-18 19:13:05 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 00:37:14 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
 
 <body>
     <header>
-        <h1><a href="/">Damian Zaremba</a></h1>
+        <h1><a href="/">Damian Zaremba</a> <span>Changing the MySQL client prompt</span></h1>
 
-        <nav class="menu">
-            <ul class="main">
+        <nav>
+            <ul id="main">
                <li><a href="/">Blog</a></li>
                <li><a href="/archives">Archives</a></li>
                <li><a href="/about">About</a></li>
+               <li><a href="/cv">CV</a></li>
             </ul>
         </nav>
 
-        <div class="right">
+        <div id="right">
+            <p>
+                <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
+                <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
+            </p>
             <form class="search" action="http://google.com/search" method="get">
                 <input class="left" type="text" name="q" results="0">
                 <input type="hidden" name="q" value="site:damianzaremba.co.uk">
@@ -98,7 +104,14 @@
 
 <div id="content">
 <article class="post">
-    <h1 class="title">Changing the MySQL client prompt</h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" />25 Aug 2011</span>
+        <span><img src="/assests/images/comments.png" /><a href="/2011/08/changing-the-mysql-client-prompt/#disqus_thread">Comments</a></span>
+        
+            <ul id="categories">
+            <li><a href='FOSS'>FOSS</a></li><li><a href='Knowledge Base'>Knowledge Base</a></li><li><a href='Linux'>Linux</a></li><li><a href='MySQL'>MySQL</a></li></ul>
+        
+    </div>
     <div class="entry">
         <p>It is quite easy to get lost in MySQL when working between a lot of databases.</p>
 
@@ -192,16 +205,16 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2012 Damian Zaremba</p>
+    <p class="copyright">Copyright 2009-2012 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <p class="ads">
-        <ul class="ads">
+        <ul id="ads">
             <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
             <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+            <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
         </ul>
     </p>
 </footer>
 
-<script src="/assests/js/jquery.fancybox.pack.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -212,6 +225,17 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 
 <script type="text/javascript">
     !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
 </script>
 </body>
 </html>
