@@ -227,6 +227,7 @@ article code {
     -ms-border-radius: 5px;
     -khtml-border-radius: 5px;
     border-radius: 5px;
+    display: block;
 }
 
 article pre {
@@ -241,6 +242,7 @@ article pre {
     -ms-border-radius: 5px;
     -khtml-border-radius: 5px;
     border-radius: 5px;
+    display: block;
 }
 
 article pre code {
@@ -254,6 +256,7 @@ article pre code {
     -ms-border-radius: 0;
     -khtml-border-radius: 0;
     border-radius: 0;
+    display: block;
 }
 
 /* Post styles */
