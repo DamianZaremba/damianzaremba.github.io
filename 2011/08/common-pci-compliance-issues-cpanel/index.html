@@ -23,26 +23,62 @@
     <meta name="MSSmartTagsPreventParsing" content="TRUE" />
 
     <!-- CSS files -->
-    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- JS files -->
+    <script src="http://mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11817192-1']);
+        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www');
+            ga.src += '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=126887194078923";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        window.___gcfg = {lang: 'en-GB'};
+        (function() {
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        })();
+    </script>
 
     <!-- IE fixes -->
     <!--[if IE]>
         /* hover.htc fixes a bunch of issues with hovering objects in IE */
         body {
-            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+            behavior: url("/assests/other/hover.htc");
         }
     <![endif]-->
 
     <!--
-    Site rendered at:  2012-08-17 22:13:38 +0100 by Jekyll.
+    Site rendered at: 2012-08-18 16:43:11 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
 
 <body>
-
     <header>
-        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+        <h1><a href="/">Damian Zaremba</a></h1>
 
         <nav class="menu">
             <ul class="main">
@@ -57,18 +93,14 @@
                 <input class="left" type="text" name="q" results="0">
                 <input type="hidden" name="q" value="site:damianzaremba.co.uk">
             </form>
-
-            <div class="social">
-                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
-                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
-                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
-           </div>
         </div>
 </header>
 
 <div id="content">
-<div id="post">
-<p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+<article class="post">
+    <h1 class="title">Common PCI compliance issues - cPanel</h1>
+    <div class="entry">
+        <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
 
 <p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
 
@@ -82,9 +114,25 @@
 
 <p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
 
+<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
+SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
+</code></pre>
+</div>
+
+
 <p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
 
+<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
+</code></pre>
+</div>
+
+
 <p>In the exim.conf file add the following:</p>
+
+<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+</code></pre>
+</div>
+
 
 <p>3) Update the server (you should be doing this already).</p>
 
@@ -99,6 +147,13 @@ You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
 
 <p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
 
+<div class="highlight"><pre><code class="text">ServerSignature Off
+ServerTokens Prod
+FileETag None
+</code></pre>
+</div>
+
+
 <p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
 
 <p>Notes:
@@ -106,23 +161,25 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
 
 <p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
 
-</div>
+    </div>
+</article>
 
 <section id="related">
-	<h1>Comments</h1>
-	<ul class="posts">
+	<h2>Related posts</h2>
+	<ul id="related_posts">
 	
-		<li><span>07 Dec 2010</span> &raquo; <a href="/2010/12/system-activity-reporter">System activity reporter</a></li>
+		<li><span>07 Dec 2010</span> &raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
 	
-		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server">virt-install is a life server</a></li>
+		<li><span>06 Jul 2010</span> &raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
 	
-		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+		<li><span>28 Jun 2011</span> &raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
 	
 	</ul>
 </section>
 
+
 <section id="comment">
-	<h1>Comments</h1>
+	<h2>Comments</h2>
 	<div id="disqus_thread" aria-live="polite">
 		<noscript>Please enable JavaScript to view the comments</noscript>
 	</div>
@@ -130,8 +187,8 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
 
 <script type="text/javascript">
     var disqus_shortname = 'damianzaremba';
-    var disqus_identifier = '';
-    var disqus_url = '';
+    var disqus_identifier = '/2011/08/common-pci-compliance-issues-cpanel/';
+    var disqus_url = '//2011/08/common-pci-compliance-issues-cpanel/';
     var disqus_script = 'embed.js';
 
     (function () {
@@ -142,28 +199,30 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
+
 </div>
 
 <footer>
-    <p>Copyright 2009-2012 Damian Zaremba</p>
-    <p>
-        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
-        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    <p class="copyright">Copyright 2009-2012 Damian Zaremba</p>
+    <p class="ads">
+        <ul class="ads">
+            <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+            <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        </ul>
     </p>
 </footer>
 
-<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
-
+<script src="/assests/js/jquery.fancybox.pack.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
 </script>
 <![endif]-->
 
 <script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
 
     var disqus_shortname = 'damianzaremba';
     var disqus_script = 'count.js';

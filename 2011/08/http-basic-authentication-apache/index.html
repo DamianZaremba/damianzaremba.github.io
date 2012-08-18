@@ -23,26 +23,62 @@
     <meta name="MSSmartTagsPreventParsing" content="TRUE" />
 
     <!-- CSS files -->
-    <link href="http://10.44.200.5:4039/assests/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assests/css/main.css" rel="stylesheet" type="text/css" />
+
+    <!-- JS files -->
+    <script src="http://mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11817192-1']);
+        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www');
+            ga.src += '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=126887194078923";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        window.___gcfg = {lang: 'en-GB'};
+        (function() {
+            var po = document.createElement('script');
+            po.type = 'text/javascript';
+            po.async = true;
+            po.src = 'https://apis.google.com/js/plusone.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(po, s);
+        })();
+    </script>
 
     <!-- IE fixes -->
     <!--[if IE]>
         /* hover.htc fixes a bunch of issues with hovering objects in IE */
         body {
-            behavior: url("http://10.44.200.5:4039/assests/other/hover.htc");
+            behavior: url("/assests/other/hover.htc");
         }
     <![endif]-->
 
     <!--
-    Site rendered at:  2012-08-17 22:13:40 +0100 by Jekyll.
+    Site rendered at: 2012-08-18 16:43:13 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
 
 <body>
-
     <header>
-        <h1><a href="/">Damian Zaremba's Blog</a></h1>
+        <h1><a href="/">Damian Zaremba</a></h1>
 
         <nav class="menu">
             <ul class="main">
@@ -57,46 +93,74 @@
                 <input class="left" type="text" name="q" results="0">
                 <input type="hidden" name="q" value="site:damianzaremba.co.uk">
             </form>
-
-            <div class="social">
-                <a class="twitter" href="http://twitter.com/DamianZaremba" title="Twitter">Twitter</a>
-                <a class="github" href="https://github.com/DamianZaremba" title="GitHub">GitHub</a>
-                <a class="rss" href="http://feeds.feedburner.com/DamianZaremba" title="RSS">RSS</a>
-           </div>
         </div>
 </header>
 
 <div id="content">
-<div id="post">
-<p>Method 1)
+<article class="post">
+    <h1 class="title">HTTP basic authentication - Apache</h1>
+    <div class="entry">
+        <p>Method 1)
 Inside the directory you wish to protect include a .htaccess file with the following content:</p>
+
+<div class="highlight"><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
+AuthName &quot;My secure area&quot;
+AuthType Basic
+Require valid-user
+</code></pre>
+</div>
+
 
 <p>Method 2)
 In your apache config file add the following:</p>
+
+<div class="highlight"><pre><code class="text">&lt;Directory /path/to/directory/to/protect/&gt;
+ AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
+ AuthName &quot;My secure area&quot;
+ AuthType Basic
+ Require valid-user
+&lt;/Directory&gt;
+</code></pre>
+</div>
+
 
 <p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p>
 
 <p>You can create it with the htpasswd command:</p>
 
-<p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
-
+<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre>
 </div>
 
+
+<p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
+
+<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre>
+</div>
+
+
+
+
+    </div>
+</article>
+
 <section id="related">
-	<h1>Comments</h1>
-	<ul class="posts">
+	<h2>Related posts</h2>
+	<ul id="related_posts">
 	
-		<li><span>23 Aug 2011</span> &raquo; <a href="/2011/08/apache-segmentation-fault-debugging">Apache segmentation fault debugging</a></li>
+		<li><span>23 Aug 2011</span> &raquo; <a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></li>
 	
-		<li><span>23 Aug 2011</span> &raquo; <a href="/2011/08/common-pci-compliance-issues-cpanel">Common PCI compliance issues - cPanel</a></li>
+		<li><span>25 Aug 2011</span> &raquo; <a href="/2011/08/changing-the-mysql-client-prompt/">Changing the MySQL client prompt</a></li>
 	
-		<li><span>25 Aug 2011</span> &raquo; <a href="/2011/08/changing-the-mysql-client-prompt">Changing the MySQL client prompt</a></li>
+		<li><span>23 Aug 2011</span> &raquo; <a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></li>
 	
 	</ul>
 </section>
 
+
 <section id="comment">
-	<h1>Comments</h1>
+	<h2>Comments</h2>
 	<div id="disqus_thread" aria-live="polite">
 		<noscript>Please enable JavaScript to view the comments</noscript>
 	</div>
@@ -104,8 +168,8 @@ In your apache config file add the following:</p>
 
 <script type="text/javascript">
     var disqus_shortname = 'damianzaremba';
-    var disqus_identifier = '';
-    var disqus_url = '';
+    var disqus_identifier = '/2011/08/http-basic-authentication-apache/';
+    var disqus_url = '//2011/08/http-basic-authentication-apache/';
     var disqus_script = 'embed.js';
 
     (function () {
@@ -116,28 +180,30 @@ In your apache config file add the following:</p>
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
+
 </div>
 
 <footer>
-    <p>Copyright 2009-2012 Damian Zaremba</p>
-    <p>
-        Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a> &dash;
-        Need hosting? Try <a href="http://www.vision108.com/">Vision180</a>
+    <p class="copyright">Copyright 2009-2012 Damian Zaremba</p>
+    <p class="ads">
+        <ul class="ads">
+            <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+            <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        </ul>
     </p>
 </footer>
 
-<script src="http://10.44.200.5:4039/assests/js/jquery.fancybox.pack.js"></script>
-
+<script src="/assests/js/jquery.fancybox.pack.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
 </script>
 <![endif]-->
 
 <script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="http://10.44.200.5:4039/assests/js/jquery.js"%3E%3C/script%3E'))
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
 
     var disqus_shortname = 'damianzaremba';
     var disqus_script = 'count.js';
