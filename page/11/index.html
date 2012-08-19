@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Damian Zaremba's Blog" />
     <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
-	<meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
     <meta name="author" content="Damian Zaremba" />
     <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
 
@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:20:19 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 03:32:14 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -106,19 +106,19 @@
 
 <div id="content">
 
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />28 Jun 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p>
 
 <div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -211,21 +211,21 @@
 
 
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />28 Jun 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p>
 
 <p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p>
 
@@ -431,37 +431,38 @@ end
 <p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job.
 One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I'll start playing with the configs, for now they work just fine.</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />09 Apr 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />09 Apr 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            
 
-	    </div>
-	</article>
-	
+        </div>
+    </article>
+    
 
 
 
 <nav id="page_nav">
-	
-    <a href="" class="prev">Previous</a>
+    
+    <a href="/page/10/" class="prev">Previous</a>
     
 
-	
+    
     <a href="/page/12/" class="next">Next</a>
     
 </nav>
+
 
 </div>
 

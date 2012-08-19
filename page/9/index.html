@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Damian Zaremba's Blog" />
     <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
-	<meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
     <meta name="author" content="Damian Zaremba" />
     <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
 
@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:20:19 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 03:32:14 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -106,19 +106,19 @@
 
 <div id="content">
 
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />18 Aug 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />18 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
 ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn't getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.</p>
 
 <p>After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).</p>
@@ -189,21 +189,21 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
 
 <p>Simples!</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />10 Jul 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>In my kickstart files I "cheat" on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />10 Jul 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>In my kickstart files I "cheat" on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
 
 <p>To do this I use the following in my kickstarts:</p>
 
@@ -240,21 +240,21 @@ EOF
 
 <p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/06/twitter/">Twitter?</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />28 Jun 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/06/twitter/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/general'>General</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>It appears twitter decided to have a re-style once again as can be seen below;</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/twitter/">Twitter?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/twitter/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It appears twitter decided to have a re-style once again as can be seen below;</p>
 
 <p><strong>2011</strong>
 <img src="/2011/06/twitter/twitter1.png" alt="" /></p>
@@ -275,21 +275,22 @@ EOF
 
 <p>The one notification I wouldn't mind getting via email is un-follow notifications, I currently rely on third-party services +a bunch of Perl for them.</p>
 
-	    </div>
-	</article>
-	
+        </div>
+    </article>
+    
 
 
 
 <nav id="page_nav">
-	
-    <a href="" class="prev">Previous</a>
+    
+    <a href="/page/8/" class="prev">Previous</a>
     
 
-	
+    
     <a href="/page/10/" class="next">Next</a>
     
 </nav>
+
 
 </div>
 

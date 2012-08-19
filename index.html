@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Damian Zaremba's Blog" />
     <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
-	<meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
     <meta name="author" content="Damian Zaremba" />
     <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
 
@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:20:19 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 03:32:14 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -106,19 +106,19 @@
 
 <div id="content">
 
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />01 Apr 2012</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />01 Apr 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
 <div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
 </code></pre>
@@ -141,21 +141,21 @@ aaa authentication ssh enable radius local
 
 <p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />01 Apr 2012</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />01 Apr 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
 <div class="highlight"><pre><code class="text">radius-server primary-host serverIp
 radius-server primary-host serverIp key &quot;SecretKeyHere&quot;
@@ -174,21 +174,21 @@ radius-server secure-backdoor
 
 <p>The last 3 then enable the server and enable a backdoor so we can authenticate against the switch if the RADIUS server is down.</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2012/03/sntp-on-a-hp-procurve-switch/">SNTP on a HP ProCurve switch</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />18 Mar 2012</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2012/03/sntp-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/ntp'>Ntp</a></li><li><a href='/tag/sntp'>Sntp</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2012/03/sntp-on-a-hp-procurve-switch/">SNTP on a HP ProCurve switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />18 Mar 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/03/sntp-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/ntp'>Ntp</a></li><li><a href='/tag/sntp'>Sntp</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.</p>
 
 <p>Most switches use SNTP rather than NTP, SNTP is basically NTP but lacks some of the more advanced internal algorithms and is slightly less accurate.</p>
 
@@ -242,19 +242,20 @@ Switch# logout
 
 <p>Your switches should now keep their time in sync :)</p>
 
-	    </div>
-	</article>
-	
+        </div>
+    </article>
+    
 
 
 
 <nav id="page_nav">
-	
+    
 
-	
+    
     <a href="/page/2/" class="next">Next</a>
     
 </nav>
+
 
 </div>
 

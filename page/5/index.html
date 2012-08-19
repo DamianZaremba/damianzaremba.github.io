@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="description" content="Damian Zaremba's Blog" />
     <meta name="copyright" content=">Copyright 2009-2012 Damian Zaremba" />
-	<meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
     <meta name="author" content="Damian Zaremba" />
     <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
 
@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:20:19 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 03:32:14 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -106,19 +106,19 @@
 
 <div id="content">
 
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/">Quick script to get public IPs on a NAT'd server</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />23 Aug 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/bash'>Bash</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/ips'>Ips</a></li><li><a href='/tag/nat'>Nat</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/">Quick script to get public IPs on a NAT'd server</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/bash'>Bash</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/ips'>Ips</a></li><li><a href='/tag/nat'>Nat</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
 </code></pre>
@@ -153,21 +153,21 @@ vnet0: <span class="o">=</span>&gt;
 
 
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/08/mysql-uses-no-space-on-cpanel/">MySQL uses no space on cPanel</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />23 Aug 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/08/mysql-uses-no-space-on-cpanel/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cpanel.config'>Cpanel.config</a></li><li><a href='/tag/mysql'>Mysql</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.</p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/mysql-uses-no-space-on-cpanel/">MySQL uses no space on cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/mysql-uses-no-space-on-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cpanel.config'>Cpanel.config</a></li><li><a href='/tag/mysql'>Mysql</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.</p>
 
 <p>To enable these again edit the /var/cpanel/cpanel.config file and change disk_usage_include_sqldbs from 0 to 1.</p>
 
@@ -175,21 +175,21 @@ vnet0: <span class="o">=</span>&gt;
 
 <p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
 
-	    </div>
-	</article>
-	
-	<article class="post">
-	    <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
-	    <div class="meta">
-        	<span><img src="/assests/images/date.png" />23 Aug 2011</span>
-        	<span><img src="/assests/images/comments.png" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
-    		
-	        	<ul id="categories">
-	        	<li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
-    		
-	    </div>
-	    <div class="entry">
-	        <p>To install PostgreSQL on a cPanel server you can perform the following:
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To install PostgreSQL on a cPanel server you can perform the following:
 1) Run /scripts/installpostgres
 2) Go to SQL services -> Postgre config and click Install config
 3) Configure a root password for Postgre
@@ -210,21 +210,22 @@ done
 
 
 
-	    </div>
-	</article>
-	
+        </div>
+    </article>
+    
 
 
 
 <nav id="page_nav">
-	
-    <a href="" class="prev">Previous</a>
+    
+    <a href="/page/4/" class="prev">Previous</a>
     
 
-	
+    
     <a href="/page/6/" class="next">Next</a>
     
 </nav>
+
 
 </div>
 
