@@ -185,10 +185,10 @@ ul#ads li:last-of-type:after {
 
 /* Page nav styles */
 #page_nav {
-    margin-top: 20px;
-    padding: 20px 0;
-    height: 20px;
-    line-height: 20px;
+    padding: 10px 0;
+    margin-top: 10px;
+    height: 10px;
+    line-height: 10px;
     position: relative;
     border-top: 1px solid #ddd;
 }
@@ -197,21 +197,16 @@ ul#ads li:last-of-type:after {
     text-decoration: underline;
 }
 
-#page_nav .prev {
-    padding-left: 30px;
-    left: 0;
-    position: absolute;
-}
-
-#page_nav .next {
-    padding-right: 30px;
+#page_nav a.next {
+    padding-right: 5px;
     right: 0;
     position: absolute;
 }
 
-#page_nav .center {
-    text-align: center;
-    display: block;
+#page_nav a.prev {
+    padding-left: 5px;
+    left: 0;
+    position: absolute;
 }
 
 /* Article pre styles */
