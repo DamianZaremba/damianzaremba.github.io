@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:32:07 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 04:05:20 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -121,11 +121,15 @@
 
 <p>This will allow you to recover log files/executables as long as you do not kill the process.</p>
 
-<p>To recover the files use the following steps:
-1) Find the PID of the process with the open file handlers (use lsof)
-2) cd /proc//fd where  is what you found using lsof above
-3) ls -lra and you should see a load of broken symlinks (red)
-4) Copy the file using cp into another directory</p>
+<p>To recover the files use the following steps:</p>
+
+<ol>
+<li>Find the PID of the process with the open file handlers (use lsof)</li>
+<li>cd /proc//fd where  is what you found using lsof above</li>
+<li>ls -lra and you should see a load of broken symlinks (red)</li>
+<li>Copy the file using cp into another directory</li>
+</ol>
+
 
     </div>
 </article>
@@ -139,7 +143,7 @@
     
         <li>&raquo; <a href="/2011/06/meth-stove/">Meth stove</a></li>
     
-        <li>&raquo; <a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></li>
+        <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
     </ul>
 </section>

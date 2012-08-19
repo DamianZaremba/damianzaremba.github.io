@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:32:14 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 04:05:28 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -215,11 +215,15 @@ Please check this file if you believe everything else is correct.
         <div class="entry">
             <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
 
-<p>On a RHEL system perform the following:
-1) pecl uninstall
-2) yum remove php-devel.i386
-3) yum install php-devel.x86_64
-4) pecl install</p>
+<p>On a RHEL system perform the following:</p>
+
+<ol>
+<li>pecl uninstall</li>
+<li>yum remove php-devel.i386</li>
+<li>yum install php-devel.x86_64</li>
+<li>pecl install</li>
+</ol>
+
 
 <p>Any further modules will now be 64bit.</p>
 

@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:32:02 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 04:05:15 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -126,24 +126,32 @@
 
 <p>By default apache won't give you any more info than this. To get core dumps you will need to do the following.</p>
 
-<p>1) Enable system coredumps for the apache user.
-In /etc/security/limits.conf ensure the following line is present:</p>
+<ol>
+<li>Enable system coredumps for the apache user.
+In /etc/security/limits.conf ensure the following line is present:</li>
+</ol>
+
 
 <div class="highlight"><pre><code class="text">apache soft core 10000
 </code></pre>
 </div>
 
 
-<p>2) Tell apache what directory to put dumps into, do this with the following config line:</p>
+<ol>
+<li>Tell apache what directory to put dumps into, do this with the following config line:</li>
+</ol>
+
 
 <div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/
 </code></pre>
 </div>
 
 
-<p>3) Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p>
+<ol>
+<li><p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p></li>
+<li><p>Restart apache and wait for a segfault.</p></li>
+</ol>
 
-<p>4) Restart apache and wait for a segfault.</p>
 
 <p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p>
 

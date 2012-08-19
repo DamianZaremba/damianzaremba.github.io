@@ -73,7 +73,7 @@
     <![endif]-->
 
     <!--
-    Site rendered at: 2012-08-19 03:32:08 +0100 by Jekyll.
+    Site rendered at: 2012-08-19 04:05:21 +0100 by Jekyll.
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
@@ -132,12 +132,16 @@
 </div>
 
 
-<p>To upgrade ClamAV on a RHEL based system perform the following:
-1) wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm
-2) yum install srpm unzip
-3) CFLAGS="-O0" ./configure --disable-zlib-vcheck
-4) make &amp;&amp; make install
-5) Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</p>
+<p>To upgrade ClamAV on a RHEL based system perform the following:</p>
+
+<ol>
+<li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li>
+<li>yum install srpm unzip</li>
+<li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li>
+<li>make &amp;&amp; make install</li>
+<li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li>
+</ol>
+
 
 <p>ClamAV should now work once again.</p>
 
@@ -153,7 +157,7 @@
     
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
-        <li>&raquo; <a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></li>
+        <li>&raquo; <a href="/2010/07/powershell/">Powershell!?!?!?!</a></li>
     
     </ul>
 </section>
