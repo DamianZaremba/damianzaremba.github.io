@@ -107,6 +107,38 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/apache-process-id/">Apache process ID</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/apache-process-id/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/logformat'>Logformat</a></li><li><a href='/tag/process'>Process</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Sometimes you need to know the Apache PID when trying to track down segfaults or CPU usage issues.</p>
+
+<p>There is a very simple way to do this by altering your LogFormat, a command format to have is the CLF (common log format):</p>
+
+<div class="highlight"><pre><code class="text">%h %l %u %t \&quot;%r\&quot; %&gt;s %b
+</code></pre>
+</div>
+
+
+<p>To enable logging the pid just add the %P var like so:</p>
+
+<div class="highlight"><pre><code class="text">[%P] %h %l %u %t \&quot;%r\&quot; %&gt;s %b
+</code></pre>
+</div>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />18 Aug 2011</span>
@@ -238,44 +270,6 @@ EOF
 <p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p>
 
 <p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/06/twitter/">Twitter?</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/06/twitter/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/general'>General</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>It appears twitter decided to have a re-style once again as can be seen below;</p>
-
-<p><strong>2011</strong></p>
-
-<p><img src="/2011/06/twitter/twitter1.png" alt="" /></p>
-
-<p><strong>2010</strong></p>
-
-<p><img src="/2011/06/twitter/twitter2.png" alt="" /></p>
-
-<p><strong>2009</strong></p>
-
-<p><img src="/2011/06/twitter/twitter3.png" alt="" /></p>
-
-<p>They also keep playing with the web theme as well, mainly the homepage which has changed twice this year and the login link colors which last week where orange but are now back to white.</p>
-
-<p>I think they should focus more on scaling their API and web stack so that they can remove the API limits and increase the platform stability.</p>
-
-<p>Things could change now they have purchased tweetdeck however this may just slowly replace the "official" twitter client.</p>
-
-<p>The recent changes to send email notifications on events also seems to be a step backwards - they are moving things away from near-real time to slow time. The notifications also seem to be quite slow along with the search feeds which I hope they speed up soon.</p>
-
-<p>The one notification I wouldn't mind getting via email is un-follow notifications, I currently rely on third-party services +a bunch of Perl for them.</p>
 
         </div>
     </article>

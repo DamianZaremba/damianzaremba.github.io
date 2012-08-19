@@ -107,6 +107,50 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/upgrade-eol-clamav/">Upgrade EOL Clamav</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/upgrade-eol-clamav/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/clamav'>Clamav</a></li><li><a href='/tag/eol'>Eol</a></li><li><a href='/tag/update'>Update</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            
+
+<div class="highlight"><pre><code class="text">ClamAV have EOL&#39;d all their versions prior to 0.95 - if you see an error like the following then ClamAV needs an update:
+ LibClamAV Warning: ***********************************************************
+ LibClamAV Warning: *** This version of the ClamAV engine is outdated. ***
+ LibClamAV Warning: *** DON&#39;T PANIC! Read http://www.clamav.net/support/faq ***
+ LibClamAV Warning: ***********************************************************
+ LibClamAV Error: cli_hex2str(): Malformed hexstring: This ClamAV version has reached End of Life! Please upgrade to version 0.95 or later. For more information see www.clamav.net/eol-clamav-094 and www.clamav.net/download (length: 169)
+ LibClamAV Error: Problem parsing database at line 742
+ LibClamAV Error: Can&#39;t load daily.ndb: Malformed database
+ LibClamAV Error: cli_tgzload: Can&#39;t load daily.ndb
+ LibClamAV Error: Can&#39;t load /var/lib/clamav/daily.cld: Malformed database
+ ERROR: Malformed database
+</code></pre>
+</div>
+
+
+<p>To upgrade ClamAV on a RHEL based system perform the following:</p>
+
+<ol>
+<li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li>
+<li>yum install srpm unzip</li>
+<li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li>
+<li>make &amp;&amp; make install</li>
+<li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li>
+</ol>
+
+
+<p>ClamAV should now work once again.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -181,36 +225,6 @@ passwd user2
 </div>
 
 
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/recovering-deleted-files-from-the-handlers-in-proc/">Recovering deleted files from the handlers in /proc/</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/recovering-deleted-files-from-the-handlers-in-proc/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/deleted-files'>Deleted files</a></li><li><a href='/tag/file-recovary'>File recovary</a></li><li><a href='/tag/proc'>Proc</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>On compromised servers it is very common for the exploit to delete its self/logs to try and hide its presence.</p>
-
-<p>Even though the executable may be removed from the filesystem as the process is forked from apache the parent process will still have file handlers open.</p>
-
-<p>This will allow you to recover log files/executables as long as you do not kill the process.</p>
-
-<p>To recover the files use the following steps:</p>
-
-<ol>
-<li>Find the PID of the process with the open file handlers (use lsof)</li>
-<li>cd /proc//fd where  is what you found using lsof above</li>
-<li>ls -lra and you should see a load of broken symlinks (red)</li>
-<li>Copy the file using cp into another directory</li>
-</ol>
 
 
         </div>

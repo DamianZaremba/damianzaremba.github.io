@@ -3,12 +3,73 @@
     <title type="text" xml:lang="en">Damian Zaremba's Blog</title>
     <link type="application/atom+xml" href="http://damianzaremba.co.uk/feed/" rel="self"/>
     <link type="text" href="http://damianzaremba.co.uk" rel="alternate"/>
-    <updated>2012-08-20T00:11:05+01:00</updated>
+    <updated>2012-08-20T00:56:24+01:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
     </author>
     <rights>Copyright 2009-2012 Damian Zaremba</rights>
+    
+    <entry>
+        <title>RADIUS authentication on a Dell PowerConnect M6220 switch</title>
+        <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//"/>
+        <updated>2012-08-20T00:00:00+01:00</updated>
+        <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//</id>
+        <summary type="html"><![CDATA[<p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
+(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
+<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
+
+<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
+slightly more complicated than the HP's, but followed the Cisco style config.</p>
+
+<p>First we need add a custom login and enable method</p>
+
+<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
+aaa authentication enable &quot;LineName&quot; none
+</code></pre>
+</div>
+
+
+<p>These are used for connections over SSH - "LineName" can be anything, I tend to
+use the company name to keep things standard.</p>
+
+<p>On the second line, you could also use radius local - this would require a
+password to enter enable mode. Personally I control the login mode from the
+RADIUS server and find having to enter a password to get to enable again a hassle.</p>
+
+<p>Next we need to setup the RADIUS server</p>
+
+<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
+name &quot;server1&quot;
+usage login
+key &quot;SecretKeyHere&quot;
+exit
+</code></pre>
+</div>
+
+
+<p>Now we just need to configure the ssh line to use our aaa methods</p>
+
+<div class="highlight"><pre><code class="text">login authentication LineName
+enable authentication LineName
+</code></pre>
+</div>
+
+
+<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
+
+<p>If you require access to the switch over http(s) you can also configure the HTTP
+server to authenticate against RADIUS</p>
+
+<div class="highlight"><pre><code class="text">ip http authentication radius local
+ip https authentication radius local
+</code></pre>
+</div>
+
+
+<p>We include local on every method to ensure we don't get locked out the switch.</p>
+]]></summary>
+    </entry>
     
     <entry>
         <title>RADIUS authentication on a HP ProCurve switch</title>
@@ -963,47 +1024,6 @@ Please check this file if you believe everything else is correct.
 
 
 <p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Exim SMTP with multiple IPs and different HELO identifiers</title>
-        <link href="http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers//</id>
-        <summary type="html"><![CDATA[<p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
-
-<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
-
-<p>An example router:</p>
-
-<div class="highlight"><pre><code class="text">myrouter:
- driver = dnslookup
- senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport
-</code></pre>
-</div>
-
-
-<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
-
-<p>The transport option is a reference to your custom transport (see below).</p>
-
-<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
-
-<p>An example transport is:</p>
-
-<div class="highlight"><pre><code class="text">mytransport:
- driver = smtp
- interface = 192.168.0.1
- helo_data = mail.mydomain.com
-</code></pre>
-</div>
-
-
-<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
-
-<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
 ]]></summary>
     </entry>
     

@@ -107,6 +107,36 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/recovering-deleted-files-from-the-handlers-in-proc/">Recovering deleted files from the handlers in /proc/</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/recovering-deleted-files-from-the-handlers-in-proc/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/deleted-files'>Deleted files</a></li><li><a href='/tag/file-recovary'>File recovary</a></li><li><a href='/tag/proc'>Proc</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>On compromised servers it is very common for the exploit to delete its self/logs to try and hide its presence.</p>
+
+<p>Even though the executable may be removed from the filesystem as the process is forked from apache the parent process will still have file handlers open.</p>
+
+<p>This will allow you to recover log files/executables as long as you do not kill the process.</p>
+
+<p>To recover the files use the following steps:</p>
+
+<ol>
+<li>Find the PID of the process with the open file handlers (use lsof)</li>
+<li>cd /proc//fd where  is what you found using lsof above</li>
+<li>ls -lra and you should see a load of broken symlinks (red)</li>
+<li>Copy the file using cp into another directory</li>
+</ol>
+
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/">Quick script to get public IPs on a NAT'd server</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -173,45 +203,6 @@ vnet0: <span class="o">=</span>&gt;
 <p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p>
 
 <p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To install PostgreSQL on a cPanel server you can perform the following:</p>
-
-<ol>
-<li>Run /scripts/installpostgres</li>
-<li>Go to SQL services -> Postgre config and click Install config</li>
-<li>Configure a root password for Postgre
-4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
-</ol>
-
-
-<p>Now you would think that is it, right?
-Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
-
-<p>You can add them with the following script:</p>
-
-<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
-do
- su postgres -c &quot;createuser -S -D -R $user&quot;;
-done
-</code></pre>
-</div>
-
-
-
 
         </div>
     </article>

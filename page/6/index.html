@@ -107,6 +107,45 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To install PostgreSQL on a cPanel server you can perform the following:</p>
+
+<ol>
+<li>Run /scripts/installpostgres</li>
+<li>Go to SQL services -> Postgre config and click Install config</li>
+<li>Configure a root password for Postgre
+4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
+</ol>
+
+
+<p>Now you would think that is it, right?
+Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
+
+<p>You can add them with the following script:</p>
+
+<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
+do
+ su postgres -c &quot;createuser -S -D -R $user&quot;;
+done
+</code></pre>
+</div>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/http-basic-authentication-apache/">HTTP basic authentication - Apache</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -197,34 +236,6 @@ Please check this file if you believe everything else is correct.
 <p>The best way I find of "fixing" this is to just disable the "Ip address dns check" option in the contact manager.</p>
 
 <p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
-
-<p>On a RHEL system perform the following:</p>
-
-<ol>
-<li>pecl uninstall</li>
-<li>yum remove php-devel.i386</li>
-<li>yum install php-devel.x86_64</li>
-<li>pecl install</li>
-</ol>
-
-
-<p>Any further modules will now be 64bit.</p>
 
         </div>
     </article>

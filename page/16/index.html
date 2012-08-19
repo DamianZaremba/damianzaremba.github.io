@@ -107,6 +107,101 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2010/06/5min-hack-in-python/">5min hack in python</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />06 Jun 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/06/5min-hack-in-python/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/python'>Python</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled >.>) anyway I got bored of this for about 5min then spent the next 5min writing this:</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">bannedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ignoredIPs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failLimit</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Better change this</span>
+<span class="n">bannedChain</span> <span class="o">=</span> <span class="s">&quot;Hackor&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -N </span><span class="si">%s</span><span class="s"> &amp;&gt;/dev/null&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">))</span>
+<span class="n">iptables</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;iptables --list </span><span class="si">%s</span><span class="s"> -n | egrep -v </span><span class="se">\&quot;</span><span class="s">target.+prot.+opt.+source.+destination</span><span class="se">\&quot;</span><span class="s"> | egrep -v </span><span class="se">\&quot;</span><span class="s">Chain </span><span class="si">%s</span><span class="s"> .+ references</span><span class="se">\&quot;</span><span class="s"> | awk &#39;{print $4}&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">bannedChain</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">bannedIP</span> <span class="ow">in</span> <span class="n">iptables</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="n">bannedHosts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bannedIP</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+
+<span class="n">loginFailures</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;grep failure /var/log/secure | grep pam | awk -F </span><span class="se">\&quot;</span><span class="s">rhost=</span><span class="se">\&quot;</span><span class="s"> &#39;{print $2}&#39; | awk &#39;{print $1}&#39; | uniq --count&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">loginFailures</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+ <span class="k">try</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="n">host</span><span class="p">)[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+ <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">host</span>
+
+<span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">failLimit</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently over fail limit, processing&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">bannedHosts</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is allready banned, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">ignoredIPs</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is an ingored ip, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+ <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+ <span class="k">else</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</code></pre>
+</div>
+
+
+<p>Which happens to nicely do the job as can be seen below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./die_hackorz.py</span>
+213.225.207.41 is currently over fail limit, processing
+mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1317 failed attempts
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 failed attempts
+114.207.245.128 is currently over fail limit, processing
+114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
+62.182.30.165 is currently over fail limit, processing
+30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
+</code></pre>
+</div>
+
+
+<p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
+
+<div class="highlight"><pre><code class="bash">iptables -I INPUT -j Hackor
+iptables -I OUTPUT -j Hackor
+iptables -I FORWARD -j Hackor
+</code></pre>
+</div>
+
+
+<p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2010/05/the-difference/">The difference</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />08 May 2010</span>
