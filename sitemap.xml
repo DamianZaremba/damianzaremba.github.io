@@ -1,1007 +1,368 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-        <loc>damianzaremba.co.uk/</loc>
-        <lastmod>2012-08-19T03:14:02+01:00</lastmod>
+		<loc>http://damianzaremba.co.uk/</loc>
+        <lastmod>2012-08-19T03:17:59+01:00</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
 
     <url>
         <loc>http://damianzaremba.co.uk/about/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>1.0</priority>
     </url>
 
     <url>
         <loc>http://damianzaremba.co.uk/feed/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
 
     <url>
-        <loc>/archives</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/archives/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
 
     
     <url>
-        <loc>//2012/04/radius-authentication-on-a-hp-procurve-switch/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2012/03/sntp-on-a-hp-procurve-switch/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/11/restricting-access-to-edgecast-nodes/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/changing-wordpress-tag-to-category/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/changing-the-mysql-client-prompt/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/useful-cpanel-paths/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/upgrade-eol-clamav/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/spoon/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/spoon/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/recovering-deleted-files-from-the-handlers-in-proc/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/quick-script-to-get-public-ips-on-a-natd-server/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/mysql-uses-no-space-on-cpanel/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/install-postgresql-on-cpanel/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/http-basic-authentication-apache/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/getting-rid-of-cpanel-ip-check-errors/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/force-pecl-to-install-64bit-modules/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/fixing-iptables-for-passive-ftp/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/common-pci-compliance-issues-cpanel/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/check-for-cve-fixs/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/apache-segmentation-fault-debugging/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/apache-process-id/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/apache-process-id/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/08/php-curl-dual-stack-issue/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/07/centos-6-0-kickstart-partitioning-issue/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/twitter/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/twitter/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/quick-update/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/quick-update/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/meth-stove/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/meth-stove/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/example-of-building-nagios-configs-from-ldap/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/download-festival-hack/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/download-festival-hack/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/04/wordpress-plugin/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/04/wordpress-plugin/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2011/03/canhazip/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2011/03/canhazip/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/12/unix-time-to-human-readable/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/12/system-activity-reporter/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/12/system-activity-reporter/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/12/lots-of-files-to-remove/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/11/compiling-nginx-and-php-fpm-on-centos-5/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/10/job-change-house-move-and-more/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/10/job-change-house-move-and-more/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/09/time/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/09/time/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/07/powershell/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/07/powershell/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/07/virt-install-is-a-life-server/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/06/work-and-scouts/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/06/work-and-scouts/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/06/download-2010-2/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/06/download-2010-2/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/06/coding-help/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/06/coding-help/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/06/5min-hack-in-python/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/05/the-difference/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/05/the-difference/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     
     <url>
-        <loc>//2010/04/why-i-love-python/</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
+		<loc>http://damianzaremba.co.uk/2010/04/why-i-love-python/</loc>
+        <lastmod>2012-08-19 03:17:59 +0100</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
-    </url>
-    
-
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b670></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b648></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b620></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b5f8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b5d0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Scouts", [<Post: /2010/06/work-and-scouts>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Kvm", [<Post: /2010/07/virt-install-is-a-life-server>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Virsh", [<Post: /2010/07/virt-install-is-a-life-server>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Ukfast", [<Post: /2010/10/job-change-house-move-and-more>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b508></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b4e0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b4b8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b490></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b468></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b440></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Scraper", [<Post: /2011/06/download-festival-hack>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Iscout", [<Post: /2011/06/meth-stove>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b3c8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c3b3a0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34938></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34910></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c348e8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c348c0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Logformat", [<Post: /2011/08/apache-process-id>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Process", [<Post: /2011/08/apache-process-id>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34848></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34820></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Cve", [<Post: /2011/08/check-for-cve-fixs>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Rpm", [<Post: /2011/08/check-for-cve-fixs>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c347a8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34780></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34758></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34730></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Pci", [<Post: /2011/08/common-pci-compliance-issues-cpanel>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c346e0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c346b8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34690></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34668></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34640></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34618></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Firewall", [<Post: /2011/08/fixing-iptables-for-passive-ftp>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Ftp", [<Post: /2011/08/fixing-iptables-for-passive-ftp>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Iptables", [<Post: /2011/08/fixing-iptables-for-passive-ftp>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34550></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Pecl", [<Post: /2011/08/force-pecl-to-install-64bit-modules>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["X64", [<Post: /2011/08/force-pecl-to-install-64bit-modules>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c344d8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c344b0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34488></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Htaccess", [<Post: /2011/08/http-basic-authentication-apache>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34438></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34410></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Hack", [<Post: /2011/08/install-postgresql-on-cpanel>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Pgsql", [<Post: /2011/08/install-postgresql-on-cpanel>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34398></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34370></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34348></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34320></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c342f8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c342d0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c342a8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34280></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34258></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Camping", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Knife skills", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Hand made", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Soon", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Spoon knife", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Tree", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Would", [<Post: /2011/08/spoon>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Clamav", [<Post: /2011/08/upgrade-eol-clamav>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Eol", [<Post: /2011/08/upgrade-eol-clamav>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Update", [<Post: /2011/08/upgrade-eol-clamav>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Data", [<Post: /2011/08/useful-cpanel-paths>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Paths", [<Post: /2011/08/useful-cpanel-paths>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["My.cnf", [<Post: /2011/08/changing-the-mysql-client-prompt>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Prompt", [<Post: /2011/08/changing-the-mysql-client-prompt>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c34000></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33fd8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33fb0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Cat", [<Post: /2011/11/restricting-access-to-edgecast-nodes>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Cdn", [<Post: /2011/11/restricting-access-to-edgecast-nodes>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33f38></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33f10></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for ["Sed", [<Post: /2011/11/restricting-access-to-edgecast-nodes>]]:Array</loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33ec0></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33e98></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33e70></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33e48></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33e20></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
-    </url>
-    
-    <url>
-        <loc>Liquid error: undefined method `downcase' for #<Array:0x00000001c33df8></loc>
-        <lastmod>2012-08-19 03:14:02 +0100</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.1</priority>
     </url>
     
 </urlset>
