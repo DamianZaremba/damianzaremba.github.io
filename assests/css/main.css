@@ -328,6 +328,12 @@ article.post .meta ul#categories li:last-of-type:after {
     content: "";
 }
 
+/* Tag/Cat style stuff */
+ul#tags li, ul#categories li {
+    list-style: none;
+    margin-left: 0px;
+}
+
 /* Social style stuff */
 header div#right p {
     top: 3px;
