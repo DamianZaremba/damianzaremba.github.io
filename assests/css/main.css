@@ -16,7 +16,11 @@ p {
 
 ul li {
     list-style: circle;
-    margin-left: 20px;
+    margin-left: 25px;
+}
+
+ol li {
+    margin-left: 25px;
 }
 
 body {
