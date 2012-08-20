@@ -107,6 +107,55 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/">SMTP Authentication in Postfix using local system accounts</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/postfix'>Postfix</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>In /etc/postfix/main.cf ensure the following values are set</p>
+
+<div class="highlight"><pre><code class="text">message_size_limit = 204800000
+smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+</code></pre>
+</div>
+
+
+<p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
+
+<p>Next we just need to make sure sasl/postfix are setup to run:</p>
+
+<div class="highlight"><pre><code class="bash">chkconfig saslauthd on
+/etc/init.d/saslauthd restart
+chkconfig postfix on
+/etc/init.d/postfix restart
+</code></pre>
+</div>
+
+
+<p>Once this is done all we need to do is add our users and they can send mail:</p>
+
+<div class="highlight"><pre><code class="bash">adduser -s /sbin/nologin -M user1
+passwd user1
+
+adduser -s /sbin/nologin -M user2
+passwd user2
+</code></pre>
+</div>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/recovering-deleted-files-from-the-handlers-in-proc/">Recovering deleted files from the handlers in /proc/</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -181,28 +230,6 @@ vnet0: <span class="o">=</span>&gt;
 
 
 
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/mysql-uses-no-space-on-cpanel/">MySQL uses no space on cPanel</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/mysql-uses-no-space-on-cpanel/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cpanel.config'>Cpanel.config</a></li><li><a href='/tag/mysql'>Mysql</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.</p>
-
-<p>To enable these again edit the /var/cpanel/cpanel.config file and change disk_usage_include_sqldbs from 0 to 1.</p>
-
-<p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p>
-
-<p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
 
         </div>
     </article>

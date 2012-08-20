@@ -226,13 +226,11 @@ article code {
     -ms-border-radius: 5px;
     -khtml-border-radius: 5px;
     border-radius: 5px;
-    display: block;
 }
 
 article pre {
     font-size: 1/0.9em;
     line-height: 1.5;
-    margin-top: 10px;
     padding: 5px 15px;
     overflow-x: auto;
     -moz-border-radius: 5px;

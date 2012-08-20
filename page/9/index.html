@@ -107,6 +107,71 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/apache-segmentation-fault-debugging/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/core-dumps'>Core dumps</a></li><li><a href='/tag/segfault'>Segfault</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Sometimes you will see lines like this in the Apache error log:</p>
+
+<div class="highlight"><pre><code class="text">[notice] child pid 5 exit signal Segmentation fault (11)
+</code></pre>
+</div>
+
+
+<p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p>
+
+<p>By default apache won't give you any more info than this. To get core dumps you will need to do the following.</p>
+
+<ol>
+<li>Enable system coredumps for the apache user.
+In /etc/security/limits.conf ensure the following line is present:</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="text">apache soft core 10000
+</code></pre>
+</div>
+
+
+<ol>
+<li>Tell apache what directory to put dumps into, do this with the following config line:</li>
+</ol>
+
+
+<div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/
+</code></pre>
+</div>
+
+
+<ol>
+<li><p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p></li>
+<li><p>Restart apache and wait for a segfault.</p></li>
+</ol>
+
+
+<p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p>
+
+<p>To debug these you will need to understand system calls and have some general debugging experience when it comes to executables.</p>
+
+<p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p>
+
+<div class="highlight"><pre><code class="text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
+</code></pre>
+</div>
+
+
+<p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/apache-process-id/">Apache process ID</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -219,57 +284,6 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
 
 
 <p>Simples!</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />10 Jul 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>In my kickstart files I "cheat" on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
-
-<p>To do this I use the following in my kickstarts:</p>
-
-<div class="highlight"><pre><code class="text">%include /tmp/partinfo
-
-%pre
-# Get disks
-set $(list-harddrives)
-let numd=$#/2
-disk1=$1
-disk2=$3
-
-# Build partinfo file
-cat &gt; /tmp/partinfo &lt;part /boot --fstype ext4 --size=512 --ondisk=$disk1
-part pv.2 --size=0 --grow --ondisk=$disk1
-
-volgroup VolGroup00 --pesize=32768 pv.2
-logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
-logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
-EOF
-</code></pre>
-</div>
-
-
-<p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>
-
-<p>Now the issue I had with Centos6 was an error getting throw by Anaconda "Partition requires a size specification".</p>
-
-<p>It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).</p>
-
-<p>The simplest way to fix this is just to make --size=1 (lets face it, your minimum partition size isn't going to be smaller 1mb!).</p>
-
-<p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p>
-
-<p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
 
         </div>
     </article>

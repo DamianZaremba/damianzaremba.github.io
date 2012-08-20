@@ -107,6 +107,52 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />29 Nov 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>Foss</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p>
+
+<ul>
+<li><p><a href="http://GitHub.com">GitHub</a></p></li>
+<li><p><a href="http://Wordpress.com">Wordpress</a></p></li>
+<li><p><a href="http://Ohloh.net">Ohloh</a></p></li>
+<li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li>
+</ul>
+
+
+<p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p>
+
+<p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p>
+
+<p>Some features you'll probably love:</p>
+
+<ul>
+<li><p>Modules for load balancing</p></li>
+<li><p>Direct memcached integration</p></li>
+<li><p>Simple proxy configuration</p></li>
+<li><p>Passenger integration</p></li>
+<li><p>Ability to serve over 50,000 simultaneous connections</p></li>
+<li><p>Statistics module</p></li>
+<li><p>Low memory footprint</p></li>
+<li><p>Clean simple to edit configuration files</p></li>
+<li><p>Zero downtime configuration and binary updates</p></li>
+<li><p>PCRE based rewrite rules</p></li>
+</ul>
+
+
+<p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2010/10/job-change-house-move-and-more/">Job change, house move and more</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />06 Oct 2010</span>
@@ -156,25 +202,6 @@
 <p>Time moves so very quickly and you don't often stop to think about what you have achieved. It is easy to see how far you have to go to meet your goal and think there is never any chance of hitting them but if you step back for a moment and look at where you have been and how far you have travelled then you can see there is every chance of smashing your goals.</p>
 
 <p>Slight ramble but the general point being never let anyone tell you that you can't do something, there is always a way even if you have to fight against everyone to get there. Opportunities will present themselves when needed and belief is something you should never change for other people. Time will run away from you but every so often step back and look at how much you've done - it will be amazing.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />21 Jul 2010</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/fun'>Fun</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D
-Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p>
-
-<p>Anyway back to making this CSS I'm working on look half decent in IE!</p>
 
         </div>
     </article>

@@ -107,6 +107,54 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
+
+<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
+
+<p>An example router:</p>
+
+<div class="highlight"><pre><code class="text">myrouter:
+ driver = dnslookup
+ senders = *@mydomain.com, *@*.mydomain.com
+ transport = mytransport
+</code></pre>
+</div>
+
+
+<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
+
+<p>The transport option is a reference to your custom transport (see below).</p>
+
+<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
+
+<p>An example transport is:</p>
+
+<div class="highlight"><pre><code class="text">mytransport:
+ driver = smtp
+ interface = 192.168.0.1
+ helo_data = mail.mydomain.com
+</code></pre>
+</div>
+
+
+<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
+
+<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -209,71 +257,6 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
 
 
 
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/apache-segmentation-fault-debugging/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/foss'>Foss</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/core-dumps'>Core dumps</a></li><li><a href='/tag/segfault'>Segfault</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Sometimes you will see lines like this in the Apache error log:</p>
-
-<div class="highlight"><pre><code class="text">[notice] child pid 5 exit signal Segmentation fault (11)
-</code></pre>
-</div>
-
-
-<p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p>
-
-<p>By default apache won't give you any more info than this. To get core dumps you will need to do the following.</p>
-
-<ol>
-<li>Enable system coredumps for the apache user.
-In /etc/security/limits.conf ensure the following line is present:</li>
-</ol>
-
-
-<div class="highlight"><pre><code class="text">apache soft core 10000
-</code></pre>
-</div>
-
-
-<ol>
-<li>Tell apache what directory to put dumps into, do this with the following config line:</li>
-</ol>
-
-
-<div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/
-</code></pre>
-</div>
-
-
-<ol>
-<li><p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p></li>
-<li><p>Restart apache and wait for a segfault.</p></li>
-</ol>
-
-
-<p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p>
-
-<p>To debug these you will need to understand system calls and have some general debugging experience when it comes to executables.</p>
-
-<p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p>
-
-<div class="highlight"><pre><code class="text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
-</code></pre>
-</div>
-
-
-<p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p>
 
         </div>
     </article>
