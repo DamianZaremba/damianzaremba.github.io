@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,37 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
+
+<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
+
+<ul>
+<li>Spoon knife - for rounding the handle and scraping out the dip</li>
+<li>9" knife - for taking off the thick outer and bark</li>
+<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
+</ul>
+
+
+<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
+
+<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/">SMTP Authentication in Postfix using local system accounts</a></h1>
@@ -162,55 +195,6 @@ passwd user2
 <li>ls -lra and you should see a load of broken symlinks (red)</li>
 <li>Copy the file using cp into another directory</li>
 </ol>
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/">Quick script to get public IPs on a NAT'd server</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/quick-script-to-get-public-ips-on-a-natd-server/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/bash'>Bash</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/ips'>Ips</a></li><li><a href='/tag/nat'>Nat</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
-</code></pre>
-</div>
-
-
-<p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p>
-
-<p>Example usage is as follows:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
-br0: 10.44.200.5 <span class="o">=</span>&gt; 89.242.208.82
-br0:1: 10.44.200.15 <span class="o">=</span>&gt; 89.242.208.82
-cluevpn: 10.156.1.49 <span class="o">=</span>&gt; 89.242.208.82
-eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre>
-</div>
-
-
-<p>Or if you want IPv6 addresses returned:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span>; <span class="k">done</span>
-br0: 10.44.200.5 <span class="o">=</span>&gt; 2001:470:9083::2
-br0:1: 10.44.200.15 <span class="o">=</span>&gt;
-cluevpn: 10.156.1.49 <span class="o">=</span>&gt;
-eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre>
-</div>
-
-
 
 
         </div>

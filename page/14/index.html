@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,59 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />01 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p>
+
+<p>Bash as always is very helpful</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
+-bash: /bin/rm: Argument list too long”
+</code></pre>
+</div>
+
+
+<p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span>
+</code></pre>
+</div>
+
+
+<p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p>
+
+<p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
+/tmp/repoup1291034701
+/tmp/repoup1291034701/live
+/tmp/repoup1291034701/live/.git
+</code></pre>
+</div>
+
+
+<p>xargs just converts from standard input to command line arguments as can be seen below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
+rm /tmp/repoup1291034701
+</code></pre>
+</div>
+
+
+<p>Hope this helps</p>
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1>
@@ -154,36 +209,6 @@
 <p>Currently I'm looking for a passionate small/start-up company where I can utilize my current skills, learn a lot and dedicate my time to making a difference.</p>
 
 <p>Thanks to everyone at UKFast for the fun times, advise and support. Maybe one day we will work together once again.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/09/time/">Time</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />14 Sep 2010</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2010/09/time/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/general'>General</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Time is a funny thing, in one sense you seem to achieve a lot in a short amount but from another point of view you haven't even dipped your toe into the water. School, college, unit is starting again with the people working hard to pass exams and start their lives, choices we make in life seem insignificant at the time however the time passes so quickly and you don't even realise it.</p>
-
-<p>Personally I never did the whole college and uni thing, it is something that in one sense I regret but in another it's something I am proud of. The choice for me was simple, waste 5/6 years 'studying' things that weren't relevant to what I wanted to do to get a piece of paper and a few grand worth of debt or dive in at the deep end and try not to sink.</p>
-
-<p>After leaving school I pretty much wasted a year, during the time I did pretty much run a small hosting company with some friends and decide on what I was going to do going forwards but all in all progress was not anything to comment on. After passing some random exams I got my current job and that’s where I'm pretty much at now looking forward to passing some other exams and progressing my career.</p>
-
-<p>Tonight I've just been reminded that it was two years ago I left School where the projects ended and the search began, an analysis of the time spent since then yields mixed feelings. Bearing in mind I pretty much want to have filled most my career ambitions by the time I'm 20 I take the following from this reflection.</p>
-
-<p>I regret not going to college/uni - This would of let me grow as a person however could of potentially prevented my career from starting and left me without the opportunities I'm currently chasing. The main disadvantages are not being able to socialize, gain experience in certain areas such as student radio that I would of loved to have been a part of.</p>
-
-<p>I'm glad I went the hard way - Life's value is clear to me now, you have to run at every opportunity you get and never let one pass you buy. With confidence you can be much better than you currently think you are.  If I didn't chose the path I did then I most likely would not be sat in my of flat across the road from the office where I work as a Linux engineer and I wouldn't have the opportunities presented to me that I do right at this very moment.</p>
-
-<p>Time moves so very quickly and you don't often stop to think about what you have achieved. It is easy to see how far you have to go to meet your goal and think there is never any chance of hitting them but if you step back for a moment and look at where you have been and how far you have travelled then you can see there is every chance of smashing your goals.</p>
-
-<p>Slight ramble but the general point being never let anyone tell you that you can't do something, there is always a way even if you have to fight against everyone to get there. Opportunities will present themselves when needed and belief is something you should never change for other people. Time will run away from you but every so often step back and look at how much you've done - it will be amazing.</p>
 
         </div>
     </article>

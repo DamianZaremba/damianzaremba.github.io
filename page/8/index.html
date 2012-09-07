@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,36 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/fixing-iptables-for-passive-ftp/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/firewall'>Firewall</a></li><li><a href='/tag/ftp'>Ftp</a></li><li><a href='/tag/iptables'>Iptables</a></li><li><a href='/tag/passive-ftp'>Passive ftp</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To make passive FTP work with iptables you need to enable the "ip_conntrack_ftp" module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
+
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;
+</code></pre>
+</div>
+
+
+<p>To include the ip_conntrack_ftp module, like so:</p>
+
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;
+</code></pre>
+</div>
+
+
+<p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
@@ -207,38 +239,6 @@ FileETag None
 Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
 
 <p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/check-for-cve-fixs/">Check for CVE fixs</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/check-for-cve-fixs/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cve'>Cve</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/rpm'>Rpm</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To check if a CVE has been patched on a RHEL based system perform the following.</p>
-
-<p>First, get the real package name:</p>
-
-<div class="highlight"><pre><code class="bash">rpm -qa | grep &lt;package&gt;
-</code></pre>
-</div>
-
-
-<p>Now check the package change log for CVE patches:</p>
-
-<div class="highlight"><pre><code class="bash">rpm -q &lt;package&gt; --changelog | grep &lt;cve number&gt;
-</code></pre>
-</div>
-
-
-
 
         </div>
     </article>

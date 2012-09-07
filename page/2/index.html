@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,43 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />01 Apr 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
+
+<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
+</code></pre>
+</div>
+
+
+<p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
+
+<div class="highlight"><pre><code class="text">aaa authentication login privilege-mode 
+aaa authentication console login radius local 
+aaa authentication console enable radius local 
+aaa authentication telnet login radius local 
+aaa authentication telnet enable radius local 
+aaa authentication web login radius local 
+aaa authentication ssh login radius local 
+aaa authentication ssh enable radius local 
+</code></pre>
+</div>
+
+
+<p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</a></h1>
@@ -179,108 +218,6 @@ Switch(config)# sntp unicast
 Switch(config)# timesync sntp
 Switch(config)# exit
 Switch# write mem
-Switch# logout
-</code></pre>
-</div>
-
-
-<p>Your switches should now keep their time in sync :)</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/">NTP on a HP GbE2c L2/L3 Blade Switch</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />18 Mar 2012</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/ntp'>Ntp</a></li><li><a href='/tag/sntp'>Sntp</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem, you need to use NTP with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">ntp enable 
-ntp timezone 0
-ntp primary-server &lt;ip&gt;
-ntp secondary-server &lt;ip&gt;
-</code></pre>
-</div>
-
-
-<p>The first line enables NTP, the second tells the switch to use GMT+0 and the third/forth tells the switch which servers to sync with.</p>
-
-<p>This needs to be done in configure mode which can be got into via enable mode.</p>
-
-<div class="highlight"><pre><code class="text">enable
-configure
-</code></pre>
-</div>
-
-
-<p>Now ensure the switch timezone is correct, the command for this is slightly obnoxious. Below is an example of setting it to GB:</p>
-
-<div class="highlight"><pre><code class="text">Switch(config)# system timezone 
-Please identify a location so that time zone rules can be set correctly.
-Please select a continent or ocean.
- 1) Africa
- 2) Americas
- 3) Antarctica
- 4) Arctic Ocean
- 5) Asia
- 6) Atlantic Ocean
- 7) Australia
- 8) Europe
- 9) Indian Ocean
-10) Pacific Ocean
-11) None - disable timezone setting
-#? 8
-Please select a country.
- 1) Albania               16) Gibraltar     31) Poland
- 2) Andorra               17) Greece        32) Portugal
- 3) Austria               18) Hungary       33) Romania
- 4) Belarus               19) Ireland       34) Russia
- 5) Belgium               20) Italy         35) San Marino
- 6) Bosnia &amp; Herzegovina  21) Latvia        36) Slovakia
- 7) Britain (UK)          22) Liechtenstein 37) Slovenia
- 8) Bulgaria              23) Lithuania     38) Spain
- 9) Croatia               24) Luxembourg    39) Sweden
-10) Czech Republic        25) Macedonia     40) Switzerland
-11) Denmark               26) Malta         41) Turkey
-12) Estonia               27) Moldova       42) Ukraine
-13) Finland               28) Monaco        43) Vatican City
-14) France                29) Netherlands   44) Yugoslavia
-15) Germany               30) Norway
-#? 7
-Please select one of the following time zone regions.
-1) Great Britain
-2) Northern Ireland
-#? 1 
-System timezone set to : Europe/Britain/GB
-</code></pre>
-</div>
-
-
-<p>Lastly just save the changes then logout</p>
-
-<div class="highlight"><pre><code class="text">copy run start
-logout
-</code></pre>
-</div>
-
-
-<p>A full example of this is below:</p>
-
-<div class="highlight"><pre><code class="text">Switch&gt; en
-Switch# conf t
-Switch(config)# ntp enable
-Switch(config)# ntp timezone 0
-Switch(config)# ntp primary-server 79.142.192.4
-Switch(config)# ntp secondary-server 217.147.208.1
-Switch(config)# exit
-Switch# copy run start
 Switch# logout
 </code></pre>
 </div>

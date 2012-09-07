@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,113 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Uber hack to download images from download website, kinda works.</span>
+<span class="sd">Very messy as I ripped most the code out of other scripts I&#39;ve written.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/home/damian/Pictures/download-2011&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_total_pages</span><span class="p">():</span>
+ <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/&quot;</span><span class="p">)</span>
+ <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;page_count&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+ <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Page 1 of &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+ <span class="k">return</span> <span class="n">count</span>
+
+<span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+ <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+ <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/?page=</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+ <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ul&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;item_list&quot;</span><span class="p">})</span>
+ <span class="k">for</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&quot;li&quot;</span><span class="p">):</span>
+ <span class="n">image</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">img</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]</span>
+ <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+ <span class="k">return</span> <span class="n">images</span>
+
+<span class="k">class</span> <span class="nc">Runner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+ <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+ <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+ <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+ <span class="n">urldata</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">urldata</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+ <span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">ext</span><span class="p">)</span>
+ <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+
+<span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+ <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+ <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+ <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+ <span class="k">print</span> <span class="s">&quot;Downloaded image to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+ <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">):</span>
+ <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="n">get_total_pages</span><span class="p">()</span>
+ <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> pages found&quot;</span> <span class="o">%</span> <span class="n">total</span>
+ <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+ <span class="k">print</span> <span class="s">&quot;Processing page </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p</span>
+ <span class="n">i</span> <span class="o">=</span> <span class="n">get_images</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot;Found </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+ <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+ <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+ <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+ <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+ <span class="n">thread</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+ <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+ <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+ <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+ <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre>
+</div>
+
+
+
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1>
@@ -350,179 +459,6 @@ Both of these are optional and can be configured from the settings page.</p>
 <p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p>
 
 <p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/03/canhazip/">canhazip</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />30 Mar 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p>
-
-<h4>Basic Usage</h4>
-
-<p><a href="http://canhazip.info/">http://canhazip.info/</a></p>
-
-<p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p>
-
-<h4>Specific IP type</h4>
-
-<p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p>
-
-<p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p>
-
-<p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p>
-
-<p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p>
-
-<h4>Output format</h4>
-
-<p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format>
-to the end of the URL.</p>
-
-<p>Accepted formats are:</p>
-
-<ul>
-<li><p>xml</p></li>
-<li><p>json</p></li>
-<li><p>yaml</p></li>
-<li><p>PHP (serialize of an array)</p></li>
-<li><p>plain</p></li>
-</ul>
-
-
-<p>Example usage:</p>
-
-<p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p>
-
-<h4>FAQ</h4>
-
-<h5>icanhazip exists, why another service that does the same thing?</h5>
-
-<ol>
-<li>Because I can</li>
-<li>Because .info domains were on special offer ($1.87!)</li>
-<li>The servers hosting the site are in London and Manchester not the US (latency)</li>
-<li>The secondary service I was using previously no longer exists (I like basic redundancy)</li>
-</ol>
-
-
-<h5>Do you keep logs</h5>
-
-<p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p>
-
-<h5>Why different formats?</h5>
-
-<p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p>
-
-<h5>Is this reliable</h5>
-
-<p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p>
-
-<h5>Example usage</h5>
-
-<p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p>
-
-<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
-<span class="cp">&lt;?php</span>
- <span class="nv">$PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$TUNNELID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- <span class="nv">$USERID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
- <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
- <span class="p">}</span>
-
-<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
-
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
- <span class="nv">$return</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=&quot;</span> <span class="o">.</span> <span class="nv">$currentIP</span> <span class="o">.</span> <span class="s2">&quot;&amp;pass=&quot;</span> <span class="o">.</span> <span class="nv">$PASSWORD</span> <span class="o">.</span> <span class="s2">&quot;&amp;user_id=&quot;</span> <span class="o">.</span> <span class="nv">$USERID</span> <span class="o">.</span> <span class="s2">&quot;&amp;tunnel_id=&quot;</span> <span class="o">.</span> <span class="nv">$TUNNELID</span><span class="p">);</span>
-
-<span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;That IPv4 endpoint is already in use.&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
- <span class="k">print</span> <span class="s2">&quot;IP has not changed&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;Your tunnel endpoint has been updated to:&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
- <span class="k">print</span> <span class="s2">&quot;Tunnel endpoint has been updated&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="k">print</span> <span class="s2">&quot;Unknown return!?!?!&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre>
-</div>
-
-
-<h5>Another example</h5>
-
-<p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p>
-
-<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
-<span class="cp">&lt;?php</span>
- <span class="nv">$ACCESSKEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$NODENAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
- <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
- <span class="p">}</span>
-
-<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
-
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
- <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl&#39;</span><span class="p">);</span>
- <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;table border=6 class=\&quot;wikitable sortable\&quot;&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
- <span class="nv">$nodes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
-
-<span class="k">foreach</span><span class="p">(</span><span class="nv">$bnlTable</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">){</span>
- <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;td align=center&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
- <span class="nv">$nodes</span><span class="p">[</span><span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
- <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
- <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
- <span class="s1">&#39;ipv6′ =&gt; trim($entry[4]),</span>
-<span class="s1"> &#39;</span><span class="nx">port</span><span class="s1">&#39; =&gt; trim($entry[5]),</span>
-<span class="s1"> &#39;</span><span class="nx">ipv6pref</span><span class="s1">&#39; =&gt; trim($entry[6]),</span>
-<span class="s1"> &#39;</span><span class="nx">subnet</span><span class="s1">&#39; =&gt; trim($entry[7]),</span>
-<span class="s1"> );</span>
-<span class="s1"> }</span>
-
-<span class="s1">$currentVPNIP = $nodes[$NODENAME][&#39;</span><span class="nx">ip</span><span class="s1">&#39;];</span>
-<span class="s1"> if($currentIP != $currentVPNIP){</span>
-<span class="s1"> /* Update IP */</span>
-<span class="s1"> $ch = curl_init (&quot;http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle&quot;);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_COOKIE, &#39;</span><span class="nx">clueauth_tokenstack</span><span class="o">=</span><span class="s1">&#39;.$ACCESSKEY);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_POSTFIELDS, &#39;</span><span class="nx">nodename</span><span class="o">=</span><span class="s1">&#39;.$NODENAME.&#39;</span><span class="o">&amp;</span><span class="nx">newip</span><span class="o">=</span><span class="s1">&#39;.$currentIP.&#39;</span><span class="o">&amp;</span><span class="nx">newport</span><span class="o">=</span><span class="mi">3406</span><span class="o">&amp;</span><span class="nx">submit</span><span class="o">=</span><span class="nx">Change</span><span class="s1">&#39;);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_POST, 1);</span>
-<span class="s1"> curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);</span>
-<span class="s1"> $output = curl_exec ($ch);</span>
-
-<span class="s1">if(strpos($output, &#39;</span><span class="nx">Success</span><span class="o">.</span><span class="s1">&#39;) != 0){</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
-<span class="s1"> }else{</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="k">Not</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
-<span class="s1"> }</span>
-<span class="s1"> }else{</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre>
-</div>
-
-
-
 
         </div>
     </article>

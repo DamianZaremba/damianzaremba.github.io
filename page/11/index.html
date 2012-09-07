@@ -75,6 +75,8 @@
         <div id="right">
             <p>
                 <a href="http://twitter.com/DamianZaremba" title="Twitter"><img src="/assests/images/twitter.png" /></a>
+                <a href="https://plus.google.com/110559147647328161061" title="GooglePlus"><img src="/assests/images/googleplus.png" /></a>
+                <a href="http://facebook.com/DamianZaremba" title="Facebook"><img src="/assests/images/facebook.png" /></a>
                 <a href="https://github.com/DamianZaremba" title="GitHub"><img src="/assests/images/github.png" /></a>
                 <a href="http://feeds.feedburner.com/DamianZaremba" title="RSS"><img src="/assests/images/rss.png" /></a>
             </p>
@@ -87,6 +89,46 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/quick-update/">Quick update</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/quick-update/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Well, it has been a while.</p>
+
+<p>Currently just merging wiki.damianzaremba.co.uk (most the stuff is hidden at the moment) and thegeekstop.net into this single blog.</p>
+
+<p>Once everything is merged learnabouttheweb.co.uk and thegeekstop.net will point to damianzaremba.co.uk/blog/!</p>
+
+<p>Apart from my tumblr account (which I post random pictures too) I don't see the point in having separate blogs all over the place.</p>
+
+<p>Here will become my random content, how to, scripts and generally anything I get time to post about.</p>
+
+<p>Some topics I'm trying to catch up on at the moment are:</p>
+
+<ul>
+<li><p>Camping/outdoor skills</p></li>
+<li><p>Bushcraft skills</p></li>
+<li><p>New equipment</p></li>
+<li><p>Tech items</p></li>
+<li><p>Events</p></li>
+<li><p>Other stuff...</p></li>
+</ul>
+
+
+<p>I also intend to get the calendar up to date (it is missing a LOT of stuff at the moment but the first items on that to-do list are syncing up the scout calendars with the activity plans for the year. If I can find a decent video editing app/camera then I might start using you tube more for publishing content.</p>
+
+<p>Currently quite busy as there is a lot of stuff going on, lots of ideas for next year and plans for this - will post more about them later.</p>
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2011/06/meth-stove/">Meth stove</a></h1>
@@ -471,113 +513,6 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 
 <span class="k">print</span> <span class="s">&quot;Reloading\n&quot;</span><span class="p">;</span>
 <span class="sb">`/etc/init.d/nagios reload`</span>
-</code></pre>
-</div>
-
-
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p>
-
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Uber hack to download images from download website, kinda works.</span>
-<span class="sd">Very messy as I ripped most the code out of other scripts I&#39;ve written.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">urllib</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">Queue</span>
-<span class="kn">import</span> <span class="nn">urlparse</span>
-<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/home/damian/Pictures/download-2011&#39;</span>
-
-<span class="k">def</span> <span class="nf">get_total_pages</span><span class="p">():</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/&quot;</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="n">count</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;page_count&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
- <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Page 1 of &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
- <span class="k">return</span> <span class="n">count</span>
-
-<span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/?page=</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="n">r</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ul&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;item_list&quot;</span><span class="p">})</span>
- <span class="k">for</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&quot;li&quot;</span><span class="p">):</span>
- <span class="n">image</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">img</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]</span>
- <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="k">return</span> <span class="n">images</span>
-
-<span class="k">class</span> <span class="nc">Runner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
- <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
- <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
-
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
- <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
- <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
- <span class="n">urldata</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-
-<span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">urldata</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
- <span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">ext</span><span class="p">)</span>
- <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
-
-<span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="k">print</span> <span class="s">&quot;Downloaded image to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
- <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">):</span>
- <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
-
-<span class="n">total</span> <span class="o">=</span> <span class="n">get_total_pages</span><span class="p">()</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
-
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> pages found&quot;</span> <span class="o">%</span> <span class="n">total</span>
- <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
- <span class="k">print</span> <span class="s">&quot;Processing page </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p</span>
- <span class="n">i</span> <span class="o">=</span> <span class="n">get_images</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-
-<span class="k">print</span> <span class="s">&quot;Found </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
- <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-
- <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
- <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
- <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
- <span class="n">thread</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </code></pre>
 </div>
 

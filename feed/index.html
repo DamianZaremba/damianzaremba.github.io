@@ -3,12 +3,76 @@
     <title type="text" xml:lang="en">Damian Zaremba's Blog</title>
     <link type="application/atom+xml" href="http://damianzaremba.co.uk/feed/" rel="self"/>
     <link type="text" href="http://damianzaremba.co.uk" rel="alternate"/>
-    <updated>2012-09-03T17:07:23+01:00</updated>
+    <updated>2012-09-07T02:14:45+01:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
     </author>
     <rights>Copyright 2009-2012 Damian Zaremba</rights>
+    
+    <entry>
+        <title>KVIrc update breaks Irssi Proxy</title>
+        <link href="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//"/>
+        <updated>2012-09-04T00:00:00+01:00</updated>
+        <id>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//</id>
+        <summary type="html"><![CDATA[<p>I recently updated KVIrc on OS X from 3.2.0 to 4.2.0.
+The update appeared to complete successfully, however on trying to connect to my
+Irssi Proxy server nothing appeared to happen.</p>
+
+<p>The output from the server console was something like below</p>
+
+<p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
+using the STARTTLS extension' enabled.</p>
+
+<p>Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show
+successful connections no data is transferred over the socket.</p>
+
+<p>The simple solution to get things back up and running properly is to disable the
+option under each server.</p>
+
+<p>To do this browse to 'Configure servers' under Settings, double click on the
+server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by
+using the STARTTLS extension'.</p>
+
+<p>If you have a large number of servers you can also directly edit the ini file
+under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a
+section and each server is numbered.</p>
+
+<p>To disabled STARTTLS for the first server in network A, your config should look
+something like the below</p>
+
+<div class="highlight"><pre><code class="ini"><span class="k">[A]</span>
+<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span>
+</code></pre>
+</div>
+
+
+<p>This will usually have a number of other items, a full example is below</p>
+
+<div class="highlight"><pre><code class="ini"><span class="k">[FreeNode]</span>
+<span class="na">0_Port</span><span class="o">=</span><span class="s">8000</span>
+<span class="na">0_Hostname</span><span class="o">=</span><span class="s">myirssiproxy.local</span>
+<span class="na">0_Ip</span><span class="o">=</span><span class="s">10.44.1.1</span>
+<span class="na">0_Nick</span><span class="o">=</span><span class="s">MyNick</span>
+<span class="na">NServers</span><span class="o">=</span><span class="s">1</span>
+<span class="na">RealName</span><span class="o">=</span><span class="s">MyName</span>
+<span class="na">0_Pass</span><span class="o">=</span><span class="s">Mypass</span>
+<span class="na">0_AutoConnect</span><span class="o">=</span><span class="s">true</span>
+<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span>
+<span class="na">NickName</span><span class="o">=</span><span class="s">MyNick</span>
+<span class="na">0_Id</span><span class="o">=</span><span class="s">Server1</span>
+<span class="na">0_EnabledCAP</span><span class="o">=</span><span class="s">false</span>
+<span class="na">0_RealName</span><span class="o">=</span><span class="s">MyName</span>
+<span class="na">0_User</span><span class="o">=</span><span class="s">MyUser</span>
+<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span>
+</code></pre>
+</div>
+
+
+<p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide
+scale settings changes.</p>
+]]></summary>
+    </entry>
     
     <entry>
         <title>Running a WSGI app via Gunicorn from Python</title>
@@ -1095,27 +1159,6 @@ Please check this file if you believe everything else is correct.
 <p>The best way I find of "fixing" this is to just disable the "Ip address dns check" option in the contact manager.</p>
 
 <p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Force PECL to install 64bit modules</title>
-        <link href="http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules//</id>
-        <summary type="html"><![CDATA[<p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
-
-<p>On a RHEL system perform the following:</p>
-
-<ol>
-<li>pecl uninstall</li>
-<li>yum remove php-devel.i386</li>
-<li>yum install php-devel.x86_64</li>
-<li>pecl install</li>
-</ol>
-
-
-<p>Any further modules will now be 64bit.</p>
 ]]></summary>
     </entry>
     
