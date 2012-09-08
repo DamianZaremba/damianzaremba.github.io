@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Damian Zaremba - Changing the MySQL client prompt</title>
+    <title>Damian Zaremba - Slow SSH to new CentOS servers</title>
 
     <!-- General meta data -->
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -61,7 +61,7 @@
 
 <body>
     <header>
-        <h1><a href="/">Damian Zaremba</a> <span>Changing the MySQL client prompt</span></h1>
+        <h1><a href="/">Damian Zaremba</a> <span>Slow SSH to new CentOS servers</span></h1>
 
         <nav>
             <ul id="main">
@@ -90,61 +90,62 @@
 <div id="content">
 <article class="post">
     <div class="meta">
-        <span><img src="/assests/images/date.png" />25 Aug 2011</span>
-        <span><img src="/assests/images/comments.png" /><a href="/2011/08/changing-the-mysql-client-prompt/#disqus_thread">Comments</a></span>
+        <span><img src="/assests/images/date.png" />08 Sep 2012</span>
+        <span><img src="/assests/images/comments.png" /><a href="/2012/09/slow-ssh-to-new-centos-servers/#disqus_thread">Comments</a></span>
         
             <ul id="categories">
-            <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/mysql'>Mysql</a></li><li><a href='/tag/my.cnf'>My.cnf</a></li><li><a href='/tag/mysql'>Mysql</a></li><li><a href='/tag/prompt'>Prompt</a></li></ul>
+            <li><a href='/tag/software'>Software</a></li><li><a href='/tag/ssh'>SSH</a></li><li><a href='/tag/centos'>CentOS</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/linux'>Linux</a></li></ul>
         
     </div>
     <div class="entry">
-        <p>It is quite easy to get lost in MySQL when working between a lot of databases.</p>
+        <p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
+out for 20-30 seconds on login then function fine once authenticated.</p>
 
-<p>While you can find out which database you are in, it soon becomes quite irritating having to type</p>
+<p>I noticed this issue on CentOS 5/6 servers, however it probably applies to
+anything running glibc 2.10+.</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span>;
+<p>Now while there are a few reasons SSH might be doing this (most of which can be
+seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p>
 
-+------------------+
-| database<span class="o">()</span> |
-+------------------+
-| test_database |
-+------------------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
+<p>The interesting part was, this wasn't happening on all servers (they are
+standard config wise thanks to puppet).</p>
+
+<p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to
+quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p>
+
+<p>This might be acceptable, depending on how much you have access restricted
+however there is an alternative.</p>
+
+<p>It turns out there was a change in glibc that can be seen on the
+changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p>
+
+<p>Under some circumstances (especially when firewalls are involved) DNS resolution
+will fail and glibc should fallback, close the socket and start again. It would
+seem this takes rather a long while when trying to SSH!</p>
+
+<p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a>
+documented) option that you can add to your
+resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter
+fallback mode straight away and kills the delay.</p>
+
+<p>An example of the 'patched' /etc/resolv.conf file</p>
+
+<div class="highlight"><pre><code class="text"># This file is managed via Puppet
+
+# Servers
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 208.67.222.222
+nameserver 208.67.220.220
+
+# Options
+options single-request-reopen
 </code></pre>
 </div>
 
 
-<p>The simplest way to solve this and make life easier, is to change the prompt to include the info!
-Simple edit the [mysql] section of your my.cnf file and add the prompt option:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
-<span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
-<span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
-<span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-<p>Now when you use the client the prompt will show mysql [user@host - database]>:</p>
-
-<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-<p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
-<span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
-<span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
-<span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-
+<p>Now you might want to dig into your network stack a little more and make sure
+you can handle IPv6/dual stack properly but for now, problem solved!</p>
 
     </div>
 </article>
@@ -154,9 +155,9 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
     <h2>Related posts</h2>
     <ul id="related_posts">
     
-        <li>&raquo; <a href="/2011/08/changing-wordpress-tag-to-category/">Changing WordPress tag to category?</a></li>
+        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
-        <li>&raquo; <a href="/2011/08/http-basic-authentication-apache/">HTTP basic authentication - Apache</a></li>
+        <li>&raquo; <a href="/2011/06/meth-stove/">Meth stove</a></li>
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
@@ -174,8 +175,8 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 
 <script type="text/javascript">
     var disqus_shortname = 'damianzaremba';
-    var disqus_identifier = 'http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/';
-    var disqus_url = 'http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/';
+    var disqus_identifier = 'http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/';
+    var disqus_url = 'http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/';
     var disqus_script = 'embed.js';
 
     (function () {

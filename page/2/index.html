@@ -91,6 +91,74 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />20 Aug 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/dell'>Dell</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
+(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
+<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
+
+<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
+slightly more complicated than the HP's, but followed the Cisco style config.</p>
+
+<p>First we need add a custom login and enable method</p>
+
+<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
+aaa authentication enable &quot;LineName&quot; none
+</code></pre>
+</div>
+
+
+<p>These are used for connections over SSH - "LineName" can be anything, I tend to
+use the company name to keep things standard.</p>
+
+<p>On the second line, you could also use radius local - this would require a
+password to enter enable mode. Personally I control the login mode from the
+RADIUS server and find having to enter a password to get to enable again a hassle.</p>
+
+<p>Next we need to setup the RADIUS server</p>
+
+<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
+name &quot;server1&quot;
+usage login
+key &quot;SecretKeyHere&quot;
+exit
+</code></pre>
+</div>
+
+
+<p>Now we just need to configure the ssh line to use our aaa methods</p>
+
+<div class="highlight"><pre><code class="text">login authentication LineName
+enable authentication LineName
+</code></pre>
+</div>
+
+
+<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
+
+<p>If you require access to the switch over http(s) you can also configure the HTTP
+server to authenticate against RADIUS</p>
+
+<div class="highlight"><pre><code class="text">ip http authentication radius local
+ip https authentication radius local
+</code></pre>
+</div>
+
+
+<p>We include local on every method to ensure we don't get locked out the switch.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />01 Apr 2012</span>
@@ -156,74 +224,6 @@ radius-server secure-backdoor
 <p>The third/forth defines the port/timeout for the server we configured in the first lines.</p>
 
 <p>The last 3 then enable the server and enable a backdoor so we can authenticate against the switch if the RADIUS server is down.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/03/sntp-on-a-hp-procurve-switch/">SNTP on a HP ProCurve switch</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />18 Mar 2012</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2012/03/sntp-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/ntp'>Ntp</a></li><li><a href='/tag/sntp'>Sntp</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.</p>
-
-<p>Most switches use SNTP rather than NTP, SNTP is basically NTP but lacks some of the more advanced internal algorithms and is slightly less accurate.</p>
-
-<p>To configure a ProCurve you need to use SNTP with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">sntp server &lt;ip&gt;
-sntp unicast
-timesync sntp
-</code></pre>
-</div>
-
-
-<p>The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.</p>
-
-<p>This needs to be done in configure mode which can be got into via enable mode.</p>
-
-<div class="highlight"><pre><code class="text">enable
-configure
-</code></pre>
-</div>
-
-
-<p>Once the switch is syncing with the SNTP server you can check the time is correct with</p>
-
-<div class="highlight"><pre><code class="text">show time
-</code></pre>
-</div>
-
-
-<p>Lastly just save the changes then logout</p>
-
-<div class="highlight"><pre><code class="text">write mem
-logout
-</code></pre>
-</div>
-
-
-<p>A full example of this is below:</p>
-
-<div class="highlight"><pre><code class="text">Switch&gt; en
-Switch# conf
-Switch(config)# sntp server 79.142.192.4
-Switch(config)# sntp unicast
-Switch(config)# timesync sntp
-Switch(config)# exit
-Switch# write mem
-Switch# logout
-</code></pre>
-</div>
-
-
-<p>Your switches should now keep their time in sync :)</p>
 
         </div>
     </article>

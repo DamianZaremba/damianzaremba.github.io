@@ -91,6 +91,34 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
+
+<p>On a RHEL system perform the following:</p>
+
+<ol>
+<li>pecl uninstall</li>
+<li>yum remove php-devel.i386</li>
+<li>yum install php-devel.x86_64</li>
+<li>pecl install</li>
+</ol>
+
+
+<p>Any further modules will now be 64bit.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
@@ -164,81 +192,6 @@
 <p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
 
 <p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
-
-<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
-
-<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
-
-<p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
-
-<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
-
-<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
-
-<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
-
-<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
-SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
-</code></pre>
-</div>
-
-
-<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
-
-<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
-</code></pre>
-</div>
-
-
-<p>In the exim.conf file add the following:</p>
-
-<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
-</code></pre>
-</div>
-
-
-<p>3) Update the server (you should be doing this already).</p>
-
-<div class="highlight"><pre><code class="bash">/scripts/upcp
-yum update
-</code></pre>
-</div>
-
-
-<p>4) Disable mod_userdir.
-You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
-
-<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
-
-<div class="highlight"><pre><code class="text">ServerSignature Off
-ServerTokens Prod
-FileETag None
-</code></pre>
-</div>
-
-
-<p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
-
-<p>Notes:
-Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
-
-<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
 
         </div>
     </article>

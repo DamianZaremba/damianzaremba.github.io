@@ -91,6 +91,69 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />08 Sep 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/09/slow-ssh-to-new-centos-servers/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/software'>Software</a></li><li><a href='/tag/ssh'>SSH</a></li><li><a href='/tag/centos'>CentOS</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/linux'>Linux</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
+out for 20-30 seconds on login then function fine once authenticated.</p>
+
+<p>I noticed this issue on CentOS 5/6 servers, however it probably applies to
+anything running glibc 2.10+.</p>
+
+<p>Now while there are a few reasons SSH might be doing this (most of which can be
+seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p>
+
+<p>The interesting part was, this wasn't happening on all servers (they are
+standard config wise thanks to puppet).</p>
+
+<p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to
+quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p>
+
+<p>This might be acceptable, depending on how much you have access restricted
+however there is an alternative.</p>
+
+<p>It turns out there was a change in glibc that can be seen on the
+changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p>
+
+<p>Under some circumstances (especially when firewalls are involved) DNS resolution
+will fail and glibc should fallback, close the socket and start again. It would
+seem this takes rather a long while when trying to SSH!</p>
+
+<p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a>
+documented) option that you can add to your
+resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter
+fallback mode straight away and kills the delay.</p>
+
+<p>An example of the 'patched' /etc/resolv.conf file</p>
+
+<div class="highlight"><pre><code class="text"># This file is managed via Puppet
+
+# Servers
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+nameserver 208.67.222.222
+nameserver 208.67.220.220
+
+# Options
+options single-request-reopen
+</code></pre>
+</div>
+
+
+<p>Now you might want to dig into your network stack a little more and make sure
+you can handle IPv6/dual stack properly but for now, problem solved!</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />04 Sep 2012</span>
@@ -279,74 +342,6 @@ class, passing any options as required.</p>
 
 <p>Hopefully this should help you getting Gunicorn running smoothly in a more
 integrated manner :)</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />20 Aug 2012</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/dell'>Dell</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
-(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
-<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
-
-<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
-slightly more complicated than the HP's, but followed the Cisco style config.</p>
-
-<p>First we need add a custom login and enable method</p>
-
-<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
-aaa authentication enable &quot;LineName&quot; none
-</code></pre>
-</div>
-
-
-<p>These are used for connections over SSH - "LineName" can be anything, I tend to
-use the company name to keep things standard.</p>
-
-<p>On the second line, you could also use radius local - this would require a
-password to enter enable mode. Personally I control the login mode from the
-RADIUS server and find having to enter a password to get to enable again a hassle.</p>
-
-<p>Next we need to setup the RADIUS server</p>
-
-<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
-name &quot;server1&quot;
-usage login
-key &quot;SecretKeyHere&quot;
-exit
-</code></pre>
-</div>
-
-
-<p>Now we just need to configure the ssh line to use our aaa methods</p>
-
-<div class="highlight"><pre><code class="text">login authentication LineName
-enable authentication LineName
-</code></pre>
-</div>
-
-
-<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
-
-<p>If you require access to the switch over http(s) you can also configure the HTTP
-server to authenticate against RADIUS</p>
-
-<div class="highlight"><pre><code class="text">ip http authentication radius local
-ip https authentication radius local
-</code></pre>
-</div>
-
-
-<p>We include local on every method to ensure we don't get locked out the switch.</p>
 
         </div>
     </article>
