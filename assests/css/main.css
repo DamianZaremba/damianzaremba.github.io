@@ -256,11 +256,6 @@ article pre code {
     display: block;
 }
 
-/* Post styles */
-ul#related_posts li {
-    list-style: none;
-}
-
 /* Article styles */
 article {
     border-bottom: 1px solid #ddd;
@@ -276,6 +271,15 @@ article:last-of-type {
 /* Realted/Comment styles */
 section#related, section#comment {
     margin-top: 10px;
+}
+
+ul#related_posts li {
+	margin-left: 5px;
+    list-style: none;
+}
+
+div#disqus_thread iframe {
+	margin-left: 5px;
 }
 
 /* Archive styles */
