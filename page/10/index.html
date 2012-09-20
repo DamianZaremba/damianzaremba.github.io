@@ -91,169 +91,401 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/apache-process-id/">Apache process ID</a></h1>
+        <h1 class="title"><a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/apache-process-id/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />06 Jul 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/logformat'>Logformat</a></li><li><a href='/tag/process'>Process</a></li></ul>
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>Sometimes you need to know the Apache PID when trying to track down segfaults or CPU usage issues.</p>
+            <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p>
 
-<p>There is a very simple way to do this by altering your LogFormat, a command format to have is the CLF (common log format):</p>
+<div class="highlight"><pre><code class="bash"><span class="c">#!/bin/bash</span>
+<span class="nv">VG</span><span class="o">=</span><span class="s1">&#39;/dev/virtual_disks&#39;</span>
+<span class="nv">KS_ADDR</span><span class="o">=</span><span class="s1">&#39;http://192.168.100.1:5843/kickstarts&#39;</span>
 
-<div class="highlight"><pre><code class="text">%h %l %u %t \&quot;%r\&quot; %&gt;s %b
+<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+ centos<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/centos_$5.ks&quot;</span>
+ <span class="k">else</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://mirror.limestonenetworks.com/centos/5.5/os/x86_64/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ ;;
+ fedora<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/fedora_$5.ks&quot;</span>
+ <span class="k">else</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://www.mirrorservice.org/sites/download.fedora.redhat.com/pub/fedora/linux/releases/13/Fedora/x86_64/os/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ ;;
+ debian<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/debian_$5.ks&quot;</span>
+ <span class="k">else</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://debian.intergenia.de/debian/dists/lenny/main/installer-amd64/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ ;;
+ ubuntu<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/ubuntu_$5.ks&quot;</span>
+ <span class="k">else</span>
+<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s2">&quot;http://ubuntu.intergenia.de/ubuntu/dists/lucid/main/installer-amd64/&quot;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ ;;
+ *<span class="o">)</span>
+ <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
+ <span class="nb">exit </span>2
+ ;;
+<span class="k">esac</span>
 </code></pre>
 </div>
 
 
-<p>To enable logging the pid just add the %P var like so:</p>
+<p>Example usage:</p>
 
-<div class="highlight"><pre><code class="text">[%P] %h %l %u %t \&quot;%r\&quot; %&gt;s %b
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./vm_install.sh fedora 50 1024 CharityHosting1 basic</span>
+Installing vm CharityHosting1 with 50G disk and 1024 ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
+ Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
+Starting install...
+Retrieving file .treeinfo... | 2.4 kB 00:00 ...
+Retrieving file vmlinuz... | 6.7 MB 00:01 ...
+Retrieving file initrd.img... | 57 MB 00:15 ...
+Creating domain... | 0 B 00:00
+Domain installation still in progress. You can reconnect to
+the console to <span class="nb">complete </span>the installation process.
+:0
 </code></pre>
 </div>
 
 
+<p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p>
 
+<p>2 Variables are as follows:
+VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh)
+KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro"_"$name".ks"</p>
+
+<p>The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.</p>
+
+<p>The other thing I do along side this is make dnsmasq hand out "static" ips to servers because I use NAT for mapping the public to private addresses, this is because I only run a couple of production vms on that server (Such as the charity hosting servers and graphing server) and the rest are test servers with no need for public addresses.</p>
+
+<p>Setup for dnsmasq/the script to make the assignments static are as follows:
+DNSMASQ config:</p>
+
+<div class="highlight"><pre><code class="text">domain-needed
+bogus-priv
+strict-order
+bind-interfaces
+listen-address=192.168.100.1
+except-interface=lo
+dhcp-range=192.168.100.2,192.168.100.254
+dhcp-lease-max=253
+conf-dir=/etc/dnsmasq.d/
+</code></pre>
+</div>
+
+
+<p>/root/fix_leases.py script (this runs every 2min)</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">leases</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">known_hosts</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">):</span>
+ <span class="n">leases_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+ <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">leases_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">clientid</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+ <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span>
+ <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
+ <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
+ <span class="s">&#39;client_id&#39;</span><span class="p">:</span> <span class="n">clientid</span><span class="p">,</span>
+ <span class="p">}</span>
+
+<span class="n">leases_fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">):</span>
+ <span class="n">known_host_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+ <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">known_host_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="k">if</span> <span class="s">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;# Host&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+ <span class="k">elif</span> <span class="s">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+ <span class="k">if</span> <span class="n">hostname</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;Unknown&#39;</span>
+ <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+ <span class="p">(</span><span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+ <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
+ <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
+ <span class="p">}</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="n">new_leases</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">leases</span><span class="p">:</span>
+ <span class="k">if</span> <span class="n">mac</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
+ <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span>
+
+<span class="n">hosts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
+ <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">new_leases</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
+ <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+
+<span class="n">hosts</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Updating done :)&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span>
+</code></pre>
+</div>
+
+
+<p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p>
+
+<p>Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
+        <h1 class="title"><a href="/2010/06/work-and-scouts/">Work and scouts</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />18 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />29 Jun 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/06/work-and-scouts/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul>
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/7tha'>7tha</a></li><li><a href='/tag/scouts'>Scouts</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
-ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn't getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.</p>
+            <p>Many of you probably don't know but I am actually a member of the scout association and enjoy helping out at my "local" scout group. It is not really local group anymore as I went from living in Rossendale to Yorkshire and now Bury and 7th A is in Rochdale but I travel the extra distance because it is where my scouting history is.</p>
 
-<p>After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).</p>
+<p>Now up until 6months ago I attended regularly and would be available at most times to help out that was until I started at UKFast now as with all new jobs I let it slide that I couldn't make it down to 7th A twice a week but I feel now is the time to get back into it. With the rota I'm currently on I can get down for a couple of weeks (I currently work 4days on 4days off) but when I switch back to the usual rota this wouldn't be possible. Hopefully I can arrange to finish earlier on wed/thurs and work extra hours but that's up to my boss. I'm sure he will understand and maybe say yes!</p>
 
-<p>Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn't! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!</p>
+<p>So what's been happening recently?
+Well I'm still working on there new site (yes still.. sorry) it's proving quite a challenge as I don't know 100% what platform they have at there web host, I have so many ideas but can't guarantee that there will be access to such basic things as a database (Not that this is a massive problem as I could just host a db for there site if really needed, I happen to work in hosting and have a bunch of servers sat doing nothing :-)). Currently it will be pretty much a static site but some things I'd like to implement (totally not even discussed, this is the first time they have come out of my head):</p>
 
-<p>A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don't even document that you can set the IPRESOLVE option, but you can! Yay for php...</p>
-
-<p>The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:</p>
-
-<div class="highlight"><pre><code class="php"><span class="x">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );</span>
-</code></pre>
-</div>
-
-
-<p>My test script in a broken state is:</p>
-
-<div class="highlight"><pre><code class="php"><span class="cp">&lt;?php</span>
- <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERAGENT</span><span class="p">,</span> <span class="s1">&#39;ClueBot/2.0&#39;</span> <span class="p">);</span>
- <span class="k">if</span><span class="p">(</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyhost</span> <span class="p">)</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyport</span> <span class="p">)</span> <span class="k">and</span> <span class="nv">$proxyport</span> <span class="o">!=</span> <span class="k">null</span> <span class="k">and</span> <span class="nv">$proxyhost</span> <span class="o">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYTYPE</span><span class="p">,</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxytype</span> <span class="p">)</span> <span class="o">?</span> <span class="nv">$proxytype</span> <span class="o">:</span> <span class="nx">CURLPROXY_HTTP</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXY</span><span class="p">,</span> <span class="nv">$proxyhost</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYPORT</span><span class="p">,</span> <span class="nv">$proxyport</span> <span class="p">);</span>
- <span class="p">}</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">&quot;http://toolserver.org/~cobi/cb.php?user=124.124.10.106&amp;ns=0&amp;title=Sayala&amp;timestamp=1313668350&quot;</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_MAXREDIRS</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_TIMEOUT</span><span class="p">,</span> <span class="mi">120</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPGET</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_ENCODING</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span>
-
-<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre>
-</div>
+<ul>
+<li><p>Monthly/Bi-Monthly newsletter that parents/friends can sign up to from the website - Manageable though an admin interface - Yeah I'd need a db for that :(</p></li>
+<li><p>New stream on the website - Manageable though an admin interface - I'll need a db for that</p></li>
+<li><p>Ideas/feedback form for website/group</p></li>
+<li><p>Some interactive tour stuff of HQ</p></li>
+<li><p>"Meet the leaders" page - Manageable though an admin interface - Yeah I'd need a db for that as well</p></li>
+</ul>
 
 
-<p>And the test script in the fixed status is:</p>
+<p>Loads of other stuff as well just all depends on how flexible the hosting is tbh, should have the site finished by the end of the month to a basic level though!</p>
 
-<div class="highlight"><pre><code class="php"><span class="cp">&lt;?php</span>
- <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERAGENT</span><span class="p">,</span> <span class="s1">&#39;ClueBot/2.0&#39;</span> <span class="p">);</span>
- <span class="k">if</span><span class="p">(</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyhost</span> <span class="p">)</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyport</span> <span class="p">)</span> <span class="k">and</span> <span class="nv">$proxyport</span> <span class="o">!=</span> <span class="k">null</span> <span class="k">and</span> <span class="nv">$proxyhost</span> <span class="o">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYTYPE</span><span class="p">,</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxytype</span> <span class="p">)</span> <span class="o">?</span> <span class="nv">$proxytype</span> <span class="o">:</span> <span class="nx">CURLPROXY_HTTP</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXY</span><span class="p">,</span> <span class="nv">$proxyhost</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYPORT</span><span class="p">,</span> <span class="nv">$proxyport</span> <span class="p">);</span>
- <span class="p">}</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">&quot;http://toolserver.org/~cobi/cb.php?user=124.124.10.106&amp;ns=0&amp;title=Sayala&amp;timestamp=1313668350&quot;</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_MAXREDIRS</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_TIMEOUT</span><span class="p">,</span> <span class="mi">120</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPGET</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_ENCODING</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span>
- <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_IPRESOLVE</span><span class="p">,</span> <span class="nx">CURL_IPRESOLVE_V4</span> <span class="p">);</span>
+<p>Other ideas I have include writing a decent management system for groups.</p>
 
-<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre>
-</div>
-
-
-<p>Simples!</p>
+<p>Slightly dull post, more fun things to come soon though I hope!</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
+        <h1 class="title"><a href="/2010/06/coding-help/">Coding Help</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />10 Jul 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />09 Jun 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/06/coding-help/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/python'>Python</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>In my kickstart files I "cheat" on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
+            <p>So I'm currently working on a small project which will require authentication. Not really sure how to achieve what I want so here's a quick explanation for anyone if you want to share ideas:
+Basic SQL definition:</p>
 
-<p>To do this I use the following in my kickstarts:</p>
+<div class="highlight"><pre><code class="bash">mysql&gt;; describe users;
++---------------------------+------------------+------+-----+---------+----------------+
+| Field | Type | Null | Key | Default | Extra |
++---------------------------+------------------+------+-----+---------+----------------+
+| id | int<span class="o">(</span>11<span class="o">)</span> | NO | PRI | NULL | auto_increment |
+| username | varchar<span class="o">(</span>500<span class="o">)</span> | NO | | NULL | |
+| password | varchar<span class="o">(</span>100<span class="o">)</span> | NO | | NULL | |
+| salt | varchar<span class="o">(</span>15<span class="o">)</span> | NO | | NULL | |
+| group_id | int<span class="o">(</span>20<span class="o">)</span> | NO | | NULL | |
+| perm_login | <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span>,<span class="s1">&#39;G&#39;</span><span class="o">)</span> | NO | | G | |
++---------------------------+------------------+------+-----+---------+----------------+
 
-<div class="highlight"><pre><code class="text">%include /tmp/partinfo
-
-%pre
-# Get disks
-set $(list-harddrives)
-let numd=$#/2
-disk1=$1
-disk2=$3
-
-# Build partinfo file
-cat &gt; /tmp/partinfo &lt;part /boot --fstype ext4 --size=512 --ondisk=$disk1
-part pv.2 --size=0 --grow --ondisk=$disk1
-
-volgroup VolGroup00 --pesize=32768 pv.2
-logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
-logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
-EOF
+mysql&gt;; describe user_groups;
++---------------------------+---------------+------+-----+---------+----------------+
+| Field | Type | Null | Key | Default | Extra |
++---------------------------+---------------+------+-----+---------+----------------+
+| id | int<span class="o">(</span>11<span class="o">)</span> | NO | PRI | NULL | auto_increment |
+| name | varchar<span class="o">(</span>500<span class="o">)</span> | NO | | NULL | |
+| perm_login | <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span><span class="o">)</span> | NO | | Y | |
++---------------------------+---------------+------+-----+---------+----------------+
 </code></pre>
 </div>
 
 
-<p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>
+<p>For permissions I want to do groups but then have the option to override them on a per user basis. All permissions fields are named perm_ , in the users table there are the Y/N as options then G, if the field is G then it uses the identical permissions field from the group table that the user is part of (group_id matches up with id in the user_groups table).</p>
 
-<p>Now the issue I had with Centos6 was an error getting throw by Anaconda "Partition requires a size specification".</p>
+<p>Basic SQL idea:</p>
 
-<p>It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).</p>
+<div class="highlight"><pre><code class="bash">SELECT IF<span class="o">((</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span><span class="o">)</span>, <span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span>, <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span><span class="o">)</span> AS allowed from users LEFT JOIN <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span><span class="o">)</span> ON <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>id<span class="sb">`</span><span class="o">=</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>group_id<span class="sb">`</span><span class="o">)</span> WHERE <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>username<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;testuser&quot;</span>
+</code></pre>
+</div>
 
-<p>The simplest way to fix this is just to make --size=1 (lets face it, your minimum partition size isn't going to be smaller 1mb!).</p>
 
-<p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p>
+<p>Now this works just fine however I can see issues mainly limitations to only being able to check one permission at a time. For 99% of the time this wouldn't be an issue for example when using the web interface/api there would be at a minimum of 2 calls and most of the time that would be it however in certain cases where you needed a full list there would be large issues. For a start getting a list of permissions would be highly recourse intensive and returning everyone would result in running something like the above for every permission. This may be a few hundred times per user per load.</p>
 
-<p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
+<p>I'm thinking of a way to move permissions into there own table then call them in a relational fashion but cannot think how to do this keeping the user/group system. Any ideas would be massively appreciated, for the moment db scheme changes are fine as this is very much a testing structure.</p>
+
+<p>Speak to you soon :)</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/06/5min-hack-in-python/">5min hack in python</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />06 Jun 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/06/5min-hack-in-python/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/python'>Python</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled >.>) anyway I got bored of this for about 5min then spent the next 5min writing this:</p>
+
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+<span class="n">bannedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failedHosts</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">ignoredIPs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">failLimit</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Better change this</span>
+<span class="n">bannedChain</span> <span class="o">=</span> <span class="s">&quot;Hackor&quot;</span>
+
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -N </span><span class="si">%s</span><span class="s"> &amp;&gt;/dev/null&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">))</span>
+<span class="n">iptables</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;iptables --list </span><span class="si">%s</span><span class="s"> -n | egrep -v </span><span class="se">\&quot;</span><span class="s">target.+prot.+opt.+source.+destination</span><span class="se">\&quot;</span><span class="s"> | egrep -v </span><span class="se">\&quot;</span><span class="s">Chain </span><span class="si">%s</span><span class="s"> .+ references</span><span class="se">\&quot;</span><span class="s"> | awk &#39;{print $4}&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">bannedChain</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">bannedIP</span> <span class="ow">in</span> <span class="n">iptables</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="n">bannedHosts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">bannedIP</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>
+
+<span class="n">loginFailures</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;grep failure /var/log/secure | grep pam | awk -F </span><span class="se">\&quot;</span><span class="s">rhost=</span><span class="se">\&quot;</span><span class="s"> &#39;{print $2}&#39; | awk &#39;{print $1}&#39; | uniq --count&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">loginFailures</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">host</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+ <span class="k">try</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostbyaddr</span><span class="p">(</span><span class="n">host</span><span class="p">)[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+ <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">host</span>
+
+<span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">number</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">failLimit</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently over fail limit, processing&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">bannedHosts</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is allready banned, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">if</span> <span class="n">ip</span> <span class="ow">in</span> <span class="n">ignoredIPs</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is an ingored ip, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+ <span class="k">continue</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+ <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+ <span class="k">else</span><span class="p">:</span>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
+</code></pre>
+</div>
+
+
+<p>Which happens to nicely do the job as can be seen below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./die_hackorz.py</span>
+213.225.207.41 is currently over fail limit, processing
+mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1317 failed attempts
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+sd-15684.dedibox.fr is currently under fail limit, ignoring
+81.5.150.24 is currently under fail limit, ignoring
+88.191.92.219 is currently over fail limit, processing
+sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 failed attempts
+114.207.245.128 is currently over fail limit, processing
+114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
+62.182.30.165 is currently over fail limit, processing
+30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
+</code></pre>
+</div>
+
+
+<p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
+
+<div class="highlight"><pre><code class="bash">iptables -I INPUT -j Hackor
+iptables -I OUTPUT -j Hackor
+iptables -I FORWARD -j Hackor
+</code></pre>
+</div>
+
+
+<p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/05/the-difference/">The difference</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />08 May 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/05/the-difference/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li><li><a href='/tag/python'>Python</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I have nothing but Python to post at the moment so I shall post the difference instead! Once I have some cool stable python up I will be posting more.
+<img src="/2010/05/the-difference/the_difference.jpg" alt="" /></p>
 
         </div>
     </article>
@@ -263,11 +495,11 @@ EOF
 
 <nav id="page_nav">
     
-    <a href="/page/9/" class="prev">Previous</a>
+    <a href="/page/9/" class="prev">&laquo; Previous Page</a>
     
 
     
-    <a href="/page/11/" class="next">Next</a>
+    <a href="/page/11/" class="next">Next Page &raquo;</a>
     
 </nav>
 

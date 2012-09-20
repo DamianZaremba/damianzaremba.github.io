@@ -91,35 +91,466 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
+        <h1 class="title"><a href="/2011/06/twitter/">Twitter?</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/twitter/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
+                <li><a href='/tag/general'>General</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>To install PostgreSQL on a cPanel server you can perform the following:</p>
+            <p>It appears twitter decided to have a re-style once again as can be seen below;</p>
 
-<ol>
-<li>Run /scripts/installpostgres</li>
-<li>Go to SQL services -> Postgre config and click Install config</li>
-<li>Configure a root password for Postgre
-4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
-</ol>
+<p><strong>2011</strong></p>
+
+<p><img src="/2011/06/twitter/twitter1.png" alt="" /></p>
+
+<p><strong>2010</strong></p>
+
+<p><img src="/2011/06/twitter/twitter2.png" alt="" /></p>
+
+<p><strong>2009</strong></p>
+
+<p><img src="/2011/06/twitter/twitter3.png" alt="" /></p>
+
+<p>They also keep playing with the web theme as well, mainly the homepage which has changed twice this year and the login link colors which last week where orange but are now back to white.</p>
+
+<p>I think they should focus more on scaling their API and web stack so that they can remove the API limits and increase the platform stability.</p>
+
+<p>Things could change now they have purchased tweetdeck however this may just slowly replace the "official" twitter client.</p>
+
+<p>The recent changes to send email notifications on events also seems to be a step backwards - they are moving things away from near-real time to slow time. The notifications also seem to be quite slow along with the search feeds which I hope they speed up soon.</p>
+
+<p>The one notification I wouldn't mind getting via email is un-follow notifications, I currently rely on third-party services +a bunch of Perl for them.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/quick-update/">Quick update</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/quick-update/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Well, it has been a while.</p>
+
+<p>Currently just merging wiki.damianzaremba.co.uk (most the stuff is hidden at the moment) and thegeekstop.net into this single blog.</p>
+
+<p>Once everything is merged learnabouttheweb.co.uk and thegeekstop.net will point to damianzaremba.co.uk/blog/!</p>
+
+<p>Apart from my tumblr account (which I post random pictures too) I don't see the point in having separate blogs all over the place.</p>
+
+<p>Here will become my random content, how to, scripts and generally anything I get time to post about.</p>
+
+<p>Some topics I'm trying to catch up on at the moment are:</p>
+
+<ul>
+<li><p>Camping/outdoor skills</p></li>
+<li><p>Bushcraft skills</p></li>
+<li><p>New equipment</p></li>
+<li><p>Tech items</p></li>
+<li><p>Events</p></li>
+<li><p>Other stuff...</p></li>
+</ul>
 
 
-<p>Now you would think that is it, right?
-Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
+<p>I also intend to get the calendar up to date (it is missing a LOT of stuff at the moment but the first items on that to-do list are syncing up the scout calendars with the activity plans for the year. If I can find a decent video editing app/camera then I might start using you tube more for publishing content.</p>
 
-<p>You can add them with the following script:</p>
+<p>Currently quite busy as there is a lot of stuff going on, lots of ideas for next year and plans for this - will post more about them later.</p>
 
-<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
-do
- su postgres -c &quot;createuser -S -D -R $user&quot;;
-done
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/meth-stove/">Meth stove</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/meth-stove/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li><li><a href='/tag/iscout'>iScout</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I saw pretty cool stove the other day and decided to have a go at it.</p>
+
+<p>The final stove was a little messy but <em>should</em> work fine - I'm going to test it on Thursday and see if it works or not.</p>
+
+<p><img src="/2011/06/meth-stove/IMG_0356-225x300.jpg" alt="" /></p>
+
+<p>Some notes before starting that I found out the hard way:</p>
+
+<ul>
+<li>Be careful once you start making cuts - You end up with tiny bits of metal that are <em>very</em> sharp.</li>
+<li>File off the edges - It makes the metal easier to work with and stops you from slicing your fingers open.</li>
+<li>Measure the height of your inner wall - It makes fitting the thing together much easier.</li>
+<li>Don't slice down the side of the can when scoring off the bottoms - This makes it easier to get the bottoms off but means you need a spare can for the inner.</li>
+<li>Be careful when making the holes in the top - I started out with a pin that made nice round holes then broke it so used a knife that made much bigger "slots".</li>
+<li>When rolling your inner wall use a bit of tape - it will burn off later.</li>
+</ul>
+
+
+<h2>How to</h2>
+
+<p>First you are going to need:</p>
+
+<ul>
+<li>2 x Empty drinks cans</li>
+<li>1 x Very sharp knife</li>
+<li>1 x File</li>
+<li>1 x Saw (You could use your knife but a saw makes it easier)</li>
+<li>1 pair of scissors (Once again you could use your knife but this makes it easier)</li>
+</ul>
+
+
+<h3>Step1</h3>
+
+<p>Firstly take 1 empty can and turn it upside down so the end <em>without</em> a hole is at the top for you to work on.</p>
+
+<p>Carefully punch a bunch of holes around the outside for burners and a few holes right in the middle for filling.</p>
+
+<p>Make sure not to put the middle holes too close to the outside - you need enough space for the middle wall to separate the fuel.</p>
+
+<p>You should end up with something like this...</p>
+
+<p><img src="/2011/06/meth-stove/IMG_0357.jpg" alt="" /></p>
+
+<h3>Step2</h3>
+
+<p>Next you need to cut off the bottom of the can (the actual bottom, where you just made holes in). This will be the "top" of your burner.</p>
+
+<p>An easy way is to clip your knife onto the back of a book then score around the outside.</p>
+
+<p>Once you have a good score line take your saw and run it around to make a cut.</p>
+
+<p>Then after you have just the bottom of the can left take your file and smooth off the top. If need be use your scissors/knife to trim off any crap.</p>
+
+<h3>Step3</h3>
+
+<p>Now you need to make an inner wall which fits around the "dip" in your burners top.</p>
+
+<p>Slice down the side of the can (use the bit you just cut off) and remove the top of the can.</p>
+
+<p>You should be left with basically the body of the can (you may need to use another can depending how big you cut the top of your stove)</p>
+
+<p>Now roll it up to fit around the dip in your burners top and mark it with your knife.</p>
+
+<p>Take a pair of scissors and cut it down to size then tape both ends just to hold it in place.</p>
+
+<p>I taped it a little smaller than it needed to be then pushed it around the dip - this made a tight fit so the next step was easier.</p>
+
+<h3>Step4</h3>
+
+<p>Cut out some notches in the top of your inner wall - this will be where the fuel can flow though into the bottom of the burner.</p>
+
+<p>You should end up with a circle of notches sticking out the top of your burner top.</p>
+
+<h3>Step5</h3>
+
+<p>Now to make the burner bottom, take another empty can and measure it against your burner top.</p>
+
+<p>You want to make it about 1½ times the size of the burner top.</p>
+
+<p>This will fit over your burner top and make the base of the burner where the fuel flows into.</p>
+
+<h3>Step6</h3>
+
+<p>Now we need to fix the bottom to the top.</p>
+
+<p>You want to end up with your inner wall matching up with your little dip in the bottom of the burner as you did with the top.</p>
+
+<p>You can use a spare piece of the side to help you ease the cans together.</p>
+
+<p>You should get a really tight fit - I had to cut down and file off the outer can after as I did the measuring wrong.</p>
+
+<p>Now you should basically have a can with an inner can - You put the fuel in the middle and it flows down to the bottom of the can where you can light it.</p>
+
+<h2>Footnotes</h2>
+
+<p>I've seen a few other people's stoves and they seem to cut them down to just under 2".</p>
+
+<p>Mine ended up slightly bigger as can be seen below. I'm not sure how this will affect its performance but it should produce a better cooking height.</p>
+
+<p><img src="/2011/06/meth-stove/IMG_0358-225x300.jpg" alt="" /> <img src="/2011/06/meth-stove/IMG_0359-225x300.jpg" alt="" /></p>
+
+<p>Another thing that was done differently was the number of burners - this will probably use more fuel but should produce a larger heat.</p>
+
+<h3>Other</h3>
+
+<p>I'm going to light this on thursday and see if it works fine - It might explode or work fine. I think I slightly crimped the inner wall while fitting it together.</p>
+
+<p>If it works fine I'll probably build another and document it better else I'll do a design review. As long as my phone doesn't die on me I'll try to get a video of lighting it which could turn out quite funny...</p>
+
+<p>Update:
+The stove didn't work very well - upon lighting it the meths burnt off in a big puff of singed hair and wouldn't turn into anything more.</p>
+
+<p>I'm guessing the holes where too big causes a massive rush of oxygen into the fuel "store" and it burning off very quickly.</p>
+
+<p>I'll have another go at building one some time soon as I burnt this attempted (we had a reasonably sized fire, what else would you do) and let you know if it turns out any better.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/example-of-building-nagios-configs-from-ldap/">Example of building nagios configs from LDAP</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/example-of-building-nagios-configs-from-ldap/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Over at ClueNet we have a bunch of servers all stored in LDAP with owners and admins linked to user accounts also stored in LDAP! One thing we wanted to implement (as well as graphing, but cacti sorts that out) was service monitoring.</p>
+
+<p>After getting a box up and a bot in IRC to relay stuff I set about hacking up a script to add in servers and add owners/admins as contacts (so they can get notifications and access the Nagios web interface to disable checks and stuff (it uses mod_auth_krb to let people login over HTTPS)).</p>
+
+<p>Some notes about this script:</p>
+
+<ul>
+<li><p>Currently we don't store attributes in the servers entry relating to what services to monitor, this is something I'm looking at implimenting</p></li>
+<li><p>IP addresses and SSH ports are stored in LDAP</p></li>
+<li><p>Server owners AND admins should have access to update the server in Nagios (they do in LDAP!)</p></li>
+<li><p>There is no attribute under the users entry to determine if we <em>should</em> notify them about alerts so we don't atm!</p></li>
+<li><p>The only way people know about alerts is the relay channel on IRC or the web interface</p></li>
+</ul>
+
+
+<p>The main thing I want to implement that would improve this script is per service attributes in the servers entry following the standard for ClueNet.</p>
+
+<p>I propose the attribute clueServiceMonitoring be added into the ldap scheme and added to the servers entries.</p>
+
+<p>An example is as below:
+Server: hex
+Services to be monitored:</p>
+
+<ul>
+<li><p>ping (via ICMP)</p></li>
+<li><p>ssh (will use port listed in LDAP)</p></li>
+<li><p>http (port 8080)</p></li>
+<li><p>ldap</p></li>
+<li><p>kerberos</p></li>
+</ul>
+
+
+<div class="highlight"><pre><code class="text">dn: cn=hex,ou=servers,dc=cluenet,dc=org
+ changetype: modify
+ add: clueServiceMonitoring
+ clueServiceMonitoring: ping^ICMP
+
+dn: cn=hex,ou=servers,dc=cluenet,dc=org
+ changetype: modify
+ add: clueServiceMonitoring
+ clueServiceMonitoring: ssh
+
+dn: cn=hex,ou=servers,dc=cluenet,dc=org
+ changetype: modify
+ add: clueServiceMonitoring
+ clueServiceMonitoring: http^8080
+
+dn: cn=hex,ou=servers,dc=cluenet,dc=org
+ changetype: modify
+ add: clueServiceMonitoring
+ clueServiceMonitoring: ldap
+
+dn: cn=hex,ou=servers,dc=cluenet,dc=org
+ changetype: modify
+ add: clueServiceMonitoring
+ clueServiceMonitoring: kerberos
+</code></pre>
+</div>
+
+
+<p>This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.</p>
+
+<p>Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.</p>
+
+<div class="highlight"><pre><code class="perl"><span class="c1">#!/usr/bin/env perl</span>
+<span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">File::</span><span class="n">Path</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+
+<span class="c1"># Config stuff</span>
+<span class="k">my</span> <span class="nv">$base_dir</span> <span class="o">=</span> <span class="s">&quot;/usr/local/nagios/etc/cluenet/&quot;</span><span class="p">;</span>
+
+<span class="c1"># Main code</span>
+<span class="k">my</span> <span class="nv">$ldap</span> <span class="o">=</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">&quot;ldap.cluenet.org&quot;</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=&gt;</span> <span class="mi">30</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ldap</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s">&quot;Could not connect to ldap\n&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">print</span> <span class="s">&quot;Clearing current configs\n&quot;</span><span class="p">;</span>
+<span class="n">rmtree</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
+<span class="nb">mkdir</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
+
+<span class="k">my</span> <span class="nv">@admins</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">@owners</span> <span class="o">=</span> <span class="p">();</span>
+<span class="k">my</span> <span class="nv">$mesg</span> <span class="o">=</span> <span class="nv">$ldap</span><span class="o">-&gt;</span><span class="n">search</span><span class="p">(</span>
+    <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=server)(isActive=TRUE))&quot;</span><span class="p">,</span>
+    <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=servers,dc=cluenet,dc=org&quot;</span>
+<span class="p">);</span>
+<span class="k">my</span> <span class="nv">@entries</span> <span class="o">=</span> <span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Starting server configs\n&quot;</span><span class="p">;</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">@entries</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+    <span class="k">print</span> <span class="s">&quot;Starting &quot;</span> <span class="o">.</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$hostname</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$hostname</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing hostname\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$servername</span> <span class="o">=</span> <span class="nv">$hostname</span><span class="p">;</span>
+    <span class="nv">$servername</span> <span class="o">=~</span> <span class="sr">s/\.cluenet\.org$//</span><span class="p">;</span>
+
+    <span class="k">my</span> <span class="nv">$owner</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;owner&#39;</span><span class="p">);</span>
+    <span class="nv">$owner</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$owner</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing owner\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$ip_address</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;ipAddress&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ip_address</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">print</span> <span class="s">&quot;Skipping - missing ip address\n&quot;</span><span class="p">;</span>
+        <span class="k">next</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$ssh_port</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;sshPort&#39;</span><span class="p">);</span>
+
+    <span class="k">my</span> <span class="nv">$description</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;description&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$description</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">my</span> <span class="nv">$os</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;operatingSystem&#39;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$os</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$os</span> <span class="o">=</span> <span class="s">&#39;linux&#39;</span><span class="p">;</span> <span class="c1"># windows sux</span>
+    <span class="p">}</span>
+
+    <span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/$hostname.cfg&quot;</span><span class="p">);</span>
+    <span class="c1"># Write the host out</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">host</span> <span class="p">{</span>
+    <span class="n">host_name</span> <span class="nv">$hostname</span>
+    <span class="n">alias</span> <span class="nv">$servername</span>
+    <span class="n">address</span> <span class="nv">$ip_address</span>
+    <span class="n">hostgroups</span> <span class="nv">$owner</span><span class="o">\</span><span class="n">_servers</span>
+    <span class="n">max_check_attempts</span> <span class="mi">5</span>
+    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">contacts</span> <span class="nv">$owner</span>
+    <span class="n">contact_groups</span> <span class="nv">$servername</span><span class="o">\</span><span class="n">_admins</span>
+    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+<span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+
+    <span class="c1"># Write out the services</span>
+    <span class="c1"># - I&#39;d like these to be ldap attributes but I&#39;m not sure how we can do shit for now so hardcoding</span>
+    <span class="k">print</span> <span class="s">&quot;Adding ping check\n&quot;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">service</span> <span class="p">{</span>
+    <span class="n">host_name</span> <span class="nv">$hostname</span>
+    <span class="n">service_description</span> <span class="n">PING</span> <span class="n">check</span>
+    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">max_check_attempts</span> <span class="mi">3</span>
+    <span class="n">normal_check_interval</span> <span class="mi">5</span>
+    <span class="n">retry_check_interval</span> <span class="mi">1</span>
+    <span class="n">notification_interval</span> <span class="mi">30</span>
+    <span class="n">notification_options</span> <span class="n">w</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">s</span>
+    <span class="n">check_command</span> <span class="n">check_ping</span><span class="o">!</span><span class="mf">100.0</span><span class="p">,</span><span class="mi">20</span><span class="nv">%</span><span class="err">!</span><span class="nv">500</span><span class="mf">.00</span><span class="p">,</span><span class="mi">60</span><span class="nv">%</span>
+<span class="err">}</span>
+
+<span class="nv">EOS</span>
+<span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/windows/i</span><span class="p">,</span> <span class="nv">$os</span><span class="p">))</span> <span class="p">{</span>
+
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$ssh_port</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="s">&quot;Adding SSH check on port $ssh_port\n&quot;</span><span class="p">;</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;authorizedAdministrator&#39;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+        <span class="nv">$user</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
+        <span class="nv">$members</span> <span class="o">=</span> <span class="nv">$members</span> <span class="o">.</span> <span class="s">&quot;, &quot;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">;</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/$user/</span><span class="p">,</span> <span class="nv">@admins</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nb">push</span><span class="p">(</span><span class="nv">@admins</span><span class="p">,</span> <span class="nv">$user</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">print</span> <span class="s">&quot;Finished server configs\n&quot;</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Starting user config\n&quot;</span><span class="p">;</span>
+<span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/users.cfg&quot;</span><span class="p">);</span>
+<span class="k">print</span> <span class="s">&quot;Adding __nagiosbot__\n&quot;</span><span class="p">;</span>
+<span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">contact</span> <span class="p">{</span>
+    <span class="n">contact_name</span> <span class="n">__nagiosbot__</span>
+    <span class="n">alias</span> <span class="n">General</span> <span class="n">nagios</span> <span class="n">bot</span>
+    <span class="n">host_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">service_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
+    <span class="n">host_notification_commands</span> <span class="n">host</span><span class="o">-</span><span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
+    <span class="n">service_notification_commands</span> <span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
+
+<span class="p">}</span>
+<span class="n">EOS</span>
+<span class="p">;</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">@admins</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="s">&quot;Adding user $_ \n&quot;</span><span class="p">;</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">search</span><span class="p">(</span>
+        <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=person)(uid=&quot;</span> <span class="o">.</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&quot;))&quot;</span><span class="p">,</span>
+        <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=people,dc=cluenet,dc=org&quot;</span>
+    <span class="p">);</span>
+
+    <span class="k">foreach</span><span class="p">(</span><span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+
+        <span class="k">my</span> <span class="nv">$gecos</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;gecos&#39;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$gecos</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;\talias $gecos\n&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">my</span> <span class="nv">$mail</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;mail&#39;</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nv">$mail</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;#\temail $mail\n&quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">@owners</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">hostgroup</span> <span class="p">{</span>
+    <span class="n">hostgroup_name</span> <span class="nv">$_</span><span class="o">\</span><span class="n">_servers</span>
+    <span class="n">alias</span> <span class="nv">$_</span><span class="o">\</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">servers</span>
+<span class="p">}</span>
+
+<span class="n">EOS</span>
+<span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nb">close</span><span class="p">(</span><span class="n">FH</span><span class="p">);</span>
+<span class="k">print</span> <span class="s">&quot;Finished user config\n&quot;</span><span class="p">;</span>
+
+<span class="k">print</span> <span class="s">&quot;Reloading\n&quot;</span><span class="p">;</span>
+<span class="sb">`/etc/init.d/nagios reload`</span>
 </code></pre>
 </div>
 
@@ -130,96 +561,108 @@ done
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/http-basic-authentication-apache/">HTTP basic authentication - Apache</a></h1>
+        <h1 class="title"><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/http-basic-authentication-apache/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/htaccess'>Htaccess</a></li><li><a href='/tag/http-basic'>Http basic</a></li></ul>
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>Method 1)
-Inside the directory you wish to protect include a .htaccess file with the following content:</p>
+            <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p>
 
-<div class="highlight"><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
-AuthName &quot;My secure area&quot;
-AuthType Basic
-Require valid-user
+<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Uber hack to download images from download website, kinda works.</span>
+<span class="sd">Very messy as I ripped most the code out of other scripts I&#39;ve written.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">urlparse</span>
+<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/home/damian/Pictures/download-2011&#39;</span>
+
+<span class="k">def</span> <span class="nf">get_total_pages</span><span class="p">():</span>
+ <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/&quot;</span><span class="p">)</span>
+ <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">count</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;page_count&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+ <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Page 1 of &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
+ <span class="k">return</span> <span class="n">count</span>
+
+<span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
+ <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+ <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/?page=</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
+ <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ul&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;item_list&quot;</span><span class="p">})</span>
+ <span class="k">for</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&quot;li&quot;</span><span class="p">):</span>
+ <span class="n">image</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">img</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]</span>
+ <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+ <span class="k">return</span> <span class="n">images</span>
+
+<span class="k">class</span> <span class="nc">Runner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+ <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+ <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+ <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+ <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+ <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+ <span class="n">urldata</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+
+<span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">urldata</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
+ <span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">ext</span><span class="p">)</span>
+ <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+
+<span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+ <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+ <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+ <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+ <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+ <span class="k">print</span> <span class="s">&quot;Downloaded image to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+ <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">):</span>
+ <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+
+<span class="n">total</span> <span class="o">=</span> <span class="n">get_total_pages</span><span class="p">()</span>
+ <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> pages found&quot;</span> <span class="o">%</span> <span class="n">total</span>
+ <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
+ <span class="k">print</span> <span class="s">&quot;Processing page </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p</span>
+ <span class="n">i</span> <span class="o">=</span> <span class="n">get_images</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="k">print</span> <span class="s">&quot;Found </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+ <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+ <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
+ <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+ <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+ <span class="n">thread</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+ <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+ <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
+ <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+ <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </code></pre>
 </div>
 
 
-<p>Method 2)
-In your apache config file add the following:</p>
 
-<div class="highlight"><pre><code class="text">&lt;Directory /path/to/directory/to/protect/&gt;
- AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
- AuthName &quot;My secure area&quot;
- AuthType Basic
- Require valid-user
-&lt;/Directory&gt;
-</code></pre>
-</div>
-
-
-<p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p>
-
-<p>You can create it with the htpasswd command:</p>
-
-<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre>
-</div>
-
-
-<p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
-
-<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre>
-</div>
-
-
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/">Getting rid of cPanel IP Check errors</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/#disqus_thread">Comments</a></span>
-            
-                <ul id="categories">
-                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/error'>Error</a></li><li><a href='/tag/ipcheck'>Ipcheck</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>On Linux servers behind NAT you will start getting emails warning that the DNS setup is broken.</p>
-
-<p>cPanel states that the panel does not work behind NAT and the boxes need <strong>public</strong> ip addresses.</p>
-
-<p>It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn't recommend it, sometimes you have no choice.</p>
-
-<p>The email you get though is something like the following:</p>
-
-<div class="highlight"><pre><code class="text">[ipcheck] Problem with DNS setup on myserver.local
-
-IMPORTANT: Do not ignore this email.
-
-The hostname (myserver.local) resolves to 10.0.0.1. It should resolve to 192.168.0.1.
-Please be sure to correct /etc/hosts as well as the &#39;A&#39; entry in zone file for the domain.
-
-Some are all of these problems can be caused by /etc/resolv.conf being setup incorrectly.
-Please check this file if you believe everything else is correct.
-</code></pre>
-</div>
-
-
-<p>The best way I find of "fixing" this is to just disable the "Ip address dns check" option in the contact manager.</p>
-
-<p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p>
 
         </div>
     </article>
@@ -229,11 +672,11 @@ Please check this file if you believe everything else is correct.
 
 <nav id="page_nav">
     
-    <a href="/page/6/" class="prev">Previous</a>
+    <a href="/page/6/" class="prev">&laquo; Previous Page</a>
     
 
     
-    <a href="/page/8/" class="next">Next</a>
+    <a href="/page/8/" class="next">Next Page &raquo;</a>
     
 </nav>
 

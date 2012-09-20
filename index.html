@@ -346,6 +346,111 @@ integrated manner :)</p>
         </div>
     </article>
     
+    <article class="post">
+        <h1 class="title"><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />20 Aug 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/dell'>Dell</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
+(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
+<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
+
+<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
+slightly more complicated than the HP's, but followed the Cisco style config.</p>
+
+<p>First we need add a custom login and enable method</p>
+
+<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
+aaa authentication enable &quot;LineName&quot; none
+</code></pre>
+</div>
+
+
+<p>These are used for connections over SSH - "LineName" can be anything, I tend to
+use the company name to keep things standard.</p>
+
+<p>On the second line, you could also use radius local - this would require a
+password to enter enable mode. Personally I control the login mode from the
+RADIUS server and find having to enter a password to get to enable again a hassle.</p>
+
+<p>Next we need to setup the RADIUS server</p>
+
+<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
+name &quot;server1&quot;
+usage login
+key &quot;SecretKeyHere&quot;
+exit
+</code></pre>
+</div>
+
+
+<p>Now we just need to configure the ssh line to use our aaa methods</p>
+
+<div class="highlight"><pre><code class="text">login authentication LineName
+enable authentication LineName
+</code></pre>
+</div>
+
+
+<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
+
+<p>If you require access to the switch over http(s) you can also configure the HTTP
+server to authenticate against RADIUS</p>
+
+<div class="highlight"><pre><code class="text">ip http authentication radius local
+ip https authentication radius local
+</code></pre>
+</div>
+
+
+<p>We include local on every method to ensure we don't get locked out the switch.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />01 Apr 2012</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
+
+<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
+</code></pre>
+</div>
+
+
+<p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
+
+<div class="highlight"><pre><code class="text">aaa authentication login privilege-mode 
+aaa authentication console login radius local 
+aaa authentication console enable radius local 
+aaa authentication telnet login radius local 
+aaa authentication telnet enable radius local 
+aaa authentication web login radius local 
+aaa authentication ssh login radius local 
+aaa authentication ssh enable radius local 
+</code></pre>
+</div>
+
+
+<p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
+
+        </div>
+    </article>
+    
 
 
 
@@ -353,7 +458,7 @@ integrated manner :)</p>
     
 
     
-    <a href="/page/2/" class="next">Next</a>
+    <a href="/page/2/" class="next">Next Page &raquo;</a>
     
 </nav>
 

@@ -91,173 +91,173 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
+        <h1 class="title"><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />01 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+            <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p>
 
-<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
+<p>Bash as always is very helpful</p>
 
-<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
-
-<p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
-
-<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
-
-<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
-
-<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
-
-<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
-SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
+-bash: /bin/rm: Argument list too long”
 </code></pre>
 </div>
 
 
-<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
+<p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p>
 
-<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span>
 </code></pre>
 </div>
 
 
-<p>In the exim.conf file add the following:</p>
+<p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p>
 
-<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+<p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
+/tmp/repoup1291034701
+/tmp/repoup1291034701/live
+/tmp/repoup1291034701/live/.git
 </code></pre>
 </div>
 
 
-<p>3) Update the server (you should be doing this already).</p>
+<p>xargs just converts from standard input to command line arguments as can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash">/scripts/upcp
-yum update
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
+rm /tmp/repoup1291034701
 </code></pre>
 </div>
 
 
-<p>4) Disable mod_userdir.
-You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
-
-<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
-
-<div class="highlight"><pre><code class="text">ServerSignature Off
-ServerTokens Prod
-FileETag None
-</code></pre>
-</div>
-
-
-<p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
-
-<p>Notes:
-Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
-
-<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
+<p>Hope this helps</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/check-for-cve-fixs/">Check for CVE fixs</a></h1>
+        <h1 class="title"><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/check-for-cve-fixs/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />29 Nov 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cve'>Cve</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/rpm'>Rpm</a></li></ul>
+                <li><a href='/tag/foss'>FOSS</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>To check if a CVE has been patched on a RHEL based system perform the following.</p>
+            <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p>
 
-<p>First, get the real package name:</p>
-
-<div class="highlight"><pre><code class="bash">rpm -qa | grep &lt;package&gt;
-</code></pre>
-</div>
-
-
-<p>Now check the package change log for CVE patches:</p>
-
-<div class="highlight"><pre><code class="bash">rpm -q &lt;package&gt; --changelog | grep &lt;cve number&gt;
-</code></pre>
-</div>
+<ul>
+<li><p><a href="http://GitHub.com">GitHub</a></p></li>
+<li><p><a href="http://Wordpress.com">Wordpress</a></p></li>
+<li><p><a href="http://Ohloh.net">Ohloh</a></p></li>
+<li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li>
+</ul>
 
 
+<p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p>
 
+<p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p>
+
+<p>Some features you'll probably love:</p>
+
+<ul>
+<li><p>Modules for load balancing</p></li>
+<li><p>Direct memcached integration</p></li>
+<li><p>Simple proxy configuration</p></li>
+<li><p>Passenger integration</p></li>
+<li><p>Ability to serve over 50,000 simultaneous connections</p></li>
+<li><p>Statistics module</p></li>
+<li><p>Low memory footprint</p></li>
+<li><p>Clean simple to edit configuration files</p></li>
+<li><p>Zero downtime configuration and binary updates</p></li>
+<li><p>PCRE based rewrite rules</p></li>
+</ul>
+
+
+<p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></h1>
+        <h1 class="title"><a href="/2010/10/job-change-house-move-and-more/">Job change, house move and more</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/apache-segmentation-fault-debugging/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />06 Oct 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/10/job-change-house-move-and-more/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/core-dumps'>Core dumps</a></li><li><a href='/tag/segfault'>Segfault</a></li></ul>
+                <li><a href='/tag/work'>Work</a></li><li><a href='/tag/7tha'>7tha</a></li><li><a href='/tag/ukfast'>UKFast</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>Sometimes you will see lines like this in the Apache error log:</p>
+            <p>So yeah it's been a busy few months. I've finished my new server setup, ready to move mail onto it. Moved flats. Made loads of progress in a project and got let go from a job.</p>
 
-<div class="highlight"><pre><code class="text">[notice] child pid 5 exit signal Segmentation fault (11)
-</code></pre>
-</div>
+<p>I moved from Bury to Manchester a month ago, it's strange living in the city it's like the world never sleeps. Currently still have a messy flat as I haven't completely un-packed but things are getting there. Hopefully won't have to move any time soon as the last time was a bit of a nightmare. Moving into the center might help improve my current non existent social life or maybe just give me reason to be in an office 24/7 working (tbc). In other news the 7th A Rochdale scout groups website had a bunch of issues completed over the last few weeks, once the images are all done and I can write the actual text content then we should be good to get it online and hopefully expand the group even further! Shame I'm not the best designer but I should be able to do a better job than the current "made in word" version ;)</p>
 
+<p>As well as all the fun times had recently I've also got a bit of a change work wise, after being "let go" from my current job at UKFast I've decided to try and find a small passionate company where I can really have an impact and do what I enjoy. Unfortunately the job I did have wasn't right for me as there was little room for diversity within the role or change.</p>
 
-<p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p>
+<p>Currently I'm looking for a passionate small/start-up company where I can utilize my current skills, learn a lot and dedicate my time to making a difference.</p>
 
-<p>By default apache won't give you any more info than this. To get core dumps you will need to do the following.</p>
+<p>Thanks to everyone at UKFast for the fun times, advise and support. Maybe one day we will work together once again.</p>
 
-<ol>
-<li>Enable system coredumps for the apache user.
-In /etc/security/limits.conf ensure the following line is present:</li>
-</ol>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/09/time/">Time</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />14 Sep 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/09/time/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Time is a funny thing, in one sense you seem to achieve a lot in a short amount but from another point of view you haven't even dipped your toe into the water. School, college, unit is starting again with the people working hard to pass exams and start their lives, choices we make in life seem insignificant at the time however the time passes so quickly and you don't even realise it.</p>
 
+<p>Personally I never did the whole college and uni thing, it is something that in one sense I regret but in another it's something I am proud of. The choice for me was simple, waste 5/6 years 'studying' things that weren't relevant to what I wanted to do to get a piece of paper and a few grand worth of debt or dive in at the deep end and try not to sink.</p>
 
-<div class="highlight"><pre><code class="text">apache soft core 10000
-</code></pre>
-</div>
+<p>After leaving school I pretty much wasted a year, during the time I did pretty much run a small hosting company with some friends and decide on what I was going to do going forwards but all in all progress was not anything to comment on. After passing some random exams I got my current job and that’s where I'm pretty much at now looking forward to passing some other exams and progressing my career.</p>
 
+<p>Tonight I've just been reminded that it was two years ago I left School where the projects ended and the search began, an analysis of the time spent since then yields mixed feelings. Bearing in mind I pretty much want to have filled most my career ambitions by the time I'm 20 I take the following from this reflection.</p>
 
-<ol>
-<li>Tell apache what directory to put dumps into, do this with the following config line:</li>
-</ol>
+<p>I regret not going to college/uni - This would of let me grow as a person however could of potentially prevented my career from starting and left me without the opportunities I'm currently chasing. The main disadvantages are not being able to socialize, gain experience in certain areas such as student radio that I would of loved to have been a part of.</p>
 
+<p>I'm glad I went the hard way - Life's value is clear to me now, you have to run at every opportunity you get and never let one pass you buy. With confidence you can be much better than you currently think you are.  If I didn't chose the path I did then I most likely would not be sat in my of flat across the road from the office where I work as a Linux engineer and I wouldn't have the opportunities presented to me that I do right at this very moment.</p>
 
-<div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/
-</code></pre>
-</div>
+<p>Time moves so very quickly and you don't often stop to think about what you have achieved. It is easy to see how far you have to go to meet your goal and think there is never any chance of hitting them but if you step back for a moment and look at where you have been and how far you have travelled then you can see there is every chance of smashing your goals.</p>
 
+<p>Slight ramble but the general point being never let anyone tell you that you can't do something, there is always a way even if you have to fight against everyone to get there. Opportunities will present themselves when needed and belief is something you should never change for other people. Time will run away from you but every so often step back and look at how much you've done - it will be amazing.</p>
 
-<ol>
-<li><p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p></li>
-<li><p>Restart apache and wait for a segfault.</p></li>
-</ol>
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />21 Jul 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D
+Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p>
 
-
-<p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p>
-
-<p>To debug these you will need to understand system calls and have some general debugging experience when it comes to executables.</p>
-
-<p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p>
-
-<div class="highlight"><pre><code class="text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
-</code></pre>
-</div>
-
-
-<p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p>
+<p>Anyway back to making this CSS I'm working on look half decent in IE!</p>
 
         </div>
     </article>
@@ -267,11 +267,11 @@ In /etc/security/limits.conf ensure the following line is present:</li>
 
 <nav id="page_nav">
     
-    <a href="/page/8/" class="prev">Previous</a>
+    <a href="/page/8/" class="prev">&laquo; Previous Page</a>
     
 
     
-    <a href="/page/10/" class="next">Next</a>
+    <a href="/page/10/" class="next">Next Page &raquo;</a>
     
 </nav>
 

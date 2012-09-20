@@ -91,125 +91,221 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/upgrade-eol-clamav/">Upgrade EOL Clamav</a></h1>
+        <h1 class="title"><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/">Getting rid of cPanel IP Check errors</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/upgrade-eol-clamav/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/clamav'>Clamav</a></li><li><a href='/tag/eol'>Eol</a></li><li><a href='/tag/update'>Update</a></li></ul>
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/error'>Error</a></li><li><a href='/tag/ipcheck'>Ipcheck</a></li></ul>
             
         </div>
         <div class="entry">
-            
+            <p>On Linux servers behind NAT you will start getting emails warning that the DNS setup is broken.</p>
 
-<div class="highlight"><pre><code class="text">ClamAV have EOL&#39;d all their versions prior to 0.95 - if you see an error like the following then ClamAV needs an update:
- LibClamAV Warning: ***********************************************************
- LibClamAV Warning: *** This version of the ClamAV engine is outdated. ***
- LibClamAV Warning: *** DON&#39;T PANIC! Read http://www.clamav.net/support/faq ***
- LibClamAV Warning: ***********************************************************
- LibClamAV Error: cli_hex2str(): Malformed hexstring: This ClamAV version has reached End of Life! Please upgrade to version 0.95 or later. For more information see www.clamav.net/eol-clamav-094 and www.clamav.net/download (length: 169)
- LibClamAV Error: Problem parsing database at line 742
- LibClamAV Error: Can&#39;t load daily.ndb: Malformed database
- LibClamAV Error: cli_tgzload: Can&#39;t load daily.ndb
- LibClamAV Error: Can&#39;t load /var/lib/clamav/daily.cld: Malformed database
- ERROR: Malformed database
+<p>cPanel states that the panel does not work behind NAT and the boxes need <strong>public</strong> ip addresses.</p>
+
+<p>It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn't recommend it, sometimes you have no choice.</p>
+
+<p>The email you get though is something like the following:</p>
+
+<div class="highlight"><pre><code class="text">[ipcheck] Problem with DNS setup on myserver.local
+
+IMPORTANT: Do not ignore this email.
+
+The hostname (myserver.local) resolves to 10.0.0.1. It should resolve to 192.168.0.1.
+Please be sure to correct /etc/hosts as well as the &#39;A&#39; entry in zone file for the domain.
+
+Some are all of these problems can be caused by /etc/resolv.conf being setup incorrectly.
+Please check this file if you believe everything else is correct.
 </code></pre>
 </div>
 
 
-<p>To upgrade ClamAV on a RHEL based system perform the following:</p>
+<p>The best way I find of "fixing" this is to just disable the "Ip address dns check" option in the contact manager.</p>
+
+<p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
+
+<p>On a RHEL system perform the following:</p>
 
 <ol>
-<li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li>
-<li>yum install srpm unzip</li>
-<li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li>
-<li>make &amp;&amp; make install</li>
-<li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li>
+<li>pecl uninstall</li>
+<li>yum remove php-devel.i386</li>
+<li>yum install php-devel.x86_64</li>
+<li>pecl install</li>
 </ol>
 
 
-<p>ClamAV should now work once again.</p>
+<p>Any further modules will now be 64bit.</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
+        <h1 class="title"><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/fixing-iptables-for-passive-ftp/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/firewall'>Firewall</a></li><li><a href='/tag/ftp'>Ftp</a></li><li><a href='/tag/iptables'>Iptables</a></li><li><a href='/tag/passive-ftp'>Passive ftp</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
+            <p>To make passive FTP work with iptables you need to enable the "ip_conntrack_ftp" module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
 
-<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
-
-<ul>
-<li>Spoon knife - for rounding the handle and scraping out the dip</li>
-<li>9" knife - for taking off the thick outer and bark</li>
-<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
-</ul>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;
+</code></pre>
+</div>
 
 
-<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
+<p>To include the ip_conntrack_ftp module, like so:</p>
 
-<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;
+</code></pre>
+</div>
+
+
+<p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/">SMTP Authentication in Postfix using local system accounts</a></h1>
+        <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/postfix'>Postfix</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
+                <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>In /etc/postfix/main.cf ensure the following values are set</p>
+            <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
 
-<div class="highlight"><pre><code class="text">message_size_limit = 204800000
-smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
-smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes
+<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
+
+<p>An example router:</p>
+
+<div class="highlight"><pre><code class="text">myrouter:
+ driver = dnslookup
+ senders = *@mydomain.com, *@*.mydomain.com
+ transport = mytransport
 </code></pre>
 </div>
 
 
-<p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
+<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
 
-<p>Next we just need to make sure sasl/postfix are setup to run:</p>
+<p>The transport option is a reference to your custom transport (see below).</p>
 
-<div class="highlight"><pre><code class="bash">chkconfig saslauthd on
-/etc/init.d/saslauthd restart
-chkconfig postfix on
-/etc/init.d/postfix restart
+<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
+
+<p>An example transport is:</p>
+
+<div class="highlight"><pre><code class="text">mytransport:
+ driver = smtp
+ interface = 192.168.0.1
+ helo_data = mail.mydomain.com
 </code></pre>
 </div>
 
 
-<p>Once this is done all we need to do is add our users and they can send mail:</p>
+<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
 
-<div class="highlight"><pre><code class="bash">adduser -s /sbin/nologin -M user1
-passwd user1
+<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
 
-adduser -s /sbin/nologin -M user2
-passwd user2
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+
+<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
+
+<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
+
+<p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
+
+<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
+
+<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
+
+<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
+
+<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
+SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
 </code></pre>
 </div>
 
 
+<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
 
+<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
+</code></pre>
+</div>
+
+
+<p>In the exim.conf file add the following:</p>
+
+<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+</code></pre>
+</div>
+
+
+<p>3) Update the server (you should be doing this already).</p>
+
+<div class="highlight"><pre><code class="bash">/scripts/upcp
+yum update
+</code></pre>
+</div>
+
+
+<p>4) Disable mod_userdir.
+You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
+
+<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
+
+<div class="highlight"><pre><code class="text">ServerSignature Off
+ServerTokens Prod
+FileETag None
+</code></pre>
+</div>
+
+
+<p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
+
+<p>Notes:
+Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
+
+<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
 
         </div>
     </article>
@@ -219,11 +315,11 @@ passwd user2
 
 <nav id="page_nav">
     
-    <a href="/page/4/" class="prev">Previous</a>
+    <a href="/page/4/" class="prev">&laquo; Previous Page</a>
     
 
     
-    <a href="/page/6/" class="next">Next</a>
+    <a href="/page/6/" class="next">Next Page &raquo;</a>
     
 </nav>
 

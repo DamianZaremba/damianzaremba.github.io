@@ -91,107 +91,819 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1>
+        <h1 class="title"><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul>
+                <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
+            <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p>
 
-<p>On a RHEL system perform the following:</p>
+<p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p>
+
+<p>I've included an example config below with comments</p>
+
+<div class="highlight"><pre><code class="text">!! Basic stuff
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service password-encryption
+boot-start-marker
+boot-end-marker
+hostname router1-man !! You probably want to change this to a relevant hostname
+!
+!! Security stuff
+no cdp run
+no ip http server
+no ip http secure-server
+no mmi auto-configure
+no mmi pvc
+banner exec ^C
+Welcome to $(hostname) (:
+^
+!
+banner login ^
+##############################################
+# THIS SYSTEM IS FOR AUTHORIZED USERS ONLY. #
+# !! IF YOU DO NOT HAVE ACCESS DISCONNECT NOW !! #
+##############################################
+^C
+!
+!! Access stuff
+snmp-server community thisisnotmysnmppassword RO admin !! You probably want to change this to a sensible password
+ip domain-name router1-man.nodehost.co.uk !! You probably want to change this to a relevant hostname
+crypto key generate rsa
+ip ssh time-out 60
+ip ssh authentication-retries 2
+!
+!! Logging stuff
+logging on
+logging 10.44.200.5 !! You probably want to change this to a server that is listening for syslog traffic
+logging trap informational
+logging console debug
+logging monitor debug
+no logging monitor
+!
+!! NTP stuff
+ntp clock-period 17179944
+ntp server 83.98.201.133 !! These are the fedora NTP servers, feel free to change them
+ntp server 87.98.238.185
+ntp server 147.231.100.5
+ntp server 193.55.167.1
+!
+!! Login stuff
+no aaa new-model !! I don&#39;t use a TACAS server for my house but you can!
+enable password enable !! This clearly isn&#39;t my enable password but I don&#39;t feel like putting the hash of it in public.
+username myuser privilege 15 password mypass !! This will login directly to enable access, feel free to change the privilege level.
+!
+!! IP settings
+ipv6 cef
+ipv6 unicast-routing
+ip cef
+ip forward-protocol nd
+ip auth-proxy max-nodata-conns 3
+ip admission max-nodata-conns 3
+!
+!! DNS stuff
+ip domain name nodehost.co.uk !! You probably want to change this to a domain name that is relevant to you
+ip name-server 8.8.8.8 !! These are the google and HE nameservers, feel free to change them
+ip name-server 8.8.4.4
+ip name-server 2001:470:20::2
+!
+!! IPv6 Tunnel
+interface Tunnel0
+ description IPv6 HE Tunnel
+ ip access-group IPV6_IN in
+ ip access-group IPV6_OUT out
+ no ip address
+ ipv6 address 2001:470:xx:xx::2/64 !! Change this to your client IPv6 address
+ ipv6 enable
+ ipv6 virtual-reassembly
+ tunnel source Dialer1 !! You can use an IP address here if you have a static IP, I do not.
+ tunnel destination xx.xx.xx.xx !! Change this to your server IPv4 address
+ tunnel mode ipv6ip
+!
+!! ADSL interface
+interface ATM0
+ description ADSL interface
+ no shut
+ mtu 1432
+ no ip address
+ no ip mroute-cache
+ no atm ilmi-keepalive
+ logging event atm pvc state
+ logging event atm pvc autoppp
+ dsl operating-mode auto
+ pvc 0/38 !! Change this to the vpi / vci of your ISP
+ encapsulation aal5mux ppp dialer !! Change this if your ISP uses different encapsulation
+ dialer pool-member 1
+ !
+!
+!! Dialer interface
+interface Dialer1
+ description Dialer interface
+ ip access-group IPV4_IN in
+ ip access-group IPV4_OUT out
+ no shut
+ mtu 1432
+ ip address negotiated !! Change this if you have a static IP
+ ip nat outside
+ ip virtual-reassembly max-reassemblies 1024
+ encapsulation ppp
+ dialer pool 1
+ ppp chap hostname 00000000000@myisp.com
+ ppp chap password myubersecurepasswordhere
+ ppp pap sent-username 00000000000@myisp.com password myubersecurepasswordhere
+!
+!! ISDN interface
+interface BRI0
+ description ISDN interface
+ shut
+ no ip address
+!
+!! Internal FE interface
+interface FastEthernet0
+ description Internal interface
+ ip access-group IPV6_IN in
+ ip access-group IPV6_OUT out
+ no shut
+ ip address 10.44.200.254 255.255.255.0 !! Change this to a relevant IP address
+ ip nat inside
+ ip virtual-reassembly
+ speed 100
+ ipv6 enable
+ ipv6 nd ra-interval 60 !! You might want to change this, works for me though
+ ipv6 nd ra-lifetime 180 !! You might want to change this, works for me though
+ ipv6 nd other-config-flag !! You might want to change this, works for me though
+ ipv6 address 2001:470:xx:xx::/64 eui-64
+!
+!! Routes
+ipv6 route ::/0 Tunnel0
+ip route 0.0.0.0 0.0.0.0 Dialer1
+!
+!! NAT rules
+ip nat inside source list 1 interface Dialer1 overload !! You might want to change this if you have a pool if ips
+ip nat inside source static tcp xx.xx.xx.xx 8080 interface Dialer1 8080 !! Probably want to delete this - it&#39;s a webserver for my house
+ip nat inside source static tcp xx.xx.xx.xx 3406 interface Dialer1 3406 !! Probably want to delete this - it&#39;s a vpn endpoint for my house
+ip nat inside source static tcp xx.xx.xx.xx 22 interface Dialer1 2020 !! Probably want to delete this - it&#39;s a ssh gateway for my house
+!
+!! ACLs
+access-list 1 remark Default traffic
+access-list 1 permit any !! You might want to change this to deny all depending on how you care to do your ACLs
+dialer-list 1 protocol ip permit
+!
+ip access-list standard admin
+ remark Admin traffic
+ permit 10.44.200.0 0.0.0.255 !! Change this to a relevant IP address
+ deny any log
+!
+ipv6 access-list IPV6_IN
+ remark Incoming IPv6 Traffic
+ permit icmp any any !! Allow ICMP (ping)
+ permit tcp any any established !! Allow established TCP connections
+ permit tcp any any eq domain !! Allow incoming TCP DNS stuff - might want to delete this
+ permit udp any any eq domain !! Allow incoming UDP DNS stuff - might want to delete this
+ deny ipv6 any any log !! Drop everything else
+!
+ipv6 access-list IPV6_OUT
+ remark Outgoing IPv6 Traffic
+ permit ipv6 any any !! Permit any outgoing traffic - yeah I&#39;m lazy
+!
+ip access-list extended IPV4_IN
+ remark Incoming IPv4 Traffic
+permit GRE xx.xx.xx.xx 255.255.255.255 any !! Allow GRE from the IPv6 tunnel server
+permit ESP xx.xx.xx.xx 255.255.255.255 any !! Allow ESP from the IPv6 tunnel server
+permit 41 xx.xx.xx.xx 255.255.255.255 any !! Allow 41 from the IPv6 tunnel server
+ permit icmp any any !! Allow ICMP (ping)
+ permit tcp any any established !! Allow established TCP connections
+ permit tcp any eq domain any !! Allow incoming TCP DNS stuff - might want to delete this
+ permit udp any eq domain any !! Allow incoming UDP DNS stuff - might want to delete this
+ permit tcp any any eq 3406 !! Probably want to delete this - it&#39;s a vpn endpoint for my house
+ permit tcp any any eq 8080 !! Probably want to delete this - it&#39;s a webserver for my house
+ permit tcp any any eq 2020 !! Probably want to delete this - it&#39;s a ssh gateway for my house
+ deny ip any any log !! Drop everything else
+!
+ip access-list extended IPV4_OUT
+ remark Outgoing IPv4 Traffic
+ permit ip any any !! Permit any outgoing traffic - yeah I&#39;m lazy
+!
+!! VTY lines
+line vty 0 15
+ access-class admin in
+ privilege level 15
+ password mysemiuberawesomepassword
+ login local
+ transport input ssh
+!
+end
+</code></pre>
+</div>
+
+
+<p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job.
+One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I'll start playing with the configs, for now they work just fine.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />09 Apr 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Hi to anyone that reads this.</p>
+
+<p>I wasn’t going to post about this as it is not something I think it neat or I should be proud of, but I seem to be getting a few links though to this blog so I thought I should post something!</p>
+
+<p>I recentlt was re-designing (if you can call it that) this blog and was looking to integrate mint. The plugin utilizes;
+* admin_menu &amp; admin_notices wordpress actions for displaying/allowing editing of settings.
+* wp_head wordpress action for outputting the mint integration code into the header.
+* rss_head, rss2_head, atom_header &amp; the_permalink_rss wordpress actions for integration of birdfeeder.</p>
+
+<p>The script goes out of its way to ensure it does not break html or xml output due to PHP errors.</p>
+
+<p>The plugin can be downloaded from <a href="http://wordpress.org/extend/plugins/mint/">here</a> and offers mint integration into the header (tracking code) &amp; bird feeder integration for the rss feeds.
+Both of these are optional and can be configured from the settings page.</p>
+
+<p>The requirements are;</p>
+
+<ul>
+<li>PHP</li>
+<li>A working wordpress install (use the latest :3)</li>
+<li>A working mint install (on the same server – due to how birdfeeder integration works this has to be the case without major hacking of the plugin)</li>
+<li>The ability to read the error messages and fill out the settings page</li>
+</ul>
+
+
+<p>Why mint? It has an awesome AJAX interface for viewing stats, remains fast on pretty large sites, supports plugins and best of all the code isn’t encoded in any way.</p>
+
+<p>The downside is a 30$ license per site but this is supporting an awesome developer who keeps the product updated. Because the code is open you can also hack it to your needs and release any plugins/themes back into the community.</p>
+
+<p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p>
+
+<p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/03/canhazip/">canhazip</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" />30 Mar 2011</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span>
+            
+                <ul id="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p>
+
+<h4>Basic Usage</h4>
+
+<p><a href="http://canhazip.info/">http://canhazip.info/</a></p>
+
+<p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p>
+
+<h4>Specific IP type</h4>
+
+<p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p>
+
+<p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p>
+
+<p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p>
+
+<p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p>
+
+<h4>Output format</h4>
+
+<p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format>
+to the end of the URL.</p>
+
+<p>Accepted formats are:</p>
+
+<ul>
+<li><p>xml</p></li>
+<li><p>json</p></li>
+<li><p>yaml</p></li>
+<li><p>PHP (serialize of an array)</p></li>
+<li><p>plain</p></li>
+</ul>
+
+
+<p>Example usage:</p>
+
+<p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p>
+
+<h4>FAQ</h4>
+
+<h5>icanhazip exists, why another service that does the same thing?</h5>
 
 <ol>
-<li>pecl uninstall</li>
-<li>yum remove php-devel.i386</li>
-<li>yum install php-devel.x86_64</li>
-<li>pecl install</li>
+<li>Because I can</li>
+<li>Because .info domains were on special offer ($1.87!)</li>
+<li>The servers hosting the site are in London and Manchester not the US (latency)</li>
+<li>The secondary service I was using previously no longer exists (I like basic redundancy)</li>
 </ol>
 
 
-<p>Any further modules will now be 64bit.</p>
+<h5>Do you keep logs</h5>
+
+<p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p>
+
+<h5>Why different formats?</h5>
+
+<p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p>
+
+<h5>Is this reliable</h5>
+
+<p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p>
+
+<h5>Example usage</h5>
+
+<p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p>
+
+<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<span class="cp">&lt;?php</span>
+ <span class="nv">$PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$TUNNELID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="nv">$USERID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+ <span class="nv">$return</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=&quot;</span> <span class="o">.</span> <span class="nv">$currentIP</span> <span class="o">.</span> <span class="s2">&quot;&amp;pass=&quot;</span> <span class="o">.</span> <span class="nv">$PASSWORD</span> <span class="o">.</span> <span class="s2">&quot;&amp;user_id=&quot;</span> <span class="o">.</span> <span class="nv">$USERID</span> <span class="o">.</span> <span class="s2">&quot;&amp;tunnel_id=&quot;</span> <span class="o">.</span> <span class="nv">$TUNNELID</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;That IPv4 endpoint is already in use.&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
+ <span class="k">print</span> <span class="s2">&quot;IP has not changed&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;Your tunnel endpoint has been updated to:&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
+ <span class="k">print</span> <span class="s2">&quot;Tunnel endpoint has been updated&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+ <span class="k">print</span> <span class="s2">&quot;Unknown return!?!?!&quot;</span><span class="p">;</span>
+ <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
+ <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre>
+</div>
+
+
+<h5>Another example</h5>
+
+<p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p>
+
+<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<span class="cp">&lt;?php</span>
+ <span class="nv">$ACCESSKEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+ <span class="nv">$NODENAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
+ <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+ <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl&#39;</span><span class="p">);</span>
+ <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;table border=6 class=\&quot;wikitable sortable\&quot;&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+ <span class="nv">$nodes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+
+<span class="k">foreach</span><span class="p">(</span><span class="nv">$bnlTable</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">){</span>
+ <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;td align=center&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+ <span class="nv">$nodes</span><span class="p">[</span><span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+ <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+ <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+ <span class="s1">&#39;ipv6′ =&gt; trim($entry[4]),</span>
+<span class="s1"> &#39;</span><span class="nx">port</span><span class="s1">&#39; =&gt; trim($entry[5]),</span>
+<span class="s1"> &#39;</span><span class="nx">ipv6pref</span><span class="s1">&#39; =&gt; trim($entry[6]),</span>
+<span class="s1"> &#39;</span><span class="nx">subnet</span><span class="s1">&#39; =&gt; trim($entry[7]),</span>
+<span class="s1"> );</span>
+<span class="s1"> }</span>
+
+<span class="s1">$currentVPNIP = $nodes[$NODENAME][&#39;</span><span class="nx">ip</span><span class="s1">&#39;];</span>
+<span class="s1"> if($currentIP != $currentVPNIP){</span>
+<span class="s1"> /* Update IP */</span>
+<span class="s1"> $ch = curl_init (&quot;http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle&quot;);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_COOKIE, &#39;</span><span class="nx">clueauth_tokenstack</span><span class="o">=</span><span class="s1">&#39;.$ACCESSKEY);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_POSTFIELDS, &#39;</span><span class="nx">nodename</span><span class="o">=</span><span class="s1">&#39;.$NODENAME.&#39;</span><span class="o">&amp;</span><span class="nx">newip</span><span class="o">=</span><span class="s1">&#39;.$currentIP.&#39;</span><span class="o">&amp;</span><span class="nx">newport</span><span class="o">=</span><span class="mi">3406</span><span class="o">&amp;</span><span class="nx">submit</span><span class="o">=</span><span class="nx">Change</span><span class="s1">&#39;);</span>
+<span class="s1"> curl_setopt($ch, CURLOPT_POST, 1);</span>
+<span class="s1"> curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);</span>
+<span class="s1"> $output = curl_exec ($ch);</span>
+
+<span class="s1">if(strpos($output, &#39;</span><span class="nx">Success</span><span class="o">.</span><span class="s1">&#39;) != 0){</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
+<span class="s1"> }else{</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="k">Not</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
+<span class="s1"> }</span>
+<span class="s1"> }else{</span>
+<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+ <span class="p">}</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre>
+</div>
+
+
+
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1>
+        <h1 class="title"><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/fixing-iptables-for-passive-ftp/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />12 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/firewall'>Firewall</a></li><li><a href='/tag/ftp'>Ftp</a></li><li><a href='/tag/iptables'>Iptables</a></li><li><a href='/tag/passive-ftp'>Passive ftp</a></li></ul>
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>To make passive FTP work with iptables you need to enable the "ip_conntrack_ftp" module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
+            <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;
+<p>Quick example:</p>
+
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
+Thu Nov 25 18:22:37 CET 2010
 </code></pre>
 </div>
 
 
-<p>To include the ip_conntrack_ftp module, like so:</p>
+<p>You can also format the output of date to suit your needs, for example:</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
+18:22:37 25/11/2010
 </code></pre>
 </div>
 
 
-<p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
+<p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p>
+
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
+damian: Thu Nov 18 21:17:44 CET 2010
+<span class="nb">test</span>: Mon Nov 8 00:01:04 CET 2010
+bob: Mon Nov 15 17:34:18 CET 2010
+</code></pre>
+</div>
+
+
+
 
         </div>
     </article>
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
+        <h1 class="title"><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1>
         <div class="meta">
-            <span><img src="/assests/images/date.png" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span>
+            <span><img src="/assests/images/date.png" />07 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span>
             
                 <ul id="categories">
-                <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
+                <li><a href='/tag/foss'>FOSS</a></li></ul>
             
         </div>
         <div class="entry">
-            <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
+            <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p>
 
-<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
+<p>A nice simple program is the system activity reporter or SAR.</p>
 
-<p>An example router:</p>
+<p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p>
 
-<div class="highlight"><pre><code class="text">myrouter:
- driver = dnslookup
- senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport
+<div class="highlight"><pre><code class="bash"><span class="c"># Make sure the system is up to date</span>
+yum update
+
+<span class="c"># Install the sysstat program (includes sar and iostat)</span>
+sudo yum install sysstat
+
+<span class="c"># Make sure sysstat is enabled</span>
+chkconfig sysstat on
+
+<span class="c"># Start sysstat – this starts the system activity data collector</span>
+service sysstat start
 </code></pre>
 </div>
 
 
-<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
+<p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
 
-<p>The transport option is a reference to your custom transport (see below).</p>
+<p><strong>IOStat</strong></p>
 
-<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
+<p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p>
 
-<p>An example transport is:</p>
-
-<div class="highlight"><pre><code class="text">mytransport:
- driver = smtp
- interface = 192.168.0.1
- helo_data = mail.mydomain.com
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
 </code></pre>
 </div>
 
 
-<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
+<p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p>
 
-<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+</code></pre>
+</div>
+
+
+<p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+avg-cpu: %user %nice %system %iowait %steal %idle
+0.35 0.00 0.19 0.61 0.01 98.84
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 11.04 174.56 96.57 1575022426 871286088
+xvdb 0.92 14.90 10.14 134403952 91524480
+xvdc 0.91 12.16 10.53 109676480 95014488
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+xvda 0.00 0.00 0.00 0 0
+xvdb 0.00 0.00 0.00 0 0
+xvdc 0.00 0.00 0.00 0 0
+</code></pre>
+</div>
+
+
+<p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
+
+<div class="highlight"><pre><code class="bash">root@xxx:~# iostat -d 2 2
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 _x86_64_
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+sda 31.14 411.84 757.85 1890371422 3478544478
+sda1 31.01 409.90 755.62 1881435002 3468289496
+sdb 9.97 88.27 303.57 405165646 1393372152
+sdb1 9.97 88.27 303.57 405164878 1393372152
+sdc 7.54 57.13 131.10 262215600 601759006
+sdc1 7.54 57.13 131.10 262214832 601759006
+
+Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+sda 269.00 4.00 5968.00 8 11936
+sda1 269.00 4.00 5968.00 8 11936
+sdb 15.00 8.00 416.00 16 832
+sdb1 15.00 8.00 416.00 16 832
+sdc 71.00 12.00 752.00 24 1504
+sdc1 71.00 12.00 752.00 24 1504
+</code></pre>
+</div>
+
+
+<p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
+
+<p><strong>System activity reporter (Sar)</strong>
+As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p>
+
+<ul>
+<li><p>CPU</p></li>
+<li><p>Load avg</p></li>
+<li><p>Memory usage</p></li>
+<li><p>Inode/file/kernel table usage</p></li>
+<li><p>Swapping stats</p></li>
+<li><p>Process statistics</p></li>
+<li><p>TTY device activity</p></li>
+<li><p>Much much more....</p></li>
+</ul>
+
+
+<p>Some common things your probably want to look at;
+CPU usage:</p>
+
+<div class="highlight"><pre><code class="bash">sar -u
+</code></pre>
+</div>
+
+
+<p>Memory usage:</p>
+
+<div class="highlight"><pre><code class="bash">sar -r
+</code></pre>
+</div>
+
+
+<p>Load avg (and queue length):</p>
+
+<div class="highlight"><pre><code class="bash">sar -q
+</code></pre>
+</div>
+
+
+<p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
+
+<p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
+
+<div class="highlight"><pre><code class="bash">sar -s -f /var/log/sa/sa06
+</code></pre>
+</div>
+
+
+<p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+
+08:00:01 CPU %user %nice %system %iowait %steal %idle
+08:10:01 all 0.61 0.00 0.40 0.14 0.08 98.78
+08:20:01 all 0.29 0.00 0.28 0.01 0.01 99.41
+08:30:01 all 0.23 0.00 0.25 0.01 0.01 99.50
+08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
+08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
+09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57
+</code></pre>
+</div>
+
+
+<p><strong>But I want some graphs!</strong>
+Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
+You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
+
+<div class="highlight"><pre><code class="bash">sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
+</code></pre>
+</div>
+
+
+<p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c"># Make a tmp file</span>
+<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span>;
+<span class="c"># Fill the file with stuff</span>
+sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
+<span class="c"># Make a pretty graph</span>
+<span class="nb">echo</span> <span class="s2">&quot;set terminal dump;</span>
+<span class="s2">set title &#39;CPU usage&#39;;</span>
+<span class="s2">set xdata time;</span>
+<span class="s2">set timefmt &#39;%s&#39;;</span>
+<span class="s2">set xlabel &#39;Time&#39;;</span>
+<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> | gnuplot
+<span class="c"># Remove tmp file</span>
+rm -f <span class="nv">$cpu_data_file</span>
+</code></pre>
+</div>
+
+
+<p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
+
+<p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="c">#!/bin/bash</span>
+<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
+<span class="c"># sar_graph.sh - Makes pretty web pages from sar</span>
+<span class="c"># Written by Damian Zaremba - Released under GPLv3</span>
+<span class="c">#</span>
+<span class="c"># Please note this is a quick hack to demonstrate it can be done</span>
+<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
+
+<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">GRAPH_TYPE</span><span class="o">=</span><span class="s2">&quot;image&quot;</span>
+<span class="c">#GRAPH_TYPE=&quot;ascii&quot;</span>
+<span class="nv">HTML_DST</span><span class="o">=</span><span class="s2">&quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&quot;</span>
+<span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span>
+
+<span class="c"># Check gnuplot is all good</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span>;
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Check sadf is all good</span>
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Check graph type</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+<span class="k">then</span>
+<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
+ <span class="nb">exit </span>1;
+<span class="k">fi</span>
+
+<span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
+<span class="k">function </span>make_header <span class="o">{</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span>;
+<span class="o">}</span>
+
+<span class="k">function </span>make_footer <span class="o">{</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>;
+<span class="o">}</span>
+
+<span class="k">function </span>make_graph <span class="o">{</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span>; <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span>; <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span>; <span class="k">fi</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> | sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
+ <span class="k">else</span>
+<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;dumb&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.txt&quot;</span>
+ <span class="k">fi</span>
+<span class="k"> fi</span>
+
+<span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
+ <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Data file: $dat_file&quot;</span>
+ <span class="nv">$SADF</span> -- <span class="nv">$format</span> | awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
+<span class="s2"> set title &#39;$title&#39;;</span>
+<span class="s2"> set xdata time;</span>
+<span class="s2"> set timefmt &#39;%s&#39;;</span>
+<span class="s2"> set xlabel &#39;Time&#39;;</span>
+<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> | <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
+ <span class="k">else</span>
+<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">then</span>
+<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;iframe src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; width=&quot;650px&quot; height=&quot;350px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&#39;</span>
+ <span class="k">fi</span>
+<span class="k"> fi</span>
+<span class="o">}</span>
+
+<span class="c"># Main script stuff</span>
+<span class="nb">test</span> -d <span class="s2">&quot;$HTML_DST&quot;</span> <span class="o">||</span> mkdir -p <span class="s2">&quot;$HTML_DST&quot;</span>
+<span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+
+<span class="c"># CPU stuff</span>
+make_graph <span class="s2">&quot;CPU usage&quot;</span> <span class="s2">&quot;-u&quot;</span> <span class="s2">&quot;%idle&quot;</span>
+
+<span class="c"># Swap stuff</span>
+make_graph <span class="s2">&quot;Swap usage&quot;</span> <span class="s2">&quot;-r&quot;</span> <span class="s2">&quot;kbbuffers&quot;</span>
+
+<span class="c"># 1min load avg</span>
+make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&quot;-q&quot;</span> <span class="s2">&quot;ldavg-1&quot;</span>
+
+<span class="c"># Make the html index</span>
+<span class="nb">echo</span> <span class="s2">&quot;Writing $HTML_DST/index.html&quot;</span>
+make_header; make_footer
+<span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span>
+
+<span class="c"># Post stuff</span>
+<span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
+
+<span class="c"># Tidy</span>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span>
+</code></pre>
+</div>
+
+
+
 
         </div>
     </article>
@@ -201,11 +913,11 @@
 
 <nav id="page_nav">
     
-    <a href="/page/7/" class="prev">Previous</a>
+    <a href="/page/7/" class="prev">&laquo; Previous Page</a>
     
 
     
-    <a href="/page/9/" class="next">Next</a>
+    <a href="/page/9/" class="next">Next Page &raquo;</a>
     
 </nav>
 
