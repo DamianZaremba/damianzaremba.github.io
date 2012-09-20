@@ -1,53 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <title type="text" xml:lang="en">Damian Zaremba's Blog</title>
-    <link type="application/atom+xml" href="http://damianzaremba.co.uk/feed/" rel="self"/>
-    <link type="text" href="http://damianzaremba.co.uk" rel="alternate"/>
-    <updated>2012-09-20T16:00:45+01:00</updated>
-    <id>http://damianzaremba.co.uk/</id>
-    <author>
-        <name>Damian Zaremba</name>
-    </author>
-    <rights>Copyright 2009-2012 Damian Zaremba</rights>
-    
-    <entry>
-        <title>Slow SSH to new CentOS servers</title>
-        <link href="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers//"/>
-        <updated>2012-09-08T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers//</id>
-        <summary type="html"><![CDATA[<p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
-out for 20-30 seconds on login then function fine once authenticated.</p>
-
-<p>I noticed this issue on CentOS 5/6 servers, however it probably applies to
-anything running glibc 2.10+.</p>
-
-<p>Now while there are a few reasons SSH might be doing this (most of which can be
-seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p>
-
-<p>The interesting part was, this wasn't happening on all servers (they are
-standard config wise thanks to puppet).</p>
-
-<p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to
-quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p>
-
-<p>This might be acceptable, depending on how much you have access restricted
-however there is an alternative.</p>
-
-<p>It turns out there was a change in glibc that can be seen on the
-changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p>
-
-<p>Under some circumstances (especially when firewalls are involved) DNS resolution
-will fail and glibc should fallback, close the socket and start again. It would
-seem this takes rather a long while when trying to SSH!</p>
-
-<p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a>
-documented) option that you can add to your
-resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter
-fallback mode straight away and kills the delay.</p>
-
-<p>An example of the 'patched' /etc/resolv.conf file</p>
-
-<div class="highlight"><pre><code class="text"># This file is managed via Puppet
+<?xml version="1.0" encoding=utf-8?> <feed xmlns="http://www.w3.org/2005/Atom"> <title type=text xml:lang=en>Damian Zaremba's Blog</title> <link type="application/atom+xml" href="http://damianzaremba.co.uk/feed/" rel=self /> <link type=text href="http://damianzaremba.co.uk" rel=alternate /> <updated>2012-09-20T16:16:10+01:00</updated> <id>http://damianzaremba.co.uk/</id> <author> <name>Damian Zaremba</name> </author> <rights>Copyright 2009-2012 Damian Zaremba</rights> <entry> <title>Slow SSH to new CentOS servers</title> <link href="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers//"/> <updated>2012-09-08T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers//</id> <summary type=html><![CDATA[<p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag out for 20-30 seconds on login then function fine once authenticated.</p> <p>I noticed this issue on CentOS 5/6 servers, however it probably applies to anything running glibc 2.10+.</p> <p>Now while there are a few reasons SSH might be doing this (most of which can be seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p> <p>The interesting part was, this wasn't happening on all servers (they are standard config wise thanks to puppet).</p> <p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p> <p>This might be acceptable, depending on how much you have access restricted however there is an alternative.</p> <p>It turns out there was a change in glibc that can be seen on the changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p> <p>Under some circumstances (especially when firewalls are involved) DNS resolution will fail and glibc should fallback, close the socket and start again. It would seem this takes rather a long while when trying to SSH!</p> <p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a> documented) option that you can add to your resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter fallback mode straight away and kills the delay.</p> <p>An example of the 'patched' /etc/resolv.conf file</p> <div class=highlight><pre><code class="text"># This file is managed via Puppet
 
 # Servers
 nameserver 8.8.8.8
@@ -57,55 +8,9 @@ nameserver 208.67.220.220
 
 # Options
 options single-request-reopen
-</code></pre>
-</div>
-
-
-<p>Now you might want to dig into your network stack a little more and make sure
-you can handle IPv6/dual stack properly but for now, problem solved!</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>KVIrc update breaks Irssi Proxy</title>
-        <link href="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//"/>
-        <updated>2012-09-04T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//</id>
-        <summary type="html"><![CDATA[<p>I recently updated KVIrc on OS X from 3.2.0 to 4.2.0.
-The update appeared to complete successfully, however on trying to connect to my
-Irssi Proxy server nothing appeared to happen.</p>
-
-<p>The output from the server console was something like below</p>
-
-<p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
-using the STARTTLS extension' enabled.</p>
-
-<p>Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show
-successful connections no data is transferred over the socket.</p>
-
-<p>The simple solution to get things back up and running properly is to disable the
-option under each server.</p>
-
-<p>To do this browse to 'Configure servers' under Settings, double click on the
-server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by
-using the STARTTLS extension'.</p>
-
-<p>If you have a large number of servers you can also directly edit the ini file
-under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a
-section and each server is numbered.</p>
-
-<p>To disabled STARTTLS for the first server in network A, your config should look
-something like the below</p>
-
-<div class="highlight"><pre><code class="ini"><span class="k">[A]</span>
+</code></pre> </div> <p>Now you might want to dig into your network stack a little more and make sure you can handle IPv6/dual stack properly but for now, problem solved!</p> ]]></summary> </entry> <entry> <title>KVIrc update breaks Irssi Proxy</title> <link href="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//"/> <updated>2012-09-04T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy//</id> <summary type=html><![CDATA[<p>I recently updated KVIrc on OS X from 3.2.0 to 4.2.0. The update appeared to complete successfully, however on trying to connect to my Irssi Proxy server nothing appeared to happen.</p> <p>The output from the server console was something like below</p> <p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by using the STARTTLS extension' enabled.</p> <p>Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show successful connections no data is transferred over the socket.</p> <p>The simple solution to get things back up and running properly is to disable the option under each server.</p> <p>To do this browse to 'Configure servers' under Settings, double click on the server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by using the STARTTLS extension'.</p> <p>If you have a large number of servers you can also directly edit the ini file under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a section and each server is numbered.</p> <p>To disabled STARTTLS for the first server in network A, your config should look something like the below</p> <div class=highlight><pre><code class="ini"><span class="k">[A]</span>
 <span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span>
-</code></pre>
-</div>
-
-
-<p>This will usually have a number of other items, a full example is below</p>
-
-<div class="highlight"><pre><code class="ini"><span class="k">[FreeNode]</span>
+</code></pre> </div> <p>This will usually have a number of other items, a full example is below</p> <div class=highlight><pre><code class="ini"><span class="k">[FreeNode]</span>
 <span class="na">0_Port</span><span class="o">=</span><span class="s">8000</span>
 <span class="na">0_Hostname</span><span class="o">=</span><span class="s">myirssiproxy.local</span>
 <span class="na">0_Ip</span><span class="o">=</span><span class="s">10.44.1.1</span>
@@ -121,37 +26,7 @@ something like the below</p>
 <span class="na">0_RealName</span><span class="o">=</span><span class="s">MyName</span>
 <span class="na">0_User</span><span class="o">=</span><span class="s">MyUser</span>
 <span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span>
-</code></pre>
-</div>
-
-
-<p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide
-scale settings changes.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Running a WSGI app via Gunicorn from Python</title>
-        <link href="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python//"/>
-        <updated>2012-08-20T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python//</id>
-        <summary type="html"><![CDATA[<p>Anyone who's familiar with Gunicorn will know just how simple it is to get up
-and running; <code>gunicorn myapp.wsgi</code>.</p>
-
-<p>For a little project I'm working on I wanted to take this up a level and run
-Gunicorn from a Python script, passing in any options as required and not
-relying on sys.argv.</p>
-
-<p>Because of the way most the Gunicorn application classes are written they
-expect to be run from the console_scripts setup and have rather close
-integration.</p>
-
-<p>Unfortunately this made getting to the point of running <code>run.py</code>
-and having Gunicorn start, rather harder than it needed to be.</p>
-
-<p>For the purposes of this post my WSGI application is the example Flask app;</p>
-
-<div class="highlight"><pre><code class="python"><span class="c"># myapp.wsgi</span>
+</code></pre> </div> <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide scale settings changes.</p> ]]></summary> </entry> <entry> <title>Running a WSGI app via Gunicorn from Python</title> <link href="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python//"/> <updated>2012-08-20T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python//</id> <summary type=html><![CDATA[<p>Anyone who's familiar with Gunicorn will know just how simple it is to get up and running; <code>gunicorn myapp.wsgi</code>.</p> <p>For a little project I'm working on I wanted to take this up a level and run Gunicorn from a Python script, passing in any options as required and not relying on sys.argv.</p> <p>Because of the way most the Gunicorn application classes are written they expect to be run from the console_scripts setup and have rather close integration.</p> <p>Unfortunately this made getting to the point of running <code>run.py</code> and having Gunicorn start, rather harder than it needed to be.</p> <p>For the purposes of this post my WSGI application is the example Flask app;</p> <div class=highlight><pre><code class="python"><span class="c"># myapp.wsgi</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
 <span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -162,13 +37,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre>
-</div>
-
-
-<p>Now, to get this running under Gunicorn we need to create a custom application</p>
-
-<div class="highlight"><pre><code class="python"><span class="c"># myapp.mycustomapplication</span>
+</code></pre> </div> <p>Now, to get this running under Gunicorn we need to create a custom application</p> <div class=highlight><pre><code class="python"><span class="c"># myapp.mycustomapplication</span>
 <span class="kn">from</span> <span class="nn">gunicorn.app.base</span> <span class="kn">import</span> <span class="n">Application</span>
 <span class="kn">from</span> <span class="nn">gunicorn</span> <span class="kn">import</span> <span class="n">util</span>
 
@@ -205,25 +74,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
 <span class="sd">        Imports our application and returns it to be run.</span>
 <span class="sd">        &#39;&#39;&#39;</span>        
         <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span>
-</code></pre>
-</div>
-
-
-<p>As far as I can tell the minimum methods you can define is 3;</p>
-
-<ol>
-<li><code>__init__</code> - This sets up our base attributes</li>
-<li><p><code>init</code> - This is called to load option settings, we use self.options
-to set the cfg items.</p></li>
-<li><p><code>load</code> - This loads the application so when <code>wsgi()</code> is called the
-app runs!</p></li>
-</ol>
-
-
-<p>To run the application we just need to initialize the MyCustomApplication
-class, passing any options as required.</p>
-
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
+</code></pre> </div> <p>As far as I can tell the minimum methods you can define is 3;</p> <ol> <li><code>__init__</code> - This sets up our base attributes</li> <li><p><code>init</code> - This is called to load option settings, we use self.options to set the cfg items.</p></li> <li><p><code>load</code> - This loads the application so when <code>wsgi()</code> is called the app runs!</p></li> </ol> <p>To run the application we just need to initialize the MyCustomApplication class, passing any options as required.</p> <div class=highlight><pre><code class="python"><span class="c">#!/usr/bin/env python</span>
 <span class="c"># myapp.run</span>
 
 <span class="kn">from</span> <span class="nn">myapp.mycustomapplication</span> <span class="kn">import</span> <span class="n">MyCustomApplication</span>
@@ -234,93 +85,19 @@ class, passing any options as required.</p>
     <span class="p">}</span>
 
     <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre>
-</div>
-
-
-<p>In practice you'd probably load the options from a config file in your program.</p>
-
-<p>Hopefully this should help you getting Gunicorn running smoothly in a more
-integrated manner :)</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>RADIUS authentication on a Dell PowerConnect M6220 switch</title>
-        <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//"/>
-        <updated>2012-08-20T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//</id>
-        <summary type="html"><![CDATA[<p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
-(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
-<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
-
-<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
-slightly more complicated than the HP's, but followed the Cisco style config.</p>
-
-<p>First we need add a custom login and enable method</p>
-
-<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
+</code></pre> </div> <p>In practice you'd probably load the options from a config file in your program.</p> <p>Hopefully this should help you getting Gunicorn running smoothly in a more integrated manner :)</p> ]]></summary> </entry> <entry> <title>RADIUS authentication on a Dell PowerConnect M6220 switch</title> <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//"/> <updated>2012-08-20T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch//</id> <summary type=html><![CDATA[<p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication (<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and <a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p> <p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be slightly more complicated than the HP's, but followed the Cisco style config.</p> <p>First we need add a custom login and enable method</p> <div class=highlight><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
 aaa authentication enable &quot;LineName&quot; none
-</code></pre>
-</div>
-
-
-<p>These are used for connections over SSH - "LineName" can be anything, I tend to
-use the company name to keep things standard.</p>
-
-<p>On the second line, you could also use radius local - this would require a
-password to enter enable mode. Personally I control the login mode from the
-RADIUS server and find having to enter a password to get to enable again a hassle.</p>
-
-<p>Next we need to setup the RADIUS server</p>
-
-<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
+</code></pre> </div> <p>These are used for connections over SSH - "LineName" can be anything, I tend to use the company name to keep things standard.</p> <p>On the second line, you could also use radius local - this would require a password to enter enable mode. Personally I control the login mode from the RADIUS server and find having to enter a password to get to enable again a hassle.</p> <p>Next we need to setup the RADIUS server</p> <div class=highlight><pre><code class="text">radius-server host auth serverIpHere
 name &quot;server1&quot;
 usage login
 key &quot;SecretKeyHere&quot;
 exit
-</code></pre>
-</div>
-
-
-<p>Now we just need to configure the ssh line to use our aaa methods</p>
-
-<div class="highlight"><pre><code class="text">login authentication LineName
+</code></pre> </div> <p>Now we just need to configure the ssh line to use our aaa methods</p> <div class=highlight><pre><code class="text">login authentication LineName
 enable authentication LineName
-</code></pre>
-</div>
-
-
-<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
-
-<p>If you require access to the switch over http(s) you can also configure the HTTP
-server to authenticate against RADIUS</p>
-
-<div class="highlight"><pre><code class="text">ip http authentication radius local
+</code></pre> </div> <p>Once complete you should be able to login via ssh using your RADIUS details.</p> <p>If you require access to the switch over http(s) you can also configure the HTTP server to authenticate against RADIUS</p> <div class=highlight><pre><code class="text">ip http authentication radius local
 ip https authentication radius local
-</code></pre>
-</div>
-
-
-<p>We include local on every method to ensure we don't get locked out the switch.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>RADIUS authentication on a HP ProCurve switch</title>
-        <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch//"/>
-        <updated>2012-04-01T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch//</id>
-        <summary type="html"><![CDATA[<p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
-</code></pre>
-</div>
-
-
-<p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
-
-<div class="highlight"><pre><code class="text">aaa authentication login privilege-mode 
+</code></pre> </div> <p>We include local on every method to ensure we don't get locked out the switch.</p> ]]></summary> </entry> <entry> <title>RADIUS authentication on a HP ProCurve switch</title> <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch//"/> <updated>2012-04-01T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch//</id> <summary type=html><![CDATA[<p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p> <div class=highlight><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
+</code></pre> </div> <p>Once this is setup you need to configure the switch to authenticate against the radius server.</p> <div class=highlight><pre><code class="text">aaa authentication login privilege-mode 
 aaa authentication console login radius local 
 aaa authentication console enable radius local 
 aaa authentication telnet login radius local 
@@ -328,86 +105,22 @@ aaa authentication telnet enable radius local
 aaa authentication web login radius local 
 aaa authentication ssh login radius local 
 aaa authentication ssh enable radius local 
-</code></pre>
-</div>
-
-
-<p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</title>
-        <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch//"/>
-        <updated>2012-04-01T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch//</id>
-        <summary type="html"><![CDATA[<p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">radius-server primary-host serverIp
+</code></pre> </div> <p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p> ]]></summary> </entry> <entry> <title>RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</title> <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch//"/> <updated>2012-04-01T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch//</id> <summary type=html><![CDATA[<p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.</p> <div class=highlight><pre><code class="text">radius-server primary-host serverIp
 radius-server primary-host serverIp key &quot;SecretKeyHere&quot;
 radius-server port 1812
 radius-server timeout 10
 radius-server enable
 no radius-server telnet-backdoor
 radius-server secure-backdoor
-</code></pre>
-</div>
-
-
-<p>The first and second lines setup the server/key to authenticate against.</p>
-
-<p>The third/forth defines the port/timeout for the server we configured in the first lines.</p>
-
-<p>The last 3 then enable the server and enable a backdoor so we can authenticate against the switch if the RADIUS server is down.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>SNTP on a HP ProCurve switch</title>
-        <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch//"/>
-        <updated>2012-03-18T00:00:00+00:00</updated>
-        <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch//</id>
-        <summary type="html"><![CDATA[<p>Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.</p>
-
-<p>Most switches use SNTP rather than NTP, SNTP is basically NTP but lacks some of the more advanced internal algorithms and is slightly less accurate.</p>
-
-<p>To configure a ProCurve you need to use SNTP with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">sntp server &lt;ip&gt;
+</code></pre> </div> <p>The first and second lines setup the server/key to authenticate against.</p> <p>The third/forth defines the port/timeout for the server we configured in the first lines.</p> <p>The last 3 then enable the server and enable a backdoor so we can authenticate against the switch if the RADIUS server is down.</p> ]]></summary> </entry> <entry> <title>SNTP on a HP ProCurve switch</title> <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch//"/> <updated>2012-03-18T00:00:00+00:00</updated> <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch//</id> <summary type=html><![CDATA[<p>Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.</p> <p>Most switches use SNTP rather than NTP, SNTP is basically NTP but lacks some of the more advanced internal algorithms and is slightly less accurate.</p> <p>To configure a ProCurve you need to use SNTP with the following syntax.</p> <div class=highlight><pre><code class="text">sntp server &lt;ip&gt;
 sntp unicast
 timesync sntp
-</code></pre>
-</div>
-
-
-<p>The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.</p>
-
-<p>This needs to be done in configure mode which can be got into via enable mode.</p>
-
-<div class="highlight"><pre><code class="text">enable
+</code></pre> </div> <p>The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.</p> <p>This needs to be done in configure mode which can be got into via enable mode.</p> <div class=highlight><pre><code class="text">enable
 configure
-</code></pre>
-</div>
-
-
-<p>Once the switch is syncing with the SNTP server you can check the time is correct with</p>
-
-<div class="highlight"><pre><code class="text">show time
-</code></pre>
-</div>
-
-
-<p>Lastly just save the changes then logout</p>
-
-<div class="highlight"><pre><code class="text">write mem
+</code></pre> </div> <p>Once the switch is syncing with the SNTP server you can check the time is correct with</p> <div class=highlight><pre><code class="text">show time
+</code></pre> </div> <p>Lastly just save the changes then logout</p> <div class=highlight><pre><code class="text">write mem
 logout
-</code></pre>
-</div>
-
-
-<p>A full example of this is below:</p>
-
-<div class="highlight"><pre><code class="text">Switch&gt; en
+</code></pre> </div> <p>A full example of this is below:</p> <div class=highlight><pre><code class="text">Switch&gt; en
 Switch# conf
 Switch(config)# sntp server 79.142.192.4
 Switch(config)# sntp unicast
@@ -415,42 +128,13 @@ Switch(config)# timesync sntp
 Switch(config)# exit
 Switch# write mem
 Switch# logout
-</code></pre>
-</div>
-
-
-<p>Your switches should now keep their time in sync :)</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>NTP on a HP GbE2c L2/L3 Blade Switch</title>
-        <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch//"/>
-        <updated>2012-03-18T00:00:00+00:00</updated>
-        <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch//</id>
-        <summary type="html"><![CDATA[<p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem, you need to use NTP with the following syntax.</p>
-
-<div class="highlight"><pre><code class="text">ntp enable 
+</code></pre> </div> <p>Your switches should now keep their time in sync :)</p> ]]></summary> </entry> <entry> <title>NTP on a HP GbE2c L2/L3 Blade Switch</title> <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch//"/> <updated>2012-03-18T00:00:00+00:00</updated> <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch//</id> <summary type=html><![CDATA[<p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem, you need to use NTP with the following syntax.</p> <div class=highlight><pre><code class="text">ntp enable 
 ntp timezone 0
 ntp primary-server &lt;ip&gt;
 ntp secondary-server &lt;ip&gt;
-</code></pre>
-</div>
-
-
-<p>The first line enables NTP, the second tells the switch to use GMT+0 and the third/forth tells the switch which servers to sync with.</p>
-
-<p>This needs to be done in configure mode which can be got into via enable mode.</p>
-
-<div class="highlight"><pre><code class="text">enable
+</code></pre> </div> <p>The first line enables NTP, the second tells the switch to use GMT+0 and the third/forth tells the switch which servers to sync with.</p> <p>This needs to be done in configure mode which can be got into via enable mode.</p> <div class=highlight><pre><code class="text">enable
 configure
-</code></pre>
-</div>
-
-
-<p>Now ensure the switch timezone is correct, the command for this is slightly obnoxious. Below is an example of setting it to GB:</p>
-
-<div class="highlight"><pre><code class="text">Switch(config)# system timezone 
+</code></pre> </div> <p>Now ensure the switch timezone is correct, the command for this is slightly obnoxious. Below is an example of setting it to GB:</p> <div class=highlight><pre><code class="text">Switch(config)# system timezone 
 Please identify a location so that time zone rules can be set correctly.
 Please select a continent or ocean.
  1) Africa
@@ -487,21 +171,9 @@ Please select one of the following time zone regions.
 2) Northern Ireland
 #? 1 
 System timezone set to : Europe/Britain/GB
-</code></pre>
-</div>
-
-
-<p>Lastly just save the changes then logout</p>
-
-<div class="highlight"><pre><code class="text">copy run start
+</code></pre> </div> <p>Lastly just save the changes then logout</p> <div class=highlight><pre><code class="text">copy run start
 logout
-</code></pre>
-</div>
-
-
-<p>A full example of this is below:</p>
-
-<div class="highlight"><pre><code class="text">Switch&gt; en
+</code></pre> </div> <p>A full example of this is below:</p> <div class=highlight><pre><code class="text">Switch&gt; en
 Switch# conf t
 Switch(config)# ntp enable
 Switch(config)# ntp timezone 0
@@ -510,32 +182,7 @@ Switch(config)# ntp secondary-server 217.147.208.1
 Switch(config)# exit
 Switch# copy run start
 Switch# logout
-</code></pre>
-</div>
-
-
-<p>Your switches should now keep their time in sync :)</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Restricting access to EdgeCast nodes</title>
-        <link href="http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes//"/>
-        <updated>2011-11-02T00:00:00+00:00</updated>
-        <id>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes//</id>
-        <summary type="html"><![CDATA[<p>Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.</p>
-
-<p>We quickly had to move him on to the CDN to ensure the traffic impact wasn't affecting performance for him or others as well as reduce his bandwidth charges substantially.</p>
-
-<p>Once the CDN was all set up and the content pushed out onto the nodes we started to send traffic over.</p>
-
-<p>Due to the impact of social media and people linking directly to the content we had to devise a plan to enable access to the content for the CDN but redirect anyone linking directly to the CDNified subdomain.</p>
-
-<p>In comes mod_rewrite. Now it appears EdgeCast don't publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.</p>
-
-<p>Linux to the rescue! First we just copy the list into a file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat &gt; edgecast_ranges
+</code></pre> </div> <p>Your switches should now keep their time in sync :)</p> ]]></summary> </entry> <entry> <title>Restricting access to EdgeCast nodes</title> <link href="http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes//"/> <updated>2011-11-02T00:00:00+00:00</updated> <id>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes//</id> <summary type=html><![CDATA[<p>Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.</p> <p>We quickly had to move him on to the CDN to ensure the traffic impact wasn't affecting performance for him or others as well as reduce his bandwidth charges substantially.</p> <p>Once the CDN was all set up and the content pushed out onto the nodes we started to send traffic over.</p> <p>Due to the impact of social media and people linking directly to the content we had to devise a plan to enable access to the content for the CDN but redirect anyone linking directly to the CDNified subdomain.</p> <p>In comes mod_rewrite. Now it appears EdgeCast don't publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.</p> <p>Linux to the rescue! First we just copy the list into a file:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat &gt; edgecast_ranges
 Asia Hong Kong 117.18.234.0 - 117.18.234.255
 110.232.176.0 - 110.232.176.255
 Asia Singapore 117.18.236.0 - 117.18.236.255
@@ -605,38 +252,14 @@ Other N/A 72.21.80.0 - 72.21.80.255
 117.18.237.0 - 117.18.237.255
 117.18.238.0 - 117.18.238.255
 117.18.239.0 - 117.18.239.255
-</code></pre>
-</div>
-
-
-<p>Next we need to clear out all the names etc that are randomly dumped in the file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^.*\s.*\s//g&#39;</span> edgecast_ranges <span class="c"># Get rid of place names</span>
+</code></pre> </div> <p>Next we need to clear out all the names etc that are randomly dumped in the file:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^.*\s.*\s//g&#39;</span> edgecast_ranges <span class="c"># Get rid of place names</span>
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span>
-</code></pre>
-</div>
-
-
-<p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&#39;</span> edgecast_ranges <span class="c"># Add the rewrite cond</span>
+</code></pre> </div> <p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&#39;</span> edgecast_ranges <span class="c"># Add the rewrite cond</span>
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span>
-</code></pre>
-</div>
-
-
-<p>Now let's create the actual htaccess file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteEngine On&#39;</span> &gt;&gt; .htaccess
+</code></pre> </div> <p>Now let's create the actual htaccess file:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteEngine On&#39;</span> &gt;&gt; .htaccess
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat edgecast_ranges &gt;&gt; .htaccess
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess
-</code></pre>
-</div>
-
-
-<p>You should end up with something looking like this:</p>
-
-<div class="highlight"><pre><code class="bash">RewriteEngine On
+</code></pre> </div> <p>You should end up with something looking like this:</p> <div class=highlight><pre><code class="bash">RewriteEngine On
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.234.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.232.176.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.236.*<span class="err">$</span>
@@ -706,86 +329,27 @@ RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.1
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.238.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.239.*<span class="err">$</span>
 RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span>
-</code></pre>
-</div>
-
-
-<p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p>
-
-<p>Now you can go back to reading slashdot ;)</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Changing WordPress tag to category?</title>
-        <link href="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category//"/>
-        <updated>2011-08-25T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category//</id>
-        <summary type="html"><![CDATA[<p>While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.</p>
-
-<p>After a quick poke around in the database it seem quite simple to convert between the two.
-Note: This /seems/ to work however it might kick you in the face and break stuff.</p>
-
-<p>First find out your "term" id (category or tag):</p>
-
-<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>terms<span class="sb">`</span> WHERE <span class="sb">`</span>slug<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;snippets&#39;</span>;
+</code></pre> </div> <p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p> <p>Now you can go back to reading slashdot ;)</p> ]]></summary> </entry> <entry> <title>Changing WordPress tag to category?</title> <link href="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category//"/> <updated>2011-08-25T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category//</id> <summary type=html><![CDATA[<p>While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.</p> <p>After a quick poke around in the database it seem quite simple to convert between the two. Note: This /seems/ to work however it might kick you in the face and break stuff.</p> <p>First find out your "term" id (category or tag):</p> <div class=highlight><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>terms<span class="sb">`</span> WHERE <span class="sb">`</span>slug<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;snippets&#39;</span>;
 +---------+----------+----------+------------+
 | term_id | name | slug | term_group |
 +---------+----------+----------+------------+
 | 171 | Snippets | snippets | 0 |
 +---------+----------+----------+------------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
-</code></pre>
-</div>
-
-
-<p>Now look in the taxonomy table and find out its details:</p>
-
-<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>term_taxonomy<span class="sb">`</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+</code></pre> </div> <p>Now look in the taxonomy table and find out its details:</p> <div class=highlight><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>term_taxonomy<span class="sb">`</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
 +------------------+---------+----------+-------------+--------+-------+
 | term_taxonomy_id | term_id | taxonomy | description | parent | count |
 +------------------+---------+----------+-------------+--------+-------+
 | 174 | 171 | post_tag | | 0 | 17 |
 +------------------+---------+----------+-------------+--------+-------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
-</code></pre>
-</div>
-
-
-<p>As you can see it is currently a "post_tag".</p>
-
-<p>To change it to a category change the "taxonomy" field to "category":</p>
-
-<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+</code></pre> </div> <p>As you can see it is currently a "post_tag".</p> <p>To change it to a category change the "taxonomy" field to "category":</p> <div class=highlight><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
 Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
 Rows matched: 1 Changed: 1 Warnings: 0
-</code></pre>
-</div>
-
-
-<p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p>
-
-<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+</code></pre> </div> <p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p> <div class=highlight><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
 Query OK, 1 row affected <span class="o">(</span>0.02 sec<span class="o">)</span>
 Rows matched: 1 Changed: 1 Warnings: 0
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Changing the MySQL client prompt</title>
-        <link href="http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt//"/>
-        <updated>2011-08-25T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt//</id>
-        <summary type="html"><![CDATA[<p>It is quite easy to get lost in MySQL when working between a lot of databases.</p>
-
-<p>While you can find out which database you are in, it soon becomes quite irritating having to type</p>
-
-<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span>;
+</code></pre> </div> ]]></summary> </entry> <entry> <title>Changing the MySQL client prompt</title> <link href="http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt//"/> <updated>2011-08-25T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt//</id> <summary type=html><![CDATA[<p>It is quite easy to get lost in MySQL when working between a lot of databases.</p> <p>While you can find out which database you are in, it soon becomes quite irritating having to type</p> <div class=highlight><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span>;
 
 +------------------+
 | database<span class="o">()</span> |
@@ -793,143 +357,18 @@ Rows matched: 1 Changed: 1 Warnings: 0
 | test_database |
 +------------------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
-</code></pre>
-</div>
-
-
-<p>The simplest way to solve this and make life easier, is to change the prompt to include the info!
-Simple edit the [mysql] section of your my.cnf file and add the prompt option:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+</code></pre> </div> <p>The simplest way to solve this and make life easier, is to change the prompt to include the info! Simple edit the [mysql] section of your my.cnf file and add the prompt option:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
 <span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-<p>Now when you use the client the prompt will show mysql [user@host - database]>:</p>
-
-<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-<p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+</code></pre> </div> <p>Now when you use the client the prompt will show mysql [user@host - database]>:</p> <div class=highlight><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
+</code></pre> </div> <p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
 <span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Useful cPanel paths</title>
-        <link href="http://damianzaremba.co.uk/2011/08/useful-cpanel-paths//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths//</id>
-        <summary type="html"><![CDATA[<p>Some common and useful paths for cPanel are as below - please note that these may change at any time.</p>
-
-<table>
-    <thead>
-        <tr>
-            <th>Location</th>
-            <th>Contents</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>/etc/ips</td>
-            <td>IP Addresses</td>
-        </tr>
-        <tr>
-            <td>/etc/reservedips</td>
-            <td>Reserved IP addresses</td>
-        </tr>
-        <tr>
-            <td>/etc/reservedipreasons</td>
-            <td>Reserved IP address reasons</td>
-        </tr>
-        <tr>
-            <td>~/.accesshash</td>
-            <td>WHM API key</td>
-        </tr>
-        <tr>
-            <td>/etc/cpupdate.conf</td>
-            <td>cPanel update configuration</td>
-        </tr>
-        <tr>
-            <td>/etc/wwwacct.conf</td>
-            <td>Basic cPanel config</td>
-        </tr>
-        <tr>
-            <td>/var/cpanel/maxemailsperhour</td>
-            <td>System wide max emails per hour setting</td>
-        </tr>
-        <tr>
-            <td>/var/cpanel/packages</td>
-            <td>cPanel packages</td>
-        </tr>
-        <tr>
-            <td>/var/cpanel/users</td>
-            <td>User data</td>
-        </tr>
-        <tr>
-            <td>/var/cpanel/templates/apache2</td>
-            <td>Apache vhost templates</td>
-        </tr>
-        <tr>
-            <td>/usr/local/apache/conf/userdata/std/2/$user/$domain/configuration.conf</td>
-            <td>Apache vhost config customizations for $user's $domain (not SSL)</td>
-        </tr>
-        <tr>
-            <td>/usr/local/apache/conf/userdata/ssl/2/$user/$domain/configuration.conf</td>
-            <td>Apache vhost config customizations for $user's $domain (SSL)</td>
-        </tr>
-        <tr>
-            <td>/etc/userdomains</td>
-            <td>Users domains</td>
-        </tr>
-        <tr>
-            <td>/usr/local/cpanel/version</td>
-            <td>cPanel version</td>
-        </tr>
-        <tr>
-            <td>/var/cpanel/resellers</td>
-            <td>Resellers</td>
-        </tr>
-        <tr>
-            <td>/scripts</td>
-            <td>Loads of useful cPanel related scripts</td>
-        </tr>
-        <tr>
-            <td>/usr/local/cpanel/bin</td>
-            <td>Loads of useful cPanel scripts</td>
-        </tr>
-    </tbody>
-</table>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Upgrade EOL Clamav</title>
-        <link href="http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav//</id>
-        <summary type="html"><![CDATA[
-
-<div class="highlight"><pre><code class="text">ClamAV have EOL&#39;d all their versions prior to 0.95 - if you see an error like the following then ClamAV needs an update:
+</code></pre> </div> ]]></summary> </entry> <entry> <title>Useful cPanel paths</title> <link href="http://damianzaremba.co.uk/2011/08/useful-cpanel-paths//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths//</id> <summary type=html><![CDATA[<p>Some common and useful paths for cPanel are as below - please note that these may change at any time.</p> <table> <thead> <tr> <th>Location</th> <th>Contents</th> </tr> </thead> <tbody> <tr> <td>/etc/ips</td> <td>IP Addresses</td> </tr> <tr> <td>/etc/reservedips</td> <td>Reserved IP addresses</td> </tr> <tr> <td>/etc/reservedipreasons</td> <td>Reserved IP address reasons</td> </tr> <tr> <td>~/.accesshash</td> <td>WHM API key</td> </tr> <tr> <td>/etc/cpupdate.conf</td> <td>cPanel update configuration</td> </tr> <tr> <td>/etc/wwwacct.conf</td> <td>Basic cPanel config</td> </tr> <tr> <td>/var/cpanel/maxemailsperhour</td> <td>System wide max emails per hour setting</td> </tr> <tr> <td>/var/cpanel/packages</td> <td>cPanel packages</td> </tr> <tr> <td>/var/cpanel/users</td> <td>User data</td> </tr> <tr> <td>/var/cpanel/templates/apache2</td> <td>Apache vhost templates</td> </tr> <tr> <td>/usr/local/apache/conf/userdata/std/2/$user/$domain/configuration.conf</td> <td>Apache vhost config customizations for $user's $domain (not SSL)</td> </tr> <tr> <td>/usr/local/apache/conf/userdata/ssl/2/$user/$domain/configuration.conf</td> <td>Apache vhost config customizations for $user's $domain (SSL)</td> </tr> <tr> <td>/etc/userdomains</td> <td>Users domains</td> </tr> <tr> <td>/usr/local/cpanel/version</td> <td>cPanel version</td> </tr> <tr> <td>/var/cpanel/resellers</td> <td>Resellers</td> </tr> <tr> <td>/scripts</td> <td>Loads of useful cPanel related scripts</td> </tr> <tr> <td>/usr/local/cpanel/bin</td> <td>Loads of useful cPanel scripts</td> </tr> </tbody> </table> ]]></summary> </entry> <entry> <title>Upgrade EOL Clamav</title> <link href="http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav//</id> <summary type=html><![CDATA[ <div class=highlight><pre><code class="text">ClamAV have EOL&#39;d all their versions prior to 0.95 - if you see an error like the following then ClamAV needs an update:
  LibClamAV Warning: ***********************************************************
  LibClamAV Warning: *** This version of the ClamAV engine is outdated. ***
  LibClamAV Warning: *** DON&#39;T PANIC! Read http://www.clamav.net/support/faq ***
@@ -940,250 +379,46 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
  LibClamAV Error: cli_tgzload: Can&#39;t load daily.ndb
  LibClamAV Error: Can&#39;t load /var/lib/clamav/daily.cld: Malformed database
  ERROR: Malformed database
-</code></pre>
-</div>
-
-
-<p>To upgrade ClamAV on a RHEL based system perform the following:</p>
-
-<ol>
-<li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li>
-<li>yum install srpm unzip</li>
-<li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li>
-<li>make &amp;&amp; make install</li>
-<li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li>
-</ol>
-
-
-<p>ClamAV should now work once again.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Spoon!</title>
-        <link href="http://damianzaremba.co.uk/2011/08/spoon//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/spoon//</id>
-        <summary type="html"><![CDATA[<p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
-
-<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
-
-<ul>
-<li>Spoon knife - for rounding the handle and scraping out the dip</li>
-<li>9" knife - for taking off the thick outer and bark</li>
-<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
-</ul>
-
-
-<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
-
-<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>SMTP Authentication in Postfix using local system accounts</title>
-        <link href="http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts//</id>
-        <summary type="html"><![CDATA[<p>In /etc/postfix/main.cf ensure the following values are set</p>
-
-<div class="highlight"><pre><code class="text">message_size_limit = 204800000
+</code></pre> </div> <p>To upgrade ClamAV on a RHEL based system perform the following:</p> <ol> <li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li> <li>yum install srpm unzip</li> <li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li> <li>make &amp;&amp; make install</li> <li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li> </ol> <p>ClamAV should now work once again.</p> ]]></summary> </entry> <entry> <title>Spoon!</title> <link href="http://damianzaremba.co.uk/2011/08/spoon//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/spoon//</id> <summary type=html><![CDATA[<p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p> <p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p> <ul> <li>Spoon knife - for rounding the handle and scraping out the dip</li> <li>9" knife - for taking off the thick outer and bark</li> <li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li> </ul> <p>Here are some "early" (4/5 days of on and off work) pictures...</p> <p><img src="/2011/08/spoon/IMG_0020.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0021.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0022.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0023.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0024.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0027.jpg" alt=""/> <img src="/2011/08/spoon/IMG_0028.jpg" alt=""/></p> ]]></summary> </entry> <entry> <title>SMTP Authentication in Postfix using local system accounts</title> <link href="http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts//</id> <summary type=html><![CDATA[<p>In /etc/postfix/main.cf ensure the following values are set</p> <div class=highlight><pre><code class="text">message_size_limit = 204800000
 smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
 smtpd_sasl_auth_enable = yes
 broken_sasl_auth_clients = yes
-</code></pre>
-</div>
-
-
-<p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
-
-<p>Next we just need to make sure sasl/postfix are setup to run:</p>
-
-<div class="highlight"><pre><code class="bash">chkconfig saslauthd on
+</code></pre> </div> <p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p> <p>Next we just need to make sure sasl/postfix are setup to run:</p> <div class=highlight><pre><code class="bash">chkconfig saslauthd on
 /etc/init.d/saslauthd restart
 chkconfig postfix on
 /etc/init.d/postfix restart
-</code></pre>
-</div>
-
-
-<p>Once this is done all we need to do is add our users and they can send mail:</p>
-
-<div class="highlight"><pre><code class="bash">adduser -s /sbin/nologin -M user1
+</code></pre> </div> <p>Once this is done all we need to do is add our users and they can send mail:</p> <div class=highlight><pre><code class="bash">adduser -s /sbin/nologin -M user1
 passwd user1
 
 adduser -s /sbin/nologin -M user2
 passwd user2
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Recovering deleted files from the handlers in /proc/</title>
-        <link href="http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc//</id>
-        <summary type="html"><![CDATA[<p>On compromised servers it is very common for the exploit to delete its self/logs to try and hide its presence.</p>
-
-<p>Even though the executable may be removed from the filesystem as the process is forked from apache the parent process will still have file handlers open.</p>
-
-<p>This will allow you to recover log files/executables as long as you do not kill the process.</p>
-
-<p>To recover the files use the following steps:</p>
-
-<ol>
-<li>Find the PID of the process with the open file handlers (use lsof)</li>
-<li>cd /proc//fd where  is what you found using lsof above</li>
-<li>ls -lra and you should see a load of broken symlinks (red)</li>
-<li>Copy the file using cp into another directory</li>
-</ol>
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Quick script to get public IPs on a NAT'd server</title>
-        <link href="http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server//</id>
-        <summary type="html"><![CDATA[<p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
-</code></pre>
-</div>
-
-
-<p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p>
-
-<p>Example usage is as follows:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
+</code></pre> </div> ]]></summary> </entry> <entry> <title>Recovering deleted files from the handlers in /proc/</title> <link href="http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc//</id> <summary type=html><![CDATA[<p>On compromised servers it is very common for the exploit to delete its self/logs to try and hide its presence.</p> <p>Even though the executable may be removed from the filesystem as the process is forked from apache the parent process will still have file handlers open.</p> <p>This will allow you to recover log files/executables as long as you do not kill the process.</p> <p>To recover the files use the following steps:</p> <ol> <li>Find the PID of the process with the open file handlers (use lsof)</li> <li>cd /proc//fd where is what you found using lsof above</li> <li>ls -lra and you should see a load of broken symlinks (red)</li> <li>Copy the file using cp into another directory</li> </ol> ]]></summary> </entry> <entry> <title>Quick script to get public IPs on a NAT'd server</title> <link href="http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server//</id> <summary type=html><![CDATA[<p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p> <div class=highlight><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
+</code></pre> </div> <p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p> <p>Example usage is as follows:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span>; <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 89.242.208.82
 br0:1: 10.44.200.15 <span class="o">=</span>&gt; 89.242.208.82
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt; 89.242.208.82
 eth0: <span class="o">=</span>&gt;
 vnet0: <span class="o">=</span>&gt;
-</code></pre>
-</div>
-
-
-<p>Or if you want IPv6 addresses returned:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span>; <span class="k">done</span>
+</code></pre> </div> <p>Or if you want IPv6 addresses returned:</p> <div class=highlight><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig | grep <span class="s2">&quot;Link encap:&quot;</span> | awk <span class="s1">&#39;{print $1}&#39;</span> | grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span>; <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span>; <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 2001:470:9083::2
 br0:1: 10.44.200.15 <span class="o">=</span>&gt;
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt;
 eth0: <span class="o">=</span>&gt;
 vnet0: <span class="o">=</span>&gt;
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>MySQL uses no space on cPanel</title>
-        <link href="http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel//</id>
-        <summary type="html"><![CDATA[<p>For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.</p>
-
-<p>To enable these again edit the /var/cpanel/cpanel.config file and change disk_usage_include_sqldbs from 0 to 1.</p>
-
-<p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p>
-
-<p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>Install PostgreSQL on cPanel</title>
-        <link href="http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel//</id>
-        <summary type="html"><![CDATA[<p>To install PostgreSQL on a cPanel server you can perform the following:</p>
-
-<ol>
-<li>Run /scripts/installpostgres</li>
-<li>Go to SQL services -> Postgre config and click Install config</li>
-<li>Configure a root password for Postgre
-4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
-</ol>
-
-
-<p>Now you would think that is it, right?
-Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
-
-<p>You can add them with the following script:</p>
-
-<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
+</code></pre> </div> ]]></summary> </entry> <entry> <title>MySQL uses no space on cPanel</title> <link href="http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel//</id> <summary type=html><![CDATA[<p>For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.</p> <p>To enable these again edit the /var/cpanel/cpanel.config file and change disk_usage_include_sqldbs from 0 to 1.</p> <p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p> <p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p> ]]></summary> </entry> <entry> <title>Install PostgreSQL on cPanel</title> <link href="http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel//</id> <summary type=html><![CDATA[<p>To install PostgreSQL on a cPanel server you can perform the following:</p> <ol> <li>Run /scripts/installpostgres</li> <li>Go to SQL services -> Postgre config and click Install config</li> <li>Configure a root password for Postgre 4 Enable Postgre with chkconfig postgres on; service postgres restart</li> </ol> <p>Now you would think that is it, right? Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p> <p>You can add them with the following script:</p> <div class=highlight><pre><code class="text">for user in $(ls /var/cpanel/users);
 do
  su postgres -c &quot;createuser -S -D -R $user&quot;;
 done
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-    <entry>
-        <title>HTTP basic authentication - Apache</title>
-        <link href="http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache//"/>
-        <updated>2011-08-23T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache//</id>
-        <summary type="html"><![CDATA[<p>Method 1)
-Inside the directory you wish to protect include a .htaccess file with the following content:</p>
-
-<div class="highlight"><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
+</code></pre> </div> ]]></summary> </entry> <entry> <title>HTTP basic authentication - Apache</title> <link href="http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache//"/> <updated>2011-08-23T00:00:00+01:00</updated> <id>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache//</id> <summary type=html><![CDATA[<p>Method 1) Inside the directory you wish to protect include a .htaccess file with the following content:</p> <div class=highlight><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
 AuthName &quot;My secure area&quot;
 AuthType Basic
 Require valid-user
-</code></pre>
-</div>
-
-
-<p>Method 2)
-In your apache config file add the following:</p>
-
-<div class="highlight"><pre><code class="text">&lt;Directory /path/to/directory/to/protect/&gt;
+</code></pre> </div> <p>Method 2) In your apache config file add the following:</p> <div class=highlight><pre><code class="text">&lt;Directory /path/to/directory/to/protect/&gt;
  AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
  AuthName &quot;My secure area&quot;
  AuthType Basic
  Require valid-user
 &lt;/Directory&gt;
-</code></pre>
-</div>
-
-
-<p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p>
-
-<p>You can create it with the htpasswd command:</p>
-
-<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre>
-</div>
-
-
-<p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
-
-<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre>
-</div>
-
-
-
-]]></summary>
-    </entry>
-    
-</feed>
+</code></pre> </div> <p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p> <p>You can create it with the htpasswd command:</p> <div class=highlight><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre> </div> <p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p> <div class=highlight><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre> </div> ]]></summary> </entry> </feed>
