@@ -1,10 +1,235 @@
-<!DOCTYPE HTML> <html> <head> <title>Damian Zaremba - Common PCI compliance issues - cPanel</title> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/main.css" rel=stylesheet type="text/css"/> <link href="/assests/css/pygments.css" rel=stylesheet type="text/css"/> <script src="http://mint.damianzaremba.co.uk/?js" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src=("https:"==document.location.protocol?"https://ssl":"http://www");b.src+=".google-analytics.com/ga.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();</script> <!--[if IE]>/* hover.htc fixes a bunch of issues with hovering objects in IE */ body { behavior: url("/assests/other/hover.htc"); }<![endif]--> </head> <body> <header> <h1><a href="/">Damian Zaremba</a> <span>Common PCI compliance issues - cPanel</span></h1> <nav> <ul id=main> <li><a href="/">Blog</a></li> <li><a href="/archives">Archives</a></li> <li><a href="/about">About</a></li> <li><a href="/cv">CV</a></li> </ul> </nav> <div id=right> <p> <a href="http://twitter.com/DamianZaremba"> <img src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://plus.google.com/110559147647328161061"> <img src="/assests/images/googleplus.png" alt=GooglePlus /> </a> <a href="http://facebook.com/DamianZaremba"> <img src="/assests/images/facebook.png" alt=Facebook /> </a> <a href="https://github.com/DamianZaremba"> <img src="/assests/images/github.png" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img src="/assests/images/rss.png" alt=RSS /> </a> </p> <form class=search action="http://google.com/search" method=get> <input class=left type=text name=q> <input type=hidden name=q value="site:damianzaremba.co.uk"> </form> </div> </header> <div id=content> <article class=post> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul> </div> <div class=entry> <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p> <p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p> <p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p> <p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p> <p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p> <p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p> <p>In the httpd.conf (or just the SSL vhosts) add the following:</p> <div class=highlight><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - Common PCI compliance issues - cPanel</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assests/css/pygments.css" rel="stylesheet" type="text/css" />
+
+    <!-- JS files -->
+    <script src="http://mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11817192-1']);
+        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www');
+            ga.src += '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+        /* hover.htc fixes a bunch of issues with hovering objects in IE */
+        body {
+            behavior: url("/assests/other/hover.htc");
+        }
+    <![endif]-->
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+
+<body>
+    <header>
+        <h1><a href="/">Damian Zaremba</a> <span>Common PCI compliance issues - cPanel</span></h1>
+
+        <nav>
+            <ul id="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <li><a href="/about">About</a></li>
+               <li><a href="/cv">CV</a></li>
+            </ul>
+        </nav>
+
+        <div id="right">
+            <p>
+                <a href="http://twitter.com/DamianZaremba">
+                    <img src="/assests/images/twitter.png" alt="Twitter" />
+                </a>
+                <a href="https://plus.google.com/110559147647328161061">
+                    <img src="/assests/images/googleplus.png" alt="GooglePlus" />
+                </a>
+                <a href="http://facebook.com/DamianZaremba">
+                    <img src="/assests/images/facebook.png" alt="Facebook" />
+                </a>
+                <a href="https://github.com/DamianZaremba">
+                    <img src="/assests/images/github.png" alt="GitHub" />
+                </a>
+                <a href="http://feeds.feedburner.com/DamianZaremba">
+                    <img src="/assests/images/rss.png" alt="RSS" />
+                </a>
+            </p>
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+        </div>
+</header>
+
+<div id="content">
+<article class="post">
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+
+<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
+
+<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
+
+<p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
+
+<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
+
+<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
+
+<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
+
+<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
 SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
-</code></pre></div> <p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p> <div class=highlight><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
-</code></pre></div> <p>In the exim.conf file add the following:</p> <div class=highlight><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
-</code></pre></div> <p>3) Update the server (you should be doing this already).</p> <div class=highlight><pre><code class="bash">/scripts/upcp
+</code></pre></div>
+
+
+<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
+
+<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
+</code></pre></div>
+
+
+<p>In the exim.conf file add the following:</p>
+
+<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+</code></pre></div>
+
+
+<p>3) Update the server (you should be doing this already).</p>
+
+<div class="highlight"><pre><code class="bash">/scripts/upcp
 yum update
-</code></pre></div> <p>4) Disable mod_userdir. You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p> <p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p> <div class=highlight><pre><code class="text">ServerSignature Off
+</code></pre></div>
+
+
+<p>4) Disable mod_userdir.
+You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
+
+<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
+
+<div class="highlight"><pre><code class="text">ServerSignature Off
 ServerTokens Prod
 FileETag None
-</code></pre></div> <p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p> <p>Notes: Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p> <p>You should take some major steps to harden the server against local users as well as remote attacks.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li> <li>&raquo; <a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></li> <li>&raquo; <a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/">Running a WSGI app via Gunicorn from Python</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_shortname="damianzaremba";var disqus_identifier="http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/";var disqus_url="http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/";var disqus_script="embed.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer> <p class=copyright>Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li> <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </footer> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'));</script><![endif]--> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'));var disqus_shortname="damianzaremba";var disqus_script="count.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </body> </html>
+</code></pre></div>
+
+
+<p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
+
+<p>Notes:
+Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
+
+<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li>
+    
+        <li>&raquo; <a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></li>
+    
+        <li>&raquo; <a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/">Running a WSGI app via Gunicorn from Python</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_shortname = 'damianzaremba';
+    var disqus_identifier = 'http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/';
+    var disqus_url = 'http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/';
+    var disqus_script = 'embed.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+</div>
+
+<footer>
+    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <ul id="ads">
+        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+    </ul>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+</script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>
