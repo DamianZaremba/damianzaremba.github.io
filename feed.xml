@@ -3,7 +3,7 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2013-01-20T18:01:55+00:00</updated>
+    <updated>2013-01-20T21:23:46+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
@@ -21,9 +21,9 @@
 
 &lt;h2&gt;Overview&lt;/h2&gt;
 
-&lt;p&gt;Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or a transport method (Unicast/Multicast/Broadcast).&lt;/p&gt;
+&lt;p&gt;Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.&lt;/p&gt;
 
-&lt;p&gt;It is a method of configuring your routing (normally via BGP) so that an IP is 'advertised' in multiple locations. As far as the 'client' is concerned, they are talking unicast (to a single node), but this may be routed to different nodes depending on the routing table.&lt;/p&gt;
+&lt;p&gt;As far as the 'client' is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.&lt;/p&gt;
 
 &lt;p&gt;A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below&lt;/p&gt;
 
