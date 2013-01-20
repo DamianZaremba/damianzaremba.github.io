@@ -93,6 +93,76 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+
+<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.</p>
+
+<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
+
+<p>If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
+
+<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
+
+<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
+
+<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
+
+<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
+SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
+</code></pre></div>
+
+
+<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
+
+<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
+</code></pre></div>
+
+
+<p>In the exim.conf file add the following:</p>
+
+<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+</code></pre></div>
+
+
+<p>3) Update the server (you should be doing this already).</p>
+
+<div class="highlight"><pre><code class="bash">/scripts/upcp
+yum update
+</code></pre></div>
+
+
+<p>4) Disable mod_userdir.
+You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
+
+<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
+
+<div class="highlight"><pre><code class="text">ServerSignature Off
+ServerTokens Prod
+FileETag None
+</code></pre></div>
+
+
+<p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
+
+<p>Notes:
+Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
+
+<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/check-for-cve-fixs/">Check for CVE fixs</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
@@ -291,56 +361,6 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
 
 
 <p>Simples!</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />10 Jul 2011</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>In my kickstart files I "cheat" on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
-
-<p>To do this I use the following in my kickstarts:</p>
-
-<div class="highlight"><pre><code class="text">%include /tmp/partinfo
-
-%pre
-# Get disks
-set $(list-harddrives)
-let numd=$#/2
-disk1=$1
-disk2=$3
-
-# Build partinfo file
-cat &gt; /tmp/partinfo &lt;part /boot --fstype ext4 --size=512 --ondisk=$disk1
-part pv.2 --size=0 --grow --ondisk=$disk1
-
-volgroup VolGroup00 --pesize=32768 pv.2
-logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
-logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
-EOF
-</code></pre></div>
-
-
-<p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>
-
-<p>Now the issue I had with Centos6 was an error getting throw by Anaconda "Partition requires a size specification".</p>
-
-<p>It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).</p>
-
-<p>The simplest way to fix this is just to make --size=1 (lets face it, your minimum partition size isn't going to be smaller 1mb!).</p>
-
-<p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p>
-
-<p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
 
         </div>
     </article>
