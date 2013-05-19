@@ -1,0 +1,437 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Damian Zaremba - Blog</title>
+
+    <!-- General meta data -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Damian Zaremba's Blog" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/assests/css/pygments.css" rel="stylesheet" type="text/css" />
+
+    <!-- JS files -->
+    <script src="http://mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-11817192-1']);
+        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www');
+            ga.src += '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <!-- IE fixes -->
+    <!--[if IE]>
+    body {
+        behavior: url("/assests/other/hover.htc");
+    }
+    <![endif]-->
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+</head>
+<body>
+    <header>
+        <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1>
+
+        <nav>
+            <ul id="main">
+               <li><a href="/">Blog</a></li>
+               <li><a href="/about">About</a></li>
+               <li><a href="/cv">CV</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <!--
+               <li><a href="/study-notes">Study notes</a></li>
+               <li><a href="/technical-interview-questions">Interview questions</a></li>
+               -->
+            </ul>
+        </nav>
+
+        <div id="right">
+            <p>
+                <a href="http://twitter.com/DamianZaremba">
+                    <img src="/assests/images/twitter.png" alt="Twitter" />
+                </a>
+                <a href="https://plus.google.com/110559147647328161061">
+                    <img src="/assests/images/googleplus.png" alt="GooglePlus" />
+                </a>
+                <a href="http://facebook.com/DamianZaremba">
+                    <img src="/assests/images/facebook.png" alt="Facebook" />
+                </a>
+                <a href="https://github.com/DamianZaremba">
+                    <img src="/assests/images/github.png" alt="GitHub" />
+                </a>
+                <a href="http://feeds.feedburner.com/DamianZaremba">
+                    <img src="/assests/images/rss.png" alt="RSS" />
+                </a>
+            </p>
+            <form class="search" action="http://google.com/search" method="get">
+                <input class="left" type="text" name="q">
+                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
+            </form>
+        </div>
+</header>
+
+<div id="content">
+
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/changing-wordpress-tag-to-category/">Changing WordPress tag to category?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />25 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/changing-wordpress-tag-to-category/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/wordpress'>Wordpress</a></li><li><a href='/tag/category-to-tag'>Category to tag</a></li><li><a href='/tag/mysql'>Mysql</a></li><li><a href='/tag/tag-to-category'>Tag to category</a></li><li><a href='/tag/wordpress'>Wordpress</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.</p>
+
+<p>After a quick poke around in the database it seem quite simple to convert between the two.
+Note: This /seems/ to work however it might kick you in the face and break stuff.</p>
+
+<p>First find out your "term" id (category or tag):</p>
+
+<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>terms<span class="sb">`</span> WHERE <span class="sb">`</span>slug<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;snippets&#39;</span>;
++---------+----------+----------+------------+
+| term_id | name | slug | term_group |
++---------+----------+----------+------------+
+| 171 | Snippets | snippets | 0 |
++---------+----------+----------+------------+
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</code></pre></div>
+
+
+<p>Now look in the taxonomy table and find out its details:</p>
+
+<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>term_taxonomy<span class="sb">`</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
++------------------+---------+----------+-------------+--------+-------+
+| term_taxonomy_id | term_id | taxonomy | description | parent | count |
++------------------+---------+----------+-------------+--------+-------+
+| 174 | 171 | post_tag | | 0 | 17 |
++------------------+---------+----------+-------------+--------+-------+
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</code></pre></div>
+
+
+<p>As you can see it is currently a "post_tag".</p>
+
+<p>To change it to a category change the "taxonomy" field to "category":</p>
+
+<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
+Rows matched: 1 Changed: 1 Warnings: 0
+</code></pre></div>
+
+
+<p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p>
+
+<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+Query OK, 1 row affected <span class="o">(</span>0.02 sec<span class="o">)</span>
+Rows matched: 1 Changed: 1 Warnings: 0
+</code></pre></div>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/changing-the-mysql-client-prompt/">Changing the MySQL client prompt</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />25 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/changing-the-mysql-client-prompt/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/mysql'>Mysql</a></li><li><a href='/tag/my.cnf'>My.cnf</a></li><li><a href='/tag/mysql'>Mysql</a></li><li><a href='/tag/prompt'>Prompt</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It is quite easy to get lost in MySQL when working between a lot of databases.</p>
+
+<p>While you can find out which database you are in, it soon becomes quite irritating having to type</p>
+
+<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span>;
+
++------------------+
+| database<span class="o">()</span> |
++------------------+
+| test_database |
++------------------+
+1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
+</code></pre></div>
+
+
+<p>The simplest way to solve this and make life easier, is to change the prompt to include the info!
+Simple edit the [mysql] section of your my.cnf file and add the prompt option:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+<span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+<span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
+<span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
+</code></pre></div>
+
+
+<p>Now when you use the client the prompt will show mysql [user@host - database]>:</p>
+
+<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
+</code></pre></div>
+
+
+<p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p>
+
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+<span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
+<span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
+<span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
+</code></pre></div>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/useful-cpanel-paths/">Useful cPanel paths</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/useful-cpanel-paths/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/data'>Data</a></li><li><a href='/tag/paths'>Paths</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Some common and useful paths for cPanel are as below - please note that these may change at any time.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Location</th>
+            <th>Contents</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>/etc/ips</td>
+            <td>IP Addresses</td>
+        </tr>
+        <tr>
+            <td>/etc/reservedips</td>
+            <td>Reserved IP addresses</td>
+        </tr>
+        <tr>
+            <td>/etc/reservedipreasons</td>
+            <td>Reserved IP address reasons</td>
+        </tr>
+        <tr>
+            <td>~/.accesshash</td>
+            <td>WHM API key</td>
+        </tr>
+        <tr>
+            <td>/etc/cpupdate.conf</td>
+            <td>cPanel update configuration</td>
+        </tr>
+        <tr>
+            <td>/etc/wwwacct.conf</td>
+            <td>Basic cPanel config</td>
+        </tr>
+        <tr>
+            <td>/var/cpanel/maxemailsperhour</td>
+            <td>System wide max emails per hour setting</td>
+        </tr>
+        <tr>
+            <td>/var/cpanel/packages</td>
+            <td>cPanel packages</td>
+        </tr>
+        <tr>
+            <td>/var/cpanel/users</td>
+            <td>User data</td>
+        </tr>
+        <tr>
+            <td>/var/cpanel/templates/apache2</td>
+            <td>Apache vhost templates</td>
+        </tr>
+        <tr>
+            <td>/usr/local/apache/conf/userdata/std/2/$user/$domain/configuration.conf</td>
+            <td>Apache vhost config customizations for $user's $domain (not SSL)</td>
+        </tr>
+        <tr>
+            <td>/usr/local/apache/conf/userdata/ssl/2/$user/$domain/configuration.conf</td>
+            <td>Apache vhost config customizations for $user's $domain (SSL)</td>
+        </tr>
+        <tr>
+            <td>/etc/userdomains</td>
+            <td>Users domains</td>
+        </tr>
+        <tr>
+            <td>/usr/local/cpanel/version</td>
+            <td>cPanel version</td>
+        </tr>
+        <tr>
+            <td>/var/cpanel/resellers</td>
+            <td>Resellers</td>
+        </tr>
+        <tr>
+            <td>/scripts</td>
+            <td>Loads of useful cPanel related scripts</td>
+        </tr>
+        <tr>
+            <td>/usr/local/cpanel/bin</td>
+            <td>Loads of useful cPanel scripts</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/upgrade-eol-clamav/">Upgrade EOL Clamav</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/upgrade-eol-clamav/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/clamav'>Clamav</a></li><li><a href='/tag/eol'>Eol</a></li><li><a href='/tag/update'>Update</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            
+
+<div class="highlight"><pre><code class="text">ClamAV have EOL&#39;d all their versions prior to 0.95 - if you see an error like the following then ClamAV needs an update:
+ LibClamAV Warning: ***********************************************************
+ LibClamAV Warning: *** This version of the ClamAV engine is outdated. ***
+ LibClamAV Warning: *** DON&#39;T PANIC! Read http://www.clamav.net/support/faq ***
+ LibClamAV Warning: ***********************************************************
+ LibClamAV Error: cli_hex2str(): Malformed hexstring: This ClamAV version has reached End of Life! Please upgrade to version 0.95 or later. For more information see www.clamav.net/eol-clamav-094 and www.clamav.net/download (length: 169)
+ LibClamAV Error: Problem parsing database at line 742
+ LibClamAV Error: Can&#39;t load daily.ndb: Malformed database
+ LibClamAV Error: cli_tgzload: Can&#39;t load daily.ndb
+ LibClamAV Error: Can&#39;t load /var/lib/clamav/daily.cld: Malformed database
+ ERROR: Malformed database
+</code></pre></div>
+
+
+<p>To upgrade ClamAV on a RHEL based system perform the following:</p>
+
+<ol>
+<li>wget http://pkgs.repoforge.org/clamav/clamav-0.96.1-1.el5.src.rpm</li>
+<li>yum install srpm unzip</li>
+<li>CFLAGS="-O0" ./configure --disable-zlib-vcheck</li>
+<li>make &amp;&amp; make install</li>
+<li>Update /usr/local/etc/clamd.conf (notably removing the "Example" line and un-commenting the TCP socket line).</li>
+</ol>
+
+
+<p>ClamAV should now work once again.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
+
+<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
+
+<ul>
+<li>Spoon knife - for rounding the handle and scraping out the dip</li>
+<li>9" knife - for taking off the thick outer and bark</li>
+<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
+</ul>
+
+
+<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
+
+<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
+
+        </div>
+    </article>
+    
+
+
+
+<nav id="page_nav">
+    
+    
+    <a href="/2/" class="prev">&laquo; Previous Page</a>
+    
+    
+
+    
+    <a href="/4/" class="next">Next Page &raquo;</a>
+    
+</nav>
+
+
+</div>
+
+<footer>
+    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <ul id="ads">
+        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+    </ul>
+</footer>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<!--[if lt IE 9]>
+<script src="/assests/js/html5.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
+
+    var disqus_shortname = 'damianzaremba';
+    var disqus_script = 'count.js';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+</body>
+</html>

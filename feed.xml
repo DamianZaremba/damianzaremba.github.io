@@ -3,7 +3,7 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2013-01-20T21:23:46+00:00</updated>
+    <updated>2013-05-19T16:27:29+01:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
@@ -3127,46 +3127,6 @@ rm /tmp/repoup1291034701
     </entry>
     
     <entry>
-        <title>Job change, house move and more</title>
-        <link href="http://damianzaremba.co.uk/2010/10/job-change-house-move-and-more/"/>
-        <updated>2010-10-06T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2010/10/job-change-house-move-and-more</id>
-        <content type="html">&lt;p&gt;So yeah it's been a busy few months. I've finished my new server setup, ready to move mail onto it. Moved flats. Made loads of progress in a project and got let go from a job.&lt;/p&gt;
-
-&lt;p&gt;I moved from Bury to Manchester a month ago, it's strange living in the city it's like the world never sleeps. Currently still have a messy flat as I haven't completely un-packed but things are getting there. Hopefully won't have to move any time soon as the last time was a bit of a nightmare. Moving into the center might help improve my current non existent social life or maybe just give me reason to be in an office 24/7 working (tbc). In other news the 7th A Rochdale scout groups website had a bunch of issues completed over the last few weeks, once the images are all done and I can write the actual text content then we should be good to get it online and hopefully expand the group even further! Shame I'm not the best designer but I should be able to do a better job than the current &quot;made in word&quot; version ;)&lt;/p&gt;
-
-&lt;p&gt;As well as all the fun times had recently I've also got a bit of a change work wise, after being &quot;let go&quot; from my current job at UKFast I've decided to try and find a small passionate company where I can really have an impact and do what I enjoy. Unfortunately the job I did have wasn't right for me as there was little room for diversity within the role or change.&lt;/p&gt;
-
-&lt;p&gt;Currently I'm looking for a passionate small/start-up company where I can utilize my current skills, learn a lot and dedicate my time to making a difference.&lt;/p&gt;
-
-&lt;p&gt;Thanks to everyone at UKFast for the fun times, advise and support. Maybe one day we will work together once again.&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
-        <title>Time</title>
-        <link href="http://damianzaremba.co.uk/2010/09/time/"/>
-        <updated>2010-09-14T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2010/09/time</id>
-        <content type="html">&lt;p&gt;Time is a funny thing, in one sense you seem to achieve a lot in a short amount but from another point of view you haven't even dipped your toe into the water. School, college, unit is starting again with the people working hard to pass exams and start their lives, choices we make in life seem insignificant at the time however the time passes so quickly and you don't even realise it.&lt;/p&gt;
-
-&lt;p&gt;Personally I never did the whole college and uni thing, it is something that in one sense I regret but in another it's something I am proud of. The choice for me was simple, waste 5/6 years 'studying' things that weren't relevant to what I wanted to do to get a piece of paper and a few grand worth of debt or dive in at the deep end and try not to sink.&lt;/p&gt;
-
-&lt;p&gt;After leaving school I pretty much wasted a year, during the time I did pretty much run a small hosting company with some friends and decide on what I was going to do going forwards but all in all progress was not anything to comment on. After passing some random exams I got my current job and that’s where I'm pretty much at now looking forward to passing some other exams and progressing my career.&lt;/p&gt;
-
-&lt;p&gt;Tonight I've just been reminded that it was two years ago I left School where the projects ended and the search began, an analysis of the time spent since then yields mixed feelings. Bearing in mind I pretty much want to have filled most my career ambitions by the time I'm 20 I take the following from this reflection.&lt;/p&gt;
-
-&lt;p&gt;I regret not going to college/uni - This would of let me grow as a person however could of potentially prevented my career from starting and left me without the opportunities I'm currently chasing. The main disadvantages are not being able to socialize, gain experience in certain areas such as student radio that I would of loved to have been a part of.&lt;/p&gt;
-
-&lt;p&gt;I'm glad I went the hard way - Life's value is clear to me now, you have to run at every opportunity you get and never let one pass you buy. With confidence you can be much better than you currently think you are.  If I didn't chose the path I did then I most likely would not be sat in my of flat across the road from the office where I work as a Linux engineer and I wouldn't have the opportunities presented to me that I do right at this very moment.&lt;/p&gt;
-
-&lt;p&gt;Time moves so very quickly and you don't often stop to think about what you have achieved. It is easy to see how far you have to go to meet your goal and think there is never any chance of hitting them but if you step back for a moment and look at where you have been and how far you have travelled then you can see there is every chance of smashing your goals.&lt;/p&gt;
-
-&lt;p&gt;Slight ramble but the general point being never let anyone tell you that you can't do something, there is always a way even if you have to fight against everyone to get there. Opportunities will present themselves when needed and belief is something you should never change for other people. Time will run away from you but every so often step back and look at how much you've done - it will be amazing.&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
         <title>Powershell!?!?!?!</title>
         <link href="http://damianzaremba.co.uk/2010/07/powershell/"/>
         <updated>2010-07-21T00:00:00+01:00</updated>
@@ -3765,35 +3725,6 @@ conf-dir=/etc/dnsmasq.d/
 &lt;p&gt;To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)&lt;/p&gt;
 
 &lt;p&gt;Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)&lt;/p&gt;
-</content>
-    </entry>
-    
-    <entry>
-        <title>Work and scouts</title>
-        <link href="http://damianzaremba.co.uk/2010/06/work-and-scouts/"/>
-        <updated>2010-06-29T00:00:00+01:00</updated>
-        <id>http://damianzaremba.co.uk/2010/06/work-and-scouts</id>
-        <content type="html">&lt;p&gt;Many of you probably don't know but I am actually a member of the scout association and enjoy helping out at my &quot;local&quot; scout group. It is not really local group anymore as I went from living in Rossendale to Yorkshire and now Bury and 7th A is in Rochdale but I travel the extra distance because it is where my scouting history is.&lt;/p&gt;
-
-&lt;p&gt;Now up until 6months ago I attended regularly and would be available at most times to help out that was until I started at UKFast now as with all new jobs I let it slide that I couldn't make it down to 7th A twice a week but I feel now is the time to get back into it. With the rota I'm currently on I can get down for a couple of weeks (I currently work 4days on 4days off) but when I switch back to the usual rota this wouldn't be possible. Hopefully I can arrange to finish earlier on wed/thurs and work extra hours but that's up to my boss. I'm sure he will understand and maybe say yes!&lt;/p&gt;
-
-&lt;p&gt;So what's been happening recently?
-Well I'm still working on there new site (yes still.. sorry) it's proving quite a challenge as I don't know 100% what platform they have at there web host, I have so many ideas but can't guarantee that there will be access to such basic things as a database (Not that this is a massive problem as I could just host a db for there site if really needed, I happen to work in hosting and have a bunch of servers sat doing nothing :-)). Currently it will be pretty much a static site but some things I'd like to implement (totally not even discussed, this is the first time they have come out of my head):&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Monthly/Bi-Monthly newsletter that parents/friends can sign up to from the website - Manageable though an admin interface - Yeah I'd need a db for that :(&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;New stream on the website - Manageable though an admin interface - I'll need a db for that&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Ideas/feedback form for website/group&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Some interactive tour stuff of HQ&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&quot;Meet the leaders&quot; page - Manageable though an admin interface - Yeah I'd need a db for that as well&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-
-&lt;p&gt;Loads of other stuff as well just all depends on how flexible the hosting is tbh, should have the site finished by the end of the month to a basic level though!&lt;/p&gt;
-
-&lt;p&gt;Other ideas I have include writing a decent management system for groups.&lt;/p&gt;
-
-&lt;p&gt;Slightly dull post, more fun things to come soon though I hope!&lt;/p&gt;
 </content>
     </entry>
     

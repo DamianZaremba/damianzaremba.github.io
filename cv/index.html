@@ -40,17 +40,15 @@
 
     <!-- IE fixes -->
     <!--[if IE]>
-        /* hover.htc fixes a bunch of issues with hovering objects in IE */
-        body {
-            behavior: url("/assests/other/hover.htc");
-        }
+    body {
+        behavior: url("/assests/other/hover.htc");
+    }
     <![endif]-->
 
     <!--
     RIPA NOTICE: No consent is given for the interception of this page transmission
     -->
 </head>
-
 <body>
     <header>
         <h1><a href="/">Damian Zaremba</a> <span>CV</span></h1>
@@ -58,9 +56,13 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/archives">Archives</a></li>
                <li><a href="/about">About</a></li>
                <li><a href="/cv">CV</a></li>
+               <li><a href="/archives">Archives</a></li>
+               <!--
+               <li><a href="/study-notes">Study notes</a></li>
+               <li><a href="/technical-interview-questions">Interview questions</a></li>
+               -->
             </ul>
         </nav>
 
@@ -92,26 +94,19 @@
 <div id="content">
 <h2>Summary</h2>
 
-<p>Experienced, driven and professional Linux Systems Engineer, constantly
-looking to improve service and run at the edge of technology.</p>
+<p>Experienced, driven and professional Linux Systems Engineer, constantly looking
+to improve service and run at the edge of technology.</p>
 
-<p>Most passionate about working with opensource technologies at the cutting
-edge of technology, in order to build awesome platforms that people love to use.</p>
+<p>Passionate about complex high throughput distributed systems (especially low
+latency/real time), solution design, testing, Linux, opensource, monitoring,
+metrics and graphing.</p>
 
-<p>Focused on providing a technically sound solution, great user experience,
-correct expectations and a solution that will outperform requirements.</p>
+<p>Interested in ITIL methodologies for service management, Agile methodologies for
+development life cycle/workflows and software testing/building strategies.</p>
 
-<p>Constantly looking for opportunities to work on new challenges, especially
-large distributed systems.</p>
-
-<p>Among other things, a lover of Linux, monitoring, metrics, trending and
-graphing.</p>
-
-<p>Outside of work, a Scout leader, Activity instructor (Climbing), Walker and
-general outdoor lover.</p>
-
-<p>Interested in ITIL methodologies, helpdesk workflow, issue escalation
-management, programming and automation of everything.</p>
+<p>Technical goals include attaining CCNA, CCNP, RHCA, RHCDS and RHCSS
+certification as well as learning C and focusing on kernel level
+optimisation/modules.</p>
 
 <h2>Professional Experience</h2>
 
@@ -122,24 +117,24 @@ management, programming and automation of everything.</p>
 <li>Issue escalation and SLA handling</li>
 <li>Designing and implementing redundant architecture</li>
 <li>Server, application and network monitoring via threshold alerting, graphing and trending.</li>
-<li>Management of tgtd based SANs</li>
 <li>Programming in Python, Perl, Bash</li>
 <li>Config management via Puppet</li>
 <li>Authentication/authorization management via LDAP/RADIUS</li>
+<li>Software versioning/build management</li>
+<li>System integration</li>
 </ul>
 
 
 <h2>Specialties</h2>
 
 <ul>
-<li>Linux</li>
-<li>CentOS</li>
-<li>MySQL</li>
-<li>Bash</li>
-<li>Python</li>
-<li>System design and implementation</li>
-<li>System security</li>
-<li>DNS</li>
+<li>Linux distributions (Red Hat, CentOS, Debian etc)</li>
+<li>Software packages such as Apache, Nginx, HAProxy, LVS, KVM, Pacemaker, MySQL, DNS,
+Exim, Icinga, RANCID, etc.</li>
+<li>Solution design</li>
+<li>Service monitoring</li>
+<li>Metric collection/graphing/trending/reporting</li>
+<li>Bespoke configurations including HA and clustering</li>
 </ul>
 
 
@@ -149,9 +144,30 @@ management, programming and automation of everything.</p>
 
 <p><em>Oct 2012 - Current</em></p>
 
-<p>Building infrastructure to deliver business value via collaboration, technology and automation.</p>
-
 <p>Supporting world-recognized pro audio brands such as MIDAS, Klark Teknik, Turbosound, Behringer and Bugera.</p>
+
+<ul>
+<li>Mixed Operations/engineering role covering all levels of the infrastructure</li>
+<li>Managing a complex heterogeneous infrastructure based upon VMware</li>
+<li>Implementing service monitoring and metric collection systems (MRTG, Smokeping, Icinga, Graphite, PRTG)</li>
+<li>Troubleshooting layer 2/3 network issues across multiple sites (combination of P2P MPLS links (L2 &amp; 3),
+MPLS cloud and GRE tunnels connected via a mix of OSPF and static routes)</li>
+<li>Developed custom integration (Icinga to ServiceDesk for ticketing, Pagerduty ack's to Icinga ack's for alerts),
+plugins (VMware hardware checking, Oracle ESSO transaction level checking) and templates (network devices,
+server roles etc) for monitoring systems</li>
+<li>Developed a custom roster system based around email DL's for Openfire, based on business requirements</li>
+<li>Developed numerous scripts for auditing and policy enforcement purposes</li>
+<li>Automated manual tasks to increase reliability</li>
+<li>Maintained binlog based replication on multiple MySQL clusters</li>
+<li>Dealt with multiple outages relating to VMware/DNS/Network/Disk availability</li>
+<li>Developed strategies for operating system deployment and management globally</li>
+<li>Packaged and maintained numerous pieces of software into DEB and RPM files for distribution</li>
+<li>Developed strategies for enforcing change control within a configuration management setup
+(gating/testing changesets, peer review, environment isolation)</li>
+<li>Diagnosed multiple issues with an Oracle ESSO deployment</li>
+<li>Implemented RANCID based backups for network device configs</li>
+</ul>
+
 
 <h3>Sub 6 Limited - Lead Systems Administrator</h3>
 
@@ -321,7 +337,8 @@ across 2 or more</li>
 
 <p>I completed GCSEs in ICT (A), Mathematics (D) and key skills exams.</p>
 
-<p>In my spare time I also assisted in the network administration, involving a single windows server 2003 DC, two Linux servers and around 50-70 desktops running a mix of windows 2000 and XP pro.</p>
+<p>In my spare time I also assisted in the network administration, involving a single windows server 2003 DC,
+two Linux servers and around 50-70 desktops running a mix of windows 2000 and XP pro.</p>
 
 <p>This involved me writing numerous scripts (bat/vbs) to do simple actions such as mapping drives or configuring proxies via group policy.</p>
 
@@ -349,9 +366,8 @@ across 2 or more</li>
 <h2>Misc</h2>
 
 <ul>
-<li>Full, clean UK driving license</li>
+<li>Full UK driving license</li>
 <li>UK passport</li>
-<li>Availability to work "out of hours" as required</li>
 </ul>
 
 
@@ -361,7 +377,7 @@ across 2 or more</li>
 <li><a href="https://github.com/damianzaremba">GitHub</a> - damianzaremba</li>
 <li><a href="http://last.fm/user/damianzaremba4">Last.fm</a> - damianzaremba4</li>
 <li><a href="http://uk.linkedin.com/in/damianzaremba">LinkedIn</a> - damianzaremba</li>
-<li><a href="http://damianzaremba.co.uk">Random Blog</a> - damianzaremba.co.uk</li>
+<li><a href="http://damianzaremba.co.uk">Website</a> - damianzaremba.co.uk</li>
 </ul>
 
 
@@ -376,16 +392,13 @@ across 2 or more</li>
     <ul id="ads">
         <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
         <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
-        <li>Want my website? <a href="http://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
     </ul>
 </footer>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <!--[if lt IE 9]>
-<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="/assests/js/jquery.js"%3E%3C/script%3E'))
-</script>
+<script src="/assests/js/html5.js"></script>
 <![endif]-->
 
 <script type="text/javascript">
@@ -398,7 +411,7 @@ across 2 or more</li>
         var dsq = document.createElement('script');
         dsq.type = 'text/javascript';
         dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
         (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
