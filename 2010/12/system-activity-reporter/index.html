@@ -62,8 +62,8 @@
                <!--
                <li><a href="/study-notes">Study notes</a></li>
                <li><a href="/technical-interview-questions">Interview questions</a></li>
-               <li><a href="/projects">Projects</a></li>
                -->
+               <li><a href="/projects">Projects</a></li>
             </ul>
         </nav>
 
@@ -268,23 +268,23 @@ Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</sp
 Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
 You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
 
-<div class="highlight"><pre><code class="bash">sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
+<div class="highlight"><pre><code class="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
 </code></pre></div>
 
 
 <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="c"># Make a tmp file</span>
-<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span>;
+<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span><span class="p">;</span>
 <span class="c"># Fill the file with stuff</span>
-sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
+sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
 <span class="c"># Make a pretty graph</span>
 <span class="nb">echo</span> <span class="s2">&quot;set terminal dump;</span>
 <span class="s2">set title &#39;CPU usage&#39;;</span>
 <span class="s2">set xdata time;</span>
 <span class="s2">set timefmt &#39;%s&#39;;</span>
 <span class="s2">set xlabel &#39;Time&#39;;</span>
-<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> | gnuplot
+<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
 rm -f <span class="nv">$cpu_data_file</span>
 </code></pre></div>
@@ -302,52 +302,52 @@ rm -f <span class="nv">$cpu_data_file</span>
 <span class="c"># Please note this is a quick hack to demonstrate it can be done</span>
 <span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
 
-<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
-<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
 <span class="nv">GRAPH_TYPE</span><span class="o">=</span><span class="s2">&quot;image&quot;</span>
 <span class="c">#GRAPH_TYPE=&quot;ascii&quot;</span>
 <span class="nv">HTML_DST</span><span class="o">=</span><span class="s2">&quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&quot;</span>
 <span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span>
 
 <span class="c"># Check gnuplot is all good</span>
-<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span><span class="p">;</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check sadf is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check graph type</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
 <span class="k">function </span>make_header <span class="o">{</span>
- <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span>;
+ <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span><span class="p">;</span>
 <span class="o">}</span>
 
 <span class="k">function </span>make_footer <span class="o">{</span>
- <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>;
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">;</span>
 <span class="o">}</span>
 
 <span class="k">function </span>make_graph <span class="o">{</span>
- <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span>; <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span>; <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span>; <span class="k">fi</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span> <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span> <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
- <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> | sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> <span class="p">|</span> sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
 <span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
@@ -362,17 +362,17 @@ rm -f <span class="nv">$cpu_data_file</span>
 <span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
  <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
  <span class="nb">echo</span> <span class="s2">&quot;Data file: $dat_file&quot;</span>
- <span class="nv">$SADF</span> -- <span class="nv">$format</span> | awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
+ <span class="nv">$SADF</span> -- <span class="nv">$format</span> <span class="p">|</span> awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
 <span class="s2"> set title &#39;$title&#39;;</span>
 <span class="s2"> set xdata time;</span>
 <span class="s2"> set timefmt &#39;%s&#39;;</span>
 <span class="s2"> set xlabel &#39;Time&#39;;</span>
-<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> | <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
+<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> <span class="p">|</span> <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
  <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
 <span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
  <span class="k">else</span>
@@ -398,7 +398,7 @@ make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&q
 
 <span class="c"># Make the html index</span>
 <span class="nb">echo</span> <span class="s2">&quot;Writing $HTML_DST/index.html&quot;</span>
-make_header; make_footer
+make_header<span class="p">;</span> make_footer
 <span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span>
 
 <span class="c"># Post stuff</span>
@@ -456,10 +456,10 @@ rm -rf <span class="s2">&quot;$base_dir&quot;</span>
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <ul id="ads">
         <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
         <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
     </ul>
 </footer>

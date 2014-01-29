@@ -62,8 +62,8 @@
                <!--
                <li><a href="/study-notes">Study notes</a></li>
                <li><a href="/technical-interview-questions">Interview questions</a></li>
-               <li><a href="/projects">Projects</a></li>
                -->
+               <li><a href="/projects">Projects</a></li>
             </ul>
         </nav>
 
@@ -109,25 +109,25 @@
             <p>So I'm currently working on a small project which will require authentication. Not really sure how to achieve what I want so here's a quick explanation for anyone if you want to share ideas:
 Basic SQL definition:</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt;; describe users;
+<div class="highlight"><pre><code class="bash">mysql&gt;<span class="p">;</span> describe users<span class="p">;</span>
 +---------------------------+------------------+------+-----+---------+----------------+
-| Field | Type | Null | Key | Default | Extra |
+<span class="p">|</span> Field <span class="p">|</span> Type <span class="p">|</span> Null <span class="p">|</span> Key <span class="p">|</span> Default <span class="p">|</span> Extra <span class="p">|</span>
 +---------------------------+------------------+------+-----+---------+----------------+
-| id | int<span class="o">(</span>11<span class="o">)</span> | NO | PRI | NULL | auto_increment |
-| username | varchar<span class="o">(</span>500<span class="o">)</span> | NO | | NULL | |
-| password | varchar<span class="o">(</span>100<span class="o">)</span> | NO | | NULL | |
-| salt | varchar<span class="o">(</span>15<span class="o">)</span> | NO | | NULL | |
-| group_id | int<span class="o">(</span>20<span class="o">)</span> | NO | | NULL | |
-| perm_login | <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span>,<span class="s1">&#39;G&#39;</span><span class="o">)</span> | NO | | G | |
+<span class="p">|</span> id <span class="p">|</span> int<span class="o">(</span>11<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> PRI <span class="p">|</span> NULL <span class="p">|</span> auto_increment <span class="p">|</span>
+<span class="p">|</span> username <span class="p">|</span> varchar<span class="o">(</span>500<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> password <span class="p">|</span> varchar<span class="o">(</span>100<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> salt <span class="p">|</span> varchar<span class="o">(</span>15<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> group_id <span class="p">|</span> int<span class="o">(</span>20<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> perm_login <span class="p">|</span> <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span>,<span class="s1">&#39;G&#39;</span><span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> G <span class="p">|</span> <span class="p">|</span>
 +---------------------------+------------------+------+-----+---------+----------------+
 
-mysql&gt;; describe user_groups;
+mysql&gt;<span class="p">;</span> describe user_groups<span class="p">;</span>
 +---------------------------+---------------+------+-----+---------+----------------+
-| Field | Type | Null | Key | Default | Extra |
+<span class="p">|</span> Field <span class="p">|</span> Type <span class="p">|</span> Null <span class="p">|</span> Key <span class="p">|</span> Default <span class="p">|</span> Extra <span class="p">|</span>
 +---------------------------+---------------+------+-----+---------+----------------+
-| id | int<span class="o">(</span>11<span class="o">)</span> | NO | PRI | NULL | auto_increment |
-| name | varchar<span class="o">(</span>500<span class="o">)</span> | NO | | NULL | |
-| perm_login | <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span><span class="o">)</span> | NO | | Y | |
+<span class="p">|</span> id <span class="p">|</span> int<span class="o">(</span>11<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> PRI <span class="p">|</span> NULL <span class="p">|</span> auto_increment <span class="p">|</span>
+<span class="p">|</span> name <span class="p">|</span> varchar<span class="o">(</span>500<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> perm_login <span class="p">|</span> <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span><span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> Y <span class="p">|</span> <span class="p">|</span>
 +---------------------------+---------------+------+-----+---------+----------------+
 </code></pre></div>
 
@@ -170,7 +170,7 @@ mysql&gt;; describe user_groups;
 <span class="n">failedHosts</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">ignoredIPs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">failLimit</span> <span class="o">=</span> <span class="mi">0</span> <span class="c"># Better change this</span>
-<span class="n">bannedChain</span> <span class="o">=</span> <span class="s">&quot;Hackor&quot;</span>
+<span class="n">bannedChain</span> <span class="o">=</span> <span class="s">&quot;BadIp&quot;</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -N </span><span class="si">%s</span><span class="s"> &amp;&gt;/dev/null&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">))</span>
 <span class="n">iptables</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="s">&quot;iptables --list </span><span class="si">%s</span><span class="s"> -n | egrep -v </span><span class="se">\&quot;</span><span class="s">target.+prot.+opt.+source.+destination</span><span class="se">\&quot;</span><span class="s"> | egrep -v </span><span class="se">\&quot;</span><span class="s">Chain </span><span class="si">%s</span><span class="s"> .+ references</span><span class="se">\&quot;</span><span class="s"> | awk &#39;{print $4}&#39;&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">bannedChain</span><span class="p">))</span>
@@ -205,7 +205,7 @@ mysql&gt;; describe user_groups;
 
 <p>Which happens to nicely do the job as can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./die_hackorz.py</span>
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./check_bad_ip.py</span>
 213.225.207.41 is currently over fail limit, processing
 mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
 88.191.92.219 is currently over fail limit, processing
@@ -230,9 +230,9 @@ sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 
 
 <p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
 
-<div class="highlight"><pre><code class="bash">iptables -I INPUT -j Hackor
-iptables -I OUTPUT -j Hackor
-iptables -I FORWARD -j Hackor
+<div class="highlight"><pre><code class="bash">iptables -I INPUT -j BadIp
+iptables -I OUTPUT -j BadIp
+iptables -I FORWARD -j BadIp
 </code></pre></div>
 
 
@@ -371,10 +371,10 @@ iptables -I FORWARD -j Hackor
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <ul id="ads">
         <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
         <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
     </ul>
 </footer>

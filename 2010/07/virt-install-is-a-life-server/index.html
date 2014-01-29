@@ -62,8 +62,8 @@
                <!--
                <li><a href="/study-notes">Study notes</a></li>
                <li><a href="/technical-interview-questions">Interview questions</a></li>
-               <li><a href="/projects">Projects</a></li>
                -->
+               <li><a href="/projects">Projects</a></li>
             </ul>
         </nav>
 
@@ -114,7 +114,7 @@
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/centos_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -124,12 +124,12 @@
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  fedora<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/fedora_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -139,12 +139,12 @@
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  debian<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/debian_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -154,12 +154,12 @@
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  ubuntu<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/ubuntu_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -169,11 +169,11 @@
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  *<span class="o">)</span>
  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
  <span class="nb">exit </span>2
- ;;
+ <span class="p">;;</span>
 <span class="k">esac</span>
 </code></pre></div>
 
@@ -184,10 +184,10 @@
 Installing vm CharityHosting1 with 50G disk and 1024 ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
  Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
 Starting install...
-Retrieving file .treeinfo... | 2.4 kB 00:00 ...
-Retrieving file vmlinuz... | 6.7 MB 00:01 ...
-Retrieving file initrd.img... | 57 MB 00:15 ...
-Creating domain... | 0 B 00:00
+Retrieving file .treeinfo... <span class="p">|</span> 2.4 kB 00:00 ...
+Retrieving file vmlinuz... <span class="p">|</span> 6.7 MB 00:01 ...
+Retrieving file initrd.img... <span class="p">|</span> 57 MB 00:15 ...
+Creating domain... <span class="p">|</span> 0 B 00:00
 Domain installation still in progress. You can reconnect to
 the console to <span class="nb">complete </span>the installation process.
 :0
@@ -326,10 +326,10 @@ conf-dir=/etc/dnsmasq.d/
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <ul id="ads">
         <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
         <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
     </ul>
 </footer>

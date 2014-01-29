@@ -62,8 +62,8 @@
                <!--
                <li><a href="/study-notes">Study notes</a></li>
                <li><a href="/technical-interview-questions">Interview questions</a></li>
-               <li><a href="/projects">Projects</a></li>
                -->
+               <li><a href="/projects">Projects</a></li>
             </ul>
         </nav>
 
@@ -105,45 +105,40 @@ metrics and graphing.</p>
 <p>Interested in ITIL methodologies for service management, Agile methodologies for
 development life cycle/workflows and software testing/building strategies.</p>
 
-<p>Technical goals include attaining CCNA, CCNP, RHCA, RHCDS and RHCSS
-certification as well as learning C and focusing on kernel level
-optimisation/modules.</p>
-
-<h2>Professional Experience</h2>
-
-<ul>
-<li>Linux administration on RHEL/Debian based distros</li>
-<li>Application development/scripting</li>
-<li>End-to-End troubleshooting</li>
-<li>Issue escalation and SLA handling</li>
-<li>Designing and implementing redundant architecture</li>
-<li>Server, application and network monitoring via threshold alerting, graphing and trending.</li>
-<li>Programming in Python, Perl, Bash</li>
-<li>Config management via Puppet</li>
-<li>Authentication/authorization management via LDAP/RADIUS</li>
-<li>Software versioning/build management</li>
-<li>System integration</li>
-</ul>
-
-
-<h2>Specialties</h2>
-
-<ul>
-<li>Linux distributions (Red Hat, CentOS, Debian etc)</li>
-<li>Software packages such as Apache, Nginx, HAProxy, LVS, KVM, Pacemaker, MySQL, DNS,
-Exim, Icinga, RANCID, etc.</li>
-<li>Solution design</li>
-<li>Service monitoring</li>
-<li>Metric collection/graphing/trending/reporting</li>
-<li>Bespoke configurations including HA and clustering</li>
-</ul>
-
+<p>Driven to impact change where required and deliver things done properly.</p>
 
 <h2>Employment History</h2>
 
-<h3>MUSIC Group - Systems Engineer</h3>
+<h3>MUSIC Group - Software Engineer (Midas/Klark Teknik)</h3>
 
-<p><em>Oct 2012 - Current</em></p>
+<p><em>July 2013 - Current</em></p>
+
+<p>Working on new Midas/Klark Teknik products and supporting infrastructure.</p>
+
+<ul>
+<li>Deployed an isolated 3 node (2 HA controllers) Openstack Havana setup using NetApp ONTAP storage.</li>
+<li>Designed and implemented a small 'collapsed-core' network architecture - using Cisco technologies - to provide an isolated R&amp;D network, inside an existing (unsecure) corporate network.</li>
+<li>Performed data recovery on R&amp;D servers/data and developed workarounds for internal services during a 4 month long global TECH service failure.</li>
+<li>Developed a testing jig for boards using a raspberry PI with GPIO controlled relays, for automated boot loader re-programming and boot timing on changes.</li>
+<li>Developed and implemented backup/restore procedure for critical data (source code, tickets, build configurations).</li>
+<li>Rearchitected the current 2 server setup (unmonitored, running on raid 0, constrained by disk/CPU) into a 3 node Openstack setup and re-purposed older servers (removed from service during a transition from CVS to Git) as disposable build agents.</li>
+<li>Implemented configuration management (Puppet, Saltstack) and service/change monitoring (Icinga/Rancid).</li>
+<li>Reduced build times and implemented a new strategy for componentised builds.</li>
+<li>Designed a framework and strategy for increasing confidence in code and speeding up the release cycle.</li>
+<li>Developed software against x86, STM32 and ARM based platforms, including control for switches/FPGAs/DSPs</li>
+<li>Exposure to proprietary binary based communications protocols and their pitfalls vs open, standards based communications protocols and their benefits</li>
+<li>Performed maintenance on LFS and Ltib systems for building products</li>
+<li>Debugged and rectified issues in C++/Python/Perl code and shell/Sed/Awk scripting</li>
+<li>Investigated web technologies, updating/deployment methodologies, RFB reverse tunnelling, SELinux and performance analysis/containment.</li>
+<li>Utilised kernel features to enhance new products (control groups, SELinux, nftables)</li>
+<li>Documented processes for developers (board reprogramming/bootup)</li>
+<li>Ported numerous internal apps from x86 to ARM</li>
+</ul>
+
+
+<h3>MUSIC Group - Systems Engineer (Global Enterprise Engineering)</h3>
+
+<p><em>Oct 2012 - July 2013</em></p>
 
 <p>Supporting world-recognized pro audio brands such as MIDAS, Klark Teknik, Turbosound, Behringer and Bugera.</p>
 
@@ -151,11 +146,8 @@ Exim, Icinga, RANCID, etc.</li>
 <li>Mixed Operations/engineering role covering all levels of the infrastructure</li>
 <li>Managing a complex heterogeneous infrastructure based upon VMware</li>
 <li>Implementing service monitoring and metric collection systems (MRTG, Smokeping, Icinga, Graphite, PRTG)</li>
-<li>Troubleshooting layer 2/3 network issues across multiple sites (combination of P2P MPLS links (L2 &amp; 3),
-MPLS cloud and GRE tunnels connected via a mix of OSPF and static routes)</li>
-<li>Developed custom integration (Icinga to ServiceDesk for ticketing, Pagerduty ack's to Icinga ack's for alerts),
-plugins (VMware hardware checking, Oracle ESSO transaction level checking) and templates (network devices,
-server roles etc) for monitoring systems</li>
+<li>Troubleshooting layer 2/3 network issues across multiple sites (combination of P2P MPLS links (L2 &amp; 3), MPLS cloud and GRE tunnels connected via a mix of OSPF and static routes)</li>
+<li>Developed custom integration (Icinga to ServiceDesk for ticketing, Pagerduty ack's to Icinga ack's for alerts), plugins (VMware hardware checking, Oracle ESSO transaction level checking) and templates (network devices, server roles etc) for monitoring systems</li>
 <li>Developed a custom roster system based around email DL's for Openfire, based on business requirements</li>
 <li>Developed numerous scripts for auditing and policy enforcement purposes</li>
 <li>Automated manual tasks to increase reliability</li>
@@ -163,12 +155,25 @@ server roles etc) for monitoring systems</li>
 <li>Dealt with multiple outages relating to VMware/DNS/Network/Disk availability</li>
 <li>Developed strategies for operating system deployment and management globally</li>
 <li>Packaged and maintained numerous pieces of software into DEB and RPM files for distribution</li>
-<li>Developed strategies for enforcing change control within a configuration management setup
-(gating/testing changesets, peer review, environment isolation)</li>
+<li>Developed strategies for enforcing change control within a configuration management setup (gating/testing changesets, peer review, environment isolation)</li>
 <li>Diagnosed multiple issues with an Oracle ESSO deployment</li>
 <li>Implemented RANCID based backups for network device configs</li>
 </ul>
 
+
+<h3>Freelancer: Architecture, Infrastructure, Linux Deployment, Network Design, Software Development</h3>
+
+<p><em>Nov 2008 – Current</em></p>
+
+<p>End to end management and design of infrastructure, heavily Linux and Network focused.</p>
+
+<p>Provide software development as required (Python, Perl, PHP, C, C++, Shell, node.js, Django, Ruby), all custom work - some opensource. Primary focus on Python (including Django), Perl, Shell and C++.</p>
+
+<p>Deployed Linux solutions at edge and core, covering all aspects from SOHO up to multi datacenter. Areas including PXE, kickstart/preseed, Puppet, Cobbler, Saltstack, asset tracking, lifecycle management, testing, custom Linux distributions and bespoke auditing tools.</p>
+
+<p>Designed networks to specification (cost or functionality), familiar with large layer 2/3 deployments including STP, DTP, LACP protocols, vlan tagging, trunking, layer 2 protections (arp, dhcp, bpdu guard), static routing, dynamic routing (RIP, OSPF, EIGRP, BGP), MPLS (P2P and 'cloud'), QOS, ASA firewalls, ACL management, redundancy, performance optimisation, asynchronous routing, remote troubleshooting, issue diagnostics (layer 1-8) and vendor interaction/management (global).</p>
+
+<p>Re-designed and migrated data-centre architecture for hosting providers and global companies including co-ordination with onsite resources for physical relocation, design and implementation of redundant core and distribution network services, designing SPOFs out, isolating management connectivity into segregated failure domains (physically, up to a separate BGP mix with different routes), design of troubleshooting tools for helpdesk staff, auditing equipment, implementation of off-site backup arrangements, low level migration tools (redirection of network traffic to holding servers, DDOS protection, distributed caching, automated null-routing tools, automated firewall rule distribution tools), power usage profiling and cost reduction.</p>
 
 <h3>Sub 6 Limited - Lead Systems Administrator</h3>
 
@@ -225,23 +230,6 @@ servers</li>
 <li>Managed Xen and Citrix Xenserver deployments</li>
 <li>Debugged tomcat logs to identify root causes of application issues</li>
 <li>Implemented process monitoring of background workers to ensure a responsive application</li>
-</ul>
-
-
-<h3>Freelance Linux Systems Administrator</h3>
-
-<p><em>Nov 2010 – Oct 2011</em></p>
-
-<ul>
-<li>Managed a Red Hat cluster suite setup</li>
-<li>Handled custom Tomcat/Apache based applications</li>
-<li>Wrote NimBUS/Nagios based monitoring checks</li>
-<li>Managed multiple account migrations</li>
-<li>Automated away process</li>
-<li>On-call for escalated issues</li>
-<li>Worked in a structured ITIL based framework for handling change</li>
-<li>Developed monitoring for application edge cases by working closely
-with 3rd parties</li>
 </ul>
 
 
@@ -347,7 +335,7 @@ two Linux servers and around 50-70 desktops running a mix of windows 2000 and XP
 
 <h3>The Scout Association</h3>
 
-<p><em>December 2006 - Current</em></p>
+<p><em>December 2006 - January 2014</em></p>
 
 <ul>
 <li>Assistant Scout Leader</li>
@@ -389,10 +377,10 @@ two Linux servers and around 50-70 desktops running a mix of windows 2000 and XP
 </div>
 
 <footer>
-    <p class="copyright">Copyright 2009-2013 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
     <ul id="ads">
         <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need hosting? Try <a href="http://www.vision108.com/">Vision180</a></li>
+        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
         <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
     </ul>
 </footer>
