@@ -3,7 +3,7 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2014-02-03T09:44:47+01:00</updated>
+    <updated>2014-02-06T23:42:21+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
@@ -13,7 +13,7 @@
     <entry>
         <title>What's Anycast and why would I use it?</title>
         <link href="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/"/>
-        <updated>2013-01-20T00:00:00+01:00</updated>
+        <updated>2013-01-20T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it</id>
         <content type="html">&lt;p&gt;Recently I've heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.&lt;/p&gt;
 
@@ -213,7 +213,7 @@ ns3 360 IN A 10.1.0.3
     <entry>
         <title>Slow SSH to new CentOS servers</title>
         <link href="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/"/>
-        <updated>2012-09-08T00:00:00+02:00</updated>
+        <updated>2012-09-08T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers</id>
         <content type="html">&lt;p&gt;Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
 out for 20-30 seconds on login then function fine once authenticated.&lt;/p&gt;
@@ -268,7 +268,7 @@ you can handle IPv6/dual stack properly but for now, problem solved!&lt;/p&gt;
     <entry>
         <title>KVIrc update breaks Irssi Proxy</title>
         <link href="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/"/>
-        <updated>2012-09-04T00:00:00+02:00</updated>
+        <updated>2012-09-04T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy</id>
         <content type="html">&lt;p&gt;I recently updated KVIrc on OS X from 3.2.0 to 4.2.0.
 The update appeared to complete successfully, however on trying to connect to my
@@ -341,7 +341,7 @@ scale settings changes.&lt;/p&gt;
     <entry>
         <title>Running a WSGI app via Gunicorn from Python</title>
         <link href="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/"/>
-        <updated>2012-08-20T00:00:00+02:00</updated>
+        <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python</id>
         <content type="html">&lt;p&gt;Anyone who's familiar with Gunicorn will know just how simple it is to get up
 and running; &lt;code&gt;gunicorn myapp.wsgi&lt;/code&gt;.&lt;/p&gt;
@@ -453,7 +453,7 @@ integrated manner :)&lt;/p&gt;
     <entry>
         <title>RADIUS authentication on a Dell PowerConnect M6220 switch</title>
         <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/"/>
-        <updated>2012-08-20T00:00:00+02:00</updated>
+        <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch</id>
         <content type="html">&lt;p&gt;A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
 (&lt;a href=&quot;/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/&quot;&gt;here&lt;/a&gt; for GbE2c L2/L3 switches and
@@ -510,7 +510,7 @@ ip https authentication radius local
     <entry>
         <title>RADIUS authentication on a HP ProCurve switch</title>
         <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/"/>
-        <updated>2012-04-01T00:00:00+02:00</updated>
+        <updated>2012-04-01T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch</id>
         <content type="html">&lt;p&gt;To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.&lt;/p&gt;
 
@@ -538,7 +538,7 @@ aaa authentication ssh enable radius local
     <entry>
         <title>RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</title>
         <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/"/>
-        <updated>2012-04-01T00:00:00+02:00</updated>
+        <updated>2012-04-01T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch</id>
         <content type="html">&lt;p&gt;To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.&lt;/p&gt;
 
@@ -563,7 +563,7 @@ radius-server secure-backdoor
     <entry>
         <title>SNTP on a HP ProCurve switch</title>
         <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/"/>
-        <updated>2012-03-18T00:00:00+01:00</updated>
+        <updated>2012-03-18T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch</id>
         <content type="html">&lt;p&gt;Configuring NTP for switches is a rather simple process, however the syntax varies depending on the switch OS.&lt;/p&gt;
 
@@ -619,7 +619,7 @@ Switch# logout
     <entry>
         <title>NTP on a HP GbE2c L2/L3 Blade Switch</title>
         <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/"/>
-        <updated>2012-03-18T00:00:00+01:00</updated>
+        <updated>2012-03-18T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch</id>
         <content type="html">&lt;p&gt;To configure a HP GbE2c L2/L3 Ethernet Blade Switch for HP c-Class BladeSystem, you need to use NTP with the following syntax.&lt;/p&gt;
 
@@ -709,7 +709,7 @@ Switch# logout
     <entry>
         <title>Restricting access to EdgeCast nodes</title>
         <link href="http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/"/>
-        <updated>2011-11-02T00:00:00+01:00</updated>
+        <updated>2011-11-02T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes</id>
         <content type="html">&lt;p&gt;Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.&lt;/p&gt;
 
@@ -902,7 +902,7 @@ RewriteRule ^downloads/&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;.*&lt;span 
     <entry>
         <title>Changing WordPress tag to category?</title>
         <link href="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/"/>
-        <updated>2011-08-25T00:00:00+02:00</updated>
+        <updated>2011-08-25T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category</id>
         <content type="html">&lt;p&gt;While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.&lt;/p&gt;
 
@@ -958,7 +958,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
     <entry>
         <title>Changing the MySQL client prompt</title>
         <link href="http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/"/>
-        <updated>2011-08-25T00:00:00+02:00</updated>
+        <updated>2011-08-25T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt</id>
         <content type="html">&lt;p&gt;It is quite easy to get lost in MySQL when working between a lot of databases.&lt;/p&gt;
 
@@ -1009,7 +1009,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
     <entry>
         <title>Useful cPanel paths</title>
         <link href="http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths</id>
         <content type="html">&lt;p&gt;Some common and useful paths for cPanel are as below - please note that these may change at any time.&lt;/p&gt;
 
@@ -1100,7 +1100,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
     <entry>
         <title>Upgrade EOL Clamav</title>
         <link href="http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav</id>
         <content type="html">
 
@@ -1136,7 +1136,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
     <entry>
         <title>Spoon!</title>
         <link href="http://damianzaremba.co.uk/2011/08/spoon/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/spoon</id>
         <content type="html">&lt;p&gt;It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.&lt;/p&gt;
 
@@ -1160,7 +1160,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
     <entry>
         <title>SMTP Authentication in Postfix using local system accounts</title>
         <link href="http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts</id>
         <content type="html">&lt;p&gt;In /etc/postfix/main.cf ensure the following values are set&lt;/p&gt;
 
@@ -1199,7 +1199,7 @@ passwd user2
     <entry>
         <title>Recovering deleted files from the handlers in /proc/</title>
         <link href="http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc</id>
         <content type="html">&lt;p&gt;On compromised servers it is very common for the exploit to delete its self/logs to try and hide its presence.&lt;/p&gt;
 
@@ -1222,7 +1222,7 @@ passwd user2
     <entry>
         <title>Quick script to get public IPs on a NAT'd server</title>
         <link href="http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server</id>
         <content type="html">&lt;p&gt;A quick one liner to get the public equivalent of internal IPs on a box behind NAT:&lt;/p&gt;
 
@@ -1261,7 +1261,7 @@ vnet0: &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;
     <entry>
         <title>MySQL uses no space on cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel</id>
         <content type="html">&lt;p&gt;For some reason cPanel decided to start by default excluding sql databases from the disk usage stats.&lt;/p&gt;
 
@@ -1276,7 +1276,7 @@ vnet0: &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;
     <entry>
         <title>Install PostgreSQL on cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel</id>
         <content type="html">&lt;p&gt;To install PostgreSQL on a cPanel server you can perform the following:&lt;/p&gt;
 
@@ -1307,7 +1307,7 @@ done
     <entry>
         <title>HTTP basic authentication - Apache</title>
         <link href="http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache</id>
         <content type="html">&lt;p&gt;Method 1)
 Inside the directory you wish to protect include a .htaccess file with the following content:&lt;/p&gt;
@@ -1352,7 +1352,7 @@ In your apache config file add the following:&lt;/p&gt;
     <entry>
         <title>Getting rid of cPanel IP Check errors</title>
         <link href="http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors</id>
         <content type="html">&lt;p&gt;On Linux servers behind NAT you will start getting emails warning that the DNS setup is broken.&lt;/p&gt;
 
@@ -1383,7 +1383,7 @@ Please check this file if you believe everything else is correct.
     <entry>
         <title>Force PECL to install 64bit modules</title>
         <link href="http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules</id>
         <content type="html">&lt;p&gt;To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.&lt;/p&gt;
 
@@ -1404,7 +1404,7 @@ Please check this file if you believe everything else is correct.
     <entry>
         <title>Fixing iptables for passive FTP</title>
         <link href="http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp</id>
         <content type="html">&lt;p&gt;To make passive FTP work with iptables you need to enable the &quot;ip_conntrack_ftp&quot; module. This is done by editing the /etc/sysconfig/iptables-config and changing&lt;/p&gt;
 
@@ -1425,7 +1425,7 @@ Please check this file if you believe everything else is correct.
     <entry>
         <title>Exim SMTP with multiple IPs and different HELO identifiers</title>
         <link href="http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers</id>
         <content type="html">&lt;p&gt;To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.&lt;/p&gt;
 
@@ -1464,7 +1464,7 @@ Please check this file if you believe everything else is correct.
     <entry>
         <title>Common PCI compliance issues - cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel</id>
         <content type="html">&lt;p&gt;It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.&lt;/p&gt;
 
@@ -1527,7 +1527,7 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
     <entry>
         <title>Check for CVE fixs</title>
         <link href="http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs</id>
         <content type="html">&lt;p&gt;To check if a CVE has been patched on a RHEL based system perform the following.&lt;/p&gt;
 
@@ -1550,7 +1550,7 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
     <entry>
         <title>Apache segmentation fault debugging</title>
         <link href="http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging</id>
         <content type="html">&lt;p&gt;Sometimes you will see lines like this in the Apache error log:&lt;/p&gt;
 
@@ -1604,7 +1604,7 @@ In /etc/security/limits.conf ensure the following line is present:&lt;/li&gt;
     <entry>
         <title>Apache process ID</title>
         <link href="http://damianzaremba.co.uk/2011/08/apache-process-id/"/>
-        <updated>2011-08-23T00:00:00+02:00</updated>
+        <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/apache-process-id</id>
         <content type="html">&lt;p&gt;Sometimes you need to know the Apache PID when trying to track down segfaults or CPU usage issues.&lt;/p&gt;
 
@@ -1627,7 +1627,7 @@ In /etc/security/limits.conf ensure the following line is present:&lt;/li&gt;
     <entry>
         <title>PHP CURL dual stack issue</title>
         <link href="http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/"/>
-        <updated>2011-08-18T00:00:00+02:00</updated>
+        <updated>2011-08-18T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue</id>
         <content type="html">&lt;p&gt;I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
 ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn't getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.&lt;/p&gt;
@@ -1702,7 +1702,7 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
     <entry>
         <title>Centos 6.0 kickstart partitioning issue</title>
         <link href="http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/"/>
-        <updated>2011-07-10T00:00:00+02:00</updated>
+        <updated>2011-07-10T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue</id>
         <content type="html">&lt;p&gt;In my kickstart files I &quot;cheat&quot; on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.&lt;/p&gt;
 
@@ -1745,7 +1745,7 @@ EOF
     <entry>
         <title>Twitter?</title>
         <link href="http://damianzaremba.co.uk/2011/06/twitter/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/twitter</id>
         <content type="html">&lt;p&gt;It appears twitter decided to have a re-style once again as can be seen below;&lt;/p&gt;
 
@@ -1776,7 +1776,7 @@ EOF
     <entry>
         <title>Quick update</title>
         <link href="http://damianzaremba.co.uk/2011/06/quick-update/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/quick-update</id>
         <content type="html">&lt;p&gt;Well, it has been a while.&lt;/p&gt;
 
@@ -1809,7 +1809,7 @@ EOF
     <entry>
         <title>Meth stove</title>
         <link href="http://damianzaremba.co.uk/2011/06/meth-stove/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/meth-stove</id>
         <content type="html">&lt;p&gt;I saw pretty cool stove the other day and decided to have a go at it.&lt;/p&gt;
 
@@ -1932,7 +1932,7 @@ The stove didn't work very well - upon lighting it the meths burnt off in a big 
     <entry>
         <title>Example of building nagios configs from LDAP</title>
         <link href="http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap</id>
         <content type="html">&lt;p&gt;Over at ClueNet we have a bunch of servers all stored in LDAP with owners and admins linked to user accounts also stored in LDAP! One thing we wanted to implement (as well as graphing, but cacti sorts that out) was service monitoring.&lt;/p&gt;
 
@@ -2185,7 +2185,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
     <entry>
         <title>Download festival hack</title>
         <link href="http://damianzaremba.co.uk/2011/06/download-festival-hack/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/download-festival-hack</id>
         <content type="html">&lt;p&gt;I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:&lt;/p&gt;
 
@@ -2284,7 +2284,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
     <entry>
         <title>Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</title>
         <link href="http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/"/>
-        <updated>2011-06-28T00:00:00+02:00</updated>
+        <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6</id>
         <content type="html">&lt;p&gt;I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.&lt;/p&gt;
 
@@ -2496,7 +2496,7 @@ One thing that does need doing is sending the system logs over to the syslog box
     <entry>
         <title>Wordpress plugin</title>
         <link href="http://damianzaremba.co.uk/2011/04/wordpress-plugin/"/>
-        <updated>2011-04-09T00:00:00+02:00</updated>
+        <updated>2011-04-09T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/04/wordpress-plugin</id>
         <content type="html">&lt;p&gt;Hi to anyone that reads this.&lt;/p&gt;
 
@@ -2535,7 +2535,7 @@ Both of these are optional and can be configured from the settings page.&lt;/p&g
     <entry>
         <title>canhazip</title>
         <link href="http://damianzaremba.co.uk/2011/03/canhazip/"/>
-        <updated>2011-03-30T00:00:00+02:00</updated>
+        <updated>2011-03-30T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/03/canhazip</id>
         <content type="html">&lt;p&gt;I was a little bored this afternoon so made &lt;a href=&quot;http://canhazip.info&quot;&gt;canhazip.info&lt;/a&gt;! Inspired by the awesome service &lt;a href=&quot;http://icanhazip.com/&quot;&gt;icanhazip.com&lt;/a&gt; run by &lt;a href=&quot;http://rackerhacker.com/&quot;&gt;RackerHacker&lt;/a&gt;, it basically does the same thing but there are some differences.&lt;/p&gt;
 
@@ -2699,7 +2699,7 @@ to the end of the URL.&lt;/p&gt;
     <entry>
         <title>Unix time to human readable?</title>
         <link href="http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/"/>
-        <updated>2010-12-12T00:00:00+01:00</updated>
+        <updated>2010-12-12T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable</id>
         <content type="html">&lt;p&gt;You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.&lt;/p&gt;
 
@@ -2733,7 +2733,7 @@ bob: Mon Nov 15 17:34:18 CET 2010
     <entry>
         <title>System activity reporter</title>
         <link href="http://damianzaremba.co.uk/2010/12/system-activity-reporter/"/>
-        <updated>2010-12-07T00:00:00+01:00</updated>
+        <updated>2010-12-07T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/system-activity-reporter</id>
         <content type="html">&lt;p&gt;Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.&lt;/p&gt;
 
@@ -3048,7 +3048,7 @@ rm -rf &lt;span class=&quot;s2&quot;&gt;&amp;quot;$base_dir&amp;quot;&lt;/span&g
     <entry>
         <title>Lots of files to remove?</title>
         <link href="http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/"/>
-        <updated>2010-12-01T00:00:00+01:00</updated>
+        <updated>2010-12-01T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove</id>
         <content type="html">&lt;p&gt;So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!&lt;/p&gt;
 
@@ -3090,7 +3090,7 @@ rm /tmp/repoup1291034701
     <entry>
         <title>Compiling nginx and PHP-FPM on CentOS 5</title>
         <link href="http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/"/>
-        <updated>2010-11-29T00:00:00+01:00</updated>
+        <updated>2010-11-29T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5</id>
         <content type="html">&lt;p&gt;&lt;a href=&quot;http://lukecarrier.me/&quot;&gt;Luke Carrier&lt;/a&gt;, founder and lead developer at &lt;a href=&quot;http://CloudFlux.net&quot;&gt;CloudFlux&lt;/a&gt; recently wrote a how-to on compiling Nginx and PHP-FPM (can be found &lt;a href=&quot;http://lukecarrier.me/?p=59&quot;&gt;here&lt;/a&gt;). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:&lt;/p&gt;
 
@@ -3129,7 +3129,7 @@ rm /tmp/repoup1291034701
     <entry>
         <title>Powershell!?!?!?!</title>
         <link href="http://damianzaremba.co.uk/2010/07/powershell/"/>
-        <updated>2010-07-21T00:00:00+02:00</updated>
+        <updated>2010-07-21T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/powershell</id>
         <content type="html">&lt;p&gt;Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D
 Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):&lt;/p&gt;
@@ -3546,7 +3546,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
     <entry>
         <title>virt-install is a life server</title>
         <link href="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/"/>
-        <updated>2010-07-06T00:00:00+02:00</updated>
+        <updated>2010-07-06T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server</id>
         <content type="html">&lt;p&gt;So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:&lt;/p&gt;
 
@@ -3731,7 +3731,7 @@ conf-dir=/etc/dnsmasq.d/
     <entry>
         <title>Coding Help</title>
         <link href="http://damianzaremba.co.uk/2010/06/coding-help/"/>
-        <updated>2010-06-09T00:00:00+02:00</updated>
+        <updated>2010-06-09T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/06/coding-help</id>
         <content type="html">&lt;p&gt;So I'm currently working on a small project which will require authentication. Not really sure how to achieve what I want so here's a quick explanation for anyone if you want to share ideas:
 Basic SQL definition:&lt;/p&gt;
@@ -3778,7 +3778,7 @@ mysql&amp;gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; describe user_groups
     <entry>
         <title>5min hack in python</title>
         <link href="http://damianzaremba.co.uk/2010/06/5min-hack-in-python/"/>
-        <updated>2010-06-06T00:00:00+02:00</updated>
+        <updated>2010-06-06T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/06/5min-hack-in-python</id>
         <content type="html">&lt;p&gt;So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled &gt;.&gt;) anyway I got bored of this for about 5min then spent the next 5min writing this:&lt;/p&gt;
 
@@ -3863,7 +3863,7 @@ iptables -I FORWARD -j BadIp
     <entry>
         <title>The difference</title>
         <link href="http://damianzaremba.co.uk/2010/05/the-difference/"/>
-        <updated>2010-05-08T00:00:00+02:00</updated>
+        <updated>2010-05-08T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/05/the-difference</id>
         <content type="html">&lt;p&gt;I have nothing but Python to post at the moment so I shall post the difference instead! Once I have some cool stable python up I will be posting more.
 &lt;img src=&quot;/2010/05/the-difference/the_difference.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
@@ -3873,7 +3873,7 @@ iptables -I FORWARD -j BadIp
     <entry>
         <title>Why I love Python</title>
         <link href="http://damianzaremba.co.uk/2010/04/why-i-love-python/"/>
-        <updated>2010-04-17T00:00:00+02:00</updated>
+        <updated>2010-04-17T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/04/why-i-love-python</id>
         <content type="html">&lt;p&gt;So I've been playing with Python a lot recently and it is just so amazing!&lt;/p&gt;
 
