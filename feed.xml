@@ -3,7 +3,7 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2014-03-01T14:06:47+00:00</updated>
+    <updated>2014-03-01T14:48:00+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
@@ -15,15 +15,15 @@
         <link href="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/"/>
         <updated>2013-01-20T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it</id>
-        <content type="html">&lt;p&gt;Recently I've heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.&lt;/p&gt;
+        <content type="html">&lt;p&gt;Recently I&#39;ve heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.&lt;/p&gt;
 
-&lt;p&gt;While I'm not a network dude, hopefully this post will give you an overview of what Anycast is, how it's useful and what to watch out for.&lt;/p&gt;
+&lt;p&gt;While I&#39;m not a network dude, hopefully this post will give you an overview of what Anycast is, how it&#39;s useful and what to watch out for.&lt;/p&gt;
 
 &lt;h2&gt;Overview&lt;/h2&gt;
 
 &lt;p&gt;Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.&lt;/p&gt;
 
-&lt;p&gt;As far as the 'client' is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.&lt;/p&gt;
+&lt;p&gt;As far as the &#39;client&#39; is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.&lt;/p&gt;
 
 &lt;p&gt;A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below&lt;/p&gt;
 
@@ -55,7 +55,7 @@
 
 &lt;p&gt;Note the the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).&lt;/p&gt;
 
-&lt;p&gt;The 'magic' here happens at the routing layer, a router will have multiple 'paths' to the IP (173.245.59.118) and chooses the best one based on its metrics.&lt;/p&gt;
+&lt;p&gt;The &#39;magic&#39; here happens at the routing layer, a router will have multiple &#39;paths&#39; to the IP (173.245.59.118) and chooses the best one based on its metrics.&lt;/p&gt;
 
 &lt;p&gt;A large (public) example of Anycast being used is the &lt;a href=&quot;http://root-servers.org/&quot;&gt;root nameservers&lt;/a&gt; - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.&lt;/p&gt;
 
@@ -71,23 +71,23 @@
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;The problem here is you are having to go via Scotland to access Wales from England, when they have a directly link. You can't have both links up because you'd cause a loop and no traffic would pass.&lt;/p&gt;
+&lt;p&gt;The problem here is you are having to go via Scotland to access Wales from England, when they have a directly link. You can&#39;t have both links up because you&#39;d cause a loop and no traffic would pass.&lt;/p&gt;
 
-&lt;p&gt;The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you'd want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.&lt;/p&gt;
+&lt;p&gt;The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you&#39;d want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.&lt;/p&gt;
 
-&lt;p&gt;I'm not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn't hugely matter. Lets assume both links are the same speed and are direct (1 hop away).&lt;/p&gt;
+&lt;p&gt;I&#39;m not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn&#39;t hugely matter. Lets assume both links are the same speed and are direct (1 hop away).&lt;/p&gt;
 
 &lt;p&gt;The topology looks something like&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;This means if any of the offices want to talk to another office, they are only 1 hop away and don't have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.&lt;/p&gt;
+&lt;p&gt;This means if any of the offices want to talk to another office, they are only 1 hop away and don&#39;t have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;In summary using routing between the 3 offices allows for transparent failover and best-performance access. In a more complicated topology this is very useful.&lt;/p&gt;
 
-&lt;p&gt;Essentially, this is also how 'Anycast' works - the main difference being is we're dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn't care either way - it will choose the 'best' path based on what it knows about.&lt;/p&gt;
+&lt;p&gt;Essentially, this is also how &#39;Anycast&#39; works - the main difference being is we&#39;re dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn&#39;t care either way - it will choose the &#39;best&#39; path based on what it knows about.&lt;/p&gt;
 
 &lt;h2&gt;Why is this useful?&lt;/h2&gt;
 
@@ -101,7 +101,7 @@
 &lt;/ul&gt;
 
 
-&lt;h2&gt;Why doesn't everyone use it?&lt;/h2&gt;
+&lt;h2&gt;Why doesn&#39;t everyone use it?&lt;/h2&gt;
 
 &lt;p&gt;There are some drawbacks to using Anycast addressing&lt;/p&gt;
 
@@ -115,7 +115,7 @@
 
 &lt;h2&gt;How would I use it?&lt;/h2&gt;
 
-&lt;p&gt;One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk 'breaking' connections across 2 nodes.&lt;/p&gt;
+&lt;p&gt;One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk &#39;breaking&#39; connections across 2 nodes.&lt;/p&gt;
 
 &lt;p&gt;Imagine you where serving users out of Europe, US and Asia-Pacific.&lt;/p&gt;
 
@@ -140,15 +140,15 @@ ns3 360 IN  A   172.16.0.1
 
 &lt;p&gt;These NS records would then be &quot;glued&quot; on the root nameservers, so the first resolver can find the NS servers IP address.&lt;/p&gt;
 
-&lt;p&gt;Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to failover (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the 'local' one to them.&lt;/p&gt;
+&lt;p&gt;Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to failover (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the &#39;local&#39; one to them.&lt;/p&gt;
 
 &lt;p&gt;Anycast helps to solve both these issues.&lt;/p&gt;
 
-&lt;p&gt;If a server goes down you can withdraw the route and (as long as you're not flapping routes) your peers should pick it up in a few minutes.&lt;/p&gt;
+&lt;p&gt;If a server goes down you can withdraw the route and (as long as you&#39;re not flapping routes) your peers should pick it up in a few minutes.&lt;/p&gt;
 
-&lt;p&gt;In the case of a user making a request to the Anycast IP, the request will be routed to the 'nearest' node - in normal operation this would be the 'local' one, if that had failed it would automatically (after the route withdrawal) go to the next 'nearest'.&lt;/p&gt;
+&lt;p&gt;In the case of a user making a request to the Anycast IP, the request will be routed to the &#39;nearest&#39; node - in normal operation this would be the &#39;local&#39; one, if that had failed it would automatically (after the route withdrawal) go to the next &#39;nearest&#39;.&lt;/p&gt;
 
-&lt;p&gt;Now I'm quoting 'nearest' and 'local' and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.&lt;/p&gt;
+&lt;p&gt;Now I&#39;m quoting &#39;nearest&#39; and &#39;local&#39; and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.&lt;/p&gt;
 
 &lt;p&gt;The routing before we start using Anycast&lt;/p&gt;
 
@@ -158,7 +158,7 @@ ns3 360 IN  A   172.16.0.1
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;So lets start using Anycast, we're going to keep the original IPs as 'maintenance' IPs - ones we know only go to that single host and create a new block.&lt;/p&gt;
+&lt;p&gt;So lets start using Anycast, we&#39;re going to keep the original IPs as &#39;maintenance&#39; IPs - ones we know only go to that single host and create a new block.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;myawesomedns.something.  360 IN  SOA ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
@@ -188,13 +188,13 @@ ns3 360 IN A 10.1.0.3
 
 &lt;p&gt;This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).&lt;/p&gt;
 
-&lt;p&gt;I won't go into the BGP configuration in this post as it's a little lengthy to explain/draw how routing ables look, essentially you configure your neighbours and send them /32 routes - &lt;a href=&quot;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml&quot;&gt;cisco&lt;/a&gt; have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)&lt;/p&gt;
+&lt;p&gt;I won&#39;t go into the BGP configuration in this post as it&#39;s a little lengthy to explain/draw how routing ables look, essentially you configure your neighbours and send them /32 routes - &lt;a href=&quot;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml&quot;&gt;cisco&lt;/a&gt; have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)&lt;/p&gt;
 
-&lt;p&gt;The routing after we start using 'Anycast' IPs&lt;/p&gt;
+&lt;p&gt;The routing after we start using &#39;Anycast&#39; IPs&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Requests to ns{1..3} (10.1.0.{1..3}) after we start using 'Anycast' IPs&lt;/p&gt;
+&lt;p&gt;Requests to ns{1..3} (10.1.0.{1..3}) after we start using &#39;Anycast&#39; IPs&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -215,16 +215,16 @@ ns3 360 IN A 10.1.0.3
         <link href="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/"/>
         <updated>2012-09-08T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers</id>
-        <content type="html">&lt;p&gt;Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
+        <content type="html">&lt;p&gt;Recently when installing new servers I &#39;randomly&#39; had an issue where SSH connections would lag
 out for 20-30 seconds on login then function fine once authenticated.&lt;/p&gt;
 
 &lt;p&gt;I noticed this issue on CentOS 5/6 servers, however it probably applies to
 anything running glibc 2.10+.&lt;/p&gt;
 
 &lt;p&gt;Now while there are a few reasons SSH might be doing this (most of which can be
-seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).&lt;/p&gt;
+seen using verbose flags), it wasn&#39;t the usual suspects (GSSAPI etc).&lt;/p&gt;
 
-&lt;p&gt;The interesting part was, this wasn't happening on all servers (they are
+&lt;p&gt;The interesting part was, this wasn&#39;t happening on all servers (they are
 standard config wise thanks to puppet).&lt;/p&gt;
 
 &lt;p&gt;It turns out the UseDNS setting was failing, very slowly. Now a simple way to
@@ -245,7 +245,7 @@ documented) option that you can add to your
 resolv.conf file &lt;code&gt;single-request-reopen&lt;/code&gt;. This forces glibc to enter
 fallback mode straight away and kills the delay.&lt;/p&gt;
 
-&lt;p&gt;An example of the 'patched' /etc/resolv.conf file&lt;/p&gt;
+&lt;p&gt;An example of the &#39;patched&#39; /etc/resolv.conf file&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;# This file is managed via Puppet
 
@@ -287,18 +287,18 @@ Local host address is 10.44.1.2
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
-using the STARTTLS extension' enabled.&lt;/p&gt;
+&lt;p&gt;It turns out that in 4.2.0 the servers automatically had &#39;Switch to SSL/TLS by
+using the STARTTLS extension&#39; enabled.&lt;/p&gt;
 
-&lt;p&gt;Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show
+&lt;p&gt;Unfortunately Irssi Proxy doesn&#39;t like STARTTLS, so while the logs show
 successful connections no data is transferred over the socket.&lt;/p&gt;
 
 &lt;p&gt;The simple solution to get things back up and running properly is to disable the
 option under each server.&lt;/p&gt;
 
-&lt;p&gt;To do this browse to 'Configure servers' under Settings, double click on the
-server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by
-using the STARTTLS extension'.&lt;/p&gt;
+&lt;p&gt;To do this browse to &#39;Configure servers&#39; under Settings, double click on the
+server under the network, tab over to Advanced and disable &#39;Switch to SSL/TLS by
+using the STARTTLS extension&#39;.&lt;/p&gt;
 
 &lt;p&gt;If you have a large number of servers you can also directly edit the ini file
 under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a
@@ -343,10 +343,10 @@ scale settings changes.&lt;/p&gt;
         <link href="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/"/>
         <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python</id>
-        <content type="html">&lt;p&gt;Anyone who's familiar with Gunicorn will know just how simple it is to get up
+        <content type="html">&lt;p&gt;Anyone who&#39;s familiar with Gunicorn will know just how simple it is to get up
 and running; &lt;code&gt;gunicorn myapp.wsgi&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;For a little project I'm working on I wanted to take this up a level and run
+&lt;p&gt;For a little project I&#39;m working on I wanted to take this up a level and run
 Gunicorn from a Python script, passing in any options as required and not
 relying on sys.argv.&lt;/p&gt;
 
@@ -443,7 +443,7 @@ class, passing any options as required.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;In practice you'd probably load the options from a config file in your program.&lt;/p&gt;
+&lt;p&gt;In practice you&#39;d probably load the options from a config file in your program.&lt;/p&gt;
 
 &lt;p&gt;Hopefully this should help you getting Gunicorn running smoothly in a more
 integrated manner :)&lt;/p&gt;
@@ -455,12 +455,12 @@ integrated manner :)&lt;/p&gt;
         <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/"/>
         <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch</id>
-        <content type="html">&lt;p&gt;A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
+        <content type="html">&lt;p&gt;A while back I posted the &#39;how-to&#39; on setting up HP switches for RADIUS authentication
 (&lt;a href=&quot;/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/&quot;&gt;here&lt;/a&gt; for GbE2c L2/L3 switches and
 &lt;a href=&quot;/2012/04/radius-authentication-on-a-hp-procurve-switch/&quot;&gt;here&lt;/a&gt; for ProCurve switches).&lt;/p&gt;
 
 &lt;p&gt;I also had to setup some Dell PowerConnect M6220 switches; these proved to be
-slightly more complicated than the HP's, but followed the Cisco style config.&lt;/p&gt;
+slightly more complicated than the HP&#39;s, but followed the Cisco style config.&lt;/p&gt;
 
 &lt;p&gt;First we need add a custom login and enable method&lt;/p&gt;
 
@@ -503,7 +503,7 @@ ip https authentication radius local
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;We include local on every method to ensure we don't get locked out the switch.&lt;/p&gt;
+&lt;p&gt;We include local on every method to ensure we don&#39;t get locked out the switch.&lt;/p&gt;
 </content>
     </entry>
     
@@ -577,7 +577,7 @@ timesync sntp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.&lt;/p&gt;
+&lt;p&gt;The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it&#39;s time with the SNTP server.&lt;/p&gt;
 
 &lt;p&gt;This needs to be done in configure mode which can be got into via enable mode.&lt;/p&gt;
 
@@ -713,13 +713,13 @@ Switch# logout
         <id>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes</id>
         <content type="html">&lt;p&gt;Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.&lt;/p&gt;
 
-&lt;p&gt;We quickly had to move him on to the CDN to ensure the traffic impact wasn't affecting performance for him or others as well as reduce his bandwidth charges substantially.&lt;/p&gt;
+&lt;p&gt;We quickly had to move him on to the CDN to ensure the traffic impact wasn&#39;t affecting performance for him or others as well as reduce his bandwidth charges substantially.&lt;/p&gt;
 
 &lt;p&gt;Once the CDN was all set up and the content pushed out onto the nodes we started to send traffic over.&lt;/p&gt;
 
 &lt;p&gt;Due to the impact of social media and people linking directly to the content we had to devise a plan to enable access to the content for the CDN but redirect anyone linking directly to the CDNified subdomain.&lt;/p&gt;
 
-&lt;p&gt;In comes mod_rewrite. Now it appears EdgeCast don't publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.&lt;/p&gt;
+&lt;p&gt;In comes mod_rewrite. Now it appears EdgeCast don&#39;t publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.&lt;/p&gt;
 
 &lt;p&gt;Linux to the rescue! First we just copy the list into a file:&lt;/p&gt;
 
@@ -803,14 +803,14 @@ Other N/A 72.21.80.0 - 72.21.80.255
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):&lt;/p&gt;
+&lt;p&gt;Now let&#39;s actually turn these IP ranges into something Apache can understand (they are all /24&#39;s so we can cheat):&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sed -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&amp;#39;&lt;/span&gt; edgecast_ranges &lt;span class=&quot;c&quot;&gt;# Add the rewrite cond&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;sed -i &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/\.255$/.*$/g&amp;#39;&lt;/span&gt; edgecast_ranges &lt;span class=&quot;c&quot;&gt;# Add the wildcard&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Now let's create the actual htaccess file:&lt;/p&gt;
+&lt;p&gt;Now let&#39;s create the actual htaccess file:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;RewriteEngine On&amp;#39;&lt;/span&gt; &amp;gt;&amp;gt; .htaccess
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;cat edgecast_ranges &amp;gt;&amp;gt; .htaccess
@@ -904,18 +904,18 @@ RewriteRule ^downloads/&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;.*&lt;span 
         <link href="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/"/>
         <updated>2011-08-25T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category</id>
-        <content type="html">&lt;p&gt;While there appears to be plugins for converting categories to tags, I can't for the life of me find one to convert tags to categories.&lt;/p&gt;
+        <content type="html">&lt;p&gt;While there appears to be plugins for converting categories to tags, I can&#39;t for the life of me find one to convert tags to categories.&lt;/p&gt;
 
 &lt;p&gt;After a quick poke around in the database it seem quite simple to convert between the two.
 Note: This /seems/ to work however it might kick you in the face and break stuff.&lt;/p&gt;
 
 &lt;p&gt;First find out your &quot;term&quot; id (category or tag):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; SELECT * FROM &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;terms&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;slug&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;snippets&amp;#39;&lt;/span&gt;;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; SELECT * FROM &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;terms&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;slug&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;snippets&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 +---------+----------+----------+------------+
-| term_id | name | slug | term_group |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; term_id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; name &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; slug &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; term_group &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------+----------+----------+------------+
-| 171 | Snippets | snippets | 0 |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 171 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Snippets &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; snippets &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 0 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------+----------+----------+------------+
 1 row in &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.00 sec&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -923,11 +923,11 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 &lt;p&gt;Now look in the taxonomy table and find out its details:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; SELECT * FROM &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; SELECT * FROM &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 +------------------+---------+----------+-------------+--------+-------+
-| term_taxonomy_id | term_id | taxonomy | description | parent | count |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; term_taxonomy_id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; term_id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; taxonomy &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; description &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; parent &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; count &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +------------------+---------+----------+-------------+--------+-------+
-| 174 | 171 | post_tag | | 0 | 17 |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 174 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 171 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; post_tag &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 0 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 17 &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +------------------+---------+----------+-------------+--------+-------+
 1 row in &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.00 sec&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -937,7 +937,7 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 &lt;p&gt;To change it to a category change the &quot;taxonomy&quot; field to &quot;category&quot;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; UPDATE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; SET &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;category&amp;#39;&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; UPDATE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; SET &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;category&amp;#39;&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 Query OK, 1 row affected &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.00 sec&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Rows matched: 1 Changed: 1 Warnings: 0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -945,7 +945,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 &lt;p&gt;Or to change it from a category to a tag then change the &quot;taxonomy&quot; field to &quot;post_tag&quot;:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; UPDATE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; SET &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;post_tag&amp;#39;&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; UPDATE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; SET &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;taxonomy&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;post_tag&amp;#39;&lt;/span&gt; WHERE &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;term_id&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 171&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 Query OK, 1 row affected &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.02 sec&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 Rows matched: 1 Changed: 1 Warnings: 0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -964,12 +964,12 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 &lt;p&gt;While you can find out which database you are in, it soon becomes quite irritating having to type&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; &lt;span class=&quot;k&quot;&gt;select &lt;/span&gt;database&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt; &lt;span class=&quot;k&quot;&gt;select &lt;/span&gt;database&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 +------------------+
-| database&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; database&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +------------------+
-| test_database |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; test_database &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +------------------+
 1 row in &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.01 sec&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -992,7 +992,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:&lt;/p&gt;
+&lt;p&gt;No more getting confused! If you don&#39;t have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;client&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;host&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;localhost&amp;quot;&lt;/span&gt;
@@ -1063,11 +1063,11 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
         &lt;/tr&gt;
         &lt;tr&gt;
             &lt;td&gt;/usr/local/apache/conf/userdata/std/2/$user/$domain/configuration.conf&lt;/td&gt;
-            &lt;td&gt;Apache vhost config customizations for $user's $domain (not SSL)&lt;/td&gt;
+            &lt;td&gt;Apache vhost config customizations for $user&#39;s $domain (not SSL)&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
             &lt;td&gt;/usr/local/apache/conf/userdata/ssl/2/$user/$domain/configuration.conf&lt;/td&gt;
-            &lt;td&gt;Apache vhost config customizations for $user's $domain (SSL)&lt;/td&gt;
+            &lt;td&gt;Apache vhost config customizations for $user&#39;s $domain (SSL)&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
             &lt;td&gt;/etc/userdomains&lt;/td&gt;
@@ -1138,7 +1138,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:&l
         <link href="http://damianzaremba.co.uk/2011/08/spoon/"/>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/spoon</id>
-        <content type="html">&lt;p&gt;It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.&lt;/p&gt;
+        <content type="html">&lt;p&gt;It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I&#39;ve made a pretty decent start on a spoon.&lt;/p&gt;
 
 &lt;p&gt;This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:&lt;/p&gt;
 
@@ -1226,15 +1226,15 @@ passwd user2
         <id>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server</id>
         <content type="html">&lt;p&gt;A quick one liner to get the public equivalent of internal IPs on a box behind NAT:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig | grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; | grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int ipv4.canhazip.info)&amp;quot;&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int ipv4.canhazip.info)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.&lt;/p&gt;
+&lt;p&gt;I&#39;ve restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.&lt;/p&gt;
 
 &lt;p&gt;Example usage is as follows:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig | grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; | grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int ipv4.canhazip.info)&amp;quot;&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int ipv4.canhazip.info)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
 br0: 10.44.200.5 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; 89.242.208.82
 br0:1: 10.44.200.15 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; 89.242.208.82
 cluevpn: 10.156.1.49 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; 89.242.208.82
@@ -1245,7 +1245,7 @@ vnet0: &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;
 
 &lt;p&gt;Or if you want IPv6 addresses returned:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig | grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; | grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int canhazip.info)&amp;quot;&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;damian@finnix ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;int in &lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;ifconfig &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &lt;span class=&quot;s2&quot;&gt;&amp;quot;Link encap:&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep -v &lt;span class=&quot;s1&quot;&gt;&amp;#39;lo&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$int: $(ifconfig $int | grep &amp;quot;&lt;/span&gt;inet addr:&lt;span class=&quot;s2&quot;&gt;&amp;quot; | awk &amp;#39;{print $2}&amp;#39; | cut -d: -f2) =&amp;gt; $(curl -s --interface $int canhazip.info)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;
 br0: 10.44.200.5 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt; 2001:470:9083::2
 br0:1: 10.44.200.15 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;
 cluevpn: 10.156.1.49 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&amp;gt;
@@ -1358,7 +1358,7 @@ In your apache config file add the following:&lt;/p&gt;
 
 &lt;p&gt;cPanel states that the panel does not work behind NAT and the boxes need &lt;strong&gt;public&lt;/strong&gt; ip addresses.&lt;/p&gt;
 
-&lt;p&gt;It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn't recommend it, sometimes you have no choice.&lt;/p&gt;
+&lt;p&gt;It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn&#39;t recommend it, sometimes you have no choice.&lt;/p&gt;
 
 &lt;p&gt;The email you get though is something like the following:&lt;/p&gt;
 
@@ -1468,11 +1468,11 @@ Please check this file if you believe everything else is correct.
         <id>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel</id>
         <content type="html">&lt;p&gt;It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.&lt;/p&gt;
 
-&lt;p&gt;1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don't even header check what is running, they just assume based on IANA assignments what is running.&lt;/p&gt;
+&lt;p&gt;1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don&#39;t even header check what is running, they just assume based on IANA assignments what is running.&lt;/p&gt;
 
 &lt;p&gt;For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.&lt;/p&gt;
 
-&lt;p&gt;If the PCI scanner can't access the port it can't complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!&lt;/p&gt;
+&lt;p&gt;If the PCI scanner can&#39;t access the port it can&#39;t complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!&lt;/p&gt;
 
 &lt;p&gt;Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.&lt;/p&gt;
 
@@ -1533,13 +1533,13 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
 
 &lt;p&gt;First, get the real package name:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;rpm -qa | grep &amp;lt;package&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;rpm -qa &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &amp;lt;package&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Now check the package change log for CVE patches:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;rpm -q &amp;lt;package&amp;gt; --changelog | grep &amp;lt;cve number&amp;gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;rpm -q &amp;lt;package&amp;gt; --changelog &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; grep &amp;lt;cve number&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
@@ -1560,7 +1560,7 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
 
 &lt;p&gt;This means for some reason the child thread/fork has segfaulted when trying to process the request.&lt;/p&gt;
 
-&lt;p&gt;By default apache won't give you any more info than this. To get core dumps you will need to do the following.&lt;/p&gt;
+&lt;p&gt;By default apache won&#39;t give you any more info than this. To get core dumps you will need to do the following.&lt;/p&gt;
 
 &lt;ol&gt;
 &lt;li&gt;Enable system coredumps for the apache user.
@@ -1630,13 +1630,13 @@ In /etc/security/limits.conf ensure the following line is present:&lt;/li&gt;
         <updated>2011-08-18T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue</id>
         <content type="html">&lt;p&gt;I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
-ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn't getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.&lt;/p&gt;
+ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn&#39;t getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.&lt;/p&gt;
 
 &lt;p&gt;After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).&lt;/p&gt;
 
-&lt;p&gt;Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn't! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!&lt;/p&gt;
+&lt;p&gt;Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn&#39;t! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!&lt;/p&gt;
 
-&lt;p&gt;A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don't even document that you can set the IPRESOLVE option, but you can! Yay for php...&lt;/p&gt;
+&lt;p&gt;A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don&#39;t even document that you can set the IPRESOLVE option, but you can! Yay for php...&lt;/p&gt;
 
 &lt;p&gt;The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:&lt;/p&gt;
 
@@ -1734,7 +1734,7 @@ EOF
 
 &lt;p&gt;It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).&lt;/p&gt;
 
-&lt;p&gt;The simplest way to fix this is just to make --size=1 (lets face it, your minimum partition size isn't going to be smaller 1mb!).&lt;/p&gt;
+&lt;p&gt;The simplest way to fix this is just to make --size=1 (lets face it, your minimum partition size isn&#39;t going to be smaller 1mb!).&lt;/p&gt;
 
 &lt;p&gt;Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.&lt;/p&gt;
 
@@ -1769,7 +1769,7 @@ EOF
 
 &lt;p&gt;The recent changes to send email notifications on events also seems to be a step backwards - they are moving things away from near-real time to slow time. The notifications also seem to be quite slow along with the search feeds which I hope they speed up soon.&lt;/p&gt;
 
-&lt;p&gt;The one notification I wouldn't mind getting via email is un-follow notifications, I currently rely on third-party services +a bunch of Perl for them.&lt;/p&gt;
+&lt;p&gt;The one notification I wouldn&#39;t mind getting via email is un-follow notifications, I currently rely on third-party services +a bunch of Perl for them.&lt;/p&gt;
 </content>
     </entry>
     
@@ -1784,11 +1784,11 @@ EOF
 
 &lt;p&gt;Once everything is merged learnabouttheweb.co.uk and thegeekstop.net will point to damianzaremba.co.uk/blog/!&lt;/p&gt;
 
-&lt;p&gt;Apart from my tumblr account (which I post random pictures too) I don't see the point in having separate blogs all over the place.&lt;/p&gt;
+&lt;p&gt;Apart from my tumblr account (which I post random pictures too) I don&#39;t see the point in having separate blogs all over the place.&lt;/p&gt;
 
 &lt;p&gt;Here will become my random content, how to, scripts and generally anything I get time to post about.&lt;/p&gt;
 
-&lt;p&gt;Some topics I'm trying to catch up on at the moment are:&lt;/p&gt;
+&lt;p&gt;Some topics I&#39;m trying to catch up on at the moment are:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Camping/outdoor skills&lt;/p&gt;&lt;/li&gt;
@@ -1813,7 +1813,7 @@ EOF
         <id>http://damianzaremba.co.uk/2011/06/meth-stove</id>
         <content type="html">&lt;p&gt;I saw pretty cool stove the other day and decided to have a go at it.&lt;/p&gt;
 
-&lt;p&gt;The final stove was a little messy but &lt;em&gt;should&lt;/em&gt; work fine - I'm going to test it on Thursday and see if it works or not.&lt;/p&gt;
+&lt;p&gt;The final stove was a little messy but &lt;em&gt;should&lt;/em&gt; work fine - I&#39;m going to test it on Thursday and see if it works or not.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2011/06/meth-stove/IMG_0356-225x300.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1823,7 +1823,7 @@ EOF
 &lt;li&gt;Be careful once you start making cuts - You end up with tiny bits of metal that are &lt;em&gt;very&lt;/em&gt; sharp.&lt;/li&gt;
 &lt;li&gt;File off the edges - It makes the metal easier to work with and stops you from slicing your fingers open.&lt;/li&gt;
 &lt;li&gt;Measure the height of your inner wall - It makes fitting the thing together much easier.&lt;/li&gt;
-&lt;li&gt;Don't slice down the side of the can when scoring off the bottoms - This makes it easier to get the bottoms off but means you need a spare can for the inner.&lt;/li&gt;
+&lt;li&gt;Don&#39;t slice down the side of the can when scoring off the bottoms - This makes it easier to get the bottoms off but means you need a spare can for the inner.&lt;/li&gt;
 &lt;li&gt;Be careful when making the holes in the top - I started out with a pin that made nice round holes then broke it so used a knife that made much bigger &quot;slots&quot;.&lt;/li&gt;
 &lt;li&gt;When rolling your inner wall use a bit of tape - it will burn off later.&lt;/li&gt;
 &lt;/ul&gt;
@@ -1906,9 +1906,9 @@ EOF
 
 &lt;h2&gt;Footnotes&lt;/h2&gt;
 
-&lt;p&gt;I've seen a few other people's stoves and they seem to cut them down to just under 2&quot;.&lt;/p&gt;
+&lt;p&gt;I&#39;ve seen a few other people&#39;s stoves and they seem to cut them down to just under 2&quot;.&lt;/p&gt;
 
-&lt;p&gt;Mine ended up slightly bigger as can be seen below. I'm not sure how this will affect its performance but it should produce a better cooking height.&lt;/p&gt;
+&lt;p&gt;Mine ended up slightly bigger as can be seen below. I&#39;m not sure how this will affect its performance but it should produce a better cooking height.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/2011/06/meth-stove/IMG_0358-225x300.jpg&quot; alt=&quot;&quot; /&gt; &lt;img src=&quot;/2011/06/meth-stove/IMG_0359-225x300.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
@@ -1916,16 +1916,16 @@ EOF
 
 &lt;h3&gt;Other&lt;/h3&gt;
 
-&lt;p&gt;I'm going to light this on thursday and see if it works fine - It might explode or work fine. I think I slightly crimped the inner wall while fitting it together.&lt;/p&gt;
+&lt;p&gt;I&#39;m going to light this on thursday and see if it works fine - It might explode or work fine. I think I slightly crimped the inner wall while fitting it together.&lt;/p&gt;
 
-&lt;p&gt;If it works fine I'll probably build another and document it better else I'll do a design review. As long as my phone doesn't die on me I'll try to get a video of lighting it which could turn out quite funny...&lt;/p&gt;
+&lt;p&gt;If it works fine I&#39;ll probably build another and document it better else I&#39;ll do a design review. As long as my phone doesn&#39;t die on me I&#39;ll try to get a video of lighting it which could turn out quite funny...&lt;/p&gt;
 
 &lt;p&gt;Update:
-The stove didn't work very well - upon lighting it the meths burnt off in a big puff of singed hair and wouldn't turn into anything more.&lt;/p&gt;
+The stove didn&#39;t work very well - upon lighting it the meths burnt off in a big puff of singed hair and wouldn&#39;t turn into anything more.&lt;/p&gt;
 
-&lt;p&gt;I'm guessing the holes where too big causes a massive rush of oxygen into the fuel &quot;store&quot; and it burning off very quickly.&lt;/p&gt;
+&lt;p&gt;I&#39;m guessing the holes where too big causes a massive rush of oxygen into the fuel &quot;store&quot; and it burning off very quickly.&lt;/p&gt;
 
-&lt;p&gt;I'll have another go at building one some time soon as I burnt this attempted (we had a reasonably sized fire, what else would you do) and let you know if it turns out any better.&lt;/p&gt;
+&lt;p&gt;I&#39;ll have another go at building one some time soon as I burnt this attempted (we had a reasonably sized fire, what else would you do) and let you know if it turns out any better.&lt;/p&gt;
 </content>
     </entry>
     
@@ -1941,10 +1941,10 @@ The stove didn't work very well - upon lighting it the meths burnt off in a big 
 &lt;p&gt;Some notes about this script:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Currently we don't store attributes in the servers entry relating to what services to monitor, this is something I'm looking at implimenting&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Currently we don&#39;t store attributes in the servers entry relating to what services to monitor, this is something I&#39;m looking at implimenting&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;IP addresses and SSH ports are stored in LDAP&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Server owners AND admins should have access to update the server in Nagios (they do in LDAP!)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;There is no attribute under the users entry to determine if we &lt;em&gt;should&lt;/em&gt; notify them about alerts so we don't atm!&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;There is no attribute under the users entry to determine if we &lt;em&gt;should&lt;/em&gt; notify them about alerts so we don&#39;t atm!&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;The only way people know about alerts is the relay channel on IRC or the web interface&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -1995,7 +1995,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 
 &lt;p&gt;This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.&lt;/p&gt;
 
-&lt;p&gt;Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.&lt;/p&gt;
+&lt;p&gt;Also, the Perl could do with tidying up a little as I&#39;m not the best Perl programmer on the planet.&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;perl&quot;&gt;&lt;span class=&quot;c1&quot;&gt;#!/usr/bin/env perl&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;use&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;strict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
@@ -2187,7 +2187,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
         <link href="http://damianzaremba.co.uk/2011/06/download-festival-hack/"/>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/download-festival-hack</id>
-        <content type="html">&lt;p&gt;I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:&lt;/p&gt;
+        <content type="html">&lt;p&gt;I didn&#39;t make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let&#39;s make a good job of it thing.). Script is as below:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/env python&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -2290,7 +2290,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 
 &lt;p&gt;The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.&lt;/p&gt;
 
-&lt;p&gt;I've included an example config below with comments&lt;/p&gt;
+&lt;p&gt;I&#39;ve included an example config below with comments&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;text&quot;&gt;!! Basic stuff
 version 12.4
@@ -2489,7 +2489,7 @@ end
 
 
 &lt;p&gt;I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job.
-One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I'll start playing with the configs, for now they work just fine.&lt;/p&gt;
+One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I&#39;ll start playing with the configs, for now they work just fine.&lt;/p&gt;
 </content>
     </entry>
     
@@ -2701,7 +2701,7 @@ to the end of the URL.&lt;/p&gt;
         <link href="http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/"/>
         <updated>2010-12-12T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable</id>
-        <content type="html">&lt;p&gt;You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.&lt;/p&gt;
+        <content type="html">&lt;p&gt;You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don&#39;t feel like calling out to Perl.&lt;/p&gt;
 
 &lt;p&gt;Quick example:&lt;/p&gt;
 
@@ -2735,11 +2735,11 @@ bob: Mon Nov 15 17:34:18 CET 2010
         <link href="http://damianzaremba.co.uk/2010/12/system-activity-reporter/"/>
         <updated>2010-12-07T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/system-activity-reporter</id>
-        <content type="html">&lt;p&gt;Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.&lt;/p&gt;
+        <content type="html">&lt;p&gt;Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don&#39;t even want graphs you just want to know that if needed you can find out what your memory usage was last week.&lt;/p&gt;
 
 &lt;p&gt;A nice simple program is the system activity reporter or SAR.&lt;/p&gt;
 
-&lt;p&gt;To get started you'll want to install and start sysstat, on a centos box this can be done as below:&lt;/p&gt;
+&lt;p&gt;To get started you&#39;ll want to install and start sysstat, on a centos box this can be done as below:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Make sure the system is up to date&lt;/span&gt;
 yum update
@@ -2755,7 +2755,7 @@ service sysstat start
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)&lt;/p&gt;
+&lt;p&gt;Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I&#39;ll only be covering the 2). I&#39;ll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;IOStat&lt;/strong&gt;&lt;/p&gt;
 
@@ -2772,7 +2772,7 @@ xvdc 0.91 12.16 10.53 109676480 95014488
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:&lt;/p&gt;
+&lt;p&gt;The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin&#39;t helpful to you so lets get the current values at 2 second intervals instead:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@xxx ~&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# iostat -d 2&lt;/span&gt;
 Linux my.kernel.version &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;my.hostname&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 12/07/10
@@ -2839,7 +2839,7 @@ sdc1 71.00 12.00 752.00 24 1504
 &lt;p&gt;Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;System activity reporter (Sar)&lt;/strong&gt;
-As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by &quot;system data&quot;? Well this covers lots of things such as:&lt;/p&gt;
+As the name suggests it&#39;s not for reporting io data, it is mainly for reporting system data. What do we mean by &quot;system data&quot;? Well this covers lots of things such as:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;CPU&lt;/p&gt;&lt;/li&gt;
@@ -2897,26 +2897,26 @@ Linux my.kernel.version &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;my.hostnam
 
 
 &lt;p&gt;&lt;strong&gt;But I want some graphs!&lt;/strong&gt;
-Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
-You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):&lt;/p&gt;
+Awesome, let&#39;s make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
+You like excel? I&#39;m sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;sadf -- -u | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/%idle/ {print $3&amp;quot;,&amp;quot;$6}&amp;#39;&lt;/span&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;sadf -- -u &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/%idle/ {print $3&amp;quot;,&amp;quot;$6}&amp;#39;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Anyway for those geeks among us lets make some pretty stuff in gnuplot:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Make a tmp file&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;cpu_data_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;mktemp /tmp/cpu_data.XXX&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;;
+&lt;span class=&quot;nv&quot;&gt;cpu_data_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;mktemp /tmp/cpu_data.XXX&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Fill the file with stuff&lt;/span&gt;
-sadf -- -u | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/%idle/ {print $3&amp;quot; &amp;quot;$6}&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$cpu_data_file&lt;/span&gt;
+sadf -- -u &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/%idle/ {print $3&amp;quot; &amp;quot;$6}&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$cpu_data_file&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Make a pretty graph&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;set terminal dump;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt;set title &amp;#39;CPU usage&amp;#39;;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt;set xdata time;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt;set timefmt &amp;#39;%s&amp;#39;;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt;set xlabel &amp;#39;Time&amp;#39;;&lt;/span&gt;
-&lt;span class=&quot;s2&quot;&gt;plot &amp;#39;$cpu_data_file&amp;#39; using 1:2 with lines title &amp;#39;CPU usage&amp;#39;;&amp;quot;&lt;/span&gt; | gnuplot
+&lt;span class=&quot;s2&quot;&gt;plot &amp;#39;$cpu_data_file&amp;#39; using 1:2 with lines title &amp;#39;CPU usage&amp;#39;;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; gnuplot
 &lt;span class=&quot;c&quot;&gt;# Remove tmp file&lt;/span&gt;
 rm -f &lt;span class=&quot;nv&quot;&gt;$cpu_data_file&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -2934,52 +2934,52 @@ rm -f &lt;span class=&quot;nv&quot;&gt;$cpu_data_file&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Please note this is a quick hack to demonstrate it can be done&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;GNU_PLOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;whereis gnuplot | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;nv&quot;&gt;SADF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;whereis sadf | cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;GNU_PLOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;whereis gnuplot &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;SADF&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;whereis sadf &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; cut -d&lt;span class=&quot;s1&quot;&gt;&amp;#39; &amp;#39;&lt;/span&gt; -f2&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;GRAPH_TYPE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;#GRAPH_TYPE=&amp;quot;ascii&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;HTML_DST&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;POST_COMMANDS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;chown www-server:www-data -R &amp;#39;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML_DST&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Check gnuplot is all good&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -x &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GNU_PLOT&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -x &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GNU_PLOT&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Please ensure gnuplot is avaible on \$PATH&amp;quot;&lt;/span&gt;
- &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1;
+ &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Check sadf is all good&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -x &lt;span class=&quot;s2&quot;&gt;&amp;quot;$SADF&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Please ensure sadf is avaible on \$PATH&amp;quot;&lt;/span&gt;
- &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1;
+ &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Check graph type&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; !&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;ascii&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Invalid graph type specified&amp;quot;&lt;/span&gt;
- &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1;
+ &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Some functions for writing out the html, just incase you ever want to make it pretty or something..&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;make_header &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;nv&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Sar graphs!&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt;;
+ &lt;span class=&quot;nv&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;&amp;lt;title&amp;gt;Sar graphs!&amp;lt;/title&amp;gt;&amp;lt;/head&amp;gt;&amp;lt;body&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;make_footer &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;nv&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&amp;quot;&lt;/span&gt;;
+ &lt;span class=&quot;nv&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;function &lt;/span&gt;make_graph &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt; if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$2&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt; if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$3&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$1&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt; if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$2&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt; if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -z &lt;span class=&quot;s2&quot;&gt;&amp;quot;$3&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then return &lt;/span&gt;1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;field&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Making $title&amp;quot;&lt;/span&gt;
- &lt;span class=&quot;nv&quot;&gt;output_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ /_/g&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;nv&quot;&gt;output_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; sed &lt;span class=&quot;s1&quot;&gt;&amp;#39;s/ /_/g&amp;#39;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;output_format&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;png&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;nv&quot;&gt;output_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$output_file&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;.png&amp;quot;&lt;/span&gt;
@@ -2994,17 +2994,17 @@ rm -f &lt;span class=&quot;nv&quot;&gt;$cpu_data_file&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;output_path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML_DST&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;/&amp;quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$output_file&lt;/span&gt;
  &lt;span class=&quot;nv&quot;&gt;dat_file&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;$(&lt;/span&gt;mktemp /tmp/sar_graph.XXX&lt;span class=&quot;k&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Data file: $dat_file&amp;quot;&lt;/span&gt;
- &lt;span class=&quot;nv&quot;&gt;$SADF&lt;/span&gt; -- &lt;span class=&quot;nv&quot;&gt;$format&lt;/span&gt; | awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$field&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/ {print $3&amp;quot; &amp;quot;$6}&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$dat_file&lt;/span&gt;
+ &lt;span class=&quot;nv&quot;&gt;$SADF&lt;/span&gt; -- &lt;span class=&quot;nv&quot;&gt;$format&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; awk &lt;span class=&quot;s1&quot;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$field&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/ {print $3&amp;quot; &amp;quot;$6}&amp;#39;&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$dat_file&lt;/span&gt;
 
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;set terminal $output_format;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt; set title &amp;#39;$title&amp;#39;;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt; set xdata time;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt; set timefmt &amp;#39;%s&amp;#39;;&lt;/span&gt;
 &lt;span class=&quot;s2&quot;&gt; set xlabel &amp;#39;Time&amp;#39;;&lt;/span&gt;
-&lt;span class=&quot;s2&quot;&gt; plot &amp;#39;$dat_file&amp;#39; using 1:2 with lines title &amp;#39;$title&amp;#39;;&amp;quot;&lt;/span&gt; | &lt;span class=&quot;nv&quot;&gt;$GNU_PLOT&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$output_path&lt;/span&gt;
+&lt;span class=&quot;s2&quot;&gt; plot &amp;#39;$dat_file&amp;#39; using 1:2 with lines title &amp;#39;$title&amp;#39;;&amp;quot;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$GNU_PLOT&lt;/span&gt; &amp;gt; &lt;span class=&quot;nv&quot;&gt;$output_path&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Outputted $output_file&amp;quot;&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$GRAPH_TYPE&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;image&amp;quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;HTML&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;lt;img src=&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$output_file&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;quot; alt=&amp;quot;&amp;#39;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$title&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;quot; /&amp;gt;&amp;#39;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
@@ -3030,7 +3030,7 @@ make_graph &lt;span class=&quot;s2&quot;&gt;&amp;quot;1min Load avg&amp;quot;&lt
 
 &lt;span class=&quot;c&quot;&gt;# Make the html index&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Writing $HTML_DST/index.html&amp;quot;&lt;/span&gt;
-make_header; make_footer
+make_header&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; make_footer
 &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$HTML&lt;/span&gt; &amp;gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;$HTML_DST/index.html&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Post stuff&lt;/span&gt;
@@ -3059,7 +3059,7 @@ rm -rf &lt;span class=&quot;s2&quot;&gt;&amp;quot;$base_dir&amp;quot;&lt;/span&g
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;You also have this issue? Don't worry you can use find and feed the results into rm as follows&lt;/p&gt;
+&lt;p&gt;You also have this issue? Don&#39;t worry you can use find and feed the results into rm as follows&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;root@localhost&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# find /tmp/ | xargs rm&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
@@ -3104,9 +3104,9 @@ rm /tmp/repoup1291034701
 
 &lt;p&gt;These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.&lt;/p&gt;
 
-&lt;p&gt;The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.&lt;/p&gt;
+&lt;p&gt;The main advantage to using Nginx is it&#39;s event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.&lt;/p&gt;
 
-&lt;p&gt;Some features you'll probably love:&lt;/p&gt;
+&lt;p&gt;Some features you&#39;ll probably love:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;Modules for load balancing&lt;/p&gt;&lt;/li&gt;
@@ -3122,7 +3122,7 @@ rm /tmp/repoup1291034701
 &lt;/ul&gt;
 
 
-&lt;p&gt;As you can see from &lt;a href=&quot;http://wiki.nginx.org/NginxWhyUseIt&quot;&gt;their site&lt;/a&gt; Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.&lt;/p&gt;
+&lt;p&gt;As you can see from &lt;a href=&quot;http://wiki.nginx.org/NginxWhyUseIt&quot;&gt;their site&lt;/a&gt; Nginx as a server is highly regarded and recommended. I&#39;d suggest taking a look, having a play and revealing what it can do for you.&lt;/p&gt;
 </content>
     </entry>
     
@@ -3132,7 +3132,7 @@ rm /tmp/repoup1291034701
         <updated>2010-07-21T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/powershell</id>
         <content type="html">&lt;p&gt;Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D
-Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):&lt;/p&gt;
+Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don&#39;t have a windows server that can run hyperv, looks right per the docs though!):&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;powershell&quot;&gt;&lt;span class=&quot;c&quot;&gt;# Settings&lt;/span&gt;
 
@@ -3232,10 +3232,10 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;[int][double]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Get-Date&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-UFormat&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;[int][double]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Get-Date&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-UFormat&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
  &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$database_handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CreateCommand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
- &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;update queue set status = &amp;#39;f&amp;#39;, run_time = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;time)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; where id = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task_id)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;update queue set status = &amp;#39;f&amp;#39;, run_time = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; where id = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExecuteNonQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
@@ -3252,12 +3252,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;[int][double]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Get-Date&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-UFormat&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;[int][double]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;Get-Date&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-UFormat&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$database_handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CreateCommand&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;update queue set status = &amp;#39;c&amp;#39;, run_time = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;time)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; where id = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task_id)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CommandText&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;update queue set status = &amp;#39;c&amp;#39;, run_time = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; where id = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task_id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ExecuteNonQuery&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
@@ -3278,23 +3278,23 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;c&quot;&gt;# Un-tested bit but this is right according to the bizzare docs&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;machine_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;machine_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InitiateShutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$true&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Automated shutdown requested&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;returnvalue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-match&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM msvm_computersystem WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;machine_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM msvm_computersystem WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;machine_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requeststatechange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;returnvalue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-match&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue powerup&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue powerup&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
@@ -3302,7 +3302,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not shutdown vm&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not shutdown vm&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
@@ -3315,18 +3315,18 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;c&quot;&gt;# Un-tested bit but this is right according to the bizzare docs&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;machine_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;machine_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;InitiateShutdown&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$true&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Automated shutdown requested&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;returnvalue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-match&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue reboot&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue reboot&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
@@ -3339,18 +3339,18 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;c&quot;&gt;# Un-tested bit but this is right according to the bizzare docs&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM msvm_computersystem WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;machine_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gwmi&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;virtualization&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;-query&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;SELECT * FROM msvm_computersystem WHERE SystemName = &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;machine_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$vm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requeststatechange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;returnvalue&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-match&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with success status&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskSuccess&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue powerup&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; (&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;) completed with failed status, could not issue powerup&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
@@ -3358,14 +3358,14 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
-&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nbsp&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nbsp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# Main code&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;## Load what we need!&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;no&quot;&gt;[void][System.Reflection.Assembly]&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoadWithPartialName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;MySql.Data&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;no&quot;&gt;[void][System.Reflection.Assembly]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;LoadWithPartialName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;MySql.Data&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -3421,7 +3421,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 &lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Got queue from database&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Array where we will put our tasks!&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;@()&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Loading queue&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -3429,7 +3429,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
-&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;@{}&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GetValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ToString&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
@@ -3440,7 +3440,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;
 
-&lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Entered task &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; into queue&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Entered task &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; into queue&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
 
@@ -3459,13 +3459,13 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 &lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;Loaded queue&amp;#39;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-gt&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
-&lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tasks to run: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;tasks_to_run.length)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;write-host&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tasks to run: &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;!&amp;quot;&lt;/span&gt;
 &lt;span class=&quot;c&quot;&gt;# Loop though the list of tasks to run&lt;/span&gt;
 
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-lt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-lt&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;++&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
 &lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$tasks_to_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Running task &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; (Action &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for instance &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;machine_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;)&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Running task &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt; (Action &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for instance &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;machine_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;)&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$run_tasks&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-eq&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;# The bit that decides what we are going to do&lt;/span&gt;
@@ -3478,7 +3478,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poweronHyperVInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, powerup tasks are disabled&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, powerup tasks are disabled&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -3488,7 +3488,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;poweroffHyperVInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, poweroff tasks are disabled&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, poweroff tasks are disabled&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
@@ -3498,16 +3498,16 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rebootHyperVInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, reboot tasks are disabled&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, reboot tasks are disabled&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# We were asked to do something we don&amp;#39;t understand!&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tried to run an unknown action: &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; this will need running manually!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tried to run an unknown action: &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; this will need running manually!&amp;quot;&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;mail&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tried to run an unknown action: &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;type&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; this will need running manually!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mail&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Tried to run an unknown action: &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;type&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; for task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39; this will need running manually!&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 
@@ -3515,7 +3515,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
- &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;task[&amp;#39;task_id&amp;#39;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, tasks are disabled&amp;quot;&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;log&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&amp;quot;Not running task &amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;#39;, tasks are disabled&amp;quot;&lt;/span&gt;
 
 &lt;span class=&quot;n&quot;&gt;marktaskFailed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$task&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;task_id&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
@@ -3539,7 +3539,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Anyway back to making this CSS I'm working on look half decent in IE!&lt;/p&gt;
+&lt;p&gt;Anyway back to making this CSS I&#39;m working on look half decent in IE!&lt;/p&gt;
 </content>
     </entry>
     
@@ -3548,7 +3548,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
         <link href="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/"/>
         <updated>2010-07-06T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server</id>
-        <content type="html">&lt;p&gt;So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:&lt;/p&gt;
+        <content type="html">&lt;p&gt;So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I&#39;ve been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I&#39;m using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
 &lt;span class=&quot;nv&quot;&gt;VG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/dev/virtual_disks&amp;#39;&lt;/span&gt;
@@ -3559,7 +3559,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39; ks=$KS_ADDR/centos_$5.ks&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39;&amp;quot;&lt;/span&gt;
@@ -3569,12 +3569,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --size &lt;span class=&quot;nv&quot;&gt;$2G&lt;/span&gt; virtual_disks
  virt-install --connect qemu:///system --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --ram &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; --hvm --file &lt;span class=&quot;nv&quot;&gt;$VG&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --vnc --location&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$location&lt;/span&gt; --noautoconsole --extra&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$extra&amp;quot;&lt;/span&gt;
  virsh vncdisplay &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt;
- ;;
+ &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
  fedora&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39; ks=$KS_ADDR/fedora_$5.ks&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39;&amp;quot;&lt;/span&gt;
@@ -3584,12 +3584,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --size &lt;span class=&quot;nv&quot;&gt;$2G&lt;/span&gt; virtual_disks
  virt-install --connect qemu:///system --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --ram &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; --hvm --file &lt;span class=&quot;nv&quot;&gt;$VG&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --vnc --location&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$location&lt;/span&gt; --noautoconsole --extra&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$extra&amp;quot;&lt;/span&gt;
  virsh vncdisplay &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt;
- ;;
+ &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
  debian&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39; url=$KS_ADDR/debian_$5.ks&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39;&amp;quot;&lt;/span&gt;
@@ -3599,12 +3599,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --size &lt;span class=&quot;nv&quot;&gt;$2G&lt;/span&gt; virtual_disks
  virt-install --connect qemu:///system --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --ram &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; --hvm --file &lt;span class=&quot;nv&quot;&gt;$VG&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --vnc --location&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$location&lt;/span&gt; --noautoconsole --extra&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$extra&amp;quot;&lt;/span&gt;
  virsh vncdisplay &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt;
- ;;
+ &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
  ubuntu&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
  &lt;span class=&quot;nb&quot;&gt;test&lt;/span&gt; -z &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;5
- &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; ! -z &lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39; url=$KS_ADDR/ubuntu_$5.ks&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt; &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;extra&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;auto=true hostname=$4 domain=&amp;#39;&amp;#39;&amp;quot;&lt;/span&gt;
@@ -3614,11 +3614,11 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --size &lt;span class=&quot;nv&quot;&gt;$2G&lt;/span&gt; virtual_disks
  virt-install --connect qemu:///system --name &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --ram &lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; --hvm --file &lt;span class=&quot;nv&quot;&gt;$VG&lt;/span&gt;/&lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt; --vnc --location&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$location&lt;/span&gt; --noautoconsole --extra&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&amp;quot;$extra&amp;quot;&lt;/span&gt;
  virsh vncdisplay &lt;span class=&quot;nv&quot;&gt;$4&lt;/span&gt;
- ;;
+ &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
  *&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;$&amp;quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&amp;quot;&lt;/span&gt;
  &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;2
- ;;
+ &lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;
 &lt;span class=&quot;k&quot;&gt;esac&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -3629,10 +3629,10 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 Installing vm CharityHosting1 with 50G disk and 1024 ram allocation passing kernel arguments &lt;span class=&quot;s1&quot;&gt;&amp;#39;auto=true hostname=CharityHosting1 domain=&amp;#39;&amp;#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&amp;#39;&lt;/span&gt;
  Logical volume &lt;span class=&quot;s2&quot;&gt;&amp;quot;CharityHosting1&amp;quot;&lt;/span&gt; created
 Starting install...
-Retrieving file .treeinfo... | 2.4 kB 00:00 ...
-Retrieving file vmlinuz... | 6.7 MB 00:01 ...
-Retrieving file initrd.img... | 57 MB 00:15 ...
-Creating domain... | 0 B 00:00
+Retrieving file .treeinfo... &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 2.4 kB 00:00 ...
+Retrieving file vmlinuz... &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 6.7 MB 00:01 ...
+Retrieving file initrd.img... &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 57 MB 00:15 ...
+Creating domain... &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; 0 B 00:00
 Domain installation still in progress. You can reconnect to
 the console to &lt;span class=&quot;nb&quot;&gt;complete &lt;/span&gt;the installation process.
 :0
@@ -3642,7 +3642,7 @@ the console to &lt;span class=&quot;nb&quot;&gt;complete &lt;/span&gt;the instal
 &lt;p&gt;The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)&lt;/p&gt;
 
 &lt;p&gt;2 Variables are as follows:
-VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh)
+VG - This is the volume group the lvm&#39;s are going to reside in, the path is the format that you would use when calling lvcreate (duh)
 KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro&quot;_&quot;$name&quot;.ks&quot;&lt;/p&gt;
 
 &lt;p&gt;The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.&lt;/p&gt;
@@ -3724,7 +3724,7 @@ conf-dir=/etc/dnsmasq.d/
 
 &lt;p&gt;To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)&lt;/p&gt;
 
-&lt;p&gt;Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)&lt;/p&gt;
+&lt;p&gt;Until next time which may include some C as I&#39;m currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)&lt;/p&gt;
 </content>
     </entry>
     
@@ -3733,28 +3733,28 @@ conf-dir=/etc/dnsmasq.d/
         <link href="http://damianzaremba.co.uk/2010/06/coding-help/"/>
         <updated>2010-06-09T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/06/coding-help</id>
-        <content type="html">&lt;p&gt;So I'm currently working on a small project which will require authentication. Not really sure how to achieve what I want so here's a quick explanation for anyone if you want to share ideas:
+        <content type="html">&lt;p&gt;So I&#39;m currently working on a small project which will require authentication. Not really sure how to achieve what I want so here&#39;s a quick explanation for anyone if you want to share ideas:
 Basic SQL definition:&lt;/p&gt;
 
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt;; describe users;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;bash&quot;&gt;mysql&amp;gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; describe users&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 +---------------------------+------------------+------+-----+---------+----------------+
-| Field | Type | Null | Key | Default | Extra |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Field &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Type &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Null &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Key &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Default &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Extra &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------------------------+------------------+------+-----+---------+----------------+
-| id | int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;11&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | PRI | NULL | auto_increment |
-| username | varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;500&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | NULL | |
-| password | varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;100&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | NULL | |
-| salt | varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;15&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | NULL | |
-| group_id | int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;20&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | NULL | |
-| perm_login | &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Y&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;N&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;G&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | G | |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;11&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; PRI &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; auto_increment &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; username &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;500&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; password &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;100&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; salt &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;15&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; group_id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;20&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; perm_login &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Y&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;N&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;G&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; G &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------------------------+------------------+------+-----+---------+----------------+
 
-mysql&amp;gt;; describe user_groups;
+mysql&amp;gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; describe user_groups&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 +---------------------------+---------------+------+-----+---------+----------------+
-| Field | Type | Null | Key | Default | Extra |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Field &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Type &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Null &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Key &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Default &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Extra &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------------------------+---------------+------+-----+---------+----------------+
-| id | int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;11&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | PRI | NULL | auto_increment |
-| name | varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;500&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | NULL | |
-| perm_login | &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Y&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;N&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | NO | | Y | |
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; id &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; int&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;11&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; PRI &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; auto_increment &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; name &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; varchar&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;500&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NULL &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; perm_login &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;Y&amp;#39;&lt;/span&gt;,&lt;span class=&quot;s1&quot;&gt;&amp;#39;N&amp;#39;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; NO &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Y &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
 +---------------------------+---------------+------+-----+---------+----------------+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
@@ -3767,9 +3767,9 @@ mysql&amp;gt;; describe user_groups;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Now this works just fine however I can see issues mainly limitations to only being able to check one permission at a time. For 99% of the time this wouldn't be an issue for example when using the web interface/api there would be at a minimum of 2 calls and most of the time that would be it however in certain cases where you needed a full list there would be large issues. For a start getting a list of permissions would be highly recourse intensive and returning everyone would result in running something like the above for every permission. This may be a few hundred times per user per load.&lt;/p&gt;
+&lt;p&gt;Now this works just fine however I can see issues mainly limitations to only being able to check one permission at a time. For 99% of the time this wouldn&#39;t be an issue for example when using the web interface/api there would be at a minimum of 2 calls and most of the time that would be it however in certain cases where you needed a full list there would be large issues. For a start getting a list of permissions would be highly recourse intensive and returning everyone would result in running something like the above for every permission. This may be a few hundred times per user per load.&lt;/p&gt;
 
-&lt;p&gt;I'm thinking of a way to move permissions into there own table then call them in a relational fashion but cannot think how to do this keeping the user/group system. Any ideas would be massively appreciated, for the moment db scheme changes are fine as this is very much a testing structure.&lt;/p&gt;
+&lt;p&gt;I&#39;m thinking of a way to move permissions into there own table then call them in a relational fashion but cannot think how to do this keeping the user/group system. Any ideas would be massively appreciated, for the moment db scheme changes are fine as this is very much a testing structure.&lt;/p&gt;
 
 &lt;p&gt;Speak to you soon :)&lt;/p&gt;
 </content>
@@ -3856,7 +3856,7 @@ iptables -I FORWARD -j BadIp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=&lt;/p&gt;
+&lt;p&gt;Because I didn&#39;t add in any code to check if they existed, nor the chain for that matter. Without them traffic won&#39;t get processed by these rules, also make sure they go near the top above any other allow rule C=&lt;/p&gt;
 </content>
     </entry>
     
@@ -3875,11 +3875,11 @@ iptables -I FORWARD -j BadIp
         <link href="http://damianzaremba.co.uk/2010/04/why-i-love-python/"/>
         <updated>2010-04-17T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/04/why-i-love-python</id>
-        <content type="html">&lt;p&gt;So I've been playing with Python a lot recently and it is just so amazing!&lt;/p&gt;
+        <content type="html">&lt;p&gt;So I&#39;ve been playing with Python a lot recently and it is just so amazing!&lt;/p&gt;
 
 &lt;p&gt;Here are some quick example that all took less than 10mins to write:&lt;/p&gt;
 
-&lt;p&gt;SMTP proxy to allow you to connect to a server via the specified port and it be silently forwarded to another server on another port! (Note it's a bad idea to use localhost as it will make you an open proxy)&lt;/p&gt;
+&lt;p&gt;SMTP proxy to allow you to connect to a server via the specified port and it be silently forwarded to another server on another port! (Note it&#39;s a bad idea to use localhost as it will make you an open proxy)&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/python&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -3898,7 +3898,7 @@ iptables -I FORWARD -j BadIp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Email parser to allow you to process email using a IMAP connection. This is really slow atm and would be improved massively by threading but it's still really cool and took about 10min to write!&lt;/p&gt;
+&lt;p&gt;Email parser to allow you to process email using a IMAP connection. This is really slow atm and would be improved massively by threading but it&#39;s still really cool and took about 10min to write!&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;python&quot;&gt;&lt;span class=&quot;c&quot;&gt;#!/usr/bin/python&lt;/span&gt;
 &lt;span class=&quot;sd&quot;&gt;&amp;#39;&amp;#39;&amp;#39;&lt;/span&gt;
@@ -3955,7 +3955,7 @@ iptables -I FORWARD -j BadIp
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;p&gt;Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I'm working on at the moment to function correctly I can reveal some cool things in the future!&lt;/p&gt;
+&lt;p&gt;Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I&#39;m working on at the moment to function correctly I can reveal some cool things in the future!&lt;/p&gt;
 </content>
     </entry>
     

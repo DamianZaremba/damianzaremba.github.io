@@ -109,11 +109,11 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 <p>First find out your "term" id (category or tag):</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>terms<span class="sb">`</span> WHERE <span class="sb">`</span>slug<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;snippets&#39;</span>;
+<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>terms<span class="sb">`</span> WHERE <span class="sb">`</span>slug<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;snippets&#39;</span><span class="p">;</span>
 +---------+----------+----------+------------+
-| term_id | name | slug | term_group |
+<span class="p">|</span> term_id <span class="p">|</span> name <span class="p">|</span> slug <span class="p">|</span> term_group <span class="p">|</span>
 +---------+----------+----------+------------+
-| 171 | Snippets | snippets | 0 |
+<span class="p">|</span> 171 <span class="p">|</span> Snippets <span class="p">|</span> snippets <span class="p">|</span> 0 <span class="p">|</span>
 +---------+----------+----------+------------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
 </code></pre></div>
@@ -121,11 +121,11 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 <p>Now look in the taxonomy table and find out its details:</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>term_taxonomy<span class="sb">`</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+<div class="highlight"><pre><code class="bash">mysql&gt; SELECT * FROM <span class="sb">`</span>term_taxonomy<span class="sb">`</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 +------------------+---------+----------+-------------+--------+-------+
-| term_taxonomy_id | term_id | taxonomy | description | parent | count |
+<span class="p">|</span> term_taxonomy_id <span class="p">|</span> term_id <span class="p">|</span> taxonomy <span class="p">|</span> description <span class="p">|</span> parent <span class="p">|</span> count <span class="p">|</span>
 +------------------+---------+----------+-------------+--------+-------+
-| 174 | 171 | post_tag | | 0 | 17 |
+<span class="p">|</span> 174 <span class="p">|</span> 171 <span class="p">|</span> post_tag <span class="p">|</span> <span class="p">|</span> 0 <span class="p">|</span> 17 <span class="p">|</span>
 +------------------+---------+----------+-------------+--------+-------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
 </code></pre></div>
@@ -135,7 +135,7 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 <p>To change it to a category change the "taxonomy" field to "category":</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
 Rows matched: 1 Changed: 1 Warnings: 0
 </code></pre></div>
@@ -143,7 +143,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 <p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171;
+<div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.02 sec<span class="o">)</span>
 Rows matched: 1 Changed: 1 Warnings: 0
 </code></pre></div>
@@ -169,12 +169,12 @@ Rows matched: 1 Changed: 1 Warnings: 0
 
 <p>While you can find out which database you are in, it soon becomes quite irritating having to type</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span>;
+<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span><span class="p">;</span>
 
 +------------------+
-| database<span class="o">()</span> |
+<span class="p">|</span> database<span class="o">()</span> <span class="p">|</span>
 +------------------+
-| test_database |
+<span class="p">|</span> test_database <span class="p">|</span>
 +------------------+
 1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
 </code></pre></div>
