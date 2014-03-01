@@ -199,27 +199,27 @@
         <lastmod>2013-01-20T00:00:00+00:00</lastmod>
     </url>
     <url>
-        <loc>/404.html</loc>
-        <lastmod>2014-03-01 14:42:39 +0000</lastmod>
-    </url>
-    <url>
-        <loc>/about/</loc>
-        <lastmod>2014-02-08 13:16:42 +0000</lastmod>
-    </url>
-    <url>
         <loc>/archives/</loc>
-        <lastmod>2014-02-08 13:16:42 +0000</lastmod>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
     </url>
     <url>
         <loc>/cv/</loc>
-        <lastmod>2014-03-01 15:11:12 +0000</lastmod>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
+    </url>
+    <url>
+        <loc>/404.html</loc>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
     </url>
     <url>
         <loc>/</loc>
-        <lastmod>2014-02-08 13:16:42 +0000</lastmod>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
     </url>
     <url>
         <loc>/projects/</loc>
-        <lastmod>2014-02-08 13:16:42 +0000</lastmod>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
+    </url>
+    <url>
+        <loc>/about/</loc>
+        <lastmod>Sat Mar 01 15:19:39 +0000 2014</lastmod>
     </url>
 </urlset>
