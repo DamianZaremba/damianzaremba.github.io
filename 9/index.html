@@ -267,23 +267,23 @@ Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</sp
 Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
 You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
 
-<div class="highlight"><pre><code class="bash">sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
+<div class="highlight"><pre><code class="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
 </code></pre></div>
 
 
 <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="c"># Make a tmp file</span>
-<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span>;
+<span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span><span class="p">;</span>
 <span class="c"># Fill the file with stuff</span>
-sadf -- -u | awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
+sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
 <span class="c"># Make a pretty graph</span>
 <span class="nb">echo</span> <span class="s2">&quot;set terminal dump;</span>
 <span class="s2">set title &#39;CPU usage&#39;;</span>
 <span class="s2">set xdata time;</span>
 <span class="s2">set timefmt &#39;%s&#39;;</span>
 <span class="s2">set xlabel &#39;Time&#39;;</span>
-<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> | gnuplot
+<span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
 rm -f <span class="nv">$cpu_data_file</span>
 </code></pre></div>
@@ -301,52 +301,52 @@ rm -f <span class="nv">$cpu_data_file</span>
 <span class="c"># Please note this is a quick hack to demonstrate it can be done</span>
 <span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
 
-<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
-<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf | cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
 <span class="nv">GRAPH_TYPE</span><span class="o">=</span><span class="s2">&quot;image&quot;</span>
 <span class="c">#GRAPH_TYPE=&quot;ascii&quot;</span>
 <span class="nv">HTML_DST</span><span class="o">=</span><span class="s2">&quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&quot;</span>
 <span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span>
 
 <span class="c"># Check gnuplot is all good</span>
-<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span><span class="p">;</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check sadf is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check graph type</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
 <span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
- <span class="nb">exit </span>1;
+ <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
 <span class="k">function </span>make_header <span class="o">{</span>
- <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span>;
+ <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span><span class="p">;</span>
 <span class="o">}</span>
 
 <span class="k">function </span>make_footer <span class="o">{</span>
- <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span>;
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">;</span>
 <span class="o">}</span>
 
 <span class="k">function </span>make_graph <span class="o">{</span>
- <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span>; <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span>; <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span>; <span class="k">then return </span>1; <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span>; <span class="k">fi</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span> <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span> <span class="k">fi</span>
+<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
- <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> | sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> <span class="p">|</span> sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
 <span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
@@ -361,17 +361,17 @@ rm -f <span class="nv">$cpu_data_file</span>
 <span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
  <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
  <span class="nb">echo</span> <span class="s2">&quot;Data file: $dat_file&quot;</span>
- <span class="nv">$SADF</span> -- <span class="nv">$format</span> | awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
+ <span class="nv">$SADF</span> -- <span class="nv">$format</span> <span class="p">|</span> awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
 <span class="s2"> set title &#39;$title&#39;;</span>
 <span class="s2"> set xdata time;</span>
 <span class="s2"> set timefmt &#39;%s&#39;;</span>
 <span class="s2"> set xlabel &#39;Time&#39;;</span>
-<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> | <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
+<span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> <span class="p">|</span> <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
  <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span>;
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
 <span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
  <span class="k">else</span>
@@ -397,7 +397,7 @@ make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&q
 
 <span class="c"># Make the html index</span>
 <span class="nb">echo</span> <span class="s2">&quot;Writing $HTML_DST/index.html&quot;</span>
-make_header; make_footer
+make_header<span class="p">;</span> make_footer
 <span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span>
 
 <span class="c"># Post stuff</span>
@@ -620,10 +620,10 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">{</span>
 
-<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="err">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
+<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
 <span class="k">try</span> <span class="p">{</span>
  <span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
- <span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;f&#39;, run_time = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">time)</span><span class="s2">&#39; where id = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task_id)</span><span class="s2">&#39;&quot;</span>
+ <span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;f&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span>
 
@@ -640,12 +640,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">{</span>
 
-<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="err">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
+<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
 <span class="k">try</span> <span class="p">{</span>
 
 <span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
 
-<span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;c&#39;, run_time = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">time)</span><span class="s2">&#39; where id = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task_id)</span><span class="s2">&#39;&quot;</span>
+<span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;c&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span>
 
@@ -666,23 +666,23 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;machine_id&#39;])</span><span class="s2">&#39;&quot;</span>
+<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
 <span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;machine_id&#39;])</span><span class="s2">&#39;&quot;</span>
+<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
 <span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with success status&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
 
 <span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
 <span class="p">}</span><span class="k">else</span><span class="p">{</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
@@ -690,7 +690,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">}</span><span class="k">else</span><span class="p">{</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with failed status, could not shutdown vm&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not shutdown vm&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
@@ -703,18 +703,18 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;machine_id&#39;])</span><span class="s2">&#39;&quot;</span>
+<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
 <span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with success status&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
 
 <span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
 <span class="p">}</span><span class="k">else</span><span class="p">{</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with failed status, could not issue reboot&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue reboot&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
@@ -727,18 +727,18 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;machine_id&#39;])</span><span class="s2">&#39;&quot;</span>
+<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
 
 <span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
 <span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with success status&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
 
 <span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
 <span class="p">}</span><span class="k">else</span><span class="p">{</span>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; (</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
@@ -746,14 +746,14 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">}</span>
 
-<span class="p">&amp;</span><span class="n">nbsp</span><span class="err">;</span>
+<span class="p">&amp;</span><span class="n">nbsp</span><span class="p">;</span>
 
 <span class="c"># Main code</span>
 <span class="c">## Load what we need!</span>
 
 <span class="k">try</span><span class="p">{</span>
 
-<span class="no">[void][System.Reflection.Assembly]</span><span class="err">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&quot;MySql.Data&quot;</span><span class="p">)</span>
+<span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&quot;MySql.Data&quot;</span><span class="p">)</span>
 
 <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
 
@@ -809,7 +809,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 <span class="nb">write-host</span> <span class="s1">&#39;Got queue from database&#39;</span>
 <span class="c"># Array where we will put our tasks!</span>
 
-<span class="nv">$tasks_to_run</span> <span class="p">=</span> <span class="err">@</span><span class="p">()</span>
+<span class="nv">$tasks_to_run</span> <span class="p">=</span> <span class="p">@()</span>
 <span class="nb">write-host</span> <span class="s1">&#39;Loading queue&#39;</span>
 <span class="k">while</span> <span class="p">(</span><span class="nv">$data</span><span class="p">.</span><span class="n">Read</span><span class="p">())</span> <span class="p">{</span>
 
@@ -817,7 +817,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="k">try</span> <span class="p">{</span>
 
-<span class="nv">$task</span> <span class="p">=</span> <span class="err">@</span><span class="p">{}</span>
+<span class="nv">$task</span> <span class="p">=</span> <span class="p">@{}</span>
 
 <span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">1</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
 
@@ -828,7 +828,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="nv">$tasks_to_run</span> <span class="p">+=</span> <span class="nv">$task</span>
 
-<span class="nb">write-host</span> <span class="s2">&quot;Entered task </span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2"> into queue&quot;</span>
+<span class="nb">write-host</span> <span class="s2">&quot;Entered task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> into queue&quot;</span>
 
 <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
 
@@ -847,13 +847,13 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 <span class="nb">write-host</span> <span class="s1">&#39;Loaded queue&#39;</span>
 <span class="k">if</span><span class="p">(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span> <span class="o">-gt</span> <span class="n">0</span><span class="p">){</span>
 
-<span class="nb">write-host</span> <span class="s2">&quot;Tasks to run: </span><span class="si">$(</span><span class="err">$</span><span class="si">tasks_to_run.length)</span><span class="s2">!&quot;</span>
+<span class="nb">write-host</span> <span class="s2">&quot;Tasks to run: </span><span class="p">$(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="s2">!&quot;</span>
 <span class="c"># Loop though the list of tasks to run</span>
 
-<span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="p">=</span> <span class="n">0</span> <span class="err">;</span> <span class="nv">$i</span> <span class="o">-lt</span> <span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="err">;</span> <span class="nv">$i</span><span class="p">++</span> <span class="p">){</span>
+<span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="p">=</span> <span class="n">0</span> <span class="p">;</span> <span class="nv">$i</span> <span class="o">-lt</span> <span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="nv">$i</span><span class="p">++</span> <span class="p">){</span>
 
 <span class="nv">$task</span> <span class="p">=</span> <span class="nv">$tasks_to_run</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span>
-<span class="n">log</span> <span class="s2">&quot;Running task </span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2"> (Action &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">&#39; for instance &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;machine_id&#39;])</span><span class="s2">&#39;)&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Running task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> (Action &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for instance &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;)&quot;</span>
  <span class="k">if</span><span class="p">(</span><span class="nv">$run_tasks</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span>
 
 <span class="c"># The bit that decides what we are going to do</span>
@@ -866,7 +866,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">&amp;</span><span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39;, powerup tasks are disabled&quot;</span>
+ <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, powerup tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
  <span class="p">}</span>
 
@@ -876,7 +876,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">&amp;</span><span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39;, poweroff tasks are disabled&quot;</span>
+ <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, poweroff tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
  <span class="p">}</span>
 
@@ -886,16 +886,16 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">&amp;</span><span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39;, reboot tasks are disabled&quot;</span>
+ <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, reboot tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
  <span class="p">}</span>
 
 <span class="p">}</span>
 <span class="k">default</span> <span class="p">{</span> <span class="c"># We were asked to do something we don&#39;t understand!</span>
 
-<span class="n">log</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">&#39; for task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; this will need running manually!&quot;</span>
+<span class="n">log</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span>
 
-<span class="n">mail</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;type&#39;])</span><span class="s2">&#39; for task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39; this will need running manually!&quot;</span>
+<span class="n">mail</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
 
@@ -903,7 +903,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="p">}</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="si">$(</span><span class="err">$</span><span class="si">task[&#39;task_id&#39;])</span><span class="s2">&#39;, tasks are disabled&quot;</span>
+ <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, tasks are disabled&quot;</span>
 
 <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
  <span class="p">}</span>
@@ -954,7 +954,7 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/centos_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -964,12 +964,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  fedora<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/fedora_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -979,12 +979,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  debian<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/debian_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -994,12 +994,12 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  ubuntu<span class="o">)</span>
  <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
  <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span>; <span class="k">then</span>
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/ubuntu_$5.ks&quot;</span>
  <span class="k">else</span>
 <span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
@@ -1009,11 +1009,11 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
  lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
  virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
  virsh vncdisplay <span class="nv">$4</span>
- ;;
+ <span class="p">;;</span>
  *<span class="o">)</span>
  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
  <span class="nb">exit </span>2
- ;;
+ <span class="p">;;</span>
 <span class="k">esac</span>
 </code></pre></div>
 
@@ -1024,10 +1024,10 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 Installing vm CharityHosting1 with 50G disk and 1024 ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
  Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
 Starting install...
-Retrieving file .treeinfo... | 2.4 kB 00:00 ...
-Retrieving file vmlinuz... | 6.7 MB 00:01 ...
-Retrieving file initrd.img... | 57 MB 00:15 ...
-Creating domain... | 0 B 00:00
+Retrieving file .treeinfo... <span class="p">|</span> 2.4 kB 00:00 ...
+Retrieving file vmlinuz... <span class="p">|</span> 6.7 MB 00:01 ...
+Retrieving file initrd.img... <span class="p">|</span> 57 MB 00:15 ...
+Creating domain... <span class="p">|</span> 0 B 00:00
 Domain installation still in progress. You can reconnect to
 the console to <span class="nb">complete </span>the installation process.
 :0
