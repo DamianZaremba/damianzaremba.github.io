@@ -13,490 +13,441 @@
     <entry>
         <title>What's Anycast and why would I use it?</title>
         <link href="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/"/>
-        <pubDate>Sun, 20 Jan 2013 00:00:00 +0000</pubDate>
         <updated>2013-01-20T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it</id>
-        <link>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/</link>
+        <link ahref="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/</guid>
     </entry>
     
     <entry>
         <title>Slow SSH to new CentOS servers</title>
         <link href="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/"/>
-        <pubDate>Sat, 08 Sep 2012 00:00:00 +0100</pubDate>
         <updated>2012-09-08T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers</id>
-        <link>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/</guid>
     </entry>
     
     <entry>
         <title>KVIrc update breaks Irssi Proxy</title>
         <link href="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/"/>
-        <pubDate>Tue, 04 Sep 2012 00:00:00 +0100</pubDate>
         <updated>2012-09-04T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy</id>
-        <link>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/</guid>
     </entry>
     
     <entry>
         <title>Running a WSGI app via Gunicorn from Python</title>
         <link href="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/"/>
-        <pubDate>Mon, 20 Aug 2012 00:00:00 +0100</pubDate>
         <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python</id>
-        <link>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/</guid>
     </entry>
     
     <entry>
         <title>RADIUS authentication on a Dell PowerConnect M6220 switch</title>
         <link href="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/"/>
-        <pubDate>Mon, 20 Aug 2012 00:00:00 +0100</pubDate>
         <updated>2012-08-20T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch</id>
-        <link>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/</guid>
     </entry>
     
     <entry>
         <title>RADIUS authentication on a HP ProCurve switch</title>
         <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/"/>
-        <pubDate>Sun, 01 Apr 2012 00:00:00 +0100</pubDate>
         <updated>2012-04-01T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch</id>
-        <link>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</guid>
     </entry>
     
     <entry>
         <title>RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</title>
         <link href="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/"/>
-        <pubDate>Sun, 01 Apr 2012 00:00:00 +0100</pubDate>
         <updated>2012-04-01T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch</id>
-        <link>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</guid>
     </entry>
     
     <entry>
         <title>SNTP on a HP ProCurve switch</title>
         <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/"/>
-        <pubDate>Sun, 18 Mar 2012 00:00:00 +0000</pubDate>
         <updated>2012-03-18T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch</id>
-        <link>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</guid>
     </entry>
     
     <entry>
         <title>NTP on a HP GbE2c L2/L3 Blade Switch</title>
         <link href="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/"/>
-        <pubDate>Sun, 18 Mar 2012 00:00:00 +0000</pubDate>
         <updated>2012-03-18T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch</id>
-        <link>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</link>
+        <link ahref="http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</guid>
     </entry>
     
     <entry>
         <title>Restricting access to EdgeCast nodes</title>
         <link href="http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/"/>
-        <pubDate>Wed, 02 Nov 2011 00:00:00 +0000</pubDate>
         <updated>2011-11-02T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes</id>
-        <link>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</guid>
     </entry>
     
     <entry>
         <title>Changing WordPress tag to category?</title>
         <link href="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/"/>
-        <pubDate>Thu, 25 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-25T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category</id>
-        <link>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</guid>
     </entry>
     
     <entry>
         <title>Changing the MySQL client prompt</title>
         <link href="http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/"/>
-        <pubDate>Thu, 25 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-25T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt</id>
-        <link>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</guid>
     </entry>
     
     <entry>
         <title>Useful cPanel paths</title>
         <link href="http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths</id>
-        <link>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</guid>
     </entry>
     
     <entry>
         <title>Upgrade EOL Clamav</title>
         <link href="http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav</id>
-        <link>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</guid>
     </entry>
     
     <entry>
         <title>Spoon!</title>
         <link href="http://damianzaremba.co.uk/2011/08/spoon/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/spoon</id>
-        <link>http://damianzaremba.co.uk/2011/08/spoon/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/spoon/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/spoon/</guid>
     </entry>
     
     <entry>
         <title>SMTP Authentication in Postfix using local system accounts</title>
         <link href="http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts</id>
-        <link>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</guid>
     </entry>
     
     <entry>
         <title>Recovering deleted files from the handlers in /proc/</title>
         <link href="http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc</id>
-        <link>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</guid>
     </entry>
     
     <entry>
         <title>Quick script to get public IPs on a NAT'd server</title>
         <link href="http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server</id>
-        <link>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</guid>
     </entry>
     
     <entry>
         <title>MySQL uses no space on cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel</id>
-        <link>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</guid>
     </entry>
     
     <entry>
         <title>Install PostgreSQL on cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel</id>
-        <link>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</guid>
     </entry>
     
     <entry>
         <title>HTTP basic authentication - Apache</title>
         <link href="http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache</id>
-        <link>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</guid>
     </entry>
     
     <entry>
         <title>Getting rid of cPanel IP Check errors</title>
         <link href="http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors</id>
-        <link>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</guid>
     </entry>
     
     <entry>
         <title>Force PECL to install 64bit modules</title>
         <link href="http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules</id>
-        <link>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</guid>
     </entry>
     
     <entry>
         <title>Fixing iptables for passive FTP</title>
         <link href="http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp</id>
-        <link>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</guid>
     </entry>
     
     <entry>
         <title>Exim SMTP with multiple IPs and different HELO identifiers</title>
         <link href="http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers</id>
-        <link>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</guid>
     </entry>
     
     <entry>
         <title>Common PCI compliance issues - cPanel</title>
         <link href="http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel</id>
-        <link>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</guid>
     </entry>
     
     <entry>
         <title>Check for CVE fixs</title>
         <link href="http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs</id>
-        <link>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</guid>
     </entry>
     
     <entry>
         <title>Apache segmentation fault debugging</title>
         <link href="http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging</id>
-        <link>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</guid>
     </entry>
     
     <entry>
         <title>Apache process ID</title>
         <link href="http://damianzaremba.co.uk/2011/08/apache-process-id/"/>
-        <pubDate>Tue, 23 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-23T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/apache-process-id</id>
-        <link>http://damianzaremba.co.uk/2011/08/apache-process-id/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/apache-process-id/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/apache-process-id/</guid>
     </entry>
     
     <entry>
         <title>PHP CURL dual stack issue</title>
         <link href="http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/"/>
-        <pubDate>Thu, 18 Aug 2011 00:00:00 +0100</pubDate>
         <updated>2011-08-18T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue</id>
-        <link>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</guid>
     </entry>
     
     <entry>
         <title>Centos 6.0 kickstart partitioning issue</title>
         <link href="http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/"/>
-        <pubDate>Sun, 10 Jul 2011 00:00:00 +0100</pubDate>
         <updated>2011-07-10T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue</id>
-        <link>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</guid>
     </entry>
     
     <entry>
         <title>Twitter?</title>
         <link href="http://damianzaremba.co.uk/2011/06/twitter/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/twitter</id>
-        <link>http://damianzaremba.co.uk/2011/06/twitter/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/twitter/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/twitter/</guid>
     </entry>
     
     <entry>
         <title>Quick update</title>
         <link href="http://damianzaremba.co.uk/2011/06/quick-update/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/quick-update</id>
-        <link>http://damianzaremba.co.uk/2011/06/quick-update/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/quick-update/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/quick-update/</guid>
     </entry>
     
     <entry>
         <title>Meth stove</title>
         <link href="http://damianzaremba.co.uk/2011/06/meth-stove/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/meth-stove</id>
-        <link>http://damianzaremba.co.uk/2011/06/meth-stove/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/meth-stove/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/meth-stove/</guid>
     </entry>
     
     <entry>
         <title>Example of building nagios configs from LDAP</title>
         <link href="http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap</id>
-        <link>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</guid>
     </entry>
     
     <entry>
         <title>Download festival hack</title>
         <link href="http://damianzaremba.co.uk/2011/06/download-festival-hack/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/download-festival-hack</id>
-        <link>http://damianzaremba.co.uk/2011/06/download-festival-hack/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/download-festival-hack/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/download-festival-hack/</guid>
     </entry>
     
     <entry>
         <title>Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</title>
         <link href="http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/"/>
-        <pubDate>Tue, 28 Jun 2011 00:00:00 +0100</pubDate>
         <updated>2011-06-28T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6</id>
-        <link>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</guid>
     </entry>
     
     <entry>
         <title>Wordpress plugin</title>
         <link href="http://damianzaremba.co.uk/2011/04/wordpress-plugin/"/>
-        <pubDate>Sat, 09 Apr 2011 00:00:00 +0100</pubDate>
         <updated>2011-04-09T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/04/wordpress-plugin</id>
-        <link>http://damianzaremba.co.uk/2011/04/wordpress-plugin/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/04/wordpress-plugin/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/04/wordpress-plugin/</guid>
     </entry>
     
     <entry>
         <title>canhazip</title>
         <link href="http://damianzaremba.co.uk/2011/03/canhazip/"/>
-        <pubDate>Wed, 30 Mar 2011 00:00:00 +0100</pubDate>
         <updated>2011-03-30T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2011/03/canhazip</id>
-        <link>http://damianzaremba.co.uk/2011/03/canhazip/</link>
+        <link ahref="http://damianzaremba.co.uk/2011/03/canhazip/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2011/03/canhazip/</guid>
     </entry>
     
     <entry>
         <title>Unix time to human readable?</title>
         <link href="http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/"/>
-        <pubDate>Sun, 12 Dec 2010 00:00:00 +0000</pubDate>
         <updated>2010-12-12T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable</id>
-        <link>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</guid>
     </entry>
     
     <entry>
         <title>System activity reporter</title>
         <link href="http://damianzaremba.co.uk/2010/12/system-activity-reporter/"/>
-        <pubDate>Tue, 07 Dec 2010 00:00:00 +0000</pubDate>
         <updated>2010-12-07T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/system-activity-reporter</id>
-        <link>http://damianzaremba.co.uk/2010/12/system-activity-reporter/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/12/system-activity-reporter/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/12/system-activity-reporter/</guid>
     </entry>
     
     <entry>
         <title>Lots of files to remove?</title>
         <link href="http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/"/>
-        <pubDate>Wed, 01 Dec 2010 00:00:00 +0000</pubDate>
         <updated>2010-12-01T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove</id>
-        <link>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</guid>
     </entry>
     
     <entry>
         <title>Compiling nginx and PHP-FPM on CentOS 5</title>
         <link href="http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/"/>
-        <pubDate>Mon, 29 Nov 2010 00:00:00 +0000</pubDate>
         <updated>2010-11-29T00:00:00+00:00</updated>
         <id>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5</id>
-        <link>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</guid>
     </entry>
     
     <entry>
         <title>Powershell!?!?!?!</title>
         <link href="http://damianzaremba.co.uk/2010/07/powershell/"/>
-        <pubDate>Wed, 21 Jul 2010 00:00:00 +0100</pubDate>
         <updated>2010-07-21T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/powershell</id>
-        <link>http://damianzaremba.co.uk/2010/07/powershell/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/07/powershell/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/07/powershell/</guid>
     </entry>
     
     <entry>
         <title>virt-install is a life server</title>
         <link href="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/"/>
-        <pubDate>Tue, 06 Jul 2010 00:00:00 +0100</pubDate>
         <updated>2010-07-06T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server</id>
-        <link>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</guid>
     </entry>
     
     <entry>
         <title>Coding Help</title>
         <link href="http://damianzaremba.co.uk/2010/06/coding-help/"/>
-        <pubDate>Wed, 09 Jun 2010 00:00:00 +0100</pubDate>
         <updated>2010-06-09T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/06/coding-help</id>
-        <link>http://damianzaremba.co.uk/2010/06/coding-help/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/06/coding-help/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/06/coding-help/</guid>
     </entry>
     
     <entry>
         <title>5min hack in python</title>
         <link href="http://damianzaremba.co.uk/2010/06/5min-hack-in-python/"/>
-        <pubDate>Sun, 06 Jun 2010 00:00:00 +0100</pubDate>
         <updated>2010-06-06T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/06/5min-hack-in-python</id>
-        <link>http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/06/5min-hack-in-python/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</guid>
     </entry>
     
     <entry>
         <title>The difference</title>
         <link href="http://damianzaremba.co.uk/2010/05/the-difference/"/>
-        <pubDate>Sat, 08 May 2010 00:00:00 +0100</pubDate>
         <updated>2010-05-08T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/05/the-difference</id>
-        <link>http://damianzaremba.co.uk/2010/05/the-difference/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/05/the-difference/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/05/the-difference/</guid>
     </entry>
     
     <entry>
         <title>Why I love Python</title>
         <link href="http://damianzaremba.co.uk/2010/04/why-i-love-python/"/>
-        <pubDate>Sat, 17 Apr 2010 00:00:00 +0100</pubDate>
         <updated>2010-04-17T00:00:00+01:00</updated>
         <id>http://damianzaremba.co.uk/2010/04/why-i-love-python</id>
-        <link>http://damianzaremba.co.uk/2010/04/why-i-love-python/</link>
+        <link ahref="http://damianzaremba.co.uk/2010/04/why-i-love-python/"></link>
         <guid isPermaLink="true">http://damianzaremba.co.uk/2010/04/why-i-love-python/</guid>
     </entry>
     
