@@ -110,6 +110,74 @@
 <a href="http://uk.linkedin.com/in/damianzaremba"><img src="/assests/images/logos/linkedin.png" alt="LinkedIn" /></a>
 <a href="http://www.youtube.com/user/DamianZaremba"><img src="/assests/images/logos/youtube.png" alt="YouTube" /></a></p>
 
+<h2>Interested? What's Damian Looking For?</h2>
+
+<p>Damian is looking for opportunities to work with bleeding edge technologies that empower the end users to achieve anything
+they can imagine.</p>
+
+<p>This breaks down into multiple levels, but essentially fits into 3 areas.</p>
+
+<h3>Providing technologies that are easily accessible and affordable to everyone.</h3>
+
+<p>Aimed at people building their own platforms with reduces operational overhead/requite rapid scaling.</p>
+
+<p>Have easily usable APIs with lots of documentation and SDKs available, sensible billing strategies and good SLAs.</p>
+
+<p>Remove the need for developers to spend their time doing operations, think Redshift from AWS or similar.</p>
+
+<h3>Providing well designed service implementations to end users.</h3>
+
+<p>Aimed at people who don't want to build their own thing.</p>
+
+<p>Think wordpress.com or gmail.com, amazing platforms that are rock stable, people love to use and are simple.</p>
+
+<p>Anyone can have a blog or an email account by just clicking buttons, that's hugely empowering.</p>
+
+<h3>'Real' managed service.</h3>
+
+<p>Lots of companies do 'managed service', install a server for you, stick some monitoring on it, fix it when it breaks.</p>
+
+<p>Managed services tend to fall into 2 categories:</p>
+
+<ul>
+<li>No changes are made after implementation as the risk it deemed too high</li>
+<li>Rolling updates are applied with little/no understanding of the service interaction</li>
+</ul>
+
+
+<p>What about owning the whole service from day 1? Write implementation specific integration tests, have everything in configuration management, understand what is important in the implementation, develop SLAs for each component based on the impact analysis.</p>
+
+<p>Monitoring then comes directly from the integration tests and SLAs for components. Collect all the metrics, graph them, proactivly review them in aggregate, have systems that flag up strange things happening. Handle problems with cold, hard numbers right at your finger tips.</p>
+
+<p>Once the solution is up and running it can be (mostly) managed automatically or semi-automatically.</p>
+
+<p>When thinking in configuration management, don't think in services but think in systems. General system package updates can affect applications, running 2 applications with conflicting requirements is a whole other challenge. Make sure systems can be put back to exactly where they are, including security updates. Letting a system update its self is outside of managing that system - need a security patch? Have a system detect that, update the configuration management system and do an upgrade task (as below).</p>
+
+<p>Need to perform software upgrades?</p>
+
+<ol>
+<li>Spin up a clone of the production set-up from configuration management in a private cloud</li>
+<li>Apply the updates to the clone via configuration management</li>
+<li>Have monitoring validate the clone's services are up (via service monitoring)</li>
+<li>Have monitoring validate the clone is functional (via the integration tests)</li>
+<li>Spin down the clone and perform the upgrades on Production (or just swap instances if all virtual)</li>
+</ol>
+
+
+<p>If something still goes wrong?</p>
+
+<ol>
+<li>Roll back the production servers to the previous point in configuration management</li>
+<li>Roll the database back to the snapshot (if required, really try to use a schema that works across application versions... since at scale not everything is consistent if you want 0 downtime updates)</li>
+<li>Write tests to cover what was deemed broken</li>
+<li>Start the upgrade steps from scratch</li>
+</ol>
+
+
+<p>This must be a better, more stable way of rolling updates. Lots of companies follow a similar model internally, but Damian is convinced this can be applied to managed service and will become the next generation of managed service.</p>
+
+<p>Damian would also love to be able to spend more time working on open source software and interacting with the fantastic communities around the world, even if this means just having more free time to spend on those activities.</p>
+
 </div>
 
 <footer>
