@@ -215,14 +215,6 @@
         <lastmod>2013-01-20T00:00:00+00:00</lastmod>
     </url>
     <url>
-        <loc>http://damianzaremba.co.uk/404.html</loc>
-        <lastmod>2014-01-01T00:00:00+00:00</lastmod>
-    </url>
-    <url>
-        <loc>http://damianzaremba.co.uk/about/</loc>
-        <lastmod>2014-01-01T00:00:00+00:00</lastmod>
-    </url>
-    <url>
         <loc>http://damianzaremba.co.uk/archives/</loc>
         <lastmod>2014-01-01T00:00:00+00:00</lastmod>
     </url>
@@ -231,7 +223,15 @@
         <lastmod>2014-01-01T00:00:00+00:00</lastmod>
     </url>
     <url>
+        <loc>http://damianzaremba.co.uk/404.html</loc>
+        <lastmod>2014-01-01T00:00:00+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://damianzaremba.co.uk/</loc>
+        <lastmod>2014-01-01T00:00:00+00:00</lastmod>
+    </url>
+    <url>
+        <loc>http://damianzaremba.co.uk/todo/</loc>
         <lastmod>2014-01-01T00:00:00+00:00</lastmod>
     </url>
     <url>
@@ -239,7 +239,7 @@
         <lastmod>2014-01-01T00:00:00+00:00</lastmod>
     </url>
     <url>
-        <loc>http://damianzaremba.co.uk/todo/</loc>
+        <loc>http://damianzaremba.co.uk/about/</loc>
         <lastmod>2014-01-01T00:00:00+00:00</lastmod>
     </url>
 </urlset>
