@@ -19,24 +19,6 @@
     <link href="//damianzaremba.co.uk/assests/css/main.css" rel="stylesheet" type="text/css" />
     <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel="stylesheet" type="text/css" />
 
-    <!-- JS files -->
-    <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-11817192-1']);
-        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = '//stats.g.doubleclick.net/dc.js'
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
     <!-- IE fixes -->
     <!--[if IE]>
     body {
@@ -90,6 +72,47 @@
 
 <div id="content">
 
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />12 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p>
+
+<p>Quick example:</p>
+
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
+Thu Nov 25 18:22:37 CET 2010
+</code></pre></div>
+
+
+<p>You can also format the output of date to suit your needs, for example:</p>
+
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
+18:22:37 25/11/2010
+</code></pre></div>
+
+
+<p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p>
+
+<div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
+damian: Thu Nov 18 21:17:44 CET 2010
+<span class="nb">test</span>: Mon Nov 8 00:01:04 CET 2010
+bob: Mon Nov 15 17:34:18 CET 2010
+</code></pre></div>
+
+
+
+
+        </div>
+    </article>
     
     <article class="post">
         <h1 class="title"><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1>
@@ -932,198 +955,6 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
         </div>
     </article>
     
-    <article class="post">
-        <h1 class="title"><a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />06 Jul 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="c">#!/bin/bash</span>
-<span class="nv">VG</span><span class="o">=</span><span class="s1">&#39;/dev/virtual_disks&#39;</span>
-<span class="nv">KS_ADDR</span><span class="o">=</span><span class="s1">&#39;http://192.168.100.1:5843/kickstarts&#39;</span>
-
-<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
- centos<span class="o">)</span>
- <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/centos_$5.ks&quot;</span>
- <span class="k">else</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
- <span class="k">fi</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
- <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://mirror.limestonenetworks.com/centos/5.5/os/x86_64/&#39;</span>
- lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
- virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
- virsh vncdisplay <span class="nv">$4</span>
- <span class="p">;;</span>
- fedora<span class="o">)</span>
- <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/fedora_$5.ks&quot;</span>
- <span class="k">else</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
- <span class="k">fi</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
- <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://www.mirrorservice.org/sites/download.fedora.redhat.com/pub/fedora/linux/releases/13/Fedora/x86_64/os/&#39;</span>
- lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
- virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
- virsh vncdisplay <span class="nv">$4</span>
- <span class="p">;;</span>
- debian<span class="o">)</span>
- <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/debian_$5.ks&quot;</span>
- <span class="k">else</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
- <span class="k">fi</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
- <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://debian.intergenia.de/debian/dists/lenny/main/installer-amd64/&#39;</span>
- lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
- virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
- virsh vncdisplay <span class="nv">$4</span>
- <span class="p">;;</span>
- ubuntu<span class="o">)</span>
- <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
- <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/ubuntu_$5.ks&quot;</span>
- <span class="k">else</span>
-<span class="k"> </span><span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
- <span class="k">fi</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
- <span class="nv">location</span><span class="o">=</span><span class="s2">&quot;http://ubuntu.intergenia.de/ubuntu/dists/lucid/main/installer-amd64/&quot;</span>
- lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
- virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
- virsh vncdisplay <span class="nv">$4</span>
- <span class="p">;;</span>
- *<span class="o">)</span>
- <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
- <span class="nb">exit </span>2
- <span class="p">;;</span>
-<span class="k">esac</span>
-</code></pre></div>
-
-
-<p>Example usage:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./vm_install.sh fedora 50 1024 CharityHosting1 basic</span>
-Installing vm CharityHosting1 with 50G disk and 1024 ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
- Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
-Starting install...
-Retrieving file .treeinfo... <span class="p">|</span> 2.4 kB 00:00 ...
-Retrieving file vmlinuz... <span class="p">|</span> 6.7 MB 00:01 ...
-Retrieving file initrd.img... <span class="p">|</span> 57 MB 00:15 ...
-Creating domain... <span class="p">|</span> 0 B 00:00
-Domain installation still in progress. You can reconnect to
-the console to <span class="nb">complete </span>the installation process.
-:0
-</code></pre></div>
-
-
-<p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p>
-
-<p>2 Variables are as follows:
-VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh)
-KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro"_"$name".ks"</p>
-
-<p>The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.</p>
-
-<p>The other thing I do along side this is make dnsmasq hand out "static" ips to servers because I use NAT for mapping the public to private addresses, this is because I only run a couple of production vms on that server (Such as the charity hosting servers and graphing server) and the rest are test servers with no need for public addresses.</p>
-
-<p>Setup for dnsmasq/the script to make the assignments static are as follows:
-DNSMASQ config:</p>
-
-<div class="highlight"><pre><code class="text">domain-needed
-bogus-priv
-strict-order
-bind-interfaces
-listen-address=192.168.100.1
-except-interface=lo
-dhcp-range=192.168.100.2,192.168.100.254
-dhcp-lease-max=253
-conf-dir=/etc/dnsmasq.d/
-</code></pre></div>
-
-
-<p>/root/fix_leases.py script (this runs every 2min)</p>
-
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="n">leases</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">known_hosts</span> <span class="o">=</span> <span class="p">{}</span>
-
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">):</span>
- <span class="n">leases_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
- <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">leases_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
- <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">clientid</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
- <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
- <span class="s">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span>
- <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
- <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
- <span class="s">&#39;client_id&#39;</span><span class="p">:</span> <span class="n">clientid</span><span class="p">,</span>
- <span class="p">}</span>
-
-<span class="n">leases_fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-
-<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">):</span>
- <span class="n">known_host_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
- <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">known_host_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
- <span class="k">if</span> <span class="s">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
- <span class="n">hostname</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;# Host&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
- <span class="k">elif</span> <span class="s">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
- <span class="k">if</span> <span class="n">hostname</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
- <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;Unknown&#39;</span>
- <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
- <span class="p">(</span><span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
- <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
- <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
- <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
- <span class="p">}</span>
- <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-
-<span class="n">new_leases</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">leases</span><span class="p">:</span>
- <span class="k">if</span> <span class="n">mac</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
- <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span>
-
-<span class="n">hosts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
- <span class="n">ip</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
- <span class="n">hostname</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
- <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">new_leases</span><span class="p">:</span>
- <span class="n">ip</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
- <span class="n">hostname</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
- <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
-
-<span class="n">hosts</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="k">print</span> <span class="s">&quot;Updating done :)&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span>
-</code></pre></div>
-
-
-<p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p>
-
-<p>Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)</p>
-
-        </div>
-    </article>
-    
 
 
 
@@ -1156,19 +987,49 @@ conf-dir=/etc/dnsmasq.d/
 <script src="//damianzaremba.co.uk/assests/js/html5.js"></script>
 <![endif]-->
 
+<!-- JS files -->
+<script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
 <script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11817192-1']);
+    _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+    _gaq.push(['_trackPageview']);
 
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+    })();
 
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
+    var _paq = _paq || [];
+    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+    _paq.push(["setDomains", ["*.damianzaremba.co.uk","*.thegeekstop.net"]]);
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+        var u=(("https:" == document.location.protocol) ? "https" : "http") + "://piwik.damianzaremba.co.uk/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', 1]);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
+        g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+
+!window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
+
+var disqus_shortname = 'damianzaremba';
+var disqus_script = 'count.js';
+
+(function () {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
 </script>
+<noscript><p><img src="http://piwik.damianzaremba.co.uk/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
 </body>
 </html>
