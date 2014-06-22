@@ -92,6 +92,76 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2014/04/quick-look-at-cisco-learning-network-premium-labs/">A Quick Look At Cisco Learning Network Premium/Cisco Learning Labs</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />18 Apr 2014</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2014/04/quick-look-at-cisco-learning-network-premium-labs/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/network'>Network</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/learning'>Learning</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p><img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-complex-mpls.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-complex-routing.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-home.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-labs.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-overview.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/cll-simple-lab.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/gns3-complex-mpls.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/gns3-complex-routing.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/gns3-complex-topology.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/gns3-lab-clone.png" alt="" />
+<img src="/2014/04/quick-look-at-cisco-learning-network-premium-labs/gns3-simple-lab.png" alt="" /></p>
+
+<p>CLL - 3 years old</p>
+
+<p>Learning Network Premium - 10$/mo
+4500 min (75h - 0.13 USD/hour) = ~2.5 hours/day (~0.33 USD/day) CLL time</p>
+
+<p>comparable with virtual private servers
+0.03 USD/hour @ Linode
+0.02 USD/hour @ Bytemark &amp; AWS</p>
+
+<p>ICND1/ICND2 - 79$ (valid for 90 days, 71.10$ with Learning Network Premium. 5 hour extension 23$)
+2100 min (35 h - 2.25 USD/hour) = ~27 min/day (0.60 USD/day) CLL time</p>
+
+<p>CCNP ROUTE/SWITCH/TSHOOT, MPLS - 75$ (valid for 90 days, 67.50$ with Learning Network Premium. 5 hour extension 30$)
+1500 min (25 h - 3 USD/hour) = ~16 min/day (0.48 USD/day) CLL time</p>
+
+<p>CCIE Lab - considering the 1500 USD per attempt, combined with the cost of flights/hotels (unless you happen to live in Brussles) the 99USD R&amp;S preassesment lab I'll definatly be taking a look at</p>
+
+<p>gns3 hates:
+* no switch emulation
+* getting ios images and setting them up in gns3 is a huge pita
+* resource usage
+* complex topologies are nearly impossible</p>
+
+<p>gns3 loves:
+* flexiable topologies
+* 'other' devices supported - can hook in lbs etc</p>
+
+<p>ccl hates:
+* static topologies
+* useless for design/troubleshooting outside of prescribed labs
+* time allocated per month
+* interface emulation - everything is generic (ethernet interfaces) and lacking hardware specific features (config-register etc)
+* no auto score/check feature
+* price of ccie labs is insane
+* seperate login details from normal cisco stuff
+* the web interface is a little clunky</p>
+
+<p>ccl loves:
+* good objectives
+* fixed topologies
+* valid configs for answers
+* highlighted sections of relevant documentation needed to complete the lab
+* a few topic specific labs avaible (MPLS)</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Jan 2013</span>
@@ -555,70 +625,6 @@ class, passing any options as required.</p>
 
 <p>Hopefully this should help you getting Gunicorn running smoothly in a more
 integrated manner :)</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Aug 2012</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/dell'>Dell</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication
-(<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and
-<a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p>
-
-<p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be
-slightly more complicated than the HP's, but followed the Cisco style config.</p>
-
-<p>First we need add a custom login and enable method</p>
-
-<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
-aaa authentication enable &quot;LineName&quot; none
-</code></pre></div>
-
-
-<p>These are used for connections over SSH - "LineName" can be anything, I tend to
-use the company name to keep things standard.</p>
-
-<p>On the second line, you could also use radius local - this would require a
-password to enter enable mode. Personally I control the login mode from the
-RADIUS server and find having to enter a password to get to enable again a hassle.</p>
-
-<p>Next we need to setup the RADIUS server</p>
-
-<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
-name &quot;server1&quot;
-usage login
-key &quot;SecretKeyHere&quot;
-exit
-</code></pre></div>
-
-
-<p>Now we just need to configure the ssh line to use our aaa methods</p>
-
-<div class="highlight"><pre><code class="text">login authentication LineName
-enable authentication LineName
-</code></pre></div>
-
-
-<p>Once complete you should be able to login via ssh using your RADIUS details.</p>
-
-<p>If you require access to the switch over http(s) you can also configure the HTTP
-server to authenticate against RADIUS</p>
-
-<div class="highlight"><pre><code class="text">ip http authentication radius local
-ip https authentication radius local
-</code></pre></div>
-
-
-<p>We include local on every method to ensure we don't get locked out the switch.</p>
 
         </div>
     </article>

@@ -3,12 +3,19 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2013-01-20T00:00:00+00:00</updated>
+    <updated>2014-04-18T00:00:00+01:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
         <email>damian@damianzaremba.co.uk</email>
     </author>
+    
+    <entry>
+        <title>A Quick Look At Cisco Learning Network Premium/Cisco Learning Labs</title>
+        <link href="http://damianzaremba.co.uk/2014/04/quick-look-at-cisco-learning-network-premium-labs/"/>
+        <updated>2014-04-18T00:00:00+01:00</updated>
+        <id>http://damianzaremba.co.uk/2014/04/quick-look-at-cisco-learning-network-premium-labs</id>
+    </entry>
     
     <entry>
         <title>What's Anycast and why would I use it?</title>
