@@ -92,37 +92,6 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
-
-<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
-
-<ul>
-<li>Spoon knife - for rounding the handle and scraping out the dip</li>
-<li>9" knife - for taking off the thick outer and bark</li>
-<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
-</ul>
-
-
-<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
-
-<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
-<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
-
-        </div>
-    </article>
-    
-    <article class="post">
         <h1 class="title"><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/">SMTP Authentication in Postfix using local system accounts</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
@@ -262,6 +231,44 @@ vnet0: <span class="o">=</span>&gt;
 <p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p>
 
 <p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To install PostgreSQL on a cPanel server you can perform the following:</p>
+
+<ol>
+<li>Run /scripts/installpostgres</li>
+<li>Go to SQL services -> Postgre config and click Install config</li>
+<li>Configure a root password for Postgre
+4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
+</ol>
+
+
+<p>Now you would think that is it, right?
+Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
+
+<p>You can add them with the following script:</p>
+
+<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
+do
+ su postgres -c &quot;createuser -S -D -R $user&quot;;
+done
+</code></pre></div>
+
+
+
 
         </div>
     </article>

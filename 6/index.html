@@ -92,52 +92,6 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
-
-<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
-
-<p>An example router:</p>
-
-<div class="highlight"><pre><code class="text">myrouter:
- driver = dnslookup
- senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport
-</code></pre></div>
-
-
-<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
-
-<p>The transport option is a reference to your custom transport (see below).</p>
-
-<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
-
-<p>An example transport is:</p>
-
-<div class="highlight"><pre><code class="text">mytransport:
- driver = smtp
- interface = 192.168.0.1
- helo_data = mail.mydomain.com
-</code></pre></div>
-
-
-<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
-
-<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
         <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
@@ -324,6 +278,88 @@ In /etc/security/limits.conf ensure the following line is present:</li>
 
 
 
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />18 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
+ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn't getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.</p>
+
+<p>After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).</p>
+
+<p>Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn't! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!</p>
+
+<p>A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don't even document that you can set the IPRESOLVE option, but you can! Yay for php...</p>
+
+<p>The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:</p>
+
+<div class="highlight"><pre><code class="php"><span class="x">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );</span>
+</code></pre></div>
+
+
+<p>My test script in a broken state is:</p>
+
+<div class="highlight"><pre><code class="php"><span class="cp">&lt;?php</span>
+ <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERAGENT</span><span class="p">,</span> <span class="s1">&#39;ClueBot/2.0&#39;</span> <span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyhost</span> <span class="p">)</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyport</span> <span class="p">)</span> <span class="k">and</span> <span class="nv">$proxyport</span> <span class="o">!=</span> <span class="k">null</span> <span class="k">and</span> <span class="nv">$proxyhost</span> <span class="o">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYTYPE</span><span class="p">,</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxytype</span> <span class="p">)</span> <span class="o">?</span> <span class="nv">$proxytype</span> <span class="o">:</span> <span class="nx">CURLPROXY_HTTP</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXY</span><span class="p">,</span> <span class="nv">$proxyhost</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYPORT</span><span class="p">,</span> <span class="nv">$proxyport</span> <span class="p">);</span>
+ <span class="p">}</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">&quot;http://toolserver.org/~cobi/cb.php?user=124.124.10.106&amp;ns=0&amp;title=Sayala&amp;timestamp=1313668350&quot;</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_MAXREDIRS</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_TIMEOUT</span><span class="p">,</span> <span class="mi">120</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPGET</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_ENCODING</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+
+
+<p>And the test script in the fixed status is:</p>
+
+<div class="highlight"><pre><code class="php"><span class="cp">&lt;?php</span>
+ <span class="nv">$ch</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">();</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_USERAGENT</span><span class="p">,</span> <span class="s1">&#39;ClueBot/2.0&#39;</span> <span class="p">);</span>
+ <span class="k">if</span><span class="p">(</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyhost</span> <span class="p">)</span> <span class="k">and</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxyport</span> <span class="p">)</span> <span class="k">and</span> <span class="nv">$proxyport</span> <span class="o">!=</span> <span class="k">null</span> <span class="k">and</span> <span class="nv">$proxyhost</span> <span class="o">!=</span> <span class="k">null</span> <span class="p">)</span> <span class="p">{</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYTYPE</span><span class="p">,</span> <span class="nb">isset</span><span class="p">(</span> <span class="nv">$proxytype</span> <span class="p">)</span> <span class="o">?</span> <span class="nv">$proxytype</span> <span class="o">:</span> <span class="nx">CURLPROXY_HTTP</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXY</span><span class="p">,</span> <span class="nv">$proxyhost</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_PROXYPORT</span><span class="p">,</span> <span class="nv">$proxyport</span> <span class="p">);</span>
+ <span class="p">}</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_URL</span><span class="p">,</span> <span class="s2">&quot;http://toolserver.org/~cobi/cb.php?user=124.124.10.106&amp;ns=0&amp;title=Sayala&amp;timestamp=1313668350&quot;</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_FOLLOWLOCATION</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_MAXREDIRS</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HEADER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_TIMEOUT</span><span class="p">,</span> <span class="mi">120</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_CONNECTTIMEOUT</span><span class="p">,</span> <span class="mi">10</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPGET</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_ENCODING</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span>
+ <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_IPRESOLVE</span><span class="p">,</span> <span class="nx">CURL_IPRESOLVE_V4</span> <span class="p">);</span>
+
+<span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
+
+
+<p>Simples!</p>
 
         </div>
     </article>

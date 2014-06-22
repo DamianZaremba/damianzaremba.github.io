@@ -92,206 +92,6 @@
 
     
     <article class="post">
-        <h1 class="title"><a href="/2011/11/restricting-access-to-edgecast-nodes/">Restricting access to EdgeCast nodes</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />02 Nov 2011</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/11/restricting-access-to-edgecast-nodes/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cat'>Cat</a></li><li><a href='/tag/cdn'>CDN</a></li><li><a href='/tag/edgecast'>Edgecast</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/mod_rewrite'>Mod_rewrite</a></li><li><a href='/tag/sed'>Sed</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.</p>
-
-<p>We quickly had to move him on to the CDN to ensure the traffic impact wasn't affecting performance for him or others as well as reduce his bandwidth charges substantially.</p>
-
-<p>Once the CDN was all set up and the content pushed out onto the nodes we started to send traffic over.</p>
-
-<p>Due to the impact of social media and people linking directly to the content we had to devise a plan to enable access to the content for the CDN but redirect anyone linking directly to the CDNified subdomain.</p>
-
-<p>In comes mod_rewrite. Now it appears EdgeCast don't publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.</p>
-
-<p>Linux to the rescue! First we just copy the list into a file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat &gt; edgecast_ranges
-Asia Hong Kong 117.18.234.0 - 117.18.234.255
-110.232.176.0 - 110.232.176.255
-Asia Singapore 117.18.236.0 - 117.18.236.255
-46.22.71.0 - 46.22.71.255
-Asia Tokyo 117.18.233.0 - 117.18.233.255
-110.232.177.0 - 110.232.177.255
-Australia Sydney 117.18.235.0 - 117.18.235.255
-110.232.179.0 - 110.232.179.255
-Europe Amsterdam 93.184.208.0 - 93.184.208.255
-93.184.209.0 - 93.184.209.255
-93.184.217.0 - 93.184.217.255
-46.22.70.0 - 46.22.70.255
-46.22.72.0 - 46.22.73.255
-Europe Frankfurt 72.21.89.0 - 72.21.89.255
-93.184.212.0 - 93.184.212.255
-93.184.213.0 - 93.184.213.255
-Europe London 72.21.90.0 - 72.21.90.255
-93.184.210.0 - 93.184.210.255
-93.184.211.0 - 93.184.211.255
-46.22.74.0 - 46.22.75.255
-Europe Madrid 46.22.66.0 - 46.22.67.255
-Europe Paris 93.184.214.0 - 93.184.214.255
-North America Ashburn 72.21.83.0 - 72.21.83.255
-68.232.36.0 - 68.232.36.255
-North America Atlanta 72.21.88.0 - 72.21.88.255
-72.21.93.0 - 72.21.93.255
-North America Chicago 72.21.87.0 - 72.21.87.255
-68.232.38.0 - 68.232.38.255
-North America Dallas 72.21.86.0 - 72.21.86.255
-68.232.39.0 - 68.232.39.255
-North America Los Angeles 72.21.84.0 - 72.21.84.255
-68.232.40.0 - 68.232.40.255
-72.21.94.0 - 72.21.94.255
-93.184.218.0 - 93.184.218.255
-46.22.69.0 - 46.22.69.255
-North America Miami 46.22.64.0 - 46.22.65.255
-North America New York 72.21.95.0 - 72.21.95.255
-68.232.37.0 - 68.232.37.255
-North America San Jose
-North America San Jose 72.21.82.0 - 72.21.82.255
-68.232.41.0 - 68.232.41.255
-North America Seattle 72.21.85.0 - 72.21.85.255
-Other N/A 72.21.80.0 - 72.21.80.255
-72.21.81.0 - 72.21.81.255
-72.21.91.0 - 72.21.91.255
-72.21.92.0 - 72.21.92.255
-117.18.232.0 - 117.18.232.255
-93.184.221.0 - 93.184.221.255
-93.184.220.0 - 93.184.220.255
-93.184.219.0 - 93.184.219.255
-117.18.237.0 - 117.18.237.255
-93.184.215.0 - 93.184.215.255
-93.184.216.0 - 93.184.216.255
-68.232.32.0 - 68.232.32.255
-68.232.33.0 - 68.232.33.255
-68.232.34.0 - 68.232.34.255
-68.232.35.0 - 68.232.35.255
-68.232.42.0 - 68.232.42.255
-68.232.43.0 - 68.232.43.255
-68.232.44.0 - 68.232.44.255
-68.232.45.0 - 68.232.45.255
-68.232.46.0 - 68.232.46.255
-68.232.47.0 - 68.232.47.255
-93.184.222.0 - 93.184.222.255
-93.184.223.0 - 93.184.223.255
-110.232.178.0 - 110.232.178.255
-117.18.237.0 - 117.18.237.255
-117.18.238.0 - 117.18.238.255
-117.18.239.0 - 117.18.239.255
-</code></pre></div>
-
-
-<p>Next we need to clear out all the names etc that are randomly dumped in the file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^.*\s.*\s//g&#39;</span> edgecast_ranges <span class="c"># Get rid of place names</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span>
-</code></pre></div>
-
-
-<p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&#39;</span> edgecast_ranges <span class="c"># Add the rewrite cond</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span>
-</code></pre></div>
-
-
-<p>Now let's create the actual htaccess file:</p>
-
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteEngine On&#39;</span> &gt;&gt; .htaccess
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat edgecast_ranges &gt;&gt; .htaccess
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess
-</code></pre></div>
-
-
-<p>You should end up with something looking like this:</p>
-
-<div class="highlight"><pre><code class="bash">RewriteEngine On
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.234.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.232.176.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.236.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.71.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.233.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.232.177.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.235.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.232.179.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.208.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.209.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.217.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.70.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.72.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.89.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.212.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.213.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.90.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.210.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.211.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.74.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.66.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.214.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.83.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.36.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.88.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.93.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.87.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.38.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.86.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.39.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.84.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.40.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.94.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.218.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.69.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^46.22.64.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.95.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.37.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.82.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.41.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.85.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.80.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.81.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.91.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^72.21.92.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.232.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.221.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.220.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.219.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.237.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.215.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.216.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.32.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.33.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.34.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.35.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.42.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.43.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.44.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.45.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.46.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^68.232.47.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.222.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^93.184.223.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.232.178.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.237.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.238.*<span class="err">$</span>
-RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.239.*<span class="err">$</span>
-RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span>
-</code></pre></div>
-
-
-<p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p>
-
-<p>Now you can go back to reading slashdot ;)</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
         <h1 class="title"><a href="/2011/08/changing-wordpress-tag-to-category/">Changing WordPress tag to category?</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />25 Aug 2011</span>
@@ -549,6 +349,37 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 
 
 <p>ClamAV should now work once again.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
+
+<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
+
+<ul>
+<li>Spoon knife - for rounding the handle and scraping out the dip</li>
+<li>9" knife - for taking off the thick outer and bark</li>
+<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
+</ul>
+
+
+<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
+
+<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
 
         </div>
     </article>
