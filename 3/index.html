@@ -115,8 +115,7 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 +---------+----------+----------+------------+
 <span class="p">|</span> 171 <span class="p">|</span> Snippets <span class="p">|</span> snippets <span class="p">|</span> 0 <span class="p">|</span>
 +---------+----------+----------+------------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
-</code></pre></div>
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></code></pre></div>
 
 
 <p>Now look in the taxonomy table and find out its details:</p>
@@ -127,8 +126,7 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 +------------------+---------+----------+-------------+--------+-------+
 <span class="p">|</span> 174 <span class="p">|</span> 171 <span class="p">|</span> post_tag <span class="p">|</span> <span class="p">|</span> 0 <span class="p">|</span> 17 <span class="p">|</span>
 +------------------+---------+----------+-------------+--------+-------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
-</code></pre></div>
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></code></pre></div>
 
 
 <p>As you can see it is currently a "post_tag".</p>
@@ -137,16 +135,14 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 <div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
-Rows matched: 1 Changed: 1 Warnings: 0
-</code></pre></div>
+Rows matched: 1 Changed: 1 Warnings: 0</code></pre></div>
 
 
 <p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p>
 
 <div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.02 sec<span class="o">)</span>
-Rows matched: 1 Changed: 1 Warnings: 0
-</code></pre></div>
+Rows matched: 1 Changed: 1 Warnings: 0</code></pre></div>
 
 
 
@@ -176,8 +172,7 @@ Rows matched: 1 Changed: 1 Warnings: 0
 +------------------+
 <span class="p">|</span> test_database <span class="p">|</span>
 +------------------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
-</code></pre></div>
+1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span></code></pre></div>
 
 
 <p>The simplest way to solve this and make life easier, is to change the prompt to include the info!
@@ -187,14 +182,12 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre></div>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;</code></pre></div>
 
 
 <p>Now when you use the client the prompt will show mysql [user@host - database]>:</p>
 
-<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;</code></pre></div>
 
 
 <p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p>
@@ -203,8 +196,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre></div>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;</code></pre></div>
 
 
 
@@ -333,8 +325,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
  LibClamAV Error: Can&#39;t load daily.ndb: Malformed database
  LibClamAV Error: cli_tgzload: Can&#39;t load daily.ndb
  LibClamAV Error: Can&#39;t load /var/lib/clamav/daily.cld: Malformed database
- ERROR: Malformed database
-</code></pre></div>
+ ERROR: Malformed database</code></pre></div>
 
 
 <p>To upgrade ClamAV on a RHEL based system perform the following:</p>

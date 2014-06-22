@@ -104,14 +104,12 @@
 <p>Bash as always is very helpful</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
--bash: /bin/rm: Argument list too long”
-</code></pre></div>
+-bash: /bin/rm: Argument list too long”</code></pre></div>
 
 
 <p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></div>
 
 
 <p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p>
@@ -121,15 +119,13 @@
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
 /tmp/repoup1291034701
 /tmp/repoup1291034701/live
-/tmp/repoup1291034701/live/.git
-</code></pre></div>
+/tmp/repoup1291034701/live/.git</code></pre></div>
 
 
 <p>xargs just converts from standard input to command line arguments as can be seen below:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
-rm /tmp/repoup1291034701
-</code></pre></div>
+rm /tmp/repoup1291034701</code></pre></div>
 
 
 <p>Hope this helps</p>

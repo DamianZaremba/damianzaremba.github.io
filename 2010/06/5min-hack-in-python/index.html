@@ -138,8 +138,7 @@
 <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
  <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
  <span class="k">else</span><span class="p">:</span>
- <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
-</code></pre></div>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span></code></pre></div>
 
 
 <p>Which happens to nicely do the job as can be seen below:</p>
@@ -163,16 +162,14 @@ sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 
 114.207.245.128 is currently over fail limit, processing
 114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
 62.182.30.165 is currently over fail limit, processing
-30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
-</code></pre></div>
+30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts</code></pre></div>
 
 
 <p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
 
 <div class="highlight"><pre><code class="bash">iptables -I INPUT -j BadIp
 iptables -I OUTPUT -j BadIp
-iptables -I FORWARD -j BadIp
-</code></pre></div>
+iptables -I FORWARD -j BadIp</code></pre></div>
 
 
 <p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>

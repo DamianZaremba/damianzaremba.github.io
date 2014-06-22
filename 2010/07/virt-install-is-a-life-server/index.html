@@ -170,8 +170,7 @@
  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
  <span class="nb">exit </span>2
  <span class="p">;;</span>
-<span class="k">esac</span>
-</code></pre></div>
+<span class="k">esac</span></code></pre></div>
 
 
 <p>Example usage:</p>
@@ -186,8 +185,7 @@ Retrieving file initrd.img... <span class="p">|</span> 57 MB 00:15 ...
 Creating domain... <span class="p">|</span> 0 B 00:00
 Domain installation still in progress. You can reconnect to
 the console to <span class="nb">complete </span>the installation process.
-:0
-</code></pre></div>
+:0</code></pre></div>
 
 
 <p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p>
@@ -211,8 +209,7 @@ listen-address=192.168.100.1
 except-interface=lo
 dhcp-range=192.168.100.2,192.168.100.254
 dhcp-lease-max=253
-conf-dir=/etc/dnsmasq.d/
-</code></pre></div>
+conf-dir=/etc/dnsmasq.d/</code></pre></div>
 
 
 <p>/root/fix_leases.py script (this runs every 2min)</p>
@@ -269,8 +266,7 @@ conf-dir=/etc/dnsmasq.d/
 
 <span class="n">hosts</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="k">print</span> <span class="s">&quot;Updating done :)&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span>
-</code></pre></div>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span></code></pre></div>
 
 
 <p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p>

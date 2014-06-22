@@ -104,8 +104,7 @@
 <div class="highlight"><pre><code class="text">message_size_limit = 204800000
 smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
 smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes
-</code></pre></div>
+broken_sasl_auth_clients = yes</code></pre></div>
 
 
 <p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
@@ -115,8 +114,7 @@ broken_sasl_auth_clients = yes
 <div class="highlight"><pre><code class="bash">chkconfig saslauthd on
 /etc/init.d/saslauthd restart
 chkconfig postfix on
-/etc/init.d/postfix restart
-</code></pre></div>
+/etc/init.d/postfix restart</code></pre></div>
 
 
 <p>Once this is done all we need to do is add our users and they can send mail:</p>
@@ -125,8 +123,7 @@ chkconfig postfix on
 passwd user1
 
 adduser -s /sbin/nologin -M user2
-passwd user2
-</code></pre></div>
+passwd user2</code></pre></div>
 
 
 

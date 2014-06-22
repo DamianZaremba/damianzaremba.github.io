@@ -108,8 +108,7 @@
 <div class="highlight"><pre><code class="text">myrouter:
  driver = dnslookup
  senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport
-</code></pre></div>
+ transport = mytransport</code></pre></div>
 
 
 <p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
@@ -123,8 +122,7 @@
 <div class="highlight"><pre><code class="text">mytransport:
  driver = smtp
  interface = 192.168.0.1
- helo_data = mail.mydomain.com
-</code></pre></div>
+ helo_data = mail.mydomain.com</code></pre></div>
 
 
 <p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>

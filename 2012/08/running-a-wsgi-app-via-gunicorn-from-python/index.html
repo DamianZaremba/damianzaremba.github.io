@@ -125,8 +125,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
     <span class="k">return</span> <span class="s">&quot;Hello World!&quot;</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
+    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
 
 
 <p>Now, to get this running under Gunicorn we need to create a custom application</p>
@@ -167,8 +166,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
 
 <span class="sd">        Imports our application and returns it to be run.</span>
 <span class="sd">        &#39;&#39;&#39;</span>        
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span>
-</code></pre></div>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span></code></pre></div>
 
 
 <p>As far as I can tell the minimum methods you can define is 3;</p>
@@ -195,8 +193,7 @@ class, passing any options as required.</p>
         <span class="s">&#39;bind&#39;</span><span class="p">:</span> <span class="s">&#39;localhost:8080&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</code></pre></div>
+    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
 
 
 <p>In practice you'd probably load the options from a config file in your program.</p>

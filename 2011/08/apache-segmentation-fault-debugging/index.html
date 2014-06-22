@@ -101,8 +101,7 @@
     <div class="entry">
         <p>Sometimes you will see lines like this in the Apache error log:</p>
 
-<div class="highlight"><pre><code class="text">[notice] child pid 5 exit signal Segmentation fault (11)
-</code></pre></div>
+<div class="highlight"><pre><code class="text">[notice] child pid 5 exit signal Segmentation fault (11)</code></pre></div>
 
 
 <p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p>
@@ -115,8 +114,7 @@ In /etc/security/limits.conf ensure the following line is present:</li>
 </ol>
 
 
-<div class="highlight"><pre><code class="text">apache soft core 10000
-</code></pre></div>
+<div class="highlight"><pre><code class="text">apache soft core 10000</code></pre></div>
 
 
 <ol>
@@ -124,8 +122,7 @@ In /etc/security/limits.conf ensure the following line is present:</li>
 </ol>
 
 
-<div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/
-</code></pre></div>
+<div class="highlight"><pre><code class="text">CoreDumpDirectory /var/apache/coredumps/</code></pre></div>
 
 
 <ol>
@@ -140,8 +137,7 @@ In /etc/security/limits.conf ensure the following line is present:</li>
 
 <p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p>
 
-<div class="highlight"><pre><code class="text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
-</code></pre></div>
+<div class="highlight"><pre><code class="text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump</code></pre></div>
 
 
 <p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p>

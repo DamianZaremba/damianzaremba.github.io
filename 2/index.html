@@ -104,8 +104,7 @@
         <div class="entry">
             <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
-<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
-</code></pre></div>
+<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;</code></pre></div>
 
 
 <p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
@@ -117,8 +116,7 @@ aaa authentication telnet login radius local
 aaa authentication telnet enable radius local 
 aaa authentication web login radius local 
 aaa authentication ssh login radius local 
-aaa authentication ssh enable radius local 
-</code></pre></div>
+aaa authentication ssh enable radius local</code></pre></div>
 
 
 <p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
@@ -145,8 +143,7 @@ radius-server port 1812
 radius-server timeout 10
 radius-server enable
 no radius-server telnet-backdoor
-radius-server secure-backdoor
-</code></pre></div>
+radius-server secure-backdoor</code></pre></div>
 
 
 <p>The first and second lines setup the server/key to authenticate against.</p>
@@ -177,8 +174,7 @@ radius-server secure-backdoor
 
 <div class="highlight"><pre><code class="text">sntp server &lt;ip&gt;
 sntp unicast
-timesync sntp
-</code></pre></div>
+timesync sntp</code></pre></div>
 
 
 <p>The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.</p>
@@ -186,21 +182,18 @@ timesync sntp
 <p>This needs to be done in configure mode which can be got into via enable mode.</p>
 
 <div class="highlight"><pre><code class="text">enable
-configure
-</code></pre></div>
+configure</code></pre></div>
 
 
 <p>Once the switch is syncing with the SNTP server you can check the time is correct with</p>
 
-<div class="highlight"><pre><code class="text">show time
-</code></pre></div>
+<div class="highlight"><pre><code class="text">show time</code></pre></div>
 
 
 <p>Lastly just save the changes then logout</p>
 
 <div class="highlight"><pre><code class="text">write mem
-logout
-</code></pre></div>
+logout</code></pre></div>
 
 
 <p>A full example of this is below:</p>
@@ -212,8 +205,7 @@ Switch(config)# sntp unicast
 Switch(config)# timesync sntp
 Switch(config)# exit
 Switch# write mem
-Switch# logout
-</code></pre></div>
+Switch# logout</code></pre></div>
 
 
 <p>Your switches should now keep their time in sync :)</p>
@@ -237,8 +229,7 @@ Switch# logout
 <div class="highlight"><pre><code class="text">ntp enable 
 ntp timezone 0
 ntp primary-server &lt;ip&gt;
-ntp secondary-server &lt;ip&gt;
-</code></pre></div>
+ntp secondary-server &lt;ip&gt;</code></pre></div>
 
 
 <p>The first line enables NTP, the second tells the switch to use GMT+0 and the third/forth tells the switch which servers to sync with.</p>
@@ -246,8 +237,7 @@ ntp secondary-server &lt;ip&gt;
 <p>This needs to be done in configure mode which can be got into via enable mode.</p>
 
 <div class="highlight"><pre><code class="text">enable
-configure
-</code></pre></div>
+configure</code></pre></div>
 
 
 <p>Now ensure the switch timezone is correct, the command for this is slightly obnoxious. Below is an example of setting it to GB:</p>
@@ -288,15 +278,13 @@ Please select one of the following time zone regions.
 1) Great Britain
 2) Northern Ireland
 #? 1 
-System timezone set to : Europe/Britain/GB
-</code></pre></div>
+System timezone set to : Europe/Britain/GB</code></pre></div>
 
 
 <p>Lastly just save the changes then logout</p>
 
 <div class="highlight"><pre><code class="text">copy run start
-logout
-</code></pre></div>
+logout</code></pre></div>
 
 
 <p>A full example of this is below:</p>
@@ -309,8 +297,7 @@ Switch(config)# ntp primary-server 79.142.192.4
 Switch(config)# ntp secondary-server 217.147.208.1
 Switch(config)# exit
 Switch# copy run start
-Switch# logout
-</code></pre></div>
+Switch# logout</code></pre></div>
 
 
 <p>Your switches should now keep their time in sync :)</p>
@@ -410,30 +397,26 @@ Other N/A 72.21.80.0 - 72.21.80.255
 110.232.178.0 - 110.232.178.255
 117.18.237.0 - 117.18.237.255
 117.18.238.0 - 117.18.238.255
-117.18.239.0 - 117.18.239.255
-</code></pre></div>
+117.18.239.0 - 117.18.239.255</code></pre></div>
 
 
 <p>Next we need to clear out all the names etc that are randomly dumped in the file:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^.*\s.*\s//g&#39;</span> edgecast_ranges <span class="c"># Get rid of place names</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span>
-</code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span></code></pre></div>
 
 
 <p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&#39;</span> edgecast_ranges <span class="c"># Add the rewrite cond</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span>
-</code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span></code></pre></div>
 
 
 <p>Now let's create the actual htaccess file:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteEngine On&#39;</span> &gt;&gt; .htaccess
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat edgecast_ranges &gt;&gt; .htaccess
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess
-</code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess</code></pre></div>
 
 
 <p>You should end up with something looking like this:</p>
@@ -507,8 +490,7 @@ RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.2
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.237.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.238.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.239.*<span class="err">$</span>
-RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span>
-</code></pre></div>
+RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span></code></pre></div>
 
 
 <p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p>
