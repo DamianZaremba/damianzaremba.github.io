@@ -180,26 +180,30 @@ Other N/A 72.21.80.0 - 72.21.80.255
 110.232.178.0 - 110.232.178.255
 117.18.237.0 - 117.18.237.255
 117.18.238.0 - 117.18.238.255
-117.18.239.0 - 117.18.239.255</code></pre></div>
+117.18.239.0 - 117.18.239.255
+</code></pre></div>
 
 
 <p>Next we need to clear out all the names etc that are randomly dumped in the file:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^.*\s.*\s//g&#39;</span> edgecast_ranges <span class="c"># Get rid of place names</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span></code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;/^\s*$/d&#39;</span> edgecast_ranges <span class="c"># Get rid of blank lines</span>
+</code></pre></div>
 
 
 <p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/^/RewriteCond %{REMOTE_ADDR} !^/g&#39;</span> edgecast_ranges <span class="c"># Add the rewrite cond</span>
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span></code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>sed -i <span class="s1">&#39;s/\.255$/.*$/g&#39;</span> edgecast_ranges <span class="c"># Add the wildcard</span>
+</code></pre></div>
 
 
 <p>Now let's create the actual htaccess file:</p>
 
 <div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteEngine On&#39;</span> &gt;&gt; .htaccess
 <span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span>cat edgecast_ranges &gt;&gt; .htaccess
-<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess</code></pre></div>
+<span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="nb">echo</span> <span class="s1">&#39;RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]&#39;</span> &gt;&gt; .htaccess
+</code></pre></div>
 
 
 <p>You should end up with something looking like this:</p>
@@ -273,7 +277,8 @@ RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^110.2
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.237.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.238.*<span class="err">$</span>
 RewriteCond %<span class="o">{</span>REMOTE_ADDR<span class="o">}</span> !^117.18.239.*<span class="err">$</span>
-RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span></code></pre></div>
+RewriteRule ^downloads/<span class="o">(</span>.*<span class="o">)</span><span class="nv">$ </span>http://media.example.com/<span class="nv">$1</span> <span class="o">[</span>R,L<span class="o">]</span>
+</code></pre></div>
 
 
 <p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p>

@@ -119,7 +119,8 @@ part pv.2 --size=0 --grow --ondisk=$disk1
 volgroup VolGroup00 --pesize=32768 pv.2
 logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
 logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
-EOF</code></pre></div>
+EOF
+</code></pre></div>
 
 
 <p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>

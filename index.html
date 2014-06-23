@@ -123,7 +123,8 @@
  6  host-78-144-1-61.as13285.net (78.144.1.61)  56.102 ms  48.605 ms  41.366 ms
  7  host-78-144-0-180.as13285.net (78.144.0.180)  42.400 ms host-78-144-0-116.as13285.net (78.144.0.116)  39.599 ms host-78-144-0-164.as13285.net (78.144.0.164)  37.310 ms
  8  195.66.225.179 (195.66.225.179)  38.239 ms  73.818 ms  72.494 ms
- 9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms</code></pre></div>
+ 9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms
+</code></pre></div>
 
 
 
@@ -135,7 +136,8 @@
  4  po21.dsr01.dllstx3.networklayer.com (70.87.255.65)  0.902 ms  0.983 ms  1.020 ms
  5  ae16.bbr01.eq01.dal03.networklayer.com (173.192.18.224)  16.145 ms  16.138 ms  16.112 ms
  6  141.101.74.253 (141.101.74.253)  0.602 ms  0.566 ms  0.549 ms
- 7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms</code></pre></div>
+ 7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms
+</code></pre></div>
 
 
 <p>Note the the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p>
@@ -219,7 +221,8 @@ ns1 360 IN  A   10.0.0.1
 ns2 360 IN  A   192.168.0.1
 
 ; US
-ns3 360 IN  A   172.16.0.1</code></pre></div>
+ns3 360 IN  A   172.16.0.1
+</code></pre></div>
 
 
 <p>These NS records would then be "glued" on the root nameservers, so the first resolver can find the NS servers IP address.</p>
@@ -262,7 +265,8 @@ srv-ns3 360 IN  A   172.16.0.1
 ; Anycast
 ns1 360 IN A 10.1.0.1
 ns2 360 IN A 10.1.0.2
-ns3 360 IN A 10.1.0.3</code></pre></div>
+ns3 360 IN A 10.1.0.3
+</code></pre></div>
 
 
 <p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p>
@@ -346,7 +350,8 @@ nameserver 208.67.222.222
 nameserver 208.67.220.220
 
 # Options
-options single-request-reopen</code></pre></div>
+options single-request-reopen
+</code></pre></div>
 
 
 <p>Now you might want to dig into your network stack a little more and make sure
@@ -379,7 +384,8 @@ Looking up the server hostname (myirssiproxy.local)...
 Server hostname resolved to 10.44.1.1
 Contacting IRC server myirssiproxy.local (10.44.1.1) on port 8000
 Connection established [myirssiproxy.local (10.44.1.1:8000)]
-Local host address is 10.44.1.2</code></pre></div>
+Local host address is 10.44.1.2
+</code></pre></div>
 
 
 <p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
@@ -403,7 +409,8 @@ section and each server is numbered.</p>
 something like the below</p>
 
 <div class="highlight"><pre><code class="ini"><span class="k">[A]</span>
-<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span></code></pre></div>
+<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span>
+</code></pre></div>
 
 
 <p>This will usually have a number of other items, a full example is below</p>
@@ -423,7 +430,8 @@ something like the below</p>
 <span class="na">0_EnabledCAP</span><span class="o">=</span><span class="s">false</span>
 <span class="na">0_RealName</span><span class="o">=</span><span class="s">MyName</span>
 <span class="na">0_User</span><span class="o">=</span><span class="s">MyUser</span>
-<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span></code></pre></div>
+<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span>
+</code></pre></div>
 
 
 <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide
@@ -469,7 +477,8 @@ and having Gunicorn start, rather harder than it needed to be.</p>
     <span class="k">return</span> <span class="s">&quot;Hello World!&quot;</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
+    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
 
 
 <p>Now, to get this running under Gunicorn we need to create a custom application</p>
@@ -510,7 +519,8 @@ and having Gunicorn start, rather harder than it needed to be.</p>
 
 <span class="sd">        Imports our application and returns it to be run.</span>
 <span class="sd">        &#39;&#39;&#39;</span>        
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span></code></pre></div>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span>
+</code></pre></div>
 
 
 <p>As far as I can tell the minimum methods you can define is 3;</p>
@@ -537,7 +547,8 @@ class, passing any options as required.</p>
         <span class="s">&#39;bind&#39;</span><span class="p">:</span> <span class="s">&#39;localhost:8080&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
+    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</code></pre></div>
 
 
 <p>In practice you'd probably load the options from a config file in your program.</p>
@@ -569,7 +580,8 @@ slightly more complicated than the HP's, but followed the Cisco style config.</p
 <p>First we need add a custom login and enable method</p>
 
 <div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
-aaa authentication enable &quot;LineName&quot; none</code></pre></div>
+aaa authentication enable &quot;LineName&quot; none
+</code></pre></div>
 
 
 <p>These are used for connections over SSH - "LineName" can be anything, I tend to
@@ -585,13 +597,15 @@ RADIUS server and find having to enter a password to get to enable again a hassl
 name &quot;server1&quot;
 usage login
 key &quot;SecretKeyHere&quot;
-exit</code></pre></div>
+exit
+</code></pre></div>
 
 
 <p>Now we just need to configure the ssh line to use our aaa methods</p>
 
 <div class="highlight"><pre><code class="text">login authentication LineName
-enable authentication LineName</code></pre></div>
+enable authentication LineName
+</code></pre></div>
 
 
 <p>Once complete you should be able to login via ssh using your RADIUS details.</p>
@@ -600,7 +614,8 @@ enable authentication LineName</code></pre></div>
 server to authenticate against RADIUS</p>
 
 <div class="highlight"><pre><code class="text">ip http authentication radius local
-ip https authentication radius local</code></pre></div>
+ip https authentication radius local
+</code></pre></div>
 
 
 <p>We include local on every method to ensure we don't get locked out the switch.</p>

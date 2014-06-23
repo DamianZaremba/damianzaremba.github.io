@@ -108,7 +108,8 @@ Inside the directory you wish to protect include a .htaccess file with the follo
 <div class="highlight"><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
 AuthName &quot;My secure area&quot;
 AuthType Basic
-Require valid-user</code></pre></div>
+Require valid-user
+</code></pre></div>
 
 
 <p>Method 2)
@@ -119,19 +120,22 @@ In your apache config file add the following:</p>
  AuthName &quot;My secure area&quot;
  AuthType Basic
  Require valid-user
-&lt;/Directory&gt;</code></pre></div>
+&lt;/Directory&gt;
+</code></pre></div>
 
 
 <p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p>
 
 <p>You can create it with the htpasswd command:</p>
 
-<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername</code></pre></div>
+<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre></div>
 
 
 <p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
 
-<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername</code></pre></div>
+<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
+</code></pre></div>
 
 
 
@@ -166,7 +170,8 @@ The hostname (myserver.local) resolves to 10.0.0.1. It should resolve to 192.168
 Please be sure to correct /etc/hosts as well as the &#39;A&#39; entry in zone file for the domain.
 
 Some are all of these problems can be caused by /etc/resolv.conf being setup incorrectly.
-Please check this file if you believe everything else is correct.</code></pre></div>
+Please check this file if you believe everything else is correct.
+</code></pre></div>
 
 
 <p>The best way I find of "fixing" this is to just disable the "Ip address dns check" option in the contact manager.</p>
@@ -217,12 +222,14 @@ Please check this file if you believe everything else is correct.</code></pre></
         <div class="entry">
             <p>To make passive FTP work with iptables you need to enable the "ip_conntrack_ftp" module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;</code></pre></div>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;
+</code></pre></div>
 
 
 <p>To include the ip_conntrack_ftp module, like so:</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;</code></pre></div>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;
+</code></pre></div>
 
 
 <p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
@@ -250,7 +257,8 @@ Please check this file if you believe everything else is correct.</code></pre></
 <div class="highlight"><pre><code class="text">myrouter:
  driver = dnslookup
  senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport</code></pre></div>
+ transport = mytransport
+</code></pre></div>
 
 
 <p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
@@ -264,7 +272,8 @@ Please check this file if you believe everything else is correct.</code></pre></
 <div class="highlight"><pre><code class="text">mytransport:
  driver = smtp
  interface = 192.168.0.1
- helo_data = mail.mydomain.com</code></pre></div>
+ helo_data = mail.mydomain.com
+</code></pre></div>
 
 
 <p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>

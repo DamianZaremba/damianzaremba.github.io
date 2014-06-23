@@ -101,7 +101,8 @@
     <div class="entry">
         <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
-<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;</code></pre></div>
+<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
+</code></pre></div>
 
 
 <p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
@@ -113,7 +114,8 @@ aaa authentication telnet login radius local
 aaa authentication telnet enable radius local 
 aaa authentication web login radius local 
 aaa authentication ssh login radius local 
-aaa authentication ssh enable radius local</code></pre></div>
+aaa authentication ssh enable radius local 
+</code></pre></div>
 
 
 <p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>

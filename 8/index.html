@@ -188,7 +188,8 @@
 
 <span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
  <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></div>
+ <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+</code></pre></div>
 
 
 
@@ -405,7 +406,8 @@ line vty 0 15
  login local
  transport input ssh
 !
-end</code></pre></div>
+end
+</code></pre></div>
 
 
 <p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job.
@@ -565,7 +567,8 @@ to the end of the URL.</p>
  <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
  <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
  <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
 
 
 <h5>Another example</h5>
@@ -621,7 +624,8 @@ to the end of the URL.</p>
 <span class="s1"> }else{</span>
 <span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
  <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
 
 
 
@@ -645,13 +649,15 @@ to the end of the URL.</p>
 <p>Quick example:</p>
 
 <div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
-Thu Nov 25 18:22:37 CET 2010</code></pre></div>
+Thu Nov 25 18:22:37 CET 2010
+</code></pre></div>
 
 
 <p>You can also format the output of date to suit your needs, for example:</p>
 
 <div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
-18:22:37 25/11/2010</code></pre></div>
+18:22:37 25/11/2010
+</code></pre></div>
 
 
 <p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p>
@@ -659,7 +665,8 @@ Thu Nov 25 18:22:37 CET 2010</code></pre></div>
 <div class="highlight"><pre><code class="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
 damian: Thu Nov 18 21:17:44 CET 2010
 <span class="nb">test</span>: Mon Nov 8 00:01:04 CET 2010
-bob: Mon Nov 15 17:34:18 CET 2010</code></pre></div>
+bob: Mon Nov 15 17:34:18 CET 2010
+</code></pre></div>
 
 
 

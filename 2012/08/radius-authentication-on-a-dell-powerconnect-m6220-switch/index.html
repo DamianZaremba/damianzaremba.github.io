@@ -109,7 +109,8 @@ slightly more complicated than the HP's, but followed the Cisco style config.</p
 <p>First we need add a custom login and enable method</p>
 
 <div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
-aaa authentication enable &quot;LineName&quot; none</code></pre></div>
+aaa authentication enable &quot;LineName&quot; none
+</code></pre></div>
 
 
 <p>These are used for connections over SSH - "LineName" can be anything, I tend to
@@ -125,13 +126,15 @@ RADIUS server and find having to enter a password to get to enable again a hassl
 name &quot;server1&quot;
 usage login
 key &quot;SecretKeyHere&quot;
-exit</code></pre></div>
+exit
+</code></pre></div>
 
 
 <p>Now we just need to configure the ssh line to use our aaa methods</p>
 
 <div class="highlight"><pre><code class="text">login authentication LineName
-enable authentication LineName</code></pre></div>
+enable authentication LineName
+</code></pre></div>
 
 
 <p>Once complete you should be able to login via ssh using your RADIUS details.</p>
@@ -140,7 +143,8 @@ enable authentication LineName</code></pre></div>
 server to authenticate against RADIUS</p>
 
 <div class="highlight"><pre><code class="text">ip http authentication radius local
-ip https authentication radius local</code></pre></div>
+ip https authentication radius local
+</code></pre></div>
 
 
 <p>We include local on every method to ensure we don't get locked out the switch.</p>

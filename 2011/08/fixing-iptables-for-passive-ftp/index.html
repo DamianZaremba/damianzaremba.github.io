@@ -101,12 +101,14 @@
     <div class="entry">
         <p>To make passive FTP work with iptables you need to enable the "ip_conntrack_ftp" module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;</code></pre></div>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;&quot;
+</code></pre></div>
 
 
 <p>To include the ip_conntrack_ftp module, like so:</p>
 
-<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;</code></pre></div>
+<div class="highlight"><pre><code class="text">IPTABLES_MODULES=&quot;ip_conntrack_ftp&quot;
+</code></pre></div>
 
 
 <p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>

@@ -110,7 +110,8 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
 
 <p>The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:</p>
 
-<div class="highlight"><pre><code class="php"><span class="x">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );</span></code></pre></div>
+<div class="highlight"><pre><code class="php"><span class="x">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );</span>
+</code></pre></div>
 
 
 <p>My test script in a broken state is:</p>
@@ -134,7 +135,8 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
  <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_ENCODING</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">);</span>
 
 <span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
 
 
 <p>And the test script in the fixed status is:</p>
@@ -159,7 +161,8 @@ ClueBot NG was returning API errors all over the place, after a quick look thoug
  <span class="nb">curl_setopt</span><span class="p">(</span> <span class="nv">$ch</span><span class="p">,</span> <span class="nx">CURLOPT_IPRESOLVE</span><span class="p">,</span> <span class="nx">CURL_IPRESOLVE_V4</span> <span class="p">);</span>
 
 <span class="nb">var_dump</span><span class="p">(</span> <span class="nb">curl_exec</span><span class="p">(</span> <span class="nv">$ch</span> <span class="p">)</span> <span class="p">);</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span>
+</code></pre></div>
 
 
 <p>Simples!</p>

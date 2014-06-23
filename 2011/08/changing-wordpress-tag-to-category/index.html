@@ -112,7 +112,8 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 +---------+----------+----------+------------+
 <span class="p">|</span> 171 <span class="p">|</span> Snippets <span class="p">|</span> snippets <span class="p">|</span> 0 <span class="p">|</span>
 +---------+----------+----------+------------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></code></pre></div>
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</code></pre></div>
 
 
 <p>Now look in the taxonomy table and find out its details:</p>
@@ -123,7 +124,8 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 +------------------+---------+----------+-------------+--------+-------+
 <span class="p">|</span> 174 <span class="p">|</span> 171 <span class="p">|</span> post_tag <span class="p">|</span> <span class="p">|</span> 0 <span class="p">|</span> 17 <span class="p">|</span>
 +------------------+---------+----------+-------------+--------+-------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span></code></pre></div>
+1 row in <span class="nb">set</span> <span class="o">(</span>0.00 sec<span class="o">)</span>
+</code></pre></div>
 
 
 <p>As you can see it is currently a "post_tag".</p>
@@ -132,14 +134,16 @@ Note: This /seems/ to work however it might kick you in the face and break stuff
 
 <div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;category&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.00 sec<span class="o">)</span>
-Rows matched: 1 Changed: 1 Warnings: 0</code></pre></div>
+Rows matched: 1 Changed: 1 Warnings: 0
+</code></pre></div>
 
 
 <p>Or to change it from a category to a tag then change the "taxonomy" field to "post_tag":</p>
 
 <div class="highlight"><pre><code class="bash">mysql&gt; UPDATE <span class="sb">`</span>term_taxonomy<span class="sb">`</span> SET <span class="sb">`</span>taxonomy<span class="sb">`</span> <span class="o">=</span> <span class="s1">&#39;post_tag&#39;</span> WHERE <span class="sb">`</span>term_id<span class="sb">`</span> <span class="o">=</span> 171<span class="p">;</span>
 Query OK, 1 row affected <span class="o">(</span>0.02 sec<span class="o">)</span>
-Rows matched: 1 Changed: 1 Warnings: 0</code></pre></div>
+Rows matched: 1 Changed: 1 Warnings: 0
+</code></pre></div>
 
 
 

@@ -117,7 +117,8 @@ Well if you already have users on the box you will now need to add them into pos
 <div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
 do
  su postgres -c &quot;createuser -S -D -R $user&quot;;
-done</code></pre></div>
+done
+</code></pre></div>
 
 
 

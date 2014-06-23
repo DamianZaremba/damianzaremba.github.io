@@ -107,7 +107,8 @@
 <div class="highlight"><pre><code class="text">message_size_limit = 204800000
 smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
 smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes</code></pre></div>
+broken_sasl_auth_clients = yes
+</code></pre></div>
 
 
 <p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
@@ -117,7 +118,8 @@ broken_sasl_auth_clients = yes</code></pre></div>
 <div class="highlight"><pre><code class="bash">chkconfig saslauthd on
 /etc/init.d/saslauthd restart
 chkconfig postfix on
-/etc/init.d/postfix restart</code></pre></div>
+/etc/init.d/postfix restart
+</code></pre></div>
 
 
 <p>Once this is done all we need to do is add our users and they can send mail:</p>
@@ -126,7 +128,8 @@ chkconfig postfix on
 passwd user1
 
 adduser -s /sbin/nologin -M user2
-passwd user2</code></pre></div>
+passwd user2
+</code></pre></div>
 
 
 
@@ -177,7 +180,8 @@ passwd user2</code></pre></div>
         <div class="entry">
             <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span></code></pre></div>
+<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
+</code></pre></div>
 
 
 <p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p>
@@ -189,7 +193,8 @@ br0: 10.44.200.5 <span class="o">=</span>&gt; 89.242.208.82
 br0:1: 10.44.200.15 <span class="o">=</span>&gt; 89.242.208.82
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt; 89.242.208.82
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;</code></pre></div>
+vnet0: <span class="o">=</span>&gt;
+</code></pre></div>
 
 
 <p>Or if you want IPv6 addresses returned:</p>
@@ -199,7 +204,8 @@ br0: 10.44.200.5 <span class="o">=</span>&gt; 2001:470:9083::2
 br0:1: 10.44.200.15 <span class="o">=</span>&gt;
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt;
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;</code></pre></div>
+vnet0: <span class="o">=</span>&gt;
+</code></pre></div>
 
 
 
@@ -258,7 +264,8 @@ Well if you already have users on the box you will now need to add them into pos
 <div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
 do
  su postgres -c &quot;createuser -S -D -R $user&quot;;
-done</code></pre></div>
+done
+</code></pre></div>
 
 
 

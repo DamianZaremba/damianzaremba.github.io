@@ -115,7 +115,8 @@ sudo yum install sysstat
 chkconfig sysstat on
 
 <span class="c"># Start sysstat – this starts the system activity data collector</span>
-service sysstat start</code></pre></div>
+service sysstat start
+</code></pre></div>
 
 
 <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
@@ -131,7 +132,8 @@ avg-cpu: %user %nice %system %iowait %steal %idle
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 1575022426 871286088
 xvdb 0.92 14.90 10.14 134403952 91524480
-xvdc 0.91 12.16 10.53 109676480 95014488</code></pre></div>
+xvdc 0.91 12.16 10.53 109676480 95014488
+</code></pre></div>
 
 
 <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p>
@@ -153,7 +155,8 @@ xvdc 0.00 0.00 0.00 0 0
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 0 0
 xvdb 0.00 0.00 0.00 0 0
-xvdc 0.00 0.00 0.00 0 0</code></pre></div>
+xvdc 0.00 0.00 0.00 0 0
+</code></pre></div>
 
 
 <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
@@ -170,7 +173,8 @@ xvdc 0.91 12.16 10.53 109676480 95014488
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 0 0
 xvdb 0.00 0.00 0.00 0 0
-xvdc 0.00 0.00 0.00 0 0</code></pre></div>
+xvdc 0.00 0.00 0.00 0 0
+</code></pre></div>
 
 
 <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
@@ -192,7 +196,8 @@ sda1 269.00 4.00 5968.00 8 11936
 sdb 15.00 8.00 416.00 16 832
 sdb1 15.00 8.00 416.00 16 832
 sdc 71.00 12.00 752.00 24 1504
-sdc1 71.00 12.00 752.00 24 1504</code></pre></div>
+sdc1 71.00 12.00 752.00 24 1504
+</code></pre></div>
 
 
 <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
@@ -215,24 +220,28 @@ As the name suggests it's not for reporting io data, it is mainly for reporting 
 <p>Some common things your probably want to look at;
 CPU usage:</p>
 
-<div class="highlight"><pre><code class="bash">sar -u</code></pre></div>
+<div class="highlight"><pre><code class="bash">sar -u
+</code></pre></div>
 
 
 <p>Memory usage:</p>
 
-<div class="highlight"><pre><code class="bash">sar -r</code></pre></div>
+<div class="highlight"><pre><code class="bash">sar -r
+</code></pre></div>
 
 
 <p>Load avg (and queue length):</p>
 
-<div class="highlight"><pre><code class="bash">sar -q</code></pre></div>
+<div class="highlight"><pre><code class="bash">sar -q
+</code></pre></div>
 
 
 <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
 
 <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
 
-<div class="highlight"><pre><code class="bash">sar -s -f /var/log/sa/sa06</code></pre></div>
+<div class="highlight"><pre><code class="bash">sar -s -f /var/log/sa/sa06
+</code></pre></div>
 
 
 <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
@@ -247,14 +256,16 @@ Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</sp
 08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
 08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
 09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
-09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></div>
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57
+</code></pre></div>
 
 
 <p><strong>But I want some graphs!</strong>
 Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
 You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
 
-<div class="highlight"><pre><code class="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></div>
+<div class="highlight"><pre><code class="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
+</code></pre></div>
 
 
 <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
@@ -271,7 +282,8 @@ sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&
 <span class="s2">set xlabel &#39;Time&#39;;</span>
 <span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
-rm -f <span class="nv">$cpu_data_file</span></code></pre></div>
+rm -f <span class="nv">$cpu_data_file</span>
+</code></pre></div>
 
 
 <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
@@ -389,7 +401,8 @@ make_header<span class="p">;</span> make_footer
 <span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
 
 <span class="c"># Tidy</span>
-rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></div>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span>
+</code></pre></div>
 
 
 

@@ -118,7 +118,8 @@
 <span class="kn">import</span> <span class="nn">asyncore</span>
 
 <span class="n">smtpd</span><span class="o">.</span><span class="n">PureProxy</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">2535</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;mail.damianzaremba.co.uk&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
-<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span></code></pre></div>
+<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
+</code></pre></div>
 
 
 <p>Email parser to allow you to process email using a IMAP connection. This is really slow atm and would be improved massively by threading but it's still really cool and took about 10min to write!</p>
@@ -174,7 +175,8 @@
 
 <span class="n">MH</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">MH</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">emails</span></code></pre></div>
+<span class="k">print</span> <span class="n">emails</span>
+</code></pre></div>
 
 
 <p>Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I'm working on at the moment to function correctly I can reveal some cool things in the future!</p>
