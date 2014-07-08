@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -108,9 +108,8 @@ slightly more complicated than the HP's, but followed the Cisco style config.</p
 
 <p>First we need add a custom login and enable method</p>
 
-<div class="highlight"><pre><code class="text">aaa authentication login &quot;LineName&quot; radius local
-aaa authentication enable &quot;LineName&quot; none
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">aaa authentication login &quot;LineName&quot; radius local
+aaa authentication enable &quot;LineName&quot; none</code></pre></div>
 
 
 <p>These are used for connections over SSH - "LineName" can be anything, I tend to
@@ -122,19 +121,17 @@ RADIUS server and find having to enter a password to get to enable again a hassl
 
 <p>Next we need to setup the RADIUS server</p>
 
-<div class="highlight"><pre><code class="text">radius-server host auth serverIpHere
+<div class="highlight"><pre><code class="language-text" data-lang="text">radius-server host auth serverIpHere
 name &quot;server1&quot;
 usage login
 key &quot;SecretKeyHere&quot;
-exit
-</code></pre></div>
+exit</code></pre></div>
 
 
 <p>Now we just need to configure the ssh line to use our aaa methods</p>
 
-<div class="highlight"><pre><code class="text">login authentication LineName
-enable authentication LineName
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">login authentication LineName
+enable authentication LineName</code></pre></div>
 
 
 <p>Once complete you should be able to login via ssh using your RADIUS details.</p>
@@ -142,9 +139,8 @@ enable authentication LineName
 <p>If you require access to the switch over http(s) you can also configure the HTTP
 server to authenticate against RADIUS</p>
 
-<div class="highlight"><pre><code class="text">ip http authentication radius local
-ip https authentication radius local
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ip http authentication radius local
+ip https authentication radius local</code></pre></div>
 
 
 <p>We include local on every method to ensure we don't get locked out the switch.</p>
@@ -161,7 +157,7 @@ ip https authentication radius local
     
         <li>&raquo; <a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</a></li>
     
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
     </ul>
 </section>

@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -101,32 +101,29 @@
     <div class="entry">
         <p>In /etc/postfix/main.cf ensure the following values are set</p>
 
-<div class="highlight"><pre><code class="text">message_size_limit = 204800000
+<div class="highlight"><pre><code class="language-text" data-lang="text">message_size_limit = 204800000
 smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
 smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes
-</code></pre></div>
+broken_sasl_auth_clients = yes</code></pre></div>
 
 
 <p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
 
 <p>Next we just need to make sure sasl/postfix are setup to run:</p>
 
-<div class="highlight"><pre><code class="bash">chkconfig saslauthd on
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">chkconfig saslauthd on
 /etc/init.d/saslauthd restart
 chkconfig postfix on
-/etc/init.d/postfix restart
-</code></pre></div>
+/etc/init.d/postfix restart</code></pre></div>
 
 
 <p>Once this is done all we need to do is add our users and they can send mail:</p>
 
-<div class="highlight"><pre><code class="bash">adduser -s /sbin/nologin -M user1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">adduser -s /sbin/nologin -M user1
 passwd user1
 
 adduser -s /sbin/nologin -M user2
-passwd user2
-</code></pre></div>
+passwd user2</code></pre></div>
 
 
 
@@ -139,11 +136,11 @@ passwd user2
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
         <li>&raquo; <a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></li>
-    
-        <li>&raquo; <a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></li>
     
     </ul>
 </section>

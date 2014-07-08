@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -105,11 +105,10 @@
 
 <p>An example router:</p>
 
-<div class="highlight"><pre><code class="text">myrouter:
+<div class="highlight"><pre><code class="language-text" data-lang="text">myrouter:
  driver = dnslookup
  senders = *@mydomain.com, *@*.mydomain.com
- transport = mytransport
-</code></pre></div>
+ transport = mytransport</code></pre></div>
 
 
 <p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
@@ -120,11 +119,10 @@
 
 <p>An example transport is:</p>
 
-<div class="highlight"><pre><code class="text">mytransport:
+<div class="highlight"><pre><code class="language-text" data-lang="text">mytransport:
  driver = smtp
  interface = 192.168.0.1
- helo_data = mail.mydomain.com
-</code></pre></div>
+ helo_data = mail.mydomain.com</code></pre></div>
 
 
 <p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
@@ -139,11 +137,11 @@
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
     
         <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
-    
-        <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
     </ul>
 </section>

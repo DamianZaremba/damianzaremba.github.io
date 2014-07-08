@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -101,14 +101,13 @@
     <div class="entry">
         <p>To configure a HP GbE2c L2/L3 Ethernet Blade Switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
-<div class="highlight"><pre><code class="text">radius-server primary-host serverIp
+<div class="highlight"><pre><code class="language-text" data-lang="text">radius-server primary-host serverIp
 radius-server primary-host serverIp key &quot;SecretKeyHere&quot;
 radius-server port 1812
 radius-server timeout 10
 radius-server enable
 no radius-server telnet-backdoor
-radius-server secure-backdoor
-</code></pre></div>
+radius-server secure-backdoor</code></pre></div>
 
 
 <p>The first and second lines setup the server/key to authenticate against.</p>

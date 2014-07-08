@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -101,32 +101,29 @@
     <div class="entry">
         <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span></code></pre></div>
 
 
 <p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p>
 
 <p>Example usage is as follows:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 89.242.208.82
 br0:1: 10.44.200.15 <span class="o">=</span>&gt; 89.242.208.82
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt; 89.242.208.82
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre></div>
+vnet0: <span class="o">=</span>&gt;</code></pre></div>
 
 
 <p>Or if you want IPv6 addresses returned:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 2001:470:9083::2
 br0:1: 10.44.200.15 <span class="o">=</span>&gt;
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt;
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre></div>
+vnet0: <span class="o">=</span>&gt;</code></pre></div>
 
 
 
@@ -143,7 +140,7 @@ vnet0: <span class="o">=</span>&gt;
     
         <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
-        <li>&raquo; <a href="/2011/03/canhazip/">canhazip</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
     </ul>
 </section>

@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -105,7 +105,7 @@
 
 <p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="c"># Make sure the system is up to date</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Make sure the system is up to date</span>
 yum update
 
 <span class="c"># Install the sysstat program (includes sar and iostat)</span>
@@ -115,8 +115,7 @@ sudo yum install sysstat
 chkconfig sysstat on
 
 <span class="c"># Start sysstat – this starts the system activity data collector</span>
-service sysstat start
-</code></pre></div>
+service sysstat start</code></pre></div>
 
 
 <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
@@ -125,79 +124,75 @@ service sysstat start
 
 <p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 11.04 174.56 96.57 1575022426 871286088
-xvdb 0.92 14.90 10.14 134403952 91524480
-xvdc 0.91 12.16 10.53 109676480 95014488
-</code></pre></div>
+xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
+xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</code></pre></div>
 
 
 <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 11.04 174.56 96.57 1575022426 871286088
-xvdb 0.92 14.90 10.14 134403952 91524480
-xvdc 0.91 12.16 10.53 109676480 95014488
+xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
+xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 0.00 0.00 0.00 0 0
-xvdb 0.00 0.00 0.00 0 0
-xvdc 0.00 0.00 0.00 0 0
+xvda 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 0.00 0.00 0.00 0 0
-xvdb 0.00 0.00 0.00 0 0
-xvdc 0.00 0.00 0.00 0 0
-</code></pre></div>
+xvda 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div>
 
 
 <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 11.04 174.56 96.57 1575022426 871286088
-xvdb 0.92 14.90 10.14 134403952 91524480
-xvdc 0.91 12.16 10.53 109676480 95014488
+xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
+xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-xvda 0.00 0.00 0.00 0 0
-xvdb 0.00 0.00 0.00 0 0
-xvdc 0.00 0.00 0.00 0 0
-</code></pre></div>
+xvda 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div>
 
 
 <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
 
-<div class="highlight"><pre><code class="bash">root@xxx:~# iostat -d 2 2
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@xxx:~# iostat -d <span class="m">2</span> 2
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 _x86_64_
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-sda 31.14 411.84 757.85 1890371422 3478544478
-sda1 31.01 409.90 755.62 1881435002 3468289496
-sdb 9.97 88.27 303.57 405165646 1393372152
-sdb1 9.97 88.27 303.57 405164878 1393372152
-sdc 7.54 57.13 131.10 262215600 601759006
-sdc1 7.54 57.13 131.10 262214832 601759006
+sda 31.14 411.84 757.85 <span class="m">1890371422</span> 3478544478
+sda1 31.01 409.90 755.62 <span class="m">1881435002</span> 3468289496
+sdb 9.97 88.27 303.57 <span class="m">405165646</span> 1393372152
+sdb1 9.97 88.27 303.57 <span class="m">405164878</span> 1393372152
+sdc 7.54 57.13 131.10 <span class="m">262215600</span> 601759006
+sdc1 7.54 57.13 131.10 <span class="m">262214832</span> 601759006
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
-sda 269.00 4.00 5968.00 8 11936
-sda1 269.00 4.00 5968.00 8 11936
-sdb 15.00 8.00 416.00 16 832
-sdb1 15.00 8.00 416.00 16 832
-sdc 71.00 12.00 752.00 24 1504
-sdc1 71.00 12.00 752.00 24 1504
-</code></pre></div>
+sda 269.00 4.00 5968.00 <span class="m">8</span> 11936
+sda1 269.00 4.00 5968.00 <span class="m">8</span> 11936
+sdb 15.00 8.00 416.00 <span class="m">16</span> 832
+sdb1 15.00 8.00 416.00 <span class="m">16</span> 832
+sdc 71.00 12.00 752.00 <span class="m">24</span> 1504
+sdc1 71.00 12.00 752.00 <span class="m">24</span> 1504</code></pre></div>
 
 
 <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
@@ -220,33 +215,29 @@ As the name suggests it's not for reporting io data, it is mainly for reporting 
 <p>Some common things your probably want to look at;
 CPU usage:</p>
 
-<div class="highlight"><pre><code class="bash">sar -u
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -u</code></pre></div>
 
 
 <p>Memory usage:</p>
 
-<div class="highlight"><pre><code class="bash">sar -r
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -r</code></pre></div>
 
 
 <p>Load avg (and queue length):</p>
 
-<div class="highlight"><pre><code class="bash">sar -q
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -q</code></pre></div>
 
 
 <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
 
 <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
 
-<div class="highlight"><pre><code class="bash">sar -s -f /var/log/sa/sa06
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -s -f /var/log/sa/sa06</code></pre></div>
 
 
 <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 
 08:00:01 CPU %user %nice %system %iowait %steal %idle
@@ -256,21 +247,19 @@ Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</sp
 08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
 08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
 09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
-09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57
-</code></pre></div>
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></div>
 
 
 <p><strong>But I want some graphs!</strong>
 Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
 You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
 
-<div class="highlight"><pre><code class="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></div>
 
 
 <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="c"># Make a tmp file</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Make a tmp file</span>
 <span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span><span class="p">;</span>
 <span class="c"># Fill the file with stuff</span>
 sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
@@ -282,15 +271,14 @@ sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&
 <span class="s2">set xlabel &#39;Time&#39;;</span>
 <span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
-rm -f <span class="nv">$cpu_data_file</span>
-</code></pre></div>
+rm -f <span class="nv">$cpu_data_file</span></code></pre></div>
 
 
 <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
 
 <p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="c">#!/bin/bash</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 <span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
 <span class="c"># sar_graph.sh - Makes pretty web pages from sar</span>
 <span class="c"># Written by Damian Zaremba - Released under GPLv3</span>
@@ -308,52 +296,52 @@ rm -f <span class="nv">$cpu_data_file</span>
 <span class="c"># Check gnuplot is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span><span class="p">;</span>
 <span class="k">then</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check sadf is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Check graph type</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
-<span class="k"> </span><span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
 <span class="k">fi</span>
 
 <span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
-<span class="k">function </span>make_header <span class="o">{</span>
+<span class="k">function</span> make_header <span class="o">{</span>
  <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span><span class="p">;</span>
 <span class="o">}</span>
 
-<span class="k">function </span>make_footer <span class="o">{</span>
+<span class="k">function</span> make_footer <span class="o">{</span>
  <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">;</span>
 <span class="o">}</span>
 
-<span class="k">function </span>make_graph <span class="o">{</span>
- <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">title</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span> <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">format</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span> <span class="k">fi</span>
-<span class="k"> if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then return </span>1<span class="p">;</span> <span class="k">else </span><span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span>
+<span class="k">function</span> make_graph <span class="o">{</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">title</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span> <span class="k">fi</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">format</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span> <span class="k">fi</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> <span class="p">|</span> sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
 
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
-<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
+ <span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
  <span class="k">else</span>
-<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
  <span class="k">then</span>
-<span class="k"> </span><span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;dumb&quot;</span>
+ <span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;dumb&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.txt&quot;</span>
  <span class="k">fi</span>
-<span class="k"> fi</span>
+ <span class="k">fi</span>
 
 <span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
  <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
@@ -370,13 +358,13 @@ rm -f <span class="nv">$cpu_data_file</span>
 
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
-<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
  <span class="k">else</span>
-<span class="k"> if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
+ <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
  <span class="k">then</span>
-<span class="k"> </span><span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;iframe src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; width=&quot;650px&quot; height=&quot;350px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&#39;</span>
+ <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;iframe src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; width=&quot;650px&quot; height=&quot;350px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&#39;</span>
  <span class="k">fi</span>
-<span class="k"> fi</span>
+ <span class="k">fi</span>
 <span class="o">}</span>
 
 <span class="c"># Main script stuff</span>
@@ -401,8 +389,7 @@ make_header<span class="p">;</span> make_footer
 <span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
 
 <span class="c"># Tidy</span>
-rm -rf <span class="s2">&quot;$base_dir&quot;</span>
-</code></pre></div>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></div>
 
 
 
@@ -415,11 +402,11 @@ rm -rf <span class="s2">&quot;$base_dir&quot;</span>
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
         <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
-    
-        <li>&raquo; <a href="/2011/06/meth-stove/">Meth stove</a></li>
     
     </ul>
 </section>

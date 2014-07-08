@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -103,33 +103,29 @@
 
 <p>Bash as always is very helpful</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
--bash: /bin/rm: Argument list too long”
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
+-bash: /bin/rm: Argument list too long”</code></pre></div>
 
 
 <p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></div>
 
 
 <p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p>
 
 <p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
 /tmp/repoup1291034701
 /tmp/repoup1291034701/live
-/tmp/repoup1291034701/live/.git
-</code></pre></div>
+/tmp/repoup1291034701/live/.git</code></pre></div>
 
 
 <p>xargs just converts from standard input to command line arguments as can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
-rm /tmp/repoup1291034701
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
+rm /tmp/repoup1291034701</code></pre></div>
 
 
 <p>Hope this helps</p>
@@ -144,9 +140,9 @@ rm /tmp/repoup1291034701
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
-        <li>&raquo; <a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
-        <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
+        <li>&raquo; <a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></li>
     
     </ul>
 </section>

@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -102,37 +102,33 @@
         <p>Method 1)
 Inside the directory you wish to protect include a .htaccess file with the following content:</p>
 
-<div class="highlight"><pre><code class="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
+<div class="highlight"><pre><code class="language-text" data-lang="text">AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
 AuthName &quot;My secure area&quot;
 AuthType Basic
-Require valid-user
-</code></pre></div>
+Require valid-user</code></pre></div>
 
 
 <p>Method 2)
 In your apache config file add the following:</p>
 
-<div class="highlight"><pre><code class="text">&lt;Directory /path/to/directory/to/protect/&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;Directory /path/to/directory/to/protect/&gt;
  AuthUserFile /some/secure/path/outside/the/public/docs/.htpasswd
  AuthName &quot;My secure area&quot;
  AuthType Basic
  Require valid-user
-&lt;/Directory&gt;
-</code></pre></div>
+&lt;/Directory&gt;</code></pre></div>
 
 
 <p>Now you have configured apache for authentication you need to create a password "databases". This is a file in a format apache can understand.</p>
 
 <p>You can create it with the htpasswd command:</p>
 
-<div class="highlight"><pre><code class="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">htpasswd -c /some/secure/path/outside/the/public/docs/.htpasswd myusername</code></pre></div>
 
 
 <p>Once you have your password database, if you need to update a users password or add more users you can use the htpasswd command without the -c option, like so:</p>
 
-<div class="highlight"><pre><code class="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">htpasswd /some/secure/path/outside/the/public/docs/.htpasswd myusername</code></pre></div>
 
 
 
@@ -145,11 +141,11 @@ In your apache config file add the following:</p>
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></li>
     
         <li>&raquo; <a href="/2012/03/sntp-on-a-hp-procurve-switch/">SNTP on a HP ProCurve switch</a></li>
-    
-        <li>&raquo; <a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></li>
     
     </ul>
 </section>

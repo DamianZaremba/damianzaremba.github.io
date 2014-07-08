@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -165,7 +165,7 @@ to the end of the URL.</p>
 
 <p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p>
 
-<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">#!/usr/bin/php</span>
 <span class="cp">&lt;?php</span>
  <span class="nv">$PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
  <span class="nv">$TUNNELID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
@@ -179,7 +179,7 @@ to the end of the URL.</p>
  <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
  <span class="p">}</span>
 
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
  <span class="nv">$return</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=&quot;</span> <span class="o">.</span> <span class="nv">$currentIP</span> <span class="o">.</span> <span class="s2">&quot;&amp;pass=&quot;</span> <span class="o">.</span> <span class="nv">$PASSWORD</span> <span class="o">.</span> <span class="s2">&quot;&amp;user_id=&quot;</span> <span class="o">.</span> <span class="nv">$USERID</span> <span class="o">.</span> <span class="s2">&quot;&amp;tunnel_id=&quot;</span> <span class="o">.</span> <span class="nv">$TUNNELID</span><span class="p">);</span>
 
 <span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;That IPv4 endpoint is already in use.&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
@@ -193,15 +193,14 @@ to the end of the URL.</p>
  <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
  <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
  <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
 
 
 <h5>Another example</h5>
 
 <p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p>
 
-<div class="highlight"><pre><code class="php"><span class="x">#!/usr/bin/php</span>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="x">#!/usr/bin/php</span>
 <span class="cp">&lt;?php</span>
  <span class="nv">$ACCESSKEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
  <span class="nv">$NODENAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
@@ -215,16 +214,16 @@ to the end of the URL.</p>
  <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
  <span class="p">}</span>
 
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
+<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
  <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl&#39;</span><span class="p">);</span>
  <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;table border=6 class=\&quot;wikitable sortable\&quot;&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
  <span class="nv">$nodes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
 
 <span class="k">foreach</span><span class="p">(</span><span class="nv">$bnlTable</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">){</span>
  <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;td align=center&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
- <span class="nv">$nodes</span><span class="p">[</span><span class="nx">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
- <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
- <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nx">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
+ <span class="nv">$nodes</span><span class="p">[</span><span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+ <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
+ <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
  <span class="s1">&#39;ipv6′ =&gt; trim($entry[4]),</span>
 <span class="s1"> &#39;</span><span class="nx">port</span><span class="s1">&#39; =&gt; trim($entry[5]),</span>
 <span class="s1"> &#39;</span><span class="nx">ipv6pref</span><span class="s1">&#39; =&gt; trim($entry[6]),</span>
@@ -250,8 +249,7 @@ to the end of the URL.</p>
 <span class="s1"> }else{</span>
 <span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
  <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</code></pre></div>
+<span class="cp">?&gt;</span><span class="x"></span></code></pre></div>
 
 
 
@@ -264,11 +262,11 @@ to the end of the URL.</p>
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
-    
-        <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
     
     </ul>
 </section>

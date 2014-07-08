@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -114,11 +114,10 @@ Well if you already have users on the box you will now need to add them into pos
 
 <p>You can add them with the following script:</p>
 
-<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
+<div class="highlight"><pre><code class="language-text" data-lang="text">for user in $(ls /var/cpanel/users);
 do
  su postgres -c &quot;createuser -S -D -R $user&quot;;
-done
-</code></pre></div>
+done</code></pre></div>
 
 
 
@@ -131,11 +130,11 @@ done
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2011/06/example-of-building-nagios-configs-from-ldap/">Example of building nagios configs from LDAP</a></li>
     
         <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
-    
-        <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
     </ul>
 </section>

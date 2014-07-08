@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -105,7 +105,7 @@
 
 <p>SMTP proxy to allow you to connect to a server via the specified port and it be silently forwarded to another server on another port! (Note it's a bad idea to use localhost as it will make you an open proxy)</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Meta data</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -118,13 +118,12 @@
 <span class="kn">import</span> <span class="nn">asyncore</span>
 
 <span class="n">smtpd</span><span class="o">.</span><span class="n">PureProxy</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">2535</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;mail.damianzaremba.co.uk&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
-<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
-</code></pre></div>
+<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span></code></pre></div>
 
 
 <p>Email parser to allow you to process email using a IMAP connection. This is really slow atm and would be improved massively by threading but it's still really cool and took about 10min to write!</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Meta data</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -175,8 +174,7 @@
 
 <span class="n">MH</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">MH</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">emails</span>
-</code></pre></div>
+<span class="k">print</span> <span class="n">emails</span></code></pre></div>
 
 
 <p>Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I'm working on at the moment to function correctly I can reveal some cool things in the future!</p>
@@ -189,11 +187,11 @@
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
-    
-        <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
     
     </ul>
 </section>

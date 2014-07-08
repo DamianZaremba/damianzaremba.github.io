@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -103,14 +103,12 @@
 
 <p>There is a very simple way to do this by altering your LogFormat, a command format to have is the CLF (common log format):</p>
 
-<div class="highlight"><pre><code class="text">%h %l %u %t \&quot;%r\&quot; %&gt;s %b
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">%h %l %u %t \&quot;%r\&quot; %&gt;s %b</code></pre></div>
 
 
 <p>To enable logging the pid just add the %P var like so:</p>
 
-<div class="highlight"><pre><code class="text">[%P] %h %l %u %t \&quot;%r\&quot; %&gt;s %b
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">[%P] %h %l %u %t \&quot;%r\&quot; %&gt;s %b</code></pre></div>
 
 
 

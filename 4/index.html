@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -92,6 +92,37 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2011/08/spoon/">Spoon!</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/spoon/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/camping'>Camping</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/knife-skills'>Knife skills</a></li><li><a href='/tag/hand-made'>Hand made</a></li><li><a href='/tag/soon'>Soon</a></li><li><a href='/tag/spoon-knife'>Spoon knife</a></li><li><a href='/tag/tree'>Tree</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It still needs some work to smooth out the handle and round the top off as well as sanding the dip out but I've made a pretty decent start on a spoon.</p>
+
+<p>This started out as part of a tree trunk which got removed and split with an axe, from there all the work has been done with 3 knives:</p>
+
+<ul>
+<li>Spoon knife - for rounding the handle and scraping out the dip</li>
+<li>9" knife - for taking off the thick outer and bark</li>
+<li>Gerber STL 2.5 knife - for taking tiny slivers off the handle and smoothing out some of the head</li>
+</ul>
+
+
+<p>Here are some "early" (4/5 days of on and off work) pictures...</p>
+
+<p><img src="/2011/08/spoon/IMG_0020.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0021.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0022.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0023.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0024.jpg" alt="" /> <img src="/2011/08/spoon/IMG_0027.jpg" alt="" />
+<img src="/2011/08/spoon/IMG_0028.jpg" alt="" /></p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/">SMTP Authentication in Postfix using local system accounts</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
@@ -104,32 +135,29 @@
         <div class="entry">
             <p>In /etc/postfix/main.cf ensure the following values are set</p>
 
-<div class="highlight"><pre><code class="text">message_size_limit = 204800000
+<div class="highlight"><pre><code class="language-text" data-lang="text">message_size_limit = 204800000
 smtpd_recipient_restrictions = permit_sasl_authenticated permit_inet_interfaces reject_unauth_destination, permit
 smtpd_sasl_auth_enable = yes
-broken_sasl_auth_clients = yes
-</code></pre></div>
+broken_sasl_auth_clients = yes</code></pre></div>
 
 
 <p>This will ensure postfix denies any un-authenticated attempts to send mail and enabled sasl authentication.</p>
 
 <p>Next we just need to make sure sasl/postfix are setup to run:</p>
 
-<div class="highlight"><pre><code class="bash">chkconfig saslauthd on
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">chkconfig saslauthd on
 /etc/init.d/saslauthd restart
 chkconfig postfix on
-/etc/init.d/postfix restart
-</code></pre></div>
+/etc/init.d/postfix restart</code></pre></div>
 
 
 <p>Once this is done all we need to do is add our users and they can send mail:</p>
 
-<div class="highlight"><pre><code class="bash">adduser -s /sbin/nologin -M user1
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">adduser -s /sbin/nologin -M user1
 passwd user1
 
 adduser -s /sbin/nologin -M user2
-passwd user2
-</code></pre></div>
+passwd user2</code></pre></div>
 
 
 
@@ -180,32 +208,29 @@ passwd user2
         <div class="entry">
             <p>A quick one liner to get the public equivalent of internal IPs on a box behind NAT:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span></code></pre></div>
 
 
 <p>I've restricted this to IPv4 only - NATing IPv6 is just silly but if you really want then it is on your head.</p>
 
 <p>Example usage is as follows:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int ipv4.canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 89.242.208.82
 br0:1: 10.44.200.15 <span class="o">=</span>&gt; 89.242.208.82
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt; 89.242.208.82
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre></div>
+vnet0: <span class="o">=</span>&gt;</code></pre></div>
 
 
 <p>Or if you want IPv6 addresses returned:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for </span>int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do </span><span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>damian@finnix ~<span class="o">]</span><span class="nv">$ </span><span class="k">for</span> int in <span class="k">$(</span>ifconfig <span class="p">|</span> grep <span class="s2">&quot;Link encap:&quot;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span> <span class="p">|</span> grep -v <span class="s1">&#39;lo&#39;</span><span class="k">)</span><span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&quot;$int: $(ifconfig $int | grep &quot;</span>inet addr:<span class="s2">&quot; | awk &#39;{print $2}&#39; | cut -d: -f2) =&gt; $(curl -s --interface $int canhazip.info)&quot;</span><span class="p">;</span> <span class="k">done</span>
 br0: 10.44.200.5 <span class="o">=</span>&gt; 2001:470:9083::2
 br0:1: 10.44.200.15 <span class="o">=</span>&gt;
 cluevpn: 10.156.1.49 <span class="o">=</span>&gt;
 eth0: <span class="o">=</span>&gt;
-vnet0: <span class="o">=</span>&gt;
-</code></pre></div>
+vnet0: <span class="o">=</span>&gt;</code></pre></div>
 
 
 
@@ -231,44 +256,6 @@ vnet0: <span class="o">=</span>&gt;
 <p>After running /scripts/update_db_cache you should now see disk stats in the interface once again.</p>
 
 <p>Note: SQL database usage stats can be quite intensive to calculate so you may want to leave it off.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2011/08/install-postgresql-on-cpanel/">Install PostgreSQL on cPanel</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/install-postgresql-on-cpanel/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/postgresql'>Postgresql</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/hack'>Hack</a></li><li><a href='/tag/pgsql'>Pgsql</a></li><li><a href='/tag/postgresql'>Postgresql</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>To install PostgreSQL on a cPanel server you can perform the following:</p>
-
-<ol>
-<li>Run /scripts/installpostgres</li>
-<li>Go to SQL services -> Postgre config and click Install config</li>
-<li>Configure a root password for Postgre
-4 Enable Postgre with chkconfig postgres on; service postgres restart</li>
-</ol>
-
-
-<p>Now you would think that is it, right?
-Well if you already have users on the box you will now need to add them into postgre otherwise they will have no access.</p>
-
-<p>You can add them with the following script:</p>
-
-<div class="highlight"><pre><code class="text">for user in $(ls /var/cpanel/users);
-do
- su postgres -c &quot;createuser -S -D -R $user&quot;;
-done
-</code></pre></div>
-
-
-
 
         </div>
     </article>

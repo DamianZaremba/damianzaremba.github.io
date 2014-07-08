@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -105,15 +105,14 @@ Irssi Proxy server nothing appeared to happen.</p>
 
 <p>The output from the server console was something like below</p>
 
-<div class="highlight"><pre><code class="text">This is the first connection in this IRC context: using the global server
+<div class="highlight"><pre><code class="language-text" data-lang="text">This is the first connection in this IRC context: using the global server
 setting
 Attempting connection to myirssiproxy.local (RawrIRC) on port 8000
 Looking up the server hostname (myirssiproxy.local)...
 Server hostname resolved to 10.44.1.1
 Contacting IRC server myirssiproxy.local (10.44.1.1) on port 8000
 Connection established [myirssiproxy.local (10.44.1.1:8000)]
-Local host address is 10.44.1.2
-</code></pre></div>
+Local host address is 10.44.1.2</code></pre></div>
 
 
 <p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
@@ -136,14 +135,13 @@ section and each server is numbered.</p>
 <p>To disabled STARTTLS for the first server in network A, your config should look
 something like the below</p>
 
-<div class="highlight"><pre><code class="ini"><span class="k">[A]</span>
-<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="k">[A]</span>
+<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span></code></pre></div>
 
 
 <p>This will usually have a number of other items, a full example is below</p>
 
-<div class="highlight"><pre><code class="ini"><span class="k">[FreeNode]</span>
+<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="k">[FreeNode]</span>
 <span class="na">0_Port</span><span class="o">=</span><span class="s">8000</span>
 <span class="na">0_Hostname</span><span class="o">=</span><span class="s">myirssiproxy.local</span>
 <span class="na">0_Ip</span><span class="o">=</span><span class="s">10.44.1.1</span>
@@ -158,8 +156,7 @@ something like the below</p>
 <span class="na">0_EnabledCAP</span><span class="o">=</span><span class="s">false</span>
 <span class="na">0_RealName</span><span class="o">=</span><span class="s">MyName</span>
 <span class="na">0_User</span><span class="o">=</span><span class="s">MyUser</span>
-<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span>
-</code></pre></div>
+<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span></code></pre></div>
 
 
 <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide
@@ -173,11 +170,11 @@ scale settings changes.</p>
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
     
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
-    
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
     </ul>
 </section>

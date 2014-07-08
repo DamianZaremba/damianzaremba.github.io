@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -131,7 +131,7 @@ Services to be monitored:</p>
 </ul>
 
 
-<div class="highlight"><pre><code class="text">dn: cn=hex,ou=servers,dc=cluenet,dc=org
+<div class="highlight"><pre><code class="language-text" data-lang="text">dn: cn=hex,ou=servers,dc=cluenet,dc=org
  changetype: modify
  add: clueServiceMonitoring
  clueServiceMonitoring: ping^ICMP
@@ -154,15 +154,14 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 dn: cn=hex,ou=servers,dc=cluenet,dc=org
  changetype: modify
  add: clueServiceMonitoring
- clueServiceMonitoring: kerberos
-</code></pre></div>
+ clueServiceMonitoring: kerberos</code></pre></div>
 
 
 <p>This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.</p>
 
 <p>Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.</p>
 
-<div class="highlight"><pre><code class="perl"><span class="c1">#!/usr/bin/env perl</span>
+<div class="highlight"><pre><code class="language-perl" data-lang="perl"><span class="c1">#!/usr/bin/env perl</span>
 <span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">File::</span><span class="n">Path</span><span class="p">;</span>
 <span class="k">use</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="p">;</span>
@@ -339,8 +338,7 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 <span class="k">print</span> <span class="s">&quot;Finished user config\n&quot;</span><span class="p">;</span>
 
 <span class="k">print</span> <span class="s">&quot;Reloading\n&quot;</span><span class="p">;</span>
-<span class="sb">`/etc/init.d/nagios reload`</span>
-</code></pre></div>
+<span class="sb">`/etc/init.d/nagios reload`</span></code></pre></div>
 
 
 
@@ -353,11 +351,11 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
-    
-        <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
     
     </ul>
 </section>

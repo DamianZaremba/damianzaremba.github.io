@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -101,21 +101,19 @@
     <div class="entry">
         <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p>
 
-<div class="highlight"><pre><code class="text">radius-server host serverIp key &quot;SecretKeyHere&quot;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">radius-server host serverIp key &quot;SecretKeyHere&quot;</code></pre></div>
 
 
 <p>Once this is setup you need to configure the switch to authenticate against the radius server.</p>
 
-<div class="highlight"><pre><code class="text">aaa authentication login privilege-mode 
+<div class="highlight"><pre><code class="language-text" data-lang="text">aaa authentication login privilege-mode 
 aaa authentication console login radius local 
 aaa authentication console enable radius local 
 aaa authentication telnet login radius local 
 aaa authentication telnet enable radius local 
 aaa authentication web login radius local 
 aaa authentication ssh login radius local 
-aaa authentication ssh enable radius local 
-</code></pre></div>
+aaa authentication ssh enable radius local</code></pre></div>
 
 
 <p>We include the local option so that in the event of the RADIUS server being down we can still authenticate.</p>
@@ -132,7 +130,7 @@ aaa authentication ssh enable radius local
     
         <li>&raquo; <a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">RADIUS authentication on a HP GbE2c L2/L3 Blade Switch</a></li>
     
-        <li>&raquo; <a href="/2012/03/sntp-on-a-hp-procurve-switch/">SNTP on a HP ProCurve switch</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
     </ul>
 </section>

@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -92,6 +92,194 @@
 
     
     <article class="post">
+        <h1 class="title"><a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />06 Jul 2010</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+<span class="nv">VG</span><span class="o">=</span><span class="s1">&#39;/dev/virtual_disks&#39;</span>
+<span class="nv">KS_ADDR</span><span class="o">=</span><span class="s1">&#39;http://192.168.100.1:5843/kickstarts&#39;</span>
+
+<span class="k">case</span> <span class="s2">&quot;$1&quot;</span> in
+ centos<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/centos_$5.ks&quot;</span>
+ <span class="k">else</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://mirror.limestonenetworks.com/centos/5.5/os/x86_64/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ <span class="p">;;</span>
+ fedora<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; ks=$KS_ADDR/fedora_$5.ks&quot;</span>
+ <span class="k">else</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://www.mirrorservice.org/sites/download.fedora.redhat.com/pub/fedora/linux/releases/13/Fedora/x86_64/os/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ <span class="p">;;</span>
+ debian<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/debian_$5.ks&quot;</span>
+ <span class="k">else</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s1">&#39;http://debian.intergenia.de/debian/dists/lenny/main/installer-amd64/&#39;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ <span class="p">;;</span>
+ ubuntu<span class="o">)</span>
+ <span class="nb">test</span> -z <span class="nv">$2</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$3</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="nb">test</span> -z <span class="nv">$4</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>5
+ <span class="k">if</span> <span class="o">[</span> ! -z <span class="nv">$5</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39; url=$KS_ADDR/ubuntu_$5.ks&quot;</span>
+ <span class="k">else</span>
+ <span class="nv">extra</span><span class="o">=</span><span class="s2">&quot;auto=true hostname=$4 domain=&#39;&#39;&quot;</span>
+ <span class="k">fi</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Installing vm $4 with $2G disk and $3 ram allocation passing kernel arguments &#39;$extra&#39;&quot;</span>
+ <span class="nv">location</span><span class="o">=</span><span class="s2">&quot;http://ubuntu.intergenia.de/ubuntu/dists/lucid/main/installer-amd64/&quot;</span>
+ lvcreate --name <span class="nv">$4</span> --size <span class="nv">$2G</span> virtual_disks
+ virt-install --connect qemu:///system --name <span class="nv">$4</span> --ram <span class="nv">$3</span> --hvm --file <span class="nv">$VG</span>/<span class="nv">$4</span> --vnc --location<span class="o">=</span><span class="nv">$location</span> --noautoconsole --extra<span class="o">=</span><span class="s2">&quot;$extra&quot;</span>
+ virsh vncdisplay <span class="nv">$4</span>
+ <span class="p">;;</span>
+ *<span class="o">)</span>
+ <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
+ <span class="nb">exit </span>2
+ <span class="p">;;</span>
+<span class="k">esac</span></code></pre></div>
+
+
+<p>Example usage:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./vm_install.sh fedora 50 1024 CharityHosting1 basic</span>
+Installing vm CharityHosting1 with 50G disk and <span class="m">1024</span> ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
+ Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
+Starting install...
+Retrieving file .treeinfo... <span class="p">|</span> 2.4 kB 00:00 ...
+Retrieving file vmlinuz... <span class="p">|</span> 6.7 MB 00:01 ...
+Retrieving file initrd.img... <span class="p">|</span> <span class="m">57</span> MB 00:15 ...
+Creating domain... <span class="p">|</span> <span class="m">0</span> B 00:00
+Domain installation still in progress. You can reconnect to
+the console to <span class="nb">complete </span>the installation process.
+:0</code></pre></div>
+
+
+<p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p>
+
+<p>2 Variables are as follows:
+VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh)
+KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro"_"$name".ks"</p>
+
+<p>The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.</p>
+
+<p>The other thing I do along side this is make dnsmasq hand out "static" ips to servers because I use NAT for mapping the public to private addresses, this is because I only run a couple of production vms on that server (Such as the charity hosting servers and graphing server) and the rest are test servers with no need for public addresses.</p>
+
+<p>Setup for dnsmasq/the script to make the assignments static are as follows:
+DNSMASQ config:</p>
+
+<div class="highlight"><pre><code class="language-text" data-lang="text">domain-needed
+bogus-priv
+strict-order
+bind-interfaces
+listen-address=192.168.100.1
+except-interface=lo
+dhcp-range=192.168.100.2,192.168.100.254
+dhcp-lease-max=253
+conf-dir=/etc/dnsmasq.d/</code></pre></div>
+
+
+<p>/root/fix_leases.py script (this runs every 2min)</p>
+
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">leases</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">known_hosts</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">):</span>
+ <span class="n">leases_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/var/lib/dnsmasq/dnsmasq.leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+ <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">leases_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">clientid</span><span class="p">)</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+ <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s">&#39;time&#39;</span><span class="p">:</span> <span class="n">time</span><span class="p">,</span>
+ <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
+ <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
+ <span class="s">&#39;client_id&#39;</span><span class="p">:</span> <span class="n">clientid</span><span class="p">,</span>
+ <span class="p">}</span>
+
+<span class="n">leases_fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">):</span>
+ <span class="n">known_host_fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+ <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">known_host_fh</span><span class="o">.</span><span class="n">readlines</span><span class="p">():</span>
+ <span class="k">if</span> <span class="s">&#39;#&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;# Host&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+ <span class="k">elif</span> <span class="s">&#39;=&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+ <span class="k">if</span> <span class="n">hostname</span> <span class="o">==</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;Unknown&#39;</span>
+ <span class="n">data</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+ <span class="p">(</span><span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+ <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+ <span class="s">&#39;ip&#39;</span><span class="p">:</span> <span class="n">ip</span><span class="p">,</span>
+ <span class="s">&#39;hostname&#39;</span><span class="p">:</span> <span class="n">hostname</span><span class="p">,</span>
+ <span class="p">}</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+<span class="n">new_leases</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">leases</span><span class="p">:</span>
+ <span class="k">if</span> <span class="n">mac</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
+ <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span> <span class="o">=</span> <span class="n">leases</span><span class="p">[</span><span class="n">mac</span><span class="p">]</span>
+
+<span class="n">hosts</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/etc/dnsmasq.d/static_leases&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">known_hosts</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">known_hosts</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
+ <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">mac</span> <span class="ow">in</span> <span class="n">new_leases</span><span class="p">:</span>
+ <span class="n">ip</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;ip&#39;</span><span class="p">]</span>
+ <span class="n">hostname</span> <span class="o">=</span> <span class="n">new_leases</span><span class="p">[</span><span class="n">mac</span><span class="p">][</span><span class="s">&#39;hostname&#39;</span><span class="p">]</span>
+ <span class="n">hosts</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;# Host </span><span class="si">%s</span><span class="se">\n</span><span class="s">dhcp-host=</span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hostname</span><span class="p">,</span> <span class="n">mac</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
+
+<span class="n">hosts</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="k">print</span> <span class="s">&quot;Updating done :)&quot;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span></code></pre></div>
+
+
+<p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p>
+
+<p>Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
         <h1 class="title"><a href="/2010/06/coding-help/">Coding Help</a></h1>
         <div class="meta">
             <span><img src="/assests/images/date.png" title="Date" alt="Date" />09 Jun 2010</span>
@@ -105,7 +293,7 @@
             <p>So I'm currently working on a small project which will require authentication. Not really sure how to achieve what I want so here's a quick explanation for anyone if you want to share ideas:
 Basic SQL definition:</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt;<span class="p">;</span> describe users<span class="p">;</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">mysql&gt;<span class="p">;</span> describe users<span class="p">;</span>
 +---------------------------+------------------+------+-----+---------+----------------+
 <span class="p">|</span> Field <span class="p">|</span> Type <span class="p">|</span> Null <span class="p">|</span> Key <span class="p">|</span> Default <span class="p">|</span> Extra <span class="p">|</span>
 +---------------------------+------------------+------+-----+---------+----------------+
@@ -124,16 +312,14 @@ mysql&gt;<span class="p">;</span> describe user_groups<span class="p">;</span>
 <span class="p">|</span> id <span class="p">|</span> int<span class="o">(</span>11<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> PRI <span class="p">|</span> NULL <span class="p">|</span> auto_increment <span class="p">|</span>
 <span class="p">|</span> name <span class="p">|</span> varchar<span class="o">(</span>500<span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> NULL <span class="p">|</span> <span class="p">|</span>
 <span class="p">|</span> perm_login <span class="p">|</span> <span class="nb">set</span><span class="o">(</span><span class="s1">&#39;Y&#39;</span>,<span class="s1">&#39;N&#39;</span><span class="o">)</span> <span class="p">|</span> NO <span class="p">|</span> <span class="p">|</span> Y <span class="p">|</span> <span class="p">|</span>
-+---------------------------+---------------+------+-----+---------+----------------+
-</code></pre></div>
++---------------------------+---------------+------+-----+---------+----------------+</code></pre></div>
 
 
 <p>For permissions I want to do groups but then have the option to override them on a per user basis. All permissions fields are named perm_ , in the users table there are the Y/N as options then G, if the field is G then it uses the identical permissions field from the group table that the user is part of (group_id matches up with id in the user_groups table).</p>
 
 <p>Basic SQL idea:</p>
 
-<div class="highlight"><pre><code class="bash">SELECT IF<span class="o">((</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span><span class="o">)</span>, <span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span>, <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span><span class="o">)</span> AS allowed from users LEFT JOIN <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span><span class="o">)</span> ON <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>id<span class="sb">`</span><span class="o">=</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>group_id<span class="sb">`</span><span class="o">)</span> WHERE <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>username<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;testuser&quot;</span>
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">SELECT IF<span class="o">((</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span><span class="o">)</span>, <span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span>, <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>perm_test<span class="sb">`</span><span class="o">)</span> AS allowed from users LEFT JOIN <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span><span class="o">)</span> ON <span class="o">(</span><span class="sb">`</span>user_groups<span class="sb">`</span>.<span class="sb">`</span>id<span class="sb">`</span><span class="o">=</span><span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>group_id<span class="sb">`</span><span class="o">)</span> WHERE <span class="sb">`</span>users<span class="sb">`</span>.<span class="sb">`</span>username<span class="sb">`</span> <span class="o">=</span> <span class="s2">&quot;testuser&quot;</span></code></pre></div>
 
 
 <p>Now this works just fine however I can see issues mainly limitations to only being able to check one permission at a time. For 99% of the time this wouldn't be an issue for example when using the web interface/api there would be at a minimum of 2 calls and most of the time that would be it however in certain cases where you needed a full list there would be large issues. For a start getting a list of permissions would be highly recourse intensive and returning everyone would result in running something like the above for every permission. This may be a few hundred times per user per load.</p>
@@ -158,7 +344,7 @@ mysql&gt;<span class="p">;</span> describe user_groups<span class="p">;</span>
         <div class="entry">
             <p>So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled >.>) anyway I got bored of this for about 5min then spent the next 5min writing this:</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">socket</span>
 
@@ -195,17 +381,16 @@ mysql&gt;<span class="p">;</span> describe user_groups<span class="p">;</span>
 <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
  <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
  <span class="k">else</span><span class="p">:</span>
- <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
-</code></pre></div>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span></code></pre></div>
 
 
 <p>Which happens to nicely do the job as can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./check_bad_ip.py</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./check_bad_ip.py</span>
 213.225.207.41 is currently over fail limit, processing
-mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
+mx-pool207-res41.momax.it not allready banned, banning <span class="k">for</span> <span class="m">15</span> failed attempts
 88.191.92.219 is currently over fail limit, processing
-sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1317 failed attempts
+sd-15684.dedibox.fr not already banned, banning <span class="k">for</span> <span class="m">1317</span> failed attempts
 81.5.150.24 is currently under fail limit, ignoring
 sd-15684.dedibox.fr is currently under fail limit, ignoring
 81.5.150.24 is currently under fail limit, ignoring
@@ -216,20 +401,18 @@ sd-15684.dedibox.fr is currently under fail limit, ignoring
 sd-15684.dedibox.fr is currently under fail limit, ignoring
 81.5.150.24 is currently under fail limit, ignoring
 88.191.92.219 is currently over fail limit, processing
-sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 failed attempts
+sd-15684.dedibox.fr not already banned, banning <span class="k">for</span> <span class="m">1014</span> failed attempts
 114.207.245.128 is currently over fail limit, processing
-114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
+114.207.245.128 not already banned, banning <span class="k">for</span> <span class="m">1350</span> failed attempts
 62.182.30.165 is currently over fail limit, processing
-30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
-</code></pre></div>
+30-165.kartel.komi.me not already banned, banning <span class="k">for</span> <span class="m">171</span> failed attempts</code></pre></div>
 
 
 <p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
 
-<div class="highlight"><pre><code class="bash">iptables -I INPUT -j BadIp
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">iptables -I INPUT -j BadIp
 iptables -I OUTPUT -j BadIp
-iptables -I FORWARD -j BadIp
-</code></pre></div>
+iptables -I FORWARD -j BadIp</code></pre></div>
 
 
 <p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>
@@ -271,7 +454,7 @@ iptables -I FORWARD -j BadIp
 
 <p>SMTP proxy to allow you to connect to a server via the specified port and it be silently forwarded to another server on another port! (Note it's a bad idea to use localhost as it will make you an open proxy)</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Meta data</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -284,13 +467,12 @@ iptables -I FORWARD -j BadIp
 <span class="kn">import</span> <span class="nn">asyncore</span>
 
 <span class="n">smtpd</span><span class="o">.</span><span class="n">PureProxy</span><span class="p">((</span><span class="s">&#39;localhost&#39;</span><span class="p">,</span> <span class="mi">2535</span><span class="p">),</span> <span class="p">(</span><span class="s">&#39;mail.damianzaremba.co.uk&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">))</span>
-<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span>
-</code></pre></div>
+<span class="n">asyncore</span><span class="o">.</span><span class="n">loop</span><span class="p">()</span></code></pre></div>
 
 
 <p>Email parser to allow you to process email using a IMAP connection. This is really slow atm and would be improved massively by threading but it's still really cool and took about 10min to write!</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">Meta data</span>
 <span class="sd">&#39;&#39;&#39;</span>
@@ -341,8 +523,7 @@ iptables -I FORWARD -j BadIp
 
 <span class="n">MH</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="n">MH</span><span class="o">.</span><span class="n">logout</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">emails</span>
-</code></pre></div>
+<span class="k">print</span> <span class="n">emails</span></code></pre></div>
 
 
 <p>Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I'm working on at the moment to function correctly I can reveal some cool things in the future!</p>

@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -103,42 +103,38 @@
 
 <p>While you can find out which database you are in, it soon becomes quite irritating having to type</p>
 
-<div class="highlight"><pre><code class="bash">mysql&gt; <span class="k">select </span>database<span class="o">()</span><span class="p">;</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">mysql&gt; <span class="k">select</span> database<span class="o">()</span><span class="p">;</span>
 
 +------------------+
 <span class="p">|</span> database<span class="o">()</span> <span class="p">|</span>
 +------------------+
 <span class="p">|</span> test_database <span class="p">|</span>
 +------------------+
-1 row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span>
-</code></pre></div>
+<span class="m">1</span> row in <span class="nb">set</span> <span class="o">(</span>0.01 sec<span class="o">)</span></code></pre></div>
 
 
 <p>The simplest way to solve this and make life easier, is to change the prompt to include the info!
 Simple edit the [mysql] section of your my.cnf file and add the prompt option:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>client<span class="o">]</span>
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre></div>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;</code></pre></div>
 
 
 <p>Now when you use the client the prompt will show mysql [user@host - database]>:</p>
 
-<div class="highlight"><pre><code class="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">mysql <span class="o">[</span>test1@localhost - test_database<span class="o">]</span>&gt;</code></pre></div>
 
 
 <p>No more getting confused! If you don't have access to /etc/my.cnf then use ~/.my.cnf, I usually stick the connection details in there as well - then you can have huge passwords and never have to type/remember them:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>client<span class="o">]</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>client<span class="o">]</span>
 <span class="nv">host</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span>
 <span class="nv">user</span> <span class="o">=</span> <span class="s2">&quot;mehuser&quot;</span>
 <span class="nv">pass</span> <span class="o">=</span> <span class="s2">&quot;someubersecurepassword&quot;</span>
-<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;
-</code></pre></div>
+<span class="nv">prompt</span><span class="o">=</span>mysql <span class="o">[</span><span class="se">\\</span>u@<span class="se">\\</span>h - <span class="se">\\</span>d<span class="o">]</span>&gt;</code></pre></div>
 
 
 
@@ -153,7 +149,7 @@ Simple edit the [mysql] section of your my.cnf file and add the prompt option:</
     
         <li>&raquo; <a href="/2011/08/changing-wordpress-tag-to-category/">Changing WordPress tag to category?</a></li>
     
-        <li>&raquo; <a href="/2011/08/http-basic-authentication-apache/">HTTP basic authentication - Apache</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     

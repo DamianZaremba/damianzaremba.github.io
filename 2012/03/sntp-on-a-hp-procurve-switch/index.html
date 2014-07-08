@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -105,45 +105,40 @@
 
 <p>To configure a ProCurve you need to use SNTP with the following syntax.</p>
 
-<div class="highlight"><pre><code class="text">sntp server &lt;ip&gt;
+<div class="highlight"><pre><code class="language-text" data-lang="text">sntp server &lt;ip&gt;
 sntp unicast
-timesync sntp
-</code></pre></div>
+timesync sntp</code></pre></div>
 
 
 <p>The first line defines what IP to sync with, the second tells the switch to use unicast UDP rather than TCP and the third tells the switch to sync it's time with the SNTP server.</p>
 
 <p>This needs to be done in configure mode which can be got into via enable mode.</p>
 
-<div class="highlight"><pre><code class="text">enable
-configure
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">enable
+configure</code></pre></div>
 
 
 <p>Once the switch is syncing with the SNTP server you can check the time is correct with</p>
 
-<div class="highlight"><pre><code class="text">show time
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">show time</code></pre></div>
 
 
 <p>Lastly just save the changes then logout</p>
 
-<div class="highlight"><pre><code class="text">write mem
-logout
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">write mem
+logout</code></pre></div>
 
 
 <p>A full example of this is below:</p>
 
-<div class="highlight"><pre><code class="text">Switch&gt; en
+<div class="highlight"><pre><code class="language-text" data-lang="text">Switch&gt; en
 Switch# conf
 Switch(config)# sntp server 79.142.192.4
 Switch(config)# sntp unicast
 Switch(config)# timesync sntp
 Switch(config)# exit
 Switch# write mem
-Switch# logout
-</code></pre></div>
+Switch# logout</code></pre></div>
 
 
 <p>Your switches should now keep their time in sync :)</p>
@@ -158,9 +153,9 @@ Switch# logout
     
         <li>&raquo; <a href="/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/">NTP on a HP GbE2c L2/L3 Blade Switch</a></li>
     
-        <li>&raquo; <a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></li>
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
     
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
+        <li>&raquo; <a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></li>
     
     </ul>
 </section>

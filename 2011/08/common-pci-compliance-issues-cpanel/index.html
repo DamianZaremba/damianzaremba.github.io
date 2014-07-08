@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -113,28 +113,24 @@
 
 <p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
 
-<div class="highlight"><pre><code class="text">SSLProtocol -ALL +SSLv3 +TLSv1
-SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">SSLProtocol -ALL +SSLv3 +TLSv1
+SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM</code></pre></div>
 
 
 <p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
 
-<div class="highlight"><pre><code class="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">TLS_CIPHER_LIST=&quot;ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH&quot;</code></pre></div>
 
 
 <p>In the exim.conf file add the following:</p>
 
-<div class="highlight"><pre><code class="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
-</code></pre></div>
+<div class="highlight"><pre><code class="language-text" data-lang="text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2</code></pre></div>
 
 
 <p>3) Update the server (you should be doing this already).</p>
 
-<div class="highlight"><pre><code class="bash">/scripts/upcp
-yum update
-</code></pre></div>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">/scripts/upcp
+yum update</code></pre></div>
 
 
 <p>4) Disable mod_userdir.
@@ -142,10 +138,9 @@ You can disable this in WHM under Security -> Apache -> mod_userdir tweak.</p>
 
 <p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
 
-<div class="highlight"><pre><code class="text">ServerSignature Off
+<div class="highlight"><pre><code class="language-text" data-lang="text">ServerSignature Off
 ServerTokens Prod
-FileETag None
-</code></pre></div>
+FileETag None</code></pre></div>
 
 
 <p>Also diable the TRACE method. To do this go into WHM -> Service configuration -> Apache -> Global configuration and set TraceEnable to off.</p>
@@ -163,11 +158,11 @@ Passing a PCI scan does not mean your server is secure. It means you have passed
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
         <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li>
-    
-        <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
     </ul>
 </section>

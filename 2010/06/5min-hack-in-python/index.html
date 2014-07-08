@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -101,7 +101,7 @@
     <div class="entry">
         <p>So I was trying to test some SELlinux stuff out on my KVM box and was getting flooded by tail -f thanks to someone trying to brute force my box (good luck by the way because a) password auth is disabled and b) root login is disabled >.>) anyway I got bored of this for about 5min then spent the next 5min writing this:</p>
 
-<div class="highlight"><pre><code class="python"><span class="c">#!/usr/bin/python</span>
+<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">socket</span>
 
@@ -138,17 +138,16 @@
 <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> not allready banned, banning for </span><span class="si">%s</span><span class="s"> failed attempts&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
  <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&quot;iptables -A </span><span class="si">%s</span><span class="s"> -s </span><span class="si">%s</span><span class="s"> -j DROP&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">bannedChain</span><span class="p">,</span> <span class="n">ip</span><span class="p">))</span>
  <span class="k">else</span><span class="p">:</span>
- <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span>
-</code></pre></div>
+ <span class="k">print</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s"> is currently under fail limit, ignoring&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">host</span><span class="p">)</span></code></pre></div>
 
 
 <p>Which happens to nicely do the job as can be seen below:</p>
 
-<div class="highlight"><pre><code class="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./check_bad_ip.py</span>
+<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./check_bad_ip.py</span>
 213.225.207.41 is currently over fail limit, processing
-mx-pool207-res41.momax.it not allready banned, banning <span class="k">for </span>15 failed attempts
+mx-pool207-res41.momax.it not allready banned, banning <span class="k">for</span> <span class="m">15</span> failed attempts
 88.191.92.219 is currently over fail limit, processing
-sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1317 failed attempts
+sd-15684.dedibox.fr not already banned, banning <span class="k">for</span> <span class="m">1317</span> failed attempts
 81.5.150.24 is currently under fail limit, ignoring
 sd-15684.dedibox.fr is currently under fail limit, ignoring
 81.5.150.24 is currently under fail limit, ignoring
@@ -159,20 +158,18 @@ sd-15684.dedibox.fr is currently under fail limit, ignoring
 sd-15684.dedibox.fr is currently under fail limit, ignoring
 81.5.150.24 is currently under fail limit, ignoring
 88.191.92.219 is currently over fail limit, processing
-sd-15684.dedibox.fr not already banned, banning <span class="k">for </span>1014 failed attempts
+sd-15684.dedibox.fr not already banned, banning <span class="k">for</span> <span class="m">1014</span> failed attempts
 114.207.245.128 is currently over fail limit, processing
-114.207.245.128 not already banned, banning <span class="k">for </span>1350 failed attempts
+114.207.245.128 not already banned, banning <span class="k">for</span> <span class="m">1350</span> failed attempts
 62.182.30.165 is currently over fail limit, processing
-30-165.kartel.komi.me not already banned, banning <span class="k">for </span>171 failed attempts
-</code></pre></div>
+30-165.kartel.komi.me not already banned, banning <span class="k">for</span> <span class="m">171</span> failed attempts</code></pre></div>
 
 
 <p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p>
 
-<div class="highlight"><pre><code class="bash">iptables -I INPUT -j BadIp
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">iptables -I INPUT -j BadIp
 iptables -I OUTPUT -j BadIp
-iptables -I FORWARD -j BadIp
-</code></pre></div>
+iptables -I FORWARD -j BadIp</code></pre></div>
 
 
 <p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p>
@@ -185,11 +182,11 @@ iptables -I FORWARD -j BadIp
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
     
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
-    
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
     
     </ul>
 </section>

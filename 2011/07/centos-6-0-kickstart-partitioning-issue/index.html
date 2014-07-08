@@ -55,11 +55,11 @@
         <nav>
             <ul id="main">
                <li><a href="/">Blog</a></li>
-               <li><a href="/about">About</a></li>
-               <li><a href="/cv">CV</a></li>
-               <li><a href="/archives">Archives</a></li>
-               <li><a href="/projects">Projects</a></li>
-               <li><a href="/todo">Todo</a></li>
+               <li><a href="/about/">About</a></li>
+               <li><a href="/cv/">CV</a></li>
+               <li><a href="/archives/">Archives</a></li>
+               <li><a href="/projects/">Projects</a></li>
+               <li><a href="/todo/">Todo</a></li>
             </ul>
         </nav>
 
@@ -103,7 +103,7 @@
 
 <p>To do this I use the following in my kickstarts:</p>
 
-<div class="highlight"><pre><code class="text">%include /tmp/partinfo
+<div class="highlight"><pre><code class="language-text" data-lang="text">%include /tmp/partinfo
 
 %pre
 # Get disks
@@ -119,8 +119,7 @@ part pv.2 --size=0 --grow --ondisk=$disk1
 volgroup VolGroup00 --pesize=32768 pv.2
 logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
 logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
-EOF
-</code></pre></div>
+EOF</code></pre></div>
 
 
 <p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>
@@ -143,11 +142,11 @@ EOF
     <h2>Related posts</h2>
     <ul id="related_posts">
     
+        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
+    
         <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
     
         <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
-    
-        <li>&raquo; <a href="/2011/06/meth-stove/">Meth stove</a></li>
     
     </ul>
 </section>
