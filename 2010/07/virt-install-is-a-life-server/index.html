@@ -1,108 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Damian Zaremba - virt-install is a life server</title>
-
-    <!-- General meta data -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
-    <meta name="author" content="Damian Zaremba" />
-    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
-
-    <!-- Robot meta data -->
-    <meta name="robots" content="INDEX" />
-    <meta name="robots" content="FOLLOW" />
-    <meta name="robots" content="INDEX,FOLLOW" />
-
-    <!-- CSS files -->
-    <link href="//damianzaremba.co.uk/assests/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel="stylesheet" type="text/css" />
-
-    <!-- JS files -->
-    <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
-        _gaq.push(['_setAccount', 'UA-11817192-1']);
-        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = '//stats.g.doubleclick.net/dc.js'
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
-    <!-- IE fixes -->
-    <!--[if IE]>
-    body {
-        behavior: url("//damianzaremba.co.uk/assests/other/hover.htc");
-    }
-    <![endif]-->
-
-    <!--
-    RIPA NOTICE: No consent is given for the interception of this page transmission
-    -->
-</head>
-<body>
-    <header>
-        <h1><a href="/">Damian Zaremba</a> <span>virt-install is a life server</span></h1>
-
-        <nav>
-            <ul id="main">
-               <li><a href="/">Blog</a></li>
-               <li><a href="/about/">About</a></li>
-               <li><a href="/cv/">CV</a></li>
-               <li><a href="/archives/">Archives</a></li>
-               <li><a href="/projects/">Projects</a></li>
-               <li><a href="/todo/">Todo</a></li>
-            </ul>
-        </nav>
-
-        <div id="right">
-            <p>
-                <a href="http://twitter.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt="Twitter" />
-                </a>
-                <a href="https://plus.google.com/110559147647328161061">
-                    <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt="GooglePlus" />
-                </a>
-                <a href="http://facebook.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt="Facebook" />
-                </a>
-                <a href="https://github.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/github.png" alt="GitHub" />
-                </a>
-                <a href="http://feeds.feedburner.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/rss.png" alt="RSS" />
-                </a>
-            </p>
-            <form class="search" action="https://google.com/search" method="get">
-                <input class="left" type="text" name="q">
-                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
-            </form>
-        </div>
-</header>
-
-<div id="content">
-<article class="post">
-    <div class="meta">
-        <span><img src="/assests/images/date.png" title="Date" alt="Date" />06 Jul 2010</span>
-        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span>
-        
-            <ul class="categories">
-            <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul>
-        
-    </div>
-    <div class="entry">
-        <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+<!DOCTYPE HTML> <html> <head> <title>Damian Zaremba - virt-install is a life server</title> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="//damianzaremba.co.uk/assests/css/main.css" rel=stylesheet type="text/css"/> <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel=stylesheet type="text/css"/> <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();</script> <!--[if IE]>body { behavior: url("//damianzaremba.co.uk/assests/other/hover.htc"); }<![endif]--> </head> <body> <header> <h1><a href="/">Damian Zaremba</a> <span>virt-install is a life server</span></h1> <nav> <ul id=main> <li><a href="/">Blog</a></li> <li><a href="/about/">About</a></li> <li><a href="/cv/">CV</a></li> <li><a href="/archives/">Archives</a></li> <li><a href="/projects/">Projects</a></li> <li><a href="/todo/">Todo</a></li> </ul> </nav> <div id=right> <p> <a href="http://twitter.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://plus.google.com/110559147647328161061"> <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt=GooglePlus /> </a> <a href="http://facebook.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt=Facebook /> </a> <a href="https://github.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/github.png" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/rss.png" alt=RSS /> </a> </p> <form class=search action="https://google.com/search" method=get> <input class=left type=text name=q> <input type=hidden name=q value="site:damianzaremba.co.uk"> </form> </div> </header> <div id=content> <article class=post> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />06 Jul 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul> </div> <div class=entry> <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility I got bored of having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 <span class="nv">VG</span><span class="o">=</span><span class="s1">&#39;/dev/virtual_disks&#39;</span>
 <span class="nv">KS_ADDR</span><span class="o">=</span><span class="s1">&#39;http://192.168.100.1:5843/kickstarts&#39;</span>
 
@@ -171,12 +67,7 @@
  <span class="nb">echo</span> <span class="s2">$&quot;Usage: $0 {centos|fedora|debian|ubuntu} {Disk Size} {Ram Allocation} {Name} {Kickstart}&quot;</span>
  <span class="nb">exit </span>2
  <span class="p">;;</span>
-<span class="k">esac</span></code></pre></div>
-
-
-<p>Example usage:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./vm_install.sh fedora 50 1024 CharityHosting1 basic</span>
+<span class="k">esac</span></code></pre></div> <p>Example usage:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@virtual1 ~<span class="o">]</span><span class="c"># ./vm_install.sh fedora 50 1024 CharityHosting1 basic</span>
 Installing vm CharityHosting1 with 50G disk and <span class="m">1024</span> ram allocation passing kernel arguments <span class="s1">&#39;auto=true hostname=CharityHosting1 domain=&#39;&#39; ks=http://192.168.100.1:5843/kickstarts/fedora_basic.ks&#39;</span>
  Logical volume <span class="s2">&quot;CharityHosting1&quot;</span> created
 Starting install...
@@ -186,23 +77,7 @@ Retrieving file initrd.img... <span class="p">|</span> <span class="m">57</span>
 Creating domain... <span class="p">|</span> <span class="m">0</span> B 00:00
 Domain installation still in progress. You can reconnect to
 the console to <span class="nb">complete </span>the installation process.
-:0</code></pre></div>
-
-
-<p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p>
-
-<p>2 Variables are as follows:
-VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh)
-KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro"_"$name".ks"</p>
-
-<p>The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.</p>
-
-<p>The other thing I do along side this is make dnsmasq hand out "static" ips to servers because I use NAT for mapping the public to private addresses, this is because I only run a couple of production vms on that server (Such as the charity hosting servers and graphing server) and the rest are test servers with no need for public addresses.</p>
-
-<p>Setup for dnsmasq/the script to make the assignments static are as follows:
-DNSMASQ config:</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">domain-needed
+:0</code></pre></div> <p>The :0 thrown out at the end is the VNC port you can connect to which is pretty much the console on the vm. Bear in mind this does very very little validation, if a domain is already defined it will error out at that stage so your pretty safe but for example if you tell it to use a lvm that already exists it will error but carry on installing and wipe everything off :-)</p> <p>2 Variables are as follows: VG - This is the volume group the lvm's are going to reside in, the path is the format that you would use when calling lvcreate (duh) KS_ADDR - This is the base http path to where the kick-starts are located, I personally use lighttpd to do this basic job. All kickstats have the format $distro"_"$name".ks"</p> <p>The main work is done in the kick-start file, at the moment they are pretty static but eventually will be built dynamically out of a database so you can customize things like the root password, set static ips, install packages etc without having to write out a custom one.</p> <p>The other thing I do along side this is make dnsmasq hand out "static" ips to servers because I use NAT for mapping the public to private addresses, this is because I only run a couple of production vms on that server (Such as the charity hosting servers and graphing server) and the rest are test servers with no need for public addresses.</p> <p>Setup for dnsmasq/the script to make the assignments static are as follows: DNSMASQ config:</p> <div class=highlight><pre><code class="language-text" data-lang="text">domain-needed
 bogus-priv
 strict-order
 bind-interfaces
@@ -210,12 +85,7 @@ listen-address=192.168.100.1
 except-interface=lo
 dhcp-range=192.168.100.2,192.168.100.254
 dhcp-lease-max=253
-conf-dir=/etc/dnsmasq.d/</code></pre></div>
-
-
-<p>/root/fix_leases.py script (this runs every 2min)</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
+conf-dir=/etc/dnsmasq.d/</code></pre></div> <p>/root/fix_leases.py script (this runs every 2min)</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/python</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="n">leases</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">known_hosts</span> <span class="o">=</span> <span class="p">{}</span>
@@ -267,84 +137,4 @@ conf-dir=/etc/dnsmasq.d/</code></pre></div>
 
 <span class="n">hosts</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 <span class="k">print</span> <span class="s">&quot;Updating done :)&quot;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span></code></pre></div>
-
-
-<p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p>
-
-<p>Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)</p>
-
-    </div>
-</article>
-
-
-<section id="related">
-    <h2>Related posts</h2>
-    <ul id="related_posts">
-    
-        <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li>
-    
-        <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
-    
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
-    
-    </ul>
-</section>
-
-
-
-<section id="comment">
-    <h2>Comments</h2>
-    <div id="disqus_thread" aria-live="polite">
-        <noscript>Please enable JavaScript to view the comments</noscript>
-    </div>
-</section>
-
-<script type="text/javascript">
-    var disqus_shortname = 'damianzaremba';
-    var disqus_identifier = 'http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/';
-    var disqus_url = 'http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/';
-    var disqus_script = 'embed.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-</div>
-
-<footer>
-    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
-    <ul id="ads">
-        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
-        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
-    </ul>
-</footer>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<!--[if lt IE 9]>
-<script src="//damianzaremba.co.uk/assests/js/html5.js"></script>
-<![endif]-->
-
-<script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
-
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-</body>
-</html>
+<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s">&#39;service dnsmasq reload&#39;</span><span class="p">)</span></code></pre></div> <p>To make the above work I run dnsmasq outside of libvirt which is not the default (you have to enable dhcp in libvirt to do it) but it works pretty well for me, just have to clear the leases out every now and then ;-)</p> <p>Until next time which may include some C as I'm currently working on a DNS management app for the iPhone (I will probably give up on it soon though due to time constrictions!)</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li> <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li> <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_shortname="damianzaremba";var disqus_identifier="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/";var disqus_url="http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/";var disqus_script="embed.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer> <p class=copyright>Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </footer> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> <!--[if lt IE 9]><script src="//damianzaremba.co.uk/assests/js/html5.js"></script><![endif]--> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'));var disqus_shortname="damianzaremba";var disqus_script="count.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </body> </html>

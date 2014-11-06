@@ -1,128 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Damian Zaremba - Blog</title>
-
-    <!-- General meta data -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="Damian Zaremba's Blog" />
-    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
-    <meta name="author" content="Damian Zaremba" />
-    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
-
-    <!-- Robot meta data -->
-    <meta name="robots" content="INDEX" />
-    <meta name="robots" content="FOLLOW" />
-    <meta name="robots" content="INDEX,FOLLOW" />
-
-    <!-- CSS files -->
-    <link href="//damianzaremba.co.uk/assests/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel="stylesheet" type="text/css" />
-
-    <!-- JS files -->
-    <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
-        _gaq.push(['_setAccount', 'UA-11817192-1']);
-        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = '//stats.g.doubleclick.net/dc.js'
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
-    <!-- IE fixes -->
-    <!--[if IE]>
-    body {
-        behavior: url("//damianzaremba.co.uk/assests/other/hover.htc");
-    }
-    <![endif]-->
-
-    <!--
-    RIPA NOTICE: No consent is given for the interception of this page transmission
-    -->
-</head>
-<body>
-    <header>
-        <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1>
-
-        <nav>
-            <ul id="main">
-               <li><a href="/">Blog</a></li>
-               <li><a href="/about/">About</a></li>
-               <li><a href="/cv/">CV</a></li>
-               <li><a href="/archives/">Archives</a></li>
-               <li><a href="/projects/">Projects</a></li>
-               <li><a href="/todo/">Todo</a></li>
-            </ul>
-        </nav>
-
-        <div id="right">
-            <p>
-                <a href="http://twitter.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt="Twitter" />
-                </a>
-                <a href="https://plus.google.com/110559147647328161061">
-                    <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt="GooglePlus" />
-                </a>
-                <a href="http://facebook.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt="Facebook" />
-                </a>
-                <a href="https://github.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/github.png" alt="GitHub" />
-                </a>
-                <a href="http://feeds.feedburner.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/rss.png" alt="RSS" />
-                </a>
-            </p>
-            <form class="search" action="https://google.com/search" method="get">
-                <input class="left" type="text" name="q">
-                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
-            </form>
-        </div>
-</header>
-
-<div id="content">
-
-    
-    <article class="post">
-        <h1 class="title"><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />08 Aug 2014</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p>
-
-<p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release</span>
+<!DOCTYPE HTML> <html> <head> <title>Damian Zaremba - Blog</title> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="//damianzaremba.co.uk/assests/css/main.css" rel=stylesheet type="text/css"/> <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel=stylesheet type="text/css"/> <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();</script> <!--[if IE]>body { behavior: url("//damianzaremba.co.uk/assests/other/hover.htc"); }<![endif]--> </head> <body> <header> <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1> <nav> <ul id=main> <li><a href="/">Blog</a></li> <li><a href="/about/">About</a></li> <li><a href="/cv/">CV</a></li> <li><a href="/archives/">Archives</a></li> <li><a href="/projects/">Projects</a></li> <li><a href="/todo/">Todo</a></li> </ul> </nav> <div id=right> <p> <a href="http://twitter.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://plus.google.com/110559147647328161061"> <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt=GooglePlus /> </a> <a href="http://facebook.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt=Facebook /> </a> <a href="https://github.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/github.png" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/rss.png" alt=RSS /> </a> </p> <form class=search action="https://google.com/search" method=get> <input class=left type=text name=q> <input type=hidden name=q value="site:damianzaremba.co.uk"> </form> </div> </header> <div id=content> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release</span>
 CentOS release 6.5 <span class="o">(</span>Final<span class="o">)</span>
 
 <span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># uptime</span>
- 20:57:41 up 22:57,  <span class="m">1</span> user,  load average: 0.00, 0.04, 0.05</code></pre></div>
-
-
-<p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p>
-
-<p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p>
-
-<p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p>
-
-<h2>First update to the latest CentOS 6 release</h2>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+ 20:57:41 up 22:57,  <span class="m">1</span> user,  load average: 0.00, 0.04, 0.05</code></pre></div> <p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p> <p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p> <p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p> <h2>First update to the latest CentOS 6 release</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
 Loaded plugins: downloadonly, fastestmirror, security
 Loading mirror speeds from cached hostfile
  * base: mirrors.coreix.net
@@ -174,15 +54,7 @@ Loading mirror speeds from cached hostfile
  * epel: mirror.vorboss.net
  * extras: centos.hyve.com
  * updates: centos.hyve.com
-No packages marked <span class="k">for</span> update</code></pre></div>
-
-
-<h2>Install the upgrade utils</h2>
-
-<p>These are still very much in dev and may explode all the things.
-See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm</span>
+No packages marked <span class="k">for</span> update</code></pre></div> <h2>Install the upgrade utils</h2> <p>These are still very much in dev and may explode all the things. See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm</span>
 Loaded plugins: downloadonly, fastestmirror, security
 Setting up Local Package Process
 preupgrade-assistant-1.0.2-33.el6.x86_64.rpm                                                          <span class="p">|</span> <span class="m">438</span> kB     00:01     
@@ -312,12 +184,7 @@ Dependency Installed:
   libxslt-devel.x86_64 0:1.1.26-2.el6_3.1  m2crypto.x86_64 0:0.20.2-9.el6            openscap.x86_64 0:1.0.8-1.el6_5         
   pcre-devel.x86_64 0:7.8-6.el6            python-simplejson.x86_64 0:2.0.9-3.1.el6  zlib-devel.x86_64 0:1.2.3-29.el6        
 
-Complete!</code></pre></div>
-
-
-<h2>Check for potential problems</h2>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># preupg</span>
+Complete!</code></pre></div> <h2>Check for potential problems</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># preupg</span>
 Preupg tool doesn<span class="err">&#39;</span>t <span class="k">do</span> the actual upgrade.
 Please ensure you have backed up your system and/or data in the event of a failed upgrade
  that would require a full re-install of the system from installation media.
@@ -542,23 +409,7 @@ Result table with checks and their results <span class="k">for</span> main conte
 Tarball with results is stored here /root/preupgrade-results/preupg_results-140708210602.tar.gz .
 The latest assessment is stored in directory /root/preupgrade .
 Upload results to UI by <span class="nb">command</span>:
-e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .</code></pre></div>
-
-
-<p>Hopefully everything looks ok and you can continue with the upgrade.</p>
-
-<h2>Run the upgrade</h2>
-
-<p>This tool basically downloads a custom kernel which does the actual upgrade.</p>
-
-<p>This should work</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/</code></pre></div>
-
-
-<p>However it fails as below</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel</span>
+e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .</code></pre></div> <p>Hopefully everything looks ok and you can continue with the upgrade.</p> <h2>Run the upgrade</h2> <p>This tool basically downloads a custom kernel which does the actual upgrade.</p> <p>This should work</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/</code></pre></div> <p>However it fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel</span>
 setting up repos...
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
@@ -573,13 +424,7 @@ verify <span class="nb">local </span>files 100% <span class="o">[===============
 warning: rpmts_HdrFromFdno: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
 
 Downloading failed: The GPG keys listed <span class="k">for</span> the <span class="s2">&quot;CentOS-7.0 - Base&quot;</span> repository are already installed but they are not correct <span class="k">for</span> this package.
-Check that the correct key URLs are configured <span class="k">for</span> this repository.</code></pre></div>
-
-
-<p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg.
-We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck</span>
+Check that the correct key URLs are configured <span class="k">for</span> this repository.</code></pre></div> <p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg. We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck</span>
 setting up repos...
 base                                                                                                                             <span class="p">|</span> 3.6 kB     00:00     
 base/primary_db                                                                                                                  <span class="p">|</span> 4.9 MB     00:01     
@@ -595,12 +440,7 @@ updates/primary_db                                                              
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
 preupgrade-assistant has not been run.
-To perform this upgrade, either run preupg or run redhat-upgrade-tool --force</code></pre></div>
-
-
-<p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck</span>
+To perform this upgrade, either run preupg or run redhat-upgrade-tool --force</code></pre></div> <p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck</span>
 setting up repos...
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
@@ -615,34 +455,8 @@ testing upgrade transaction
 rpm transaction 100% <span class="o">[=================================================================================================================================]</span>
 rpm install 100% <span class="o">[=====================================================================================================================================]</span>
 setting up system <span class="k">for</span> upgrade
-Finished. Reboot to start upgrade.</code></pre></div>
-
-
-<p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div>
-
-
-<p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p>
-
-<h2>The system booted up!</h2>
-
-<p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># rm -f /etc/yum.repos.d/CentOS-SCL.repo</span></code></pre></div>
-
-
-<p>I also have EPEL installed on this server - lets fix that up.....</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7</span>
-<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># sed -i &#39;s/6/7/g&#39; /etc/yum.repos.d/epel.repo</span></code></pre></div>
-
-
-<h2>Update packages</h2>
-
-<p>At this point CentOS 7 should update cleanly</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+Finished. Reboot to start upgrade.</code></pre></div> <p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p> <h2>The system booted up!</h2> <p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># rm -f /etc/yum.repos.d/CentOS-SCL.repo</span></code></pre></div> <p>I also have EPEL installed on this server - lets fix that up.....</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7</span>
+<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># sed -i &#39;s/6/7/g&#39; /etc/yum.repos.d/epel.repo</span></code></pre></div> <h2>Update packages</h2> <p>At this point CentOS 7 should update cleanly</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.clouvider.net
@@ -741,57 +555,8 @@ Updated:
   epel-release.noarch 0:7-0.2               htop.x86_64 0:1.0.3-3.el7    python-crypto.x86_64 0:2.6.1-1.el7    python-paramiko.noarch 0:1.11.3-1.el7   
   python-simplejson.x86_64 0:3.3.3-1.el7   
 
-Complete!</code></pre></div>
-
-
-<p>Let's reboot once more to make sure things are all cleanly started...</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div>
-
-
-<p>Oh hey, it's a CentOS 7 box</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release </span>
-CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</span></code></pre></div>
-
-
-<h2>Roundup</h2>
-
-<p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p>
-
-<p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p>
-
-<p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p>
-
-<p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Jan 2013</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Recently I've heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p>
-
-<p>While I'm not a network dude, hopefully this post will give you an overview of what Anycast is, how it's useful and what to watch out for.</p>
-
-<h2>Overview</h2>
-
-<p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p>
-
-<p>As far as the 'client' is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p>
-
-<p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+Complete!</code></pre></div> <p>Let's reboot once more to make sure things are all cleanly started...</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>Oh hey, it's a CentOS 7 box</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release </span>
+CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</span></code></pre></div> <h2>Roundup</h2> <p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p> <p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p> <p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p> <p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p> </div> </article> <article class=post> <h1 class=title><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />20 Jan 2013</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul> </div> <div class=entry> <p>Recently I've heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p> <p>While I'm not a network dude, hopefully this post will give you an overview of what Anycast is, how it's useful and what to watch out for.</p> <h2>Overview</h2> <p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p> <p>As far as the 'client' is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p> <p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p> <div class=highlight><pre><code class="language-text" data-lang="text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1 (10.44.200.254)  15.334 ms  17.279 ms  19.183 ms
  2  host-92-23-160-1.as13285.net (92.23.160.1)  29.204 ms  32.556 ms  36.016 ms
  3  host-78-151-225-101.static.as13285.net (78.151.225.101)  38.386 ms  40.704 ms  42.598 ms
@@ -800,90 +565,14 @@ CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</spa
  6  host-78-144-1-61.as13285.net (78.144.1.61)  56.102 ms  48.605 ms  41.366 ms
  7  host-78-144-0-180.as13285.net (78.144.0.180)  42.400 ms host-78-144-0-116.as13285.net (78.144.0.116)  39.599 ms host-78-144-0-164.as13285.net (78.144.0.164)  37.310 ms
  8  195.66.225.179 (195.66.225.179)  38.239 ms  73.818 ms  72.494 ms
- 9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms</code></pre></div>
-
-
-
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+ 9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms</code></pre></div> <div class=highlight><pre><code class="language-text" data-lang="text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1-dal.linode.com (67.18.7.161)  19.229 ms  19.291 ms  19.392 ms
  2  xe-2-0-0.car03.dllstx2.networklayer.com (67.18.7.89)  0.197 ms  0.220 ms  0.202 ms
  3  po101.dsr01.dllstx2.networklayer.com (70.87.254.73)  0.513 ms  0.537 ms  0.624 ms
  4  po21.dsr01.dllstx3.networklayer.com (70.87.255.65)  0.902 ms  0.983 ms  1.020 ms
  5  ae16.bbr01.eq01.dal03.networklayer.com (173.192.18.224)  16.145 ms  16.138 ms  16.112 ms
  6  141.101.74.253 (141.101.74.253)  0.602 ms  0.566 ms  0.549 ms
- 7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms</code></pre></div>
-
-
-<p>Note the the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p>
-
-<p>The 'magic' here happens at the routing layer, a router will have multiple 'paths' to the IP (173.245.59.118) and chooses the best one based on its metrics.</p>
-
-<p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p>
-
-<h1>For those used to dealing with internal networks</h1>
-
-<p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt="" /></p>
-
-<p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p>
-
-<p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would un-block and start forwarding traffic.</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt="" /></p>
-
-<p>The problem here is you are having to go via Scotland to access Wales from England, when they have a directly link. You can't have both links up because you'd cause a loop and no traffic would pass.</p>
-
-<p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you'd want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p>
-
-<p>I'm not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn't hugely matter. Lets assume both links are the same speed and are direct (1 hop away).</p>
-
-<p>The topology looks something like</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt="" /></p>
-
-<p>This means if any of the offices want to talk to another office, they are only 1 hop away and don't have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt="" /></p>
-
-<p>In summary using routing between the 3 offices allows for transparent failover and best-performance access. In a more complicated topology this is very useful.</p>
-
-<p>Essentially, this is also how 'Anycast' works - the main difference being is we're dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn't care either way - it will choose the 'best' path based on what it knows about.</p>
-
-<h2>Why is this useful?</h2>
-
-<p>Anycast gives you a number of benefits such as</p>
-
-<ul>
-<li>Higher reliability/availability</li>
-<li>Higher performance</li>
-<li>Localisation/migration of DoS/DDoS attacks</li>
-<li>Client agnostic</li>
-</ul>
-
-
-<h2>Why doesn't everyone use it?</h2>
-
-<p>There are some drawbacks to using Anycast addressing</p>
-
-<ul>
-<li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li>
-<li>Can be expensive - IP space, network infrastructure, training</li>
-<li>Harder to troubleshoot</li>
-<li>Harder to monitor</li>
-</ul>
-
-
-<h2>How would I use it?</h2>
-
-<p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk 'breaking' connections across 2 nodes.</p>
-
-<p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p>
-
-<p>A common thing to do would be create 3 NS entries pointing to servers in each location</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">myawesomedns.something.    360 IN  SOA ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+ 7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms</code></pre></div> <p>Note the the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p> <p>The 'magic' here happens at the routing layer, a router will have multiple 'paths' to the IP (173.245.59.118) and chooses the best one based on its metrics.</p> <p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p> <h1>For those used to dealing with internal networks</h1> <p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt=""/></p> <p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p> <p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would un-block and start forwarding traffic.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt=""/></p> <p>The problem here is you are having to go via Scotland to access Wales from England, when they have a directly link. You can't have both links up because you'd cause a loop and no traffic would pass.</p> <p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you'd want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p> <p>I'm not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn't hugely matter. Lets assume both links are the same speed and are direct (1 hop away).</p> <p>The topology looks something like</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt=""/></p> <p>This means if any of the offices want to talk to another office, they are only 1 hop away and don't have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt=""/></p> <p>In summary using routing between the 3 offices allows for transparent failover and best-performance access. In a more complicated topology this is very useful.</p> <p>Essentially, this is also how 'Anycast' works - the main difference being is we're dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn't care either way - it will choose the 'best' path based on what it knows about.</p> <h2>Why is this useful?</h2> <p>Anycast gives you a number of benefits such as</p> <ul> <li>Higher reliability/availability</li> <li>Higher performance</li> <li>Localisation/migration of DoS/DDoS attacks</li> <li>Client agnostic</li> </ul> <h2>Why doesn't everyone use it?</h2> <p>There are some drawbacks to using Anycast addressing</p> <ul> <li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li> <li>Can be expensive - IP space, network infrastructure, training</li> <li>Harder to troubleshoot</li> <li>Harder to monitor</li> </ul> <h2>How would I use it?</h2> <p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk 'breaking' connections across 2 nodes.</p> <p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p> <p>A common thing to do would be create 3 NS entries pointing to servers in each location</p> <div class=highlight><pre><code class="language-text" data-lang="text">myawesomedns.something.    360 IN  SOA ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something. 360 IN  NS  ns1.myawesomedns.something.
 myawesomedns.something. 360 IN  NS  ns2.myawesomedns.something.
@@ -896,32 +585,7 @@ ns1 360 IN  A   10.0.0.1
 ns2 360 IN  A   192.168.0.1
 
 ; US
-ns3 360 IN  A   172.16.0.1</code></pre></div>
-
-
-<p>These NS records would then be "glued" on the root nameservers, so the first resolver can find the NS servers IP address.</p>
-
-<p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to failover (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the 'local' one to them.</p>
-
-<p>Anycast helps to solve both these issues.</p>
-
-<p>If a server goes down you can withdraw the route and (as long as you're not flapping routes) your peers should pick it up in a few minutes.</p>
-
-<p>In the case of a user making a request to the Anycast IP, the request will be routed to the 'nearest' node - in normal operation this would be the 'local' one, if that had failed it would automatically (after the route withdrawal) go to the next 'nearest'.</p>
-
-<p>Now I'm quoting 'nearest' and 'local' and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p>
-
-<p>The routing before we start using Anycast</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt="" /></p>
-
-<p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt="" /></p>
-
-<p>So lets start using Anycast, we're going to keep the original IPs as 'maintenance' IPs - ones we know only go to that single host and create a new block.</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">myawesomedns.something.    360 IN  SOA ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+ns3 360 IN  A   172.16.0.1</code></pre></div> <p>These NS records would then be "glued" on the root nameservers, so the first resolver can find the NS servers IP address.</p> <p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to failover (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the 'local' one to them.</p> <p>Anycast helps to solve both these issues.</p> <p>If a server goes down you can withdraw the route and (as long as you're not flapping routes) your peers should pick it up in a few minutes.</p> <p>In the case of a user making a request to the Anycast IP, the request will be routed to the 'nearest' node - in normal operation this would be the 'local' one, if that had failed it would automatically (after the route withdrawal) go to the next 'nearest'.</p> <p>Now I'm quoting 'nearest' and 'local' and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p> <p>The routing before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt=""/></p> <p>So lets start using Anycast, we're going to keep the original IPs as 'maintenance' IPs - ones we know only go to that single host and create a new block.</p> <div class=highlight><pre><code class="language-text" data-lang="text">myawesomedns.something.    360 IN  SOA ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something. 360 IN  NS  ns1.myawesomedns.something.
 myawesomedns.something. 360 IN  NS  ns2.myawesomedns.something.
@@ -939,82 +603,7 @@ srv-ns3 360 IN  A   172.16.0.1
 ; Anycast
 ns1 360 IN A 10.1.0.1
 ns2 360 IN A 10.1.0.2
-ns3 360 IN A 10.1.0.3</code></pre></div>
-
-
-<p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p>
-
-<p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p>
-
-<p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p>
-
-<p>I won't go into the BGP configuration in this post as it's a little lengthy to explain/draw how routing ables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p>
-
-<p>The routing after we start using 'Anycast' IPs</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt="" /></p>
-
-<p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using 'Anycast' IPs</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt="" /></p>
-
-<p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt="" /></p>
-
-<p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p>
-
-<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt="" /></p>
-
-<p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />08 Sep 2012</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2012/09/slow-ssh-to-new-centos-servers/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/software'>Software</a></li><li><a href='/tag/ssh'>SSH</a></li><li><a href='/tag/centos'>CentOS</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/linux'>Linux</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag
-out for 20-30 seconds on login then function fine once authenticated.</p>
-
-<p>I noticed this issue on CentOS 5/6 servers, however it probably applies to
-anything running glibc 2.10+.</p>
-
-<p>Now while there are a few reasons SSH might be doing this (most of which can be
-seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p>
-
-<p>The interesting part was, this wasn't happening on all servers (they are
-standard config wise thanks to puppet).</p>
-
-<p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to
-quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p>
-
-<p>This might be acceptable, depending on how much you have access restricted
-however there is an alternative.</p>
-
-<p>It turns out there was a change in glibc that can be seen on the
-changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p>
-
-<p>Under some circumstances (especially when firewalls are involved) DNS resolution
-will fail and glibc should fallback, close the socket and start again. It would
-seem this takes rather a long while when trying to SSH!</p>
-
-<p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a>
-documented) option that you can add to your
-resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter
-fallback mode straight away and kills the delay.</p>
-
-<p>An example of the 'patched' /etc/resolv.conf file</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text"># This file is managed via Puppet
+ns3 360 IN A 10.1.0.3</code></pre></div> <p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p> <p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p> <p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p> <p>I won't go into the BGP configuration in this post as it's a little lengthy to explain/draw how routing ables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p> <p>The routing after we start using 'Anycast' IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using 'Anycast' IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt=""/></p> <p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt=""/></p> <p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt=""/></p> <p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p> </div> </article> <article class=post> <h1 class=title><a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />08 Sep 2012</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2012/09/slow-ssh-to-new-centos-servers/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/software'>Software</a></li><li><a href='/tag/ssh'>SSH</a></li><li><a href='/tag/centos'>CentOS</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/linux'>Linux</a></li></ul> </div> <div class=entry> <p>Recently when installing new servers I 'randomly' had an issue where SSH connections would lag out for 20-30 seconds on login then function fine once authenticated.</p> <p>I noticed this issue on CentOS 5/6 servers, however it probably applies to anything running glibc 2.10+.</p> <p>Now while there are a few reasons SSH might be doing this (most of which can be seen using verbose flags), it wasn't the usual suspects (GSSAPI etc).</p> <p>The interesting part was, this wasn't happening on all servers (they are standard config wise thanks to puppet).</p> <p>It turns out the UseDNS setting was failing, very slowly. Now a simple way to quickly solve the issue is to set <code>UseDNS no</code> in your sshd_config file.</p> <p>This might be acceptable, depending on how much you have access restricted however there is an alternative.</p> <p>It turns out there was a change in glibc that can be seen on the changelog <a href="http://sourceware.org/ml/libc-alpha/2009-10/msg00063.html">here</a>.</p> <p>Under some circumstances (especially when firewalls are involved) DNS resolution will fail and glibc should fallback, close the socket and start again. It would seem this takes rather a long while when trying to SSH!</p> <p>Thankfully there is a (<a href="https://bugzilla.kernel.org/show_bug.cgi?id=38542">recently</a> documented) option that you can add to your resolv.conf file <code>single-request-reopen</code>. This forces glibc to enter fallback mode straight away and kills the delay.</p> <p>An example of the 'patched' /etc/resolv.conf file</p> <div class=highlight><pre><code class="language-text" data-lang="text"># This file is managed via Puppet
 
 # Servers
 nameserver 8.8.8.8
@@ -1023,69 +612,15 @@ nameserver 208.67.222.222
 nameserver 208.67.220.220
 
 # Options
-options single-request-reopen</code></pre></div>
-
-
-<p>Now you might want to dig into your network stack a little more and make sure
-you can handle IPv6/dual stack properly but for now, problem solved!</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />04 Sep 2012</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2012/09/kvirc-update-breaks-irssi-proxy/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/irc'>IRC</a></li><li><a href='/tag/irssi'>Irssi</a></li><li><a href='/tag/kvirc'>KVIrc</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>I recently updated KVIrc on OS X from 3.2.0 to 4.2.0.
-The update appeared to complete successfully, however on trying to connect to my
-Irssi Proxy server nothing appeared to happen.</p>
-
-<p>The output from the server console was something like below</p>
-
-<div class="highlight"><pre><code class="language-text" data-lang="text">This is the first connection in this IRC context: using the global server
+options single-request-reopen</code></pre></div> <p>Now you might want to dig into your network stack a little more and make sure you can handle IPv6/dual stack properly but for now, problem solved!</p> </div> </article> <article class=post> <h1 class=title><a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />04 Sep 2012</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2012/09/kvirc-update-breaks-irssi-proxy/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/irc'>IRC</a></li><li><a href='/tag/irssi'>Irssi</a></li><li><a href='/tag/kvirc'>KVIrc</a></li></ul> </div> <div class=entry> <p>I recently updated KVIrc on OS X from 3.2.0 to 4.2.0. The update appeared to complete successfully, however on trying to connect to my Irssi Proxy server nothing appeared to happen.</p> <p>The output from the server console was something like below</p> <div class=highlight><pre><code class="language-text" data-lang="text">This is the first connection in this IRC context: using the global server
 setting
 Attempting connection to myirssiproxy.local (RawrIRC) on port 8000
 Looking up the server hostname (myirssiproxy.local)...
 Server hostname resolved to 10.44.1.1
 Contacting IRC server myirssiproxy.local (10.44.1.1) on port 8000
 Connection established [myirssiproxy.local (10.44.1.1:8000)]
-Local host address is 10.44.1.2</code></pre></div>
-
-
-<p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by
-using the STARTTLS extension' enabled.</p>
-
-<p>Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show
-successful connections no data is transferred over the socket.</p>
-
-<p>The simple solution to get things back up and running properly is to disable the
-option under each server.</p>
-
-<p>To do this browse to 'Configure servers' under Settings, double click on the
-server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by
-using the STARTTLS extension'.</p>
-
-<p>If you have a large number of servers you can also directly edit the ini file
-under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a
-section and each server is numbered.</p>
-
-<p>To disabled STARTTLS for the first server in network A, your config should look
-something like the below</p>
-
-<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="k">[A]</span>
-<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span></code></pre></div>
-
-
-<p>This will usually have a number of other items, a full example is below</p>
-
-<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="k">[FreeNode]</span>
+Local host address is 10.44.1.2</code></pre></div> <p>It turns out that in 4.2.0 the servers automatically had 'Switch to SSL/TLS by using the STARTTLS extension' enabled.</p> <p>Unfortunately Irssi Proxy doesn't like STARTTLS, so while the logs show successful connections no data is transferred over the socket.</p> <p>The simple solution to get things back up and running properly is to disable the option under each server.</p> <p>To do this browse to 'Configure servers' under Settings, double click on the server under the network, tab over to Advanced and disable 'Switch to SSL/TLS by using the STARTTLS extension'.</p> <p>If you have a large number of servers you can also directly edit the ini file under ~/.config/KVIrc/config/serverdb.kvc. In this file each network is a section and each server is numbered.</p> <p>To disabled STARTTLS for the first server in network A, your config should look something like the below</p> <div class=highlight><pre><code class="language-ini" data-lang="ini"><span class="k">[A]</span>
+<span class="na">0_EnabledSTARTTLS</span><span class="o">=</span><span class="s">false</span></code></pre></div> <p>This will usually have a number of other items, a full example is below</p> <div class=highlight><pre><code class="language-ini" data-lang="ini"><span class="k">[FreeNode]</span>
 <span class="na">0_Port</span><span class="o">=</span><span class="s">8000</span>
 <span class="na">0_Hostname</span><span class="o">=</span><span class="s">myirssiproxy.local</span>
 <span class="na">0_Ip</span><span class="o">=</span><span class="s">10.44.1.1</span>
@@ -1100,43 +635,7 @@ something like the below</p>
 <span class="na">0_EnabledCAP</span><span class="o">=</span><span class="s">false</span>
 <span class="na">0_RealName</span><span class="o">=</span><span class="s">MyName</span>
 <span class="na">0_User</span><span class="o">=</span><span class="s">MyUser</span>
-<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span></code></pre></div>
-
-
-<p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide
-scale settings changes.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/">Running a WSGI app via Gunicorn from Python</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Aug 2012</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/wsgi'>WSGI</a></li><li><a href='/tag/gunicorn'>Gunicorn</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Anyone who's familiar with Gunicorn will know just how simple it is to get up
-and running; <code>gunicorn myapp.wsgi</code>.</p>
-
-<p>For a little project I'm working on I wanted to take this up a level and run
-Gunicorn from a Python script, passing in any options as required and not
-relying on sys.argv.</p>
-
-<p>Because of the way most the Gunicorn application classes are written they
-expect to be run from the console_scripts setup and have rather close
-integration.</p>
-
-<p>Unfortunately this made getting to the point of running <code>run.py</code>
-and having Gunicorn start, rather harder than it needed to be.</p>
-
-<p>For the purposes of this post my WSGI application is the example Flask app;</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># myapp.wsgi</span>
+<span class="na">UserName</span><span class="o">=</span><span class="s">Damian</span></code></pre></div> <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide scale settings changes.</p> </div> </article> <article class=post> <h1 class=title><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/">Running a WSGI app via Gunicorn from Python</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />20 Aug 2012</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/wsgi'>WSGI</a></li><li><a href='/tag/gunicorn'>Gunicorn</a></li></ul> </div> <div class=entry> <p>Anyone who's familiar with Gunicorn will know just how simple it is to get up and running; <code>gunicorn myapp.wsgi</code>.</p> <p>For a little project I'm working on I wanted to take this up a level and run Gunicorn from a Python script, passing in any options as required and not relying on sys.argv.</p> <p>Because of the way most the Gunicorn application classes are written they expect to be run from the console_scripts setup and have rather close integration.</p> <p>Unfortunately this made getting to the point of running <code>run.py</code> and having Gunicorn start, rather harder than it needed to be.</p> <p>For the purposes of this post my WSGI application is the example Flask app;</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c"># myapp.wsgi</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
 
 <span class="n">application</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
@@ -1146,12 +645,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
     <span class="k">return</span> <span class="s">&quot;Hello World!&quot;</span>
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
-
-
-<p>Now, to get this running under Gunicorn we need to create a custom application</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c"># myapp.mycustomapplication</span>
+    <span class="n">application</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div> <p>Now, to get this running under Gunicorn we need to create a custom application</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c"># myapp.mycustomapplication</span>
 <span class="kn">from</span> <span class="nn">gunicorn.app.base</span> <span class="kn">import</span> <span class="n">Application</span>
 <span class="kn">from</span> <span class="nn">gunicorn</span> <span class="kn">import</span> <span class="n">util</span>
 
@@ -1187,24 +681,7 @@ and having Gunicorn start, rather harder than it needed to be.</p>
 
 <span class="sd">        Imports our application and returns it to be run.</span>
 <span class="sd">        &#39;&#39;&#39;</span>        
-        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span></code></pre></div>
-
-
-<p>As far as I can tell the minimum methods you can define is 3;</p>
-
-<ol>
-<li><code>__init__</code> - This sets up our base attributes</li>
-<li><p><code>init</code> - This is called to load option settings, we use self.options
-to set the cfg items.</p></li>
-<li><p><code>load</code> - This loads the application so when <code>wsgi()</code> is called the
-app runs!</p></li>
-</ol>
-
-
-<p>To run the application we just need to initialize the MyCustomApplication
-class, passing any options as required.</p>
-
-<div class="highlight"><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
+        <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">import_app</span><span class="p">(</span><span class="s">&quot;myapp.wsgi&quot;</span><span class="p">)</span></code></pre></div> <p>As far as I can tell the minimum methods you can define is 3;</p> <ol> <li><code>__init__</code> - This sets up our base attributes</li> <li><p><code>init</code> - This is called to load option settings, we use self.options to set the cfg items.</p></li> <li><p><code>load</code> - This loads the application so when <code>wsgi()</code> is called the app runs!</p></li> </ol> <p>To run the application we just need to initialize the MyCustomApplication class, passing any options as required.</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
 <span class="c"># myapp.run</span>
 
 <span class="kn">from</span> <span class="nn">myapp.mycustomapplication</span> <span class="kn">import</span> <span class="n">MyCustomApplication</span>
@@ -1214,58 +691,4 @@ class, passing any options as required.</p>
         <span class="s">&#39;bind&#39;</span><span class="p">:</span> <span class="s">&#39;localhost:8080&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 
-    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div>
-
-
-<p>In practice you'd probably load the options from a config file in your program.</p>
-
-<p>Hopefully this should help you getting Gunicorn running smoothly in a more
-integrated manner :)</p>
-
-        </div>
-    </article>
-    
-
-
-
-<nav id="page_nav">
-    
-
-    
-    <a href="/2/" class="next">Next Page &raquo;</a>
-    
-</nav>
-
-
-</div>
-
-<footer>
-    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
-    <ul id="ads">
-        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
-        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
-    </ul>
-</footer>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<!--[if lt IE 9]>
-<script src="//damianzaremba.co.uk/assests/js/html5.js"></script>
-<![endif]-->
-
-<script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
-
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-</body>
-</html>
+    <span class="n">MyCustomApplication</span><span class="p">(</span><span class="n">options</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></code></pre></div> <p>In practice you'd probably load the options from a config file in your program.</p> <p>Hopefully this should help you getting Gunicorn running smoothly in a more integrated manner :)</p> </div> </article> <nav id=page_nav> <a href="/2/" class=next>Next Page &raquo;</a> </nav> </div> <footer> <p class=copyright>Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </footer> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> <!--[if lt IE 9]><script src="//damianzaremba.co.uk/assests/js/html5.js"></script><![endif]--> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'));var disqus_shortname="damianzaremba";var disqus_script="count.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </body> </html>

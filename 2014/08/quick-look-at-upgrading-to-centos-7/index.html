@@ -1,125 +1,8 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Damian Zaremba - A very quick look at upgrading CentOS 6.5 to 7.0</title>
-
-    <!-- General meta data -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    
-    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
-    <meta name="author" content="Damian Zaremba" />
-    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
-
-    <!-- Robot meta data -->
-    <meta name="robots" content="INDEX" />
-    <meta name="robots" content="FOLLOW" />
-    <meta name="robots" content="INDEX,FOLLOW" />
-
-    <!-- CSS files -->
-    <link href="//damianzaremba.co.uk/assests/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel="stylesheet" type="text/css" />
-
-    <!-- JS files -->
-    <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
-        _gaq.push(['_setAccount', 'UA-11817192-1']);
-        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = '//stats.g.doubleclick.net/dc.js'
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
-    <!-- IE fixes -->
-    <!--[if IE]>
-    body {
-        behavior: url("//damianzaremba.co.uk/assests/other/hover.htc");
-    }
-    <![endif]-->
-
-    <!--
-    RIPA NOTICE: No consent is given for the interception of this page transmission
-    -->
-</head>
-<body>
-    <header>
-        <h1><a href="/">Damian Zaremba</a> <span>A very quick look at upgrading CentOS 6.5 to 7.0</span></h1>
-
-        <nav>
-            <ul id="main">
-               <li><a href="/">Blog</a></li>
-               <li><a href="/about/">About</a></li>
-               <li><a href="/cv/">CV</a></li>
-               <li><a href="/archives/">Archives</a></li>
-               <li><a href="/projects/">Projects</a></li>
-               <li><a href="/todo/">Todo</a></li>
-            </ul>
-        </nav>
-
-        <div id="right">
-            <p>
-                <a href="http://twitter.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt="Twitter" />
-                </a>
-                <a href="https://plus.google.com/110559147647328161061">
-                    <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt="GooglePlus" />
-                </a>
-                <a href="http://facebook.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt="Facebook" />
-                </a>
-                <a href="https://github.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/github.png" alt="GitHub" />
-                </a>
-                <a href="http://feeds.feedburner.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/rss.png" alt="RSS" />
-                </a>
-            </p>
-            <form class="search" action="https://google.com/search" method="get">
-                <input class="left" type="text" name="q">
-                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
-            </form>
-        </div>
-</header>
-
-<div id="content">
-<article class="post">
-    <div class="meta">
-        <span><img src="/assests/images/date.png" title="Date" alt="Date" />08 Aug 2014</span>
-        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span>
-        
-            <ul class="categories">
-            <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul>
-        
-    </div>
-    <div class="entry">
-        <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p>
-
-<p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release</span>
+<!DOCTYPE HTML> <html> <head> <title>Damian Zaremba - A very quick look at upgrading CentOS 6.5 to 7.0</title> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="//damianzaremba.co.uk/assests/css/main.css" rel=stylesheet type="text/css"/> <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel=stylesheet type="text/css"/> <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();</script> <!--[if IE]>body { behavior: url("//damianzaremba.co.uk/assests/other/hover.htc"); }<![endif]--> </head> <body> <header> <h1><a href="/">Damian Zaremba</a> <span>A very quick look at upgrading CentOS 6.5 to 7.0</span></h1> <nav> <ul id=main> <li><a href="/">Blog</a></li> <li><a href="/about/">About</a></li> <li><a href="/cv/">CV</a></li> <li><a href="/archives/">Archives</a></li> <li><a href="/projects/">Projects</a></li> <li><a href="/todo/">Todo</a></li> </ul> </nav> <div id=right> <p> <a href="http://twitter.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://plus.google.com/110559147647328161061"> <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt=GooglePlus /> </a> <a href="http://facebook.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt=Facebook /> </a> <a href="https://github.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/github.png" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/rss.png" alt=RSS /> </a> </p> <form class=search action="https://google.com/search" method=get> <input class=left type=text name=q> <input type=hidden name=q value="site:damianzaremba.co.uk"> </form> </div> </header> <div id=content> <article class=post> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release</span>
 CentOS release 6.5 <span class="o">(</span>Final<span class="o">)</span>
 
 <span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># uptime</span>
- 20:57:41 up 22:57,  <span class="m">1</span> user,  load average: 0.00, 0.04, 0.05</code></pre></div>
-
-
-<p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p>
-
-<p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p>
-
-<p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p>
-
-<h2>First update to the latest CentOS 6 release</h2>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+ 20:57:41 up 22:57,  <span class="m">1</span> user,  load average: 0.00, 0.04, 0.05</code></pre></div> <p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p> <p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p> <p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p> <h2>First update to the latest CentOS 6 release</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
 Loaded plugins: downloadonly, fastestmirror, security
 Loading mirror speeds from cached hostfile
  * base: mirrors.coreix.net
@@ -171,15 +54,7 @@ Loading mirror speeds from cached hostfile
  * epel: mirror.vorboss.net
  * extras: centos.hyve.com
  * updates: centos.hyve.com
-No packages marked <span class="k">for</span> update</code></pre></div>
-
-
-<h2>Install the upgrade utils</h2>
-
-<p>These are still very much in dev and may explode all the things.
-See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm</span>
+No packages marked <span class="k">for</span> update</code></pre></div> <h2>Install the upgrade utils</h2> <p>These are still very much in dev and may explode all the things. See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm</span>
 Loaded plugins: downloadonly, fastestmirror, security
 Setting up Local Package Process
 preupgrade-assistant-1.0.2-33.el6.x86_64.rpm                                                          <span class="p">|</span> <span class="m">438</span> kB     00:01     
@@ -309,12 +184,7 @@ Dependency Installed:
   libxslt-devel.x86_64 0:1.1.26-2.el6_3.1  m2crypto.x86_64 0:0.20.2-9.el6            openscap.x86_64 0:1.0.8-1.el6_5         
   pcre-devel.x86_64 0:7.8-6.el6            python-simplejson.x86_64 0:2.0.9-3.1.el6  zlib-devel.x86_64 0:1.2.3-29.el6        
 
-Complete!</code></pre></div>
-
-
-<h2>Check for potential problems</h2>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># preupg</span>
+Complete!</code></pre></div> <h2>Check for potential problems</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># preupg</span>
 Preupg tool doesn<span class="err">&#39;</span>t <span class="k">do</span> the actual upgrade.
 Please ensure you have backed up your system and/or data in the event of a failed upgrade
  that would require a full re-install of the system from installation media.
@@ -539,23 +409,7 @@ Result table with checks and their results <span class="k">for</span> main conte
 Tarball with results is stored here /root/preupgrade-results/preupg_results-140708210602.tar.gz .
 The latest assessment is stored in directory /root/preupgrade .
 Upload results to UI by <span class="nb">command</span>:
-e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .</code></pre></div>
-
-
-<p>Hopefully everything looks ok and you can continue with the upgrade.</p>
-
-<h2>Run the upgrade</h2>
-
-<p>This tool basically downloads a custom kernel which does the actual upgrade.</p>
-
-<p>This should work</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/</code></pre></div>
-
-
-<p>However it fails as below</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel</span>
+e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .</code></pre></div> <p>Hopefully everything looks ok and you can continue with the upgrade.</p> <h2>Run the upgrade</h2> <p>This tool basically downloads a custom kernel which does the actual upgrade.</p> <p>This should work</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/</code></pre></div> <p>However it fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel</span>
 setting up repos...
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
@@ -570,13 +424,7 @@ verify <span class="nb">local </span>files 100% <span class="o">[===============
 warning: rpmts_HdrFromFdno: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
 
 Downloading failed: The GPG keys listed <span class="k">for</span> the <span class="s2">&quot;CentOS-7.0 - Base&quot;</span> repository are already installed but they are not correct <span class="k">for</span> this package.
-Check that the correct key URLs are configured <span class="k">for</span> this repository.</code></pre></div>
-
-
-<p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg.
-We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck</span>
+Check that the correct key URLs are configured <span class="k">for</span> this repository.</code></pre></div> <p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg. We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck</span>
 setting up repos...
 base                                                                                                                             <span class="p">|</span> 3.6 kB     00:00     
 base/primary_db                                                                                                                  <span class="p">|</span> 4.9 MB     00:01     
@@ -592,12 +440,7 @@ updates/primary_db                                                              
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
 preupgrade-assistant has not been run.
-To perform this upgrade, either run preupg or run redhat-upgrade-tool --force</code></pre></div>
-
-
-<p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck</span>
+To perform this upgrade, either run preupg or run redhat-upgrade-tool --force</code></pre></div> <p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck</span>
 setting up repos...
 No upgrade available <span class="k">for</span> the following repos: scl
 .treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
@@ -612,34 +455,8 @@ testing upgrade transaction
 rpm transaction 100% <span class="o">[=================================================================================================================================]</span>
 rpm install 100% <span class="o">[=====================================================================================================================================]</span>
 setting up system <span class="k">for</span> upgrade
-Finished. Reboot to start upgrade.</code></pre></div>
-
-
-<p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div>
-
-
-<p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p>
-
-<h2>The system booted up!</h2>
-
-<p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># rm -f /etc/yum.repos.d/CentOS-SCL.repo</span></code></pre></div>
-
-
-<p>I also have EPEL installed on this server - lets fix that up.....</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7</span>
-<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># sed -i &#39;s/6/7/g&#39; /etc/yum.repos.d/epel.repo</span></code></pre></div>
-
-
-<h2>Update packages</h2>
-
-<p>At this point CentOS 7 should update cleanly</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+Finished. Reboot to start upgrade.</code></pre></div> <p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p> <h2>The system booted up!</h2> <p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># rm -f /etc/yum.repos.d/CentOS-SCL.repo</span></code></pre></div> <p>I also have EPEL installed on this server - lets fix that up.....</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7</span>
+<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># sed -i &#39;s/6/7/g&#39; /etc/yum.repos.d/epel.repo</span></code></pre></div> <h2>Update packages</h2> <p>At this point CentOS 7 should update cleanly</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.clouvider.net
@@ -738,101 +555,5 @@ Updated:
   epel-release.noarch 0:7-0.2               htop.x86_64 0:1.0.3-3.el7    python-crypto.x86_64 0:2.6.1-1.el7    python-paramiko.noarch 0:1.11.3-1.el7   
   python-simplejson.x86_64 0:3.3.3-1.el7   
 
-Complete!</code></pre></div>
-
-
-<p>Let's reboot once more to make sure things are all cleanly started...</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div>
-
-
-<p>Oh hey, it's a CentOS 7 box</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release </span>
-CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</span></code></pre></div>
-
-
-<h2>Roundup</h2>
-
-<p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p>
-
-<p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p>
-
-<p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p>
-
-<p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p>
-
-    </div>
-</article>
-
-
-<section id="related">
-    <h2>Related posts</h2>
-    <ul id="related_posts">
-    
-        <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li>
-    
-        <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li>
-    
-        <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li>
-    
-    </ul>
-</section>
-
-
-
-<section id="comment">
-    <h2>Comments</h2>
-    <div id="disqus_thread" aria-live="polite">
-        <noscript>Please enable JavaScript to view the comments</noscript>
-    </div>
-</section>
-
-<script type="text/javascript">
-    var disqus_shortname = 'damianzaremba';
-    var disqus_identifier = 'http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/';
-    var disqus_url = 'http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/';
-    var disqus_script = 'embed.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-</div>
-
-<footer>
-    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
-    <ul id="ads">
-        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
-        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
-    </ul>
-</footer>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<!--[if lt IE 9]>
-<script src="//damianzaremba.co.uk/assests/js/html5.js"></script>
-<![endif]-->
-
-<script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
-
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-</body>
-</html>
+Complete!</code></pre></div> <p>Let's reboot once more to make sure things are all cleanly started...</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>Oh hey, it's a CentOS 7 box</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release </span>
+CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</span></code></pre></div> <h2>Roundup</h2> <p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p> <p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p> <p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p> <p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li> <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li> <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_shortname="damianzaremba";var disqus_identifier="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";var disqus_url="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";var disqus_script="embed.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer> <p class=copyright>Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </footer> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> <!--[if lt IE 9]><script src="//damianzaremba.co.uk/assests/js/html5.js"></script><![endif]--> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'));var disqus_shortname="damianzaremba";var disqus_script="count.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </body> </html>

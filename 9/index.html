@@ -1,153 +1,9 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <title>Damian Zaremba - Blog</title>
-
-    <!-- General meta data -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="description" content="Damian Zaremba's Blog" />
-    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
-    <meta name="author" content="Damian Zaremba" />
-    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
-
-    <!-- Robot meta data -->
-    <meta name="robots" content="INDEX" />
-    <meta name="robots" content="FOLLOW" />
-    <meta name="robots" content="INDEX,FOLLOW" />
-
-    <!-- CSS files -->
-    <link href="//damianzaremba.co.uk/assests/css/main.css" rel="stylesheet" type="text/css" />
-    <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel="stylesheet" type="text/css" />
-
-    <!-- JS files -->
-    <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
-        _gaq.push(['_setAccount', 'UA-11817192-1']);
-        _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-            var ga = document.createElement('script');
-            ga.type = 'text/javascript';
-            ga.async = true;
-            ga.src = '//stats.g.doubleclick.net/dc.js'
-            var s = document.getElementsByTagName('script')[0];
-            s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
-    <!-- IE fixes -->
-    <!--[if IE]>
-    body {
-        behavior: url("//damianzaremba.co.uk/assests/other/hover.htc");
-    }
-    <![endif]-->
-
-    <!--
-    RIPA NOTICE: No consent is given for the interception of this page transmission
-    -->
-</head>
-<body>
-    <header>
-        <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1>
-
-        <nav>
-            <ul id="main">
-               <li><a href="/">Blog</a></li>
-               <li><a href="/about/">About</a></li>
-               <li><a href="/cv/">CV</a></li>
-               <li><a href="/archives/">Archives</a></li>
-               <li><a href="/projects/">Projects</a></li>
-               <li><a href="/todo/">Todo</a></li>
-            </ul>
-        </nav>
-
-        <div id="right">
-            <p>
-                <a href="http://twitter.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt="Twitter" />
-                </a>
-                <a href="https://plus.google.com/110559147647328161061">
-                    <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt="GooglePlus" />
-                </a>
-                <a href="http://facebook.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt="Facebook" />
-                </a>
-                <a href="https://github.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/github.png" alt="GitHub" />
-                </a>
-                <a href="http://feeds.feedburner.com/DamianZaremba">
-                    <img src="//damianzaremba.co.uk/assests/images/rss.png" alt="RSS" />
-                </a>
-            </p>
-            <form class="search" action="https://google.com/search" method="get">
-                <input class="left" type="text" name="q">
-                <input type="hidden" name="q" value="site:damianzaremba.co.uk">
-            </form>
-        </div>
-</header>
-
-<div id="content">
-
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />12 Dec 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p>
-
-<p>Quick example:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
-Thu Nov <span class="m">25</span> 18:22:37 CET 2010</code></pre></div>
-
-
-<p>You can also format the output of date to suit your needs, for example:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
-18:22:37 25/11/2010</code></pre></div>
-
-
-<p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
+<!DOCTYPE HTML> <html> <head> <title>Damian Zaremba - Blog</title> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="//damianzaremba.co.uk/assests/css/main.css" rel=stylesheet type="text/css"/> <link href="//damianzaremba.co.uk/assests/css/pygments.css" rel=stylesheet type="text/css"/> <script src="//mint.damianzaremba.co.uk/?js" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();</script> <!--[if IE]>body { behavior: url("//damianzaremba.co.uk/assests/other/hover.htc"); }<![endif]--> </head> <body> <header> <h1><a href="/">Damian Zaremba</a> <span>Blog</span></h1> <nav> <ul id=main> <li><a href="/">Blog</a></li> <li><a href="/about/">About</a></li> <li><a href="/cv/">CV</a></li> <li><a href="/archives/">Archives</a></li> <li><a href="/projects/">Projects</a></li> <li><a href="/todo/">Todo</a></li> </ul> </nav> <div id=right> <p> <a href="http://twitter.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://plus.google.com/110559147647328161061"> <img src="//damianzaremba.co.uk/assests/images/googleplus.png" alt=GooglePlus /> </a> <a href="http://facebook.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/facebook.png" alt=Facebook /> </a> <a href="https://github.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/github.png" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img src="//damianzaremba.co.uk/assests/images/rss.png" alt=RSS /> </a> </p> <form class=search action="https://google.com/search" method=get> <input class=left type=text name=q> <input type=hidden name=q value="site:damianzaremba.co.uk"> </form> </div> </header> <div id=content> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p> <p>Quick example:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
+Thu Nov <span class="m">25</span> 18:22:37 CET 2010</code></pre></div> <p>You can also format the output of date to suit your needs, for example:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
+18:22:37 25/11/2010</code></pre></div> <p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
 damian: Thu Nov <span class="m">18</span> 21:17:44 CET 2010
 <span class="nb">test</span>: Mon Nov <span class="m">8</span> 00:01:04 CET 2010
-bob: Mon Nov <span class="m">15</span> 17:34:18 CET 2010</code></pre></div>
-
-
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />07 Dec 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/foss'>FOSS</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p>
-
-<p>A nice simple program is the system activity reporter or SAR.</p>
-
-<p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Make sure the system is up to date</span>
+bob: Mon Nov <span class="m">15</span> 17:34:18 CET 2010</code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />07 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p> <p>A nice simple program is the system activity reporter or SAR.</p> <p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make sure the system is up to date</span>
 yum update
 
 <span class="c"># Install the sysstat program (includes sar and iostat)</span>
@@ -157,28 +13,14 @@ sudo yum install sysstat
 chkconfig sysstat on
 
 <span class="c"># Start sysstat – this starts the system activity data collector</span>
-service sysstat start</code></pre></div>
-
-
-<p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
-
-<p><strong>IOStat</strong></p>
-
-<p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
+service sysstat start</code></pre></div> <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p> <p><strong>IOStat</strong></p> <p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
 xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
-xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</code></pre></div>
-
-
-<p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</code></pre></div> <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isin't helpful to you so lets get the current values at 2 second intervals instead:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
@@ -195,12 +37,7 @@ xvdc 0.00 0.00 0.00 <span class="m">0</span> 0
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 <span class="m">0</span> 0
 xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
-xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div>
-
-
-<p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div> <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
@@ -212,12 +49,7 @@ xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 <span class="m">0</span> 0
 xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
-xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div>
-
-
-<p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">root@xxx:~# iostat -d <span class="m">2</span> 2
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div> <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@xxx:~# iostat -d <span class="m">2</span> 2
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 _x86_64_
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
@@ -234,52 +66,7 @@ sda1 269.00 4.00 5968.00 <span class="m">8</span> 11936
 sdb 15.00 8.00 416.00 <span class="m">16</span> 832
 sdb1 15.00 8.00 416.00 <span class="m">16</span> 832
 sdc 71.00 12.00 752.00 <span class="m">24</span> 1504
-sdc1 71.00 12.00 752.00 <span class="m">24</span> 1504</code></pre></div>
-
-
-<p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
-
-<p><strong>System activity reporter (Sar)</strong>
-As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p>
-
-<ul>
-<li><p>CPU</p></li>
-<li><p>Load avg</p></li>
-<li><p>Memory usage</p></li>
-<li><p>Inode/file/kernel table usage</p></li>
-<li><p>Swapping stats</p></li>
-<li><p>Process statistics</p></li>
-<li><p>TTY device activity</p></li>
-<li><p>Much much more....</p></li>
-</ul>
-
-
-<p>Some common things your probably want to look at;
-CPU usage:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -u</code></pre></div>
-
-
-<p>Memory usage:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -r</code></pre></div>
-
-
-<p>Load avg (and queue length):</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -q</code></pre></div>
-
-
-<p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
-
-<p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">sar -s -f /var/log/sa/sa06</code></pre></div>
-
-
-<p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
+sdc1 71.00 12.00 752.00 <span class="m">24</span> 1504</code></pre></div> <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p> <p><strong>System activity reporter (Sar)</strong> As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p> <ul> <li><p>CPU</p></li> <li><p>Load avg</p></li> <li><p>Memory usage</p></li> <li><p>Inode/file/kernel table usage</p></li> <li><p>Swapping stats</p></li> <li><p>Process statistics</p></li> <li><p>TTY device activity</p></li> <li><p>Much much more....</p></li> </ul> <p>Some common things your probably want to look at; CPU usage:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -u</code></pre></div> <p>Memory usage:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -r</code></pre></div> <p>Load avg (and queue length):</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -q</code></pre></div> <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p> <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -s -f /var/log/sa/sa06</code></pre></div> <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 
 08:00:01 CPU %user %nice %system %iowait %steal %idle
@@ -289,19 +76,7 @@ Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</sp
 08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
 08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
 09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
-09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></div>
-
-
-<p><strong>But I want some graphs!</strong>
-Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
-You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></div>
-
-
-<p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c"># Make a tmp file</span>
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></div> <p><strong>But I want some graphs!</strong> Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily. You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></div> <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make a tmp file</span>
 <span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span><span class="p">;</span>
 <span class="c"># Fill the file with stuff</span>
 sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
@@ -313,14 +88,7 @@ sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&
 <span class="s2">set xlabel &#39;Time&#39;;</span>
 <span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
-rm -f <span class="nv">$cpu_data_file</span></code></pre></div>
-
-
-<p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
-
-<p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+rm -f <span class="nv">$cpu_data_file</span></code></pre></div> <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p> <p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 <span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
 <span class="c"># sar_graph.sh - Makes pretty web pages from sar</span>
 <span class="c"># Written by Damian Zaremba - Released under GPLv3</span>
@@ -431,120 +199,12 @@ make_header<span class="p">;</span> make_footer
 <span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
 
 <span class="c"># Tidy</span>
-rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></div>
-
-
-
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />01 Dec 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p>
-
-<p>Bash as always is very helpful</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
--bash: /bin/rm: Argument list too long”</code></pre></div>
-
-
-<p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></div>
-
-
-<p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p>
-
-<p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />01 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul> </div> <div class=entry> <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p> <p>Bash as always is very helpful</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
+-bash: /bin/rm: Argument list too long”</code></pre></div> <p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></div> <p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p> <p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
 /tmp/repoup1291034701
 /tmp/repoup1291034701/live
-/tmp/repoup1291034701/live/.git</code></pre></div>
-
-
-<p>xargs just converts from standard input to command line arguments as can be seen below:</p>
-
-<div class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
-rm /tmp/repoup1291034701</code></pre></div>
-
-
-<p>Hope this helps</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />29 Nov 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/foss'>FOSS</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p>
-
-<ul>
-<li><p><a href="http://GitHub.com">GitHub</a></p></li>
-<li><p><a href="http://Wordpress.com">Wordpress</a></p></li>
-<li><p><a href="http://Ohloh.net">Ohloh</a></p></li>
-<li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li>
-</ul>
-
-
-<p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p>
-
-<p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p>
-
-<p>Some features you'll probably love:</p>
-
-<ul>
-<li><p>Modules for load balancing</p></li>
-<li><p>Direct memcached integration</p></li>
-<li><p>Simple proxy configuration</p></li>
-<li><p>Passenger integration</p></li>
-<li><p>Ability to serve over 50,000 simultaneous connections</p></li>
-<li><p>Statistics module</p></li>
-<li><p>Low memory footprint</p></li>
-<li><p>Clean simple to edit configuration files</p></li>
-<li><p>Zero downtime configuration and binary updates</p></li>
-<li><p>PCRE based rewrite rules</p></li>
-</ul>
-
-
-<p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p>
-
-        </div>
-    </article>
-    
-    <article class="post">
-        <h1 class="title"><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1>
-        <div class="meta">
-            <span><img src="/assests/images/date.png" title="Date" alt="Date" />21 Jul 2010</span>
-            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span>
-            
-                <ul class="categories">
-                <li><a href='/tag/fun'>Fun</a></li></ul>
-            
-        </div>
-        <div class="entry">
-            <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D
-Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p>
-
-<div class="highlight"><pre><code class="language-powershell" data-lang="powershell"><span class="c"># Settings</span>
+/tmp/repoup1291034701/live/.git</code></pre></div> <p>xargs just converts from standard input to command line arguments as can be seen below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
+rm /tmp/repoup1291034701</code></pre></div> <p>Hope this helps</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />29 Nov 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p> <ul> <li><p><a href="http://GitHub.com">GitHub</a></p></li> <li><p><a href="http://Wordpress.com">Wordpress</a></p></li> <li><p><a href="http://Ohloh.net">Ohloh</a></p></li> <li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li> </ul> <p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p> <p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p> <p>Some features you'll probably love:</p> <ul> <li><p>Modules for load balancing</p></li> <li><p>Direct memcached integration</p></li> <li><p>Simple proxy configuration</p></li> <li><p>Passenger integration</p></li> <li><p>Ability to serve over 50,000 simultaneous connections</p></li> <li><p>Statistics module</p></li> <li><p>Low memory footprint</p></li> <li><p>Clean simple to edit configuration files</p></li> <li><p>Zero downtime configuration and binary updates</p></li> <li><p>PCRE based rewrite rules</p></li> </ul> <p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <div class=highlight><pre><code class="language-powershell" data-lang="powershell"><span class="c"># Settings</span>
 
 <span class="c">## Email</span>
 
@@ -945,59 +605,4 @@ Hack of an attempt can be seen below (it works mainly but is pretty untested for
 
 <span class="nb">Start-Sleep</span> <span class="n">10</span>
 
-<span class="p">}</span></code></pre></div>
-
-
-<p>Anyway back to making this CSS I'm working on look half decent in IE!</p>
-
-        </div>
-    </article>
-    
-
-
-
-<nav id="page_nav">
-    
-    
-    <a href="/8/" class="prev">&laquo; Previous Page</a>
-    
-    
-
-    
-    <a href="/10/" class="next">Next Page &raquo;</a>
-    
-</nav>
-
-
-</div>
-
-<footer>
-    <p class="copyright">Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
-    <ul id="ads">
-        <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
-        <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
-        <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
-    </ul>
-</footer>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<!--[if lt IE 9]>
-<script src="//damianzaremba.co.uk/assests/js/html5.js"></script>
-<![endif]-->
-
-<script type="text/javascript">
-    !window.jQuery && document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'))
-
-    var disqus_shortname = 'damianzaremba';
-    var disqus_script = 'count.js';
-
-    (function () {
-        var dsq = document.createElement('script');
-        dsq.type = 'text/javascript';
-        dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-</body>
-</html>
+<span class="p">}</span></code></pre></div> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <nav id=page_nav> <a href="/8/" class=prev>&laquo; Previous Page</a> <a href="/10/" class=next>Next Page &raquo;</a> </nav> </div> <footer> <p class=copyright>Copyright 2009-2014 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </footer> <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script> <!--[if lt IE 9]><script src="//damianzaremba.co.uk/assests/js/html5.js"></script><![endif]--> <script type="text/javascript">!window.jQuery&&document.write(unescape('%3Cscript src="//damianzaremba.co.uk/assests/js/jquery.js"%3E%3C/script%3E'));var disqus_shortname="damianzaremba";var disqus_script="count.js";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//"+disqus_shortname+".disqus.com/"+disqus_script;(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </body> </html>
