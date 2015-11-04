@@ -1,82 +1,82 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p> <p>Quick example:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
-Thu Nov <span class="m">25</span> 18:22:37 CET 2010</code></pre></div> <p>You can also format the output of date to suit your needs, for example:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
-18:22:37 25/11/2010</code></pre></div> <p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p> <p>Quick example:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d @1290705757</span>
+Thu Nov <span class="m">25</span> 18:22:37 CET 2010</code></pre></figure></p> <p>You can also format the output of date to suit your needs, for example:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/<span class="o">]</span><span class="c"># date -d@1290705757 +&quot;%H:%M:%S %d/%m/%Y&quot;</span>
+18:22:37 25/11/2010</code></pre></figure></p> <p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">root@localhost <span class="o">[</span>/var/cpanel/users<span class="o">]</span><span class="c"># for user in *; do echo -n &quot;$user: &quot;; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done</span>
 damian: Thu Nov <span class="m">18</span> 21:17:44 CET 2010
 <span class="nb">test</span>: Mon Nov <span class="m">8</span> 00:01:04 CET 2010
-bob: Mon Nov <span class="m">15</span> 17:34:18 CET 2010</code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />07 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p> <p>A nice simple program is the system activity reporter or SAR.</p> <p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make sure the system is up to date</span>
-yum update
+bob: Mon Nov <span class="m">15</span> 17:34:18 CET 2010</code></pre></figure></p> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />07 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don't even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p> <p>A nice simple program is the system activity reporter or SAR.</p> <p>To get started you'll want to install and start sysstat, on a centos box this can be done as below:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make sure the system is up to date</span>
+yum update</p>
 
-<span class="c"># Install the sysstat program (includes sar and iostat)</span>
-sudo yum install sysstat
+<p><span class="c"># Install the sysstat program (includes sar and iostat)</span>
+sudo yum install sysstat</p>
 
-<span class="c"># Make sure sysstat is enabled</span>
-chkconfig sysstat on
+<p><span class="c"># Make sure sysstat is enabled</span>
+chkconfig sysstat on</p>
 
-<span class="c"># Start sysstat – this starts the system activity data collector</span>
-service sysstat start</code></pre></div> <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p> <p><strong>IOStat</strong></p> <p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
+<p><span class="c"># Start sysstat – this starts the system activity data collector</span>
+service sysstat start</code></pre></figure></p> <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I'll only be covering the 2). I'll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p> <p><strong>IOStat</strong></p> <p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
 xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
-xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</code></pre></div> <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isn't helpful to you so lets get the current values at 2 second intervals instead:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</code></pre></figure></p> <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isn't helpful to you so lets get the current values at 2 second intervals instead:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
 xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
-xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</p>
 
-Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+<p>Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 <span class="m">0</span> 0
 xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
-xvdc 0.00 0.00 0.00 <span class="m">0</span> 0
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</p>
 
-Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+<p>Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 <span class="m">0</span> 0
 xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
-xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div> <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></figure></p> <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx ~<span class="o">]</span><span class="c"># iostat -d 2 2</span>
 Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 <span class="m">1575022426</span> 871286088
 xvdb 0.92 14.90 10.14 <span class="m">134403952</span> 91524480
-xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488
+xvdc 0.91 12.16 10.53 <span class="m">109676480</span> 95014488</p>
 
-Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+<p>Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 <span class="m">0</span> 0
 xvdb 0.00 0.00 0.00 <span class="m">0</span> 0
-xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></div> <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">root@xxx:~# iostat -d <span class="m">2</span> 2
-Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 _x86_64_
+xvdc 0.00 0.00 0.00 <span class="m">0</span> 0</code></pre></figure></p> <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">root@xxx:~# iostat -d <span class="m">2</span> 2
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10 <em>x86_64</em></p>
 
-Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+<p>Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 sda 31.14 411.84 757.85 <span class="m">1890371422</span> 3478544478
 sda1 31.01 409.90 755.62 <span class="m">1881435002</span> 3468289496
 sdb 9.97 88.27 303.57 <span class="m">405165646</span> 1393372152
 sdb1 9.97 88.27 303.57 <span class="m">405164878</span> 1393372152
 sdc 7.54 57.13 131.10 <span class="m">262215600</span> 601759006
-sdc1 7.54 57.13 131.10 <span class="m">262214832</span> 601759006
+sdc1 7.54 57.13 131.10 <span class="m">262214832</span> 601759006</p>
 
-Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
+<p>Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 sda 269.00 4.00 5968.00 <span class="m">8</span> 11936
 sda1 269.00 4.00 5968.00 <span class="m">8</span> 11936
 sdb 15.00 8.00 416.00 <span class="m">16</span> 832
 sdb1 15.00 8.00 416.00 <span class="m">16</span> 832
 sdc 71.00 12.00 752.00 <span class="m">24</span> 1504
-sdc1 71.00 12.00 752.00 <span class="m">24</span> 1504</code></pre></div> <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p> <p><strong>System activity reporter (Sar)</strong> As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p> <ul> <li><p>CPU</p></li> <li><p>Load avg</p></li> <li><p>Memory usage</p></li> <li><p>Inode/file/kernel table usage</p></li> <li><p>Swapping stats</p></li> <li><p>Process statistics</p></li> <li><p>TTY device activity</p></li> <li><p>Much much more....</p></li> </ul> <p>Some common things your probably want to look at; CPU usage:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -u</code></pre></div> <p>Memory usage:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -r</code></pre></div> <p>Load avg (and queue length):</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -q</code></pre></div> <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p> <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sar -s -f /var/log/sa/sa06</code></pre></div> <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
-Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10
+sdc1 71.00 12.00 752.00 <span class="m">24</span> 1504</code></pre></figure></p> <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p> <p><strong>System activity reporter (Sar)</strong> As the name suggests it's not for reporting io data, it is mainly for reporting system data. What do we mean by "system data"? Well this covers lots of things such as:</p> <ul> <li><p>CPU</p></li> <li><p>Load avg</p></li> <li><p>Memory usage</p></li> <li><p>Inode/file/kernel table usage</p></li> <li><p>Swapping stats</p></li> <li><p>Process statistics</p></li> <li><p>TTY device activity</p></li> <li><p>Much much more....</p></li> </ul> <p>Some common things your probably want to look at; CPU usage:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">sar -u</code></pre></figure></p> <p>Memory usage:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">sar -r</code></pre></figure></p> <p>Load avg (and queue length):</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">sar -q</code></pre></figure></p> <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p> <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">sar -s -f /var/log/sa/sa06</code></pre></figure></p> <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@xxx~<span class="o">]</span><span class="c"># sar -s | head</span>
+Linux my.kernel.version <span class="o">(</span>my.hostname<span class="o">)</span> 12/07/10</p>
 
-08:00:01 CPU %user %nice %system %iowait %steal %idle
+<p>08:00:01 CPU %user %nice %system %iowait %steal %idle
 08:10:01 all 0.61 0.00 0.40 0.14 0.08 98.78
 08:20:01 all 0.29 0.00 0.28 0.01 0.01 99.41
 08:30:01 all 0.23 0.00 0.25 0.01 0.01 99.50
 08:40:01 all 0.56 0.00 0.36 0.07 0.01 99.00
 08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
 09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
-09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></div> <p><strong>But I want some graphs!</strong> Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily. You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></div> <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make a tmp file</span>
+09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57</code></pre></figure></p> <p><strong>But I want some graphs!</strong> Awesome, let's make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily. You like excel? I'm sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash">sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot;,&quot;$6}&#39;</span></code></pre></figure></p> <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c"># Make a tmp file</span>
 <span class="nv">cpu_data_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/cpu_data.XXX<span class="k">)</span><span class="p">;</span>
 <span class="c"># Fill the file with stuff</span>
 sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$cpu_data_file</span>
@@ -88,60 +88,60 @@ sadf -- -u <span class="p">|</span> awk <span class="s1">&#39;/%idle/ {print $3&
 <span class="s2">set xlabel &#39;Time&#39;;</span>
 <span class="s2">plot &#39;$cpu_data_file&#39; using 1:2 with lines title &#39;CPU usage&#39;;&quot;</span> <span class="p">|</span> gnuplot
 <span class="c"># Remove tmp file</span>
-rm -f <span class="nv">$cpu_data_file</span></code></pre></div> <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p> <p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
+rm -f <span class="nv">$cpu_data_file</span></code></pre></figure></p> <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p> <p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="c">#!/bin/bash</span>
 <span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
 <span class="c"># sar_graph.sh - Makes pretty web pages from sar</span>
 <span class="c"># Written by Damian Zaremba - Released under GPLv3</span>
 <span class="c">#</span>
 <span class="c"># Please note this is a quick hack to demonstrate it can be done</span>
-<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span>
+<span class="c"># # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #</span></p>
 
-<span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
+<p><span class="nv">GNU_PLOT</span><span class="o">=</span><span class="k">$(</span>whereis gnuplot <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
 <span class="nv">SADF</span><span class="o">=</span><span class="k">$(</span>whereis sadf <span class="p">|</span> cut -d<span class="s1">&#39; &#39;</span> -f2<span class="k">)</span>
 <span class="nv">GRAPH_TYPE</span><span class="o">=</span><span class="s2">&quot;image&quot;</span>
 <span class="c">#GRAPH_TYPE=&quot;ascii&quot;</span>
 <span class="nv">HTML_DST</span><span class="o">=</span><span class="s2">&quot;/var/www/vhosts/stuff.damianzaremba.co.uk/public/sar_graph/&quot;</span>
-<span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span>
+<span class="nv">POST_COMMANDS</span><span class="o">=</span><span class="s1">&#39;chown www-server:www-data -R &#39;</span><span class="nv">$HTML_DST</span></p>
 
-<span class="c"># Check gnuplot is all good</span>
+<p><span class="c"># Check gnuplot is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$GNU_PLOT&quot;</span> <span class="o">]</span><span class="p">;</span>
 <span class="k">then</span>
  <span class="nb">echo</span> <span class="s2">&quot;Please ensure gnuplot is avaible on \$PATH&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
-<span class="k">fi</span>
+<span class="k">fi</span></p>
 
-<span class="c"># Check sadf is all good</span>
+<p><span class="c"># Check sadf is all good</span>
 <span class="k">if</span> <span class="o">[</span> ! -x <span class="s2">&quot;$SADF&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
  <span class="nb">echo</span> <span class="s2">&quot;Please ensure sadf is avaible on \$PATH&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
-<span class="k">fi</span>
+<span class="k">fi</span></p>
 
-<span class="c"># Check graph type</span>
+<p><span class="c"># Check graph type</span>
 <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> !<span class="o">=</span> <span class="s2">&quot;ascii&quot;</span> <span class="o">]</span>
 <span class="k">then</span>
  <span class="nb">echo</span> <span class="s2">&quot;Invalid graph type specified&quot;</span>
  <span class="nb">exit </span>1<span class="p">;</span>
-<span class="k">fi</span>
+<span class="k">fi</span></p>
 
-<span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
+<p><span class="c"># Some functions for writing out the html, just incase you ever want to make it pretty or something..</span>
 <span class="k">function</span> make_header <span class="o">{</span>
  <span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Sar graphs!&lt;/title&gt;&lt;/head&gt;&lt;body&gt;&quot;</span><span class="nv">$HTML</span><span class="p">;</span>
-<span class="o">}</span>
+<span class="o">}</span></p>
 
-<span class="k">function</span> make_footer <span class="o">{</span>
+<p><span class="k">function</span> make_footer <span class="o">{</span>
  <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s2">&quot;&lt;/body&gt;&lt;/html&gt;&quot;</span><span class="p">;</span>
-<span class="o">}</span>
+<span class="o">}</span></p>
 
-<span class="k">function</span> make_graph <span class="o">{</span>
+<p><span class="k">function</span> make_graph <span class="o">{</span>
  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$1&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">title</span><span class="o">=</span><span class="nv">$1</span><span class="p">;</span> <span class="k">fi</span>
  <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$2&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">format</span><span class="o">=</span><span class="nv">$2</span><span class="p">;</span> <span class="k">fi</span>
- <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span>
+ <span class="k">if</span> <span class="o">[</span> -z <span class="s2">&quot;$3&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> <span class="k">return</span> 1<span class="p">;</span> <span class="k">else</span> <span class="nv">field</span><span class="o">=</span><span class="nv">$3</span><span class="p">;</span> <span class="k">fi</span></p>
 
-<span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
- <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> <span class="p">|</span> sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span>
+<p><span class="nb">echo</span> <span class="s2">&quot;Making $title&quot;</span>
+ <span class="nv">output_file</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$title</span> <span class="p">|</span> sed <span class="s1">&#39;s/ /_/g&#39;</span><span class="k">)</span></p>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
+<p><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
  <span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;png&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.png&quot;</span>
@@ -151,22 +151,22 @@ rm -f <span class="nv">$cpu_data_file</span></code></pre></div> <p>If your not a
  <span class="nv">output_format</span><span class="o">=</span><span class="s2">&quot;dumb&quot;</span>
  <span class="nv">output_file</span><span class="o">=</span><span class="nv">$output_file</span><span class="s2">&quot;.txt&quot;</span>
  <span class="k">fi</span>
- <span class="k">fi</span>
+ <span class="k">fi</span></p>
 
-<span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
+<p><span class="nv">output_path</span><span class="o">=</span><span class="nv">$HTML_DST</span><span class="s2">&quot;/&quot;</span><span class="nv">$output_file</span>
  <span class="nv">dat_file</span><span class="o">=</span><span class="k">$(</span>mktemp /tmp/sar_graph.XXX<span class="k">)</span>
  <span class="nb">echo</span> <span class="s2">&quot;Data file: $dat_file&quot;</span>
- <span class="nv">$SADF</span> -- <span class="nv">$format</span> <span class="p">|</span> awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span>
+ <span class="nv">$SADF</span> -- <span class="nv">$format</span> <span class="p">|</span> awk <span class="s1">&#39;/&#39;</span><span class="nv">$field</span><span class="s1">&#39;/ {print $3&quot; &quot;$6}&#39;</span> &gt; <span class="nv">$dat_file</span></p>
 
-<span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
+<p><span class="nb">echo</span> <span class="s2">&quot;set terminal $output_format;</span>
 <span class="s2"> set title &#39;$title&#39;;</span>
 <span class="s2"> set xdata time;</span>
 <span class="s2"> set timefmt &#39;%s&#39;;</span>
 <span class="s2"> set xlabel &#39;Time&#39;;</span>
 <span class="s2"> plot &#39;$dat_file&#39; using 1:2 with lines title &#39;$title&#39;;&quot;</span> <span class="p">|</span> <span class="nv">$GNU_PLOT</span> &gt; <span class="nv">$output_path</span>
- <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span>
+ <span class="nb">echo</span> <span class="s2">&quot;Outputted $output_file&quot;</span></p>
 
-<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
+<p><span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;$GRAPH_TYPE&quot;</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span> <span class="o">]</span><span class="p">;</span>
  <span class="k">then</span>
  <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;img src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; alt=&quot;&#39;</span><span class="nv">$title</span><span class="s1">&#39;&quot; /&gt;&#39;</span>
  <span class="k">else</span>
@@ -175,434 +175,434 @@ rm -f <span class="nv">$cpu_data_file</span></code></pre></div> <p>If your not a
  <span class="nv">HTML</span><span class="o">=</span><span class="nv">$HTML</span><span class="s1">&#39;&lt;iframe src=&quot;&#39;</span><span class="nv">$output_file</span><span class="s1">&#39;&quot; width=&quot;650px&quot; height=&quot;350px&quot; scrolling=&quot;no&quot;&gt;&lt;/iframe&gt;&#39;</span>
  <span class="k">fi</span>
  <span class="k">fi</span>
-<span class="o">}</span>
+<span class="o">}</span></p>
 
-<span class="c"># Main script stuff</span>
+<p><span class="c"># Main script stuff</span>
 <span class="nb">test</span> -d <span class="s2">&quot;$HTML_DST&quot;</span> <span class="o">||</span> mkdir -p <span class="s2">&quot;$HTML_DST&quot;</span>
-<span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="nv">HTML</span><span class="o">=</span><span class="s2">&quot;&quot;</span></p>
 
-<span class="c"># CPU stuff</span>
-make_graph <span class="s2">&quot;CPU usage&quot;</span> <span class="s2">&quot;-u&quot;</span> <span class="s2">&quot;%idle&quot;</span>
+<p><span class="c"># CPU stuff</span>
+make_graph <span class="s2">&quot;CPU usage&quot;</span> <span class="s2">&quot;-u&quot;</span> <span class="s2">&quot;%idle&quot;</span></p>
 
-<span class="c"># Swap stuff</span>
-make_graph <span class="s2">&quot;Swap usage&quot;</span> <span class="s2">&quot;-r&quot;</span> <span class="s2">&quot;kbbuffers&quot;</span>
+<p><span class="c"># Swap stuff</span>
+make_graph <span class="s2">&quot;Swap usage&quot;</span> <span class="s2">&quot;-r&quot;</span> <span class="s2">&quot;kbbuffers&quot;</span></p>
 
-<span class="c"># 1min load avg</span>
-make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&quot;-q&quot;</span> <span class="s2">&quot;ldavg-1&quot;</span>
+<p><span class="c"># 1min load avg</span>
+make_graph <span class="s2">&quot;1min Load avg&quot;</span> <span class="s2">&quot;-q&quot;</span> <span class="s2">&quot;ldavg-1&quot;</span></p>
 
-<span class="c"># Make the html index</span>
+<p><span class="c"># Make the html index</span>
 <span class="nb">echo</span> <span class="s2">&quot;Writing $HTML_DST/index.html&quot;</span>
 make_header<span class="p">;</span> make_footer
-<span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span>
+<span class="nb">echo</span> <span class="nv">$HTML</span> &gt; <span class="s2">&quot;$HTML_DST/index.html&quot;</span></p>
 
-<span class="c"># Post stuff</span>
-<span class="sb">`</span><span class="nv">$POST_COMMANDS</span><span class="sb">`</span>
+<p><span class="c"># Post stuff</span>
+<span class="sb"><code>&lt;/span&gt;&lt;span class="nv"&gt;$POST_COMMANDS&lt;/span&gt;&lt;span class="sb"&gt;</code></span></p>
 
-<span class="c"># Tidy</span>
-rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />01 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul> </div> <div class=entry> <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p> <p>Bash as always is very helpful</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
--bash: /bin/rm: Argument list too long”</code></pre></div> <p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></div> <p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p> <p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
+<p><span class="c"># Tidy</span>
+rm -rf <span class="s2">&quot;$base_dir&quot;</span></code></pre></figure></p> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/lots-of-files-to-remove/">Lots of files to remove?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />01 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/lots-of-files-to-remove/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li></ul> </div> <div class=entry> <p>So I recently have a few hundred thousand files in /tmp/ (was testing something and needed to remove them all)!</p> <p>Bash as always is very helpful</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># rm -rf /tmp/*</span>
+-bash: /bin/rm: Argument list too long”</code></pre></figure></p> <p>You also have this issue? Don't worry you can use find and feed the results into rm as follows</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | xargs rm</span></code></pre></figure></p> <p>(You could also specify -type f or -type d if you only wanted files or directory, you may need rm -r rather than rm if you want to recurse into directories)</p> <p>If you have seen the output of find previously you will know why this works, if not then here is a quick snippet:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/</span>
 /tmp/repoup1291034701
 /tmp/repoup1291034701/live
-/tmp/repoup1291034701/live/.git</code></pre></div> <p>xargs just converts from standard input to command line arguments as can be seen below:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
-rm /tmp/repoup1291034701</code></pre></div> <p>Hope this helps</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />29 Nov 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p> <ul> <li><p><a href="http://GitHub.com">GitHub</a></p></li> <li><p><a href="http://Wordpress.com">Wordpress</a></p></li> <li><p><a href="http://Ohloh.net">Ohloh</a></p></li> <li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li> </ul> <p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p> <p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p> <p>Some features you'll probably love:</p> <ul> <li><p>Modules for load balancing</p></li> <li><p>Direct memcached integration</p></li> <li><p>Simple proxy configuration</p></li> <li><p>Passenger integration</p></li> <li><p>Ability to serve over 50,000 simultaneous connections</p></li> <li><p>Statistics module</p></li> <li><p>Low memory footprint</p></li> <li><p>Clean simple to edit configuration files</p></li> <li><p>Zero downtime configuration and binary updates</p></li> <li><p>PCRE based rewrite rules</p></li> </ul> <p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <div class=highlight><pre><code class="language-powershell" data-lang="powershell"><span class="c"># Settings</span>
+/tmp/repoup1291034701/live/.git</code></pre></figure></p> <p>xargs just converts from standard input to command line arguments as can be seen below:</p> <p><figure class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@localhost<span class="o">]</span><span class="c"># find /tmp/ | head -n 1 | xargs echo rm</span>
+rm /tmp/repoup1291034701</code></pre></figure></p> <p>Hope this helps</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />29 Nov 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p> <ul> <li><p><a href="http://GitHub.com">GitHub</a></p></li> <li><p><a href="http://Wordpress.com">Wordpress</a></p></li> <li><p><a href="http://Ohloh.net">Ohloh</a></p></li> <li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li> </ul> <p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p> <p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p> <p>Some features you'll probably love:</p> <ul> <li><p>Modules for load balancing</p></li> <li><p>Direct memcached integration</p></li> <li><p>Simple proxy configuration</p></li> <li><p>Passenger integration</p></li> <li><p>Ability to serve over 50,000 simultaneous connections</p></li> <li><p>Statistics module</p></li> <li><p>Low memory footprint</p></li> <li><p>Clean simple to edit configuration files</p></li> <li><p>Zero downtime configuration and binary updates</p></li> <li><p>PCRE based rewrite rules</p></li> </ul> <p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <p><figure class=highlight><pre><code class="language-powershell" data-lang="powershell"><span class="c"># Settings</span></p>
 
-<span class="c">## Email</span>
+<p><span class="c">## Email</span></p>
 
-<span class="nv">$email_system</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<p><span class="nv">$email_system</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
 
-<span class="nv">$email_contact</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<p><span class="nv">$email_contact</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
 
-<span class="nv">$email_host</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span>
+<p><span class="nv">$email_host</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span></p>
 
-<span class="nv">$email_username</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span>
+<p><span class="nv">$email_username</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span></p>
 
-<span class="nv">$email_password</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span>
-<span class="c">## Database</span>
+<p><span class="nv">$email_password</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span>
+<span class="c">## Database</span></p>
 
-<span class="nv">$database_host</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<p><span class="nv">$database_host</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
 
-<span class="nv">$database_name</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<p><span class="nv">$database_name</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
 
-<span class="nv">$database_user</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<p><span class="nv">$database_user</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
 
-<span class="nv">$database_pass</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
-<span class="c">## Run task settings</span>
+<p><span class="nv">$database_pass</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
+<span class="c">## Run task settings</span></p>
 
-<span class="nv">$run_tasks</span> <span class="p">=</span> <span class="n">1</span>
+<p><span class="nv">$run_tasks</span> <span class="p">=</span> <span class="n">1</span></p>
 
-<span class="nv">$run_reboots</span> <span class="p">=</span> <span class="n">1</span>
+<p><span class="nv">$run_reboots</span> <span class="p">=</span> <span class="n">1</span></p>
 
-<span class="nv">$run_poweroffs</span> <span class="p">=</span> <span class="n">1</span>
+<p><span class="nv">$run_poweroffs</span> <span class="p">=</span> <span class="n">1</span></p>
 
-<span class="nv">$run_powerups</span> <span class="p">=</span> <span class="n">1</span>
-<span class="c"># Log file directory</span>
+<p><span class="nv">$run_powerups</span> <span class="p">=</span> <span class="n">1</span>
+<span class="c"># Log file directory</span></p>
 
-<span class="nv">$file_log_dir</span> <span class="p">=</span> <span class="s1">&#39;C:\automation_logs\&#39;</span>
-<span class="c">#</span>
+<p><span class="nv">$file_log_dir</span> <span class="p">=</span> <span class="s1">&#39;C:\automation_logs&amp;#39;</span>
+<span class="c">#</span></p>
 
-<span class="c">#</span>
+<p><span class="c">#</span></p>
 
-<span class="c">#</span>
+<p><span class="c">#</span></p>
 
-<span class="c"># Don&#39;t touch below here</span>
+<p><span class="c"># Don&#39;t touch below here</span></p>
 
-<span class="c">#</span>
+<p><span class="c">#</span></p>
 
-<span class="c">#</span>
+<p><span class="c">#</span></p>
 
-<span class="c">#</span>
+<p><span class="c">#</span>
 <span class="c"># Session varibles</span>
 <span class="nv">$base_log_name</span> <span class="p">=</span> <span class="nv">$file_log_dir</span><span class="p">+$(</span><span class="nb">Get-Date</span> <span class="n">-format</span> <span class="s1">&#39;d-M-y-h-m-s&#39;</span><span class="p">)+</span><span class="s1">&#39;-&#39;</span>
 <span class="c"># Functions</span>
-<span class="c">## Core functions</span>
+<span class="c">## Core functions</span></p>
 
-<span class="k">function</span> <span class="n">log</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$message</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$type</span> <span class="p">=</span> <span class="s1">&#39;info&#39;</span><span class="p">)</span>
+<p><span class="k">function</span> <span class="n">log</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$message</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$type</span> <span class="p">=</span> <span class="s1">&#39;info&#39;</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="k">if</span> <span class="p">((</span><span class="nb">Test-Path</span> <span class="n">-path</span> <span class="nv">$file_log_dir</span><span class="p">)</span> <span class="o">-ne</span> <span class="nv">$True</span><span class="p">){</span>
+<p><span class="k">if</span> <span class="p">((</span><span class="nb">Test-Path</span> <span class="n">-path</span> <span class="nv">$file_log_dir</span><span class="p">)</span> <span class="o">-ne</span> <span class="nv">$True</span><span class="p">){</span></p>
 
-<span class="c"># Make log dir if it dosn&#39;t exist</span>
+<p><span class="c"># Make log dir if it dosn&#39;t exist</span></p>
 
-<span class="nb">write-host</span> <span class="s1">&#39;Making log dir&#39;</span>
+<p><span class="nb">write-host</span> <span class="s1">&#39;Making log dir&#39;</span></p>
 
-<span class="nb">New-Item</span> <span class="nv">$file_log_dir</span> <span class="n">-type</span> <span class="n">directory</span>
+<p><span class="nb">New-Item</span> <span class="nv">$file_log_dir</span> <span class="n">-type</span> <span class="n">directory</span></p>
 
-<span class="p">}</span>
-<span class="nv">$log_file</span> <span class="p">=</span> <span class="nv">$base_log_name</span><span class="p">+$(</span><span class="nv">$type</span><span class="p">)+</span><span class="s1">&#39;.log&#39;</span>
+<p><span class="p">}</span>
+<span class="nv">$log_file</span> <span class="p">=</span> <span class="nv">$base_log_name</span><span class="p">+$(</span><span class="nv">$type</span><span class="p">)+</span><span class="s1">&#39;.log&#39;</span></p>
 
-<span class="nb">write-host</span> <span class="nv">$message</span>
+<p><span class="nb">write-host</span> <span class="nv">$message</span></p>
 
-<span class="nb">add-content</span> <span class="nv">$log_file</span> <span class="nv">$message</span>
+<p><span class="nb">add-content</span> <span class="nv">$log_file</span> <span class="nv">$message</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">error</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$traceback</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">error</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$traceback</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="nv">$error</span> <span class="p">=</span> <span class="s1">&#39;Hit exception:&#39;</span><span class="p">+</span><span class="nv">$traceback</span>
+<p><span class="nv">$error</span> <span class="p">=</span> <span class="s1">&#39;Hit exception:&#39;</span><span class="p">+</span><span class="nv">$traceback</span></p>
 
-<span class="n">log</span> <span class="nv">$error</span> <span class="s1">&#39;error&#39;</span>
+<p><span class="n">log</span> <span class="nv">$error</span> <span class="s1">&#39;error&#39;</span></p>
 
-<span class="n">mail</span> <span class="s1">&#39;Exception encountered&#39;</span> <span class="nv">$error</span>
+<p><span class="n">mail</span> <span class="s1">&#39;Exception encountered&#39;</span> <span class="nv">$error</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">mail</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$subject</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$message</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">mail</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$subject</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$message</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="c">#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)</span>
+<p><span class="c">#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)</span></p>
 
-<span class="c">#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)</span>
+<p><span class="c">#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)</span></p>
 
-<span class="c">#$smtp_handler.Send($email_system, $email_contact, $subject, $message)</span>
+<p><span class="c">#$smtp_handler.Send($email_system, $email_contact, $subject, $message)</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">marktaskFailed</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">marktaskFailed</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
+<p><span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
 <span class="k">try</span> <span class="p">{</span>
  <span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
- <span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;f&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span>
+ <span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;f&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span>
+<p><span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not set status = failed for task id $task_id&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not set status = failed for task id $task_id&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">marktaskSuccess</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">marktaskSuccess</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
-<span class="k">try</span> <span class="p">{</span>
+<p><span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
+<span class="k">try</span> <span class="p">{</span></p>
 
-<span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
+<p><span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span></p>
 
-<span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;c&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span>
+<p><span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;c&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span>
+<p><span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not set status = complete for task id $task_id&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not set status = complete for task id $task_id&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
-<span class="c">## Action functions</span>
+<p><span class="p">}</span>
+<span class="c">## Action functions</span></p>
 
-<span class="k">function</span> <span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="k">function</span> <span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
+<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
+<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
+<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
+<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
+<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
 
-<span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not shutdown vm&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not shutdown vm&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
+<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
+<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
+<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
 
-<span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue reboot&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue reboot&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
-<span class="k">function</span> <span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="p">}</span>
+<span class="k">function</span> <span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
 
-<span class="p">{</span>
+<p><span class="p">{</span></p>
 
-<span class="c"># Un-tested bit but this is right according to the bizzare docs</span>
+<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
 
-<span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span>
+<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
 
-<span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span>
+<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
 
-<span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">&amp;</span><span class="n">nbsp</span><span class="p">;</span>
+<p><span class="p">&amp;</span><span class="n">nbsp</span><span class="p">;</span></p>
 
-<span class="c"># Main code</span>
-<span class="c">## Load what we need!</span>
+<p><span class="c"># Main code</span>
+<span class="c">## Load what we need!</span></p>
 
-<span class="k">try</span><span class="p">{</span>
+<p><span class="k">try</span><span class="p">{</span></p>
 
-<span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&quot;MySql.Data&quot;</span><span class="p">)</span>
+<p><span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&quot;MySql.Data&quot;</span><span class="p">)</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not load mysql.net connector&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not load mysql.net connector&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="k">break</span>
+<p><span class="k">break</span></p>
 
-<span class="p">}</span>
-<span class="c">## Main loop</span>
+<p><span class="p">}</span>
+<span class="c">## Main loop</span></p>
 
-<span class="k">while</span> <span class="p">(</span><span class="n">1</span><span class="p">)</span> <span class="p">{</span>
+<p><span class="k">while</span> <span class="p">(</span><span class="n">1</span><span class="p">)</span> <span class="p">{</span></p>
 
-<span class="nb">write-host</span> <span class="s1">&#39;Doing run....&#39;</span>
-<span class="c">## Connect to the database</span>
+<p><span class="nb">write-host</span> <span class="s1">&#39;Doing run....&#39;</span>
+<span class="c">## Connect to the database</span></p>
 
-<span class="k">try</span><span class="p">{</span>
+<p><span class="k">try</span><span class="p">{</span></p>
 
-<span class="nv">$database_handler</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">MySql</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">MySqlClient</span><span class="p">.</span><span class="n">MySqlConnection</span>
+<p><span class="nv">$database_handler</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">MySql</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">MySqlClient</span><span class="p">.</span><span class="n">MySqlConnection</span></p>
 
-<span class="nv">$database_handler</span><span class="p">.</span><span class="n">ConnectionString</span> <span class="p">=</span> <span class="s2">&quot;server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;&quot;</span>
+<p><span class="nv">$database_handler</span><span class="p">.</span><span class="n">ConnectionString</span> <span class="p">=</span> <span class="s2">&quot;server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;&quot;</span></p>
 
-<span class="nv">$database_handler</span><span class="p">.</span><span class="n">Open</span><span class="p">()</span>
+<p><span class="nv">$database_handler</span><span class="p">.</span><span class="n">Open</span><span class="p">()</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not connect to the database :(&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not connect to the database :(&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="k">break</span>
+<p><span class="k">break</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span>
 <span class="nb">write-host</span> <span class="s1">&#39;Connected to database&#39;</span>
-<span class="k">try</span> <span class="p">{</span>
+<span class="k">try</span> <span class="p">{</span></p>
 
-<span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
+<p><span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span></p>
 
-<span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;select * from `queue` where `status` = &#39;n&#39;&quot;</span>
+<p><span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;select * from <code>queue</code> where <code>status</code> = &#39;n&#39;&quot;</span></p>
 
-<span class="nv">$data</span> <span class="p">=</span> <span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">()</span>
+<p><span class="nv">$data</span> <span class="p">=</span> <span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">()</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not run query against database&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not run query against database&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="k">continue</span>
+<p><span class="k">continue</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span>
 <span class="nb">write-host</span> <span class="s1">&#39;Got queue from database&#39;</span>
-<span class="c"># Array where we will put our tasks!</span>
+<span class="c"># Array where we will put our tasks!</span></p>
 
-<span class="nv">$tasks_to_run</span> <span class="p">=</span> <span class="p">@()</span>
+<p><span class="nv">$tasks_to_run</span> <span class="p">=</span> <span class="p">@()</span>
 <span class="nb">write-host</span> <span class="s1">&#39;Loading queue&#39;</span>
-<span class="k">while</span> <span class="p">(</span><span class="nv">$data</span><span class="p">.</span><span class="n">Read</span><span class="p">())</span> <span class="p">{</span>
+<span class="k">while</span> <span class="p">(</span><span class="nv">$data</span><span class="p">.</span><span class="n">Read</span><span class="p">())</span> <span class="p">{</span></p>
 
-<span class="c"># task</span>
+<p><span class="c"># task</span></p>
 
-<span class="k">try</span> <span class="p">{</span>
+<p><span class="k">try</span> <span class="p">{</span></p>
 
-<span class="nv">$task</span> <span class="p">=</span> <span class="p">@{}</span>
+<p><span class="nv">$task</span> <span class="p">=</span> <span class="p">@{}</span></p>
 
-<span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">1</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">1</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">0</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">0</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">3</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
-<span class="c"># Add task to list of tasks to run</span>
+<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">3</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
+<span class="c"># Add task to list of tasks to run</span></p>
 
-<span class="nv">$tasks_to_run</span> <span class="p">+=</span> <span class="nv">$task</span>
+<p><span class="nv">$tasks_to_run</span> <span class="p">+=</span> <span class="nv">$task</span></p>
 
-<span class="nb">write-host</span> <span class="s2">&quot;Entered task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> into queue&quot;</span>
+<p><span class="nb">write-host</span> <span class="s2">&quot;Entered task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> into queue&quot;</span></p>
 
-<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Could not add task to queue&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Could not add task to queue&quot;</span></p>
 
-<span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span>
+<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
 
-<span class="k">continue</span>
+<p><span class="k">continue</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="nv">$data</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># Close the data reader</span>
+<p><span class="nv">$data</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># Close the data reader</span></p>
 
-<span class="nb">write-host</span> <span class="s1">&#39;Loaded queue&#39;</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span> <span class="o">-gt</span> <span class="n">0</span><span class="p">){</span>
+<p><span class="nb">write-host</span> <span class="s1">&#39;Loaded queue&#39;</span>
+<span class="k">if</span><span class="p">(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span> <span class="o">-gt</span> <span class="n">0</span><span class="p">){</span></p>
 
-<span class="nb">write-host</span> <span class="s2">&quot;Tasks to run: </span><span class="p">$(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="s2">!&quot;</span>
-<span class="c"># Loop though the list of tasks to run</span>
+<p><span class="nb">write-host</span> <span class="s2">&quot;Tasks to run: </span><span class="p">$(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="s2">!&quot;</span>
+<span class="c"># Loop though the list of tasks to run</span></p>
 
-<span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="p">=</span> <span class="n">0</span> <span class="p">;</span> <span class="nv">$i</span> <span class="o">-lt</span> <span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="nv">$i</span><span class="p">++</span> <span class="p">){</span>
+<p><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="p">=</span> <span class="n">0</span> <span class="p">;</span> <span class="nv">$i</span> <span class="o">-lt</span> <span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="nv">$i</span><span class="p">++</span> <span class="p">){</span></p>
 
-<span class="nv">$task</span> <span class="p">=</span> <span class="nv">$tasks_to_run</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span>
+<p><span class="nv">$task</span> <span class="p">=</span> <span class="nv">$tasks_to_run</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span>
 <span class="n">log</span> <span class="s2">&quot;Running task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> (Action &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for instance &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;)&quot;</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_tasks</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span>
+ <span class="k">if</span><span class="p">(</span><span class="nv">$run_tasks</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
 
-<span class="c"># The bit that decides what we are going to do</span>
+<p><span class="c"># The bit that decides what we are going to do</span></p>
 
-<span class="k">switch</span> <span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="p">{</span>
+<p><span class="k">switch</span> <span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="p">{</span></p>
 
-<span class="n">poweron</span> <span class="p">{</span>
+<p><span class="n">poweron</span> <span class="p">{</span></p>
 
-<span class="k">if</span><span class="p">(</span><span class="nv">$run_powerups</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span>
+<p><span class="k">if</span><span class="p">(</span><span class="nv">$run_powerups</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
 
-<span class="p">&amp;</span><span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="p">&amp;</span><span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
  <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, powerup tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span>
+ <span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span>
 <span class="n">poweroff</span> <span class="p">{</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_poweroffs</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span>
+ <span class="k">if</span><span class="p">(</span><span class="nv">$run_poweroffs</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
 
-<span class="p">&amp;</span><span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="p">&amp;</span><span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
  <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, poweroff tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span>
+ <span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span>
 <span class="n">reboot</span> <span class="p">{</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_reboots</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span>
+ <span class="k">if</span><span class="p">(</span><span class="nv">$run_reboots</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
 
-<span class="p">&amp;</span><span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+<p><span class="p">&amp;</span><span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
  <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, reboot tasks are disabled&quot;</span>
  <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span>
+ <span class="p">}</span></p>
 
-<span class="p">}</span>
-<span class="k">default</span> <span class="p">{</span> <span class="c"># We were asked to do something we don&#39;t understand!</span>
+<p><span class="p">}</span>
+<span class="k">default</span> <span class="p">{</span> <span class="c"># We were asked to do something we don&#39;t understand!</span></p>
 
-<span class="n">log</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span>
+<p><span class="n">log</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span></p>
 
-<span class="n">mail</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span>
+<p><span class="n">mail</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span>
  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, tasks are disabled&quot;</span>
+ <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, tasks are disabled&quot;</span></p>
 
-<span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span>
+<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
+ <span class="p">}</span></p>
 
-<span class="p">}</span>
+<p><span class="p">}</span></p>
 
-<span class="nb">write-host</span> <span class="s1">&#39;Tasks run&#39;</span>
+<p><span class="nb">write-host</span> <span class="s1">&#39;Tasks run&#39;</span></p>
 
-<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
 
-<span class="nb">write-host</span> <span class="s2">&quot;No tasks to run!&quot;</span>
+<p><span class="nb">write-host</span> <span class="s2">&quot;No tasks to run!&quot;</span></p>
 
-<span class="p">}</span>
-<span class="nb">write-host</span> <span class="s1">&#39;Run complete....&#39;</span>
+<p><span class="p">}</span>
+<span class="nb">write-host</span> <span class="s1">&#39;Run complete....&#39;</span></p>
 
-<span class="c"># Sleep 10 seconds until next run</span>
+<p><span class="c"># Sleep 10 seconds until next run</span></p>
 
-<span class="nb">Start-Sleep</span> <span class="n">10</span>
+<p><span class="nb">Start-Sleep</span> <span class="n">10</span></p>
 
-<span class="p">}</span></code></pre></div> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <nav id=page_nav> <a href="/8/" class=prev>&laquo; Previous Page</a> <a href="/10/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script src="//mint.damianzaremba.co.uk/.js?v1" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
+<p><span class="p">}</span></code></pre></figure></p> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <nav id=page_nav> <a href="/8/" class=prev>&laquo; Previous Page</a> <a href="/10/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
