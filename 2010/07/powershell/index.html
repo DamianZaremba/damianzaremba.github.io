@@ -1,402 +1,403 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Powershell!?!?!?!</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <p><figure class=highlight><pre><code class="language-powershell" data-lang="powershell"><span class="c"># Settings</span></p>
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Powershell!?!?!?!</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <pre><code class="powershell"># Settings
 
-<p><span class="c">## Email</span></p>
+## Email
 
-<p><span class="nv">$email_system</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
+$email_system = ""
 
-<p><span class="nv">$email_contact</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
+$email_contact = ""
 
-<p><span class="nv">$email_host</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span></p>
+$email_host = ''
 
-<p><span class="nv">$email_username</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span></p>
+$email_username = ''
 
-<p><span class="nv">$email_password</span> <span class="p">=</span> <span class="s1">&#39;&#39;</span>
-<span class="c">## Database</span></p>
+$email_password = ''
+## Database
 
-<p><span class="nv">$database_host</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
+$database_host = ""
 
-<p><span class="nv">$database_name</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
+$database_name = ""
 
-<p><span class="nv">$database_user</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span></p>
+$database_user = ""
 
-<p><span class="nv">$database_pass</span> <span class="p">=</span> <span class="s2">&quot;&quot;</span>
-<span class="c">## Run task settings</span></p>
+$database_pass = ""
+## Run task settings
 
-<p><span class="nv">$run_tasks</span> <span class="p">=</span> <span class="n">1</span></p>
+$run_tasks = 1
 
-<p><span class="nv">$run_reboots</span> <span class="p">=</span> <span class="n">1</span></p>
+$run_reboots = 1
 
-<p><span class="nv">$run_poweroffs</span> <span class="p">=</span> <span class="n">1</span></p>
+$run_poweroffs = 1
 
-<p><span class="nv">$run_powerups</span> <span class="p">=</span> <span class="n">1</span>
-<span class="c"># Log file directory</span></p>
+$run_powerups = 1
+# Log file directory
 
-<p><span class="nv">$file_log_dir</span> <span class="p">=</span> <span class="s1">&#39;C:\automation_logs&amp;#39;</span>
-<span class="c">#</span></p>
+$file_log_dir = 'C:\automation_logs\'
+#
 
-<p><span class="c">#</span></p>
+#
 
-<p><span class="c">#</span></p>
+#
 
-<p><span class="c"># Don&#39;t touch below here</span></p>
+# Don't touch below here
 
-<p><span class="c">#</span></p>
+#
 
-<p><span class="c">#</span></p>
+#
 
-<p><span class="c">#</span>
-<span class="c"># Session varibles</span>
-<span class="nv">$base_log_name</span> <span class="p">=</span> <span class="nv">$file_log_dir</span><span class="p">+$(</span><span class="nb">Get-Date</span> <span class="n">-format</span> <span class="s1">&#39;d-M-y-h-m-s&#39;</span><span class="p">)+</span><span class="s1">&#39;-&#39;</span>
-<span class="c"># Functions</span>
-<span class="c">## Core functions</span></p>
+#
+# Session varibles
+$base_log_name = $file_log_dir+$(Get-Date -format 'd-M-y-h-m-s')+'-'
+# Functions
+## Core functions
 
-<p><span class="k">function</span> <span class="n">log</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$message</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$type</span> <span class="p">=</span> <span class="s1">&#39;info&#39;</span><span class="p">)</span></p>
+function log([string]$message, [string]$type = 'info')
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="k">if</span> <span class="p">((</span><span class="nb">Test-Path</span> <span class="n">-path</span> <span class="nv">$file_log_dir</span><span class="p">)</span> <span class="o">-ne</span> <span class="nv">$True</span><span class="p">){</span></p>
+if ((Test-Path -path $file_log_dir) -ne $True){
 
-<p><span class="c"># Make log dir if it dosn&#39;t exist</span></p>
+# Make log dir if it dosn't exist
 
-<p><span class="nb">write-host</span> <span class="s1">&#39;Making log dir&#39;</span></p>
+write-host 'Making log dir'
 
-<p><span class="nb">New-Item</span> <span class="nv">$file_log_dir</span> <span class="n">-type</span> <span class="n">directory</span></p>
+New-Item $file_log_dir -type directory
 
-<p><span class="p">}</span>
-<span class="nv">$log_file</span> <span class="p">=</span> <span class="nv">$base_log_name</span><span class="p">+$(</span><span class="nv">$type</span><span class="p">)+</span><span class="s1">&#39;.log&#39;</span></p>
+}
+$log_file = $base_log_name+$($type)+'.log'
 
-<p><span class="nb">write-host</span> <span class="nv">$message</span></p>
+write-host $message
 
-<p><span class="nb">add-content</span> <span class="nv">$log_file</span> <span class="nv">$message</span></p>
+add-content $log_file $message
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">error</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$traceback</span><span class="p">)</span></p>
+}
+function error([string]$traceback)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="nv">$error</span> <span class="p">=</span> <span class="s1">&#39;Hit exception:&#39;</span><span class="p">+</span><span class="nv">$traceback</span></p>
+$error = 'Hit exception:'+$traceback
 
-<p><span class="n">log</span> <span class="nv">$error</span> <span class="s1">&#39;error&#39;</span></p>
+log $error 'error'
 
-<p><span class="n">mail</span> <span class="s1">&#39;Exception encountered&#39;</span> <span class="nv">$error</span></p>
+mail 'Exception encountered' $error
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">mail</span><span class="p">(</span><span class="no">[string]</span><span class="nv">$subject</span><span class="p">,</span> <span class="no">[string]</span><span class="nv">$message</span><span class="p">)</span></p>
+}
+function mail([string]$subject, [string]$message)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="c">#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)</span></p>
+#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)
 
-<p><span class="c">#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)</span></p>
+#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)
 
-<p><span class="c">#$smtp_handler.Send($email_system, $email_contact, $subject, $message)</span></p>
+#$smtp_handler.Send($email_system, $email_contact, $subject, $message)
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">marktaskFailed</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span></p>
+}
+function marktaskFailed([int]$task_id)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
-<span class="k">try</span> <span class="p">{</span>
- <span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span>
- <span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;f&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span></p>
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
+ $command = $database_handler.CreateCommand()
+ $command.CommandText = "update queue set status = 'f', run_time = '$($time)' where id = '$($task_id)'"
 
-<p><span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span></p>
+$command.ExecuteNonQuery()
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not set status = failed for task id $task_id&quot;</span></p>
+log "Could not set status = failed for task id $task_id"
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">marktaskSuccess</span><span class="p">(</span><span class="no">[int]</span><span class="nv">$task_id</span><span class="p">)</span></p>
+}
+function marktaskSuccess([int]$task_id)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="nv">$time</span> <span class="p">=</span> <span class="no">[int][double]</span><span class="p">::</span><span class="n">Parse</span><span class="p">((</span><span class="nb">Get-Date</span> <span class="n">-UFormat</span> <span class="k">%</span><span class="n">s</span><span class="p">))</span>
-<span class="k">try</span> <span class="p">{</span></p>
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
 
-<p><span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span></p>
+$command = $database_handler.CreateCommand()
 
-<p><span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;update queue set status = &#39;c&#39;, run_time = &#39;</span><span class="p">$(</span><span class="nv">$time</span><span class="p">)</span><span class="s2">&#39; where id = &#39;</span><span class="p">$(</span><span class="nv">$task_id</span><span class="p">)</span><span class="s2">&#39;&quot;</span></p>
+$command.CommandText = "update queue set status = 'c', run_time = '$($time)' where id = '$($task_id)'"
 
-<p><span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteNonQuery</span><span class="p">()</span></p>
+$command.ExecuteNonQuery()
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not set status = complete for task id $task_id&quot;</span></p>
+log "Could not set status = complete for task id $task_id"
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span>
-<span class="c">## Action functions</span></p>
+}
+## Action functions
 
-<p><span class="k">function</span> <span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
+function rebootHyperVInstance($task)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
+# Un-tested bit but this is right according to the bizzare docs
 
-<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
 
-<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
 
-<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
 
-<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
 
-<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskSuccess($task['task_id'])
 
-<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
+}else{
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskFailed($task['task_id'])
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
+}else{
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not shutdown vm&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not shutdown vm"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskFailed($task['task_id'])
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
+}
+function poweroffHyperVInstance($task)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
+# Un-tested bit but this is right according to the bizzare docs
 
-<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
 
-<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">InitiateShutdown</span><span class="p">(</span><span class="s2">&quot;$true&quot;</span><span class="p">,</span> <span class="s2">&quot;Automated shutdown requested&quot;</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
 
-<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskSuccess($task['task_id'])
 
-<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
+}else{
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue reboot&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue reboot"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskFailed($task['task_id'])
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span>
-<span class="k">function</span> <span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span></p>
+}
+function poweronHyperVInstance($task)
 
-<p><span class="p">{</span></p>
+{
 
-<p><span class="c"># Un-tested bit but this is right according to the bizzare docs</span></p>
+# Un-tested bit but this is right according to the bizzare docs
 
-<p><span class="nv">$vm</span> <span class="p">=</span> <span class="n">gwmi</span> <span class="n">-namespace</span> <span class="n">root</span><span class="p">\</span><span class="n">virtualization</span> <span class="n">-query</span> <span class="s2">&quot;SELECT * FROM msvm_computersystem WHERE SystemName = &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;&quot;</span></p>
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
 
-<p><span class="nv">$result</span> <span class="p">=</span> <span class="nv">$vm</span><span class="p">.</span><span class="n">requeststatechange</span><span class="p">(</span><span class="n">2</span><span class="p">)</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$result</span><span class="p">.</span><span class="n">returnvalue</span> <span class="o">-match</span> <span class="s2">&quot;0&quot;</span><span class="p">){</span></p>
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with success status&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
 
-<p><span class="n">marktaskSuccess</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskSuccess($task['task_id'])
 
-<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
+}else{
 
-<p><span class="n">log</span> <span class="s2">&quot;Task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; (</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">) completed with failed status, could not issue powerup&quot;</span></p>
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskFailed($task['task_id'])
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">&amp;</span><span class="n">nbsp</span><span class="p">;</span></p>
+&amp;nbsp;
 
-<p><span class="c"># Main code</span>
-<span class="c">## Load what we need!</span></p>
+# Main code
+## Load what we need!
 
-<p><span class="k">try</span><span class="p">{</span></p>
+try{
 
-<p><span class="no">[void][System.Reflection.Assembly]</span><span class="p">::</span><span class="n">LoadWithPartialName</span><span class="p">(</span><span class="s2">&quot;MySql.Data&quot;</span><span class="p">)</span></p>
+[void][System.Reflection.Assembly]::LoadWithPartialName("MySql.Data")
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not load mysql.net connector&quot;</span></p>
+log "Could not load mysql.net connector"
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="k">break</span></p>
+break
 
-<p><span class="p">}</span>
-<span class="c">## Main loop</span></p>
+}
+## Main loop
 
-<p><span class="k">while</span> <span class="p">(</span><span class="n">1</span><span class="p">)</span> <span class="p">{</span></p>
+while (1) {
 
-<p><span class="nb">write-host</span> <span class="s1">&#39;Doing run....&#39;</span>
-<span class="c">## Connect to the database</span></p>
+write-host 'Doing run....'
+## Connect to the database
 
-<p><span class="k">try</span><span class="p">{</span></p>
+try{
 
-<p><span class="nv">$database_handler</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">MySql</span><span class="p">.</span><span class="n">Data</span><span class="p">.</span><span class="n">MySqlClient</span><span class="p">.</span><span class="n">MySqlConnection</span></p>
+$database_handler = New-Object MySql.Data.MySqlClient.MySqlConnection
 
-<p><span class="nv">$database_handler</span><span class="p">.</span><span class="n">ConnectionString</span> <span class="p">=</span> <span class="s2">&quot;server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;&quot;</span></p>
+$database_handler.ConnectionString = "server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;"
 
-<p><span class="nv">$database_handler</span><span class="p">.</span><span class="n">Open</span><span class="p">()</span></p>
+$database_handler.Open()
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not connect to the database :(&quot;</span></p>
+log "Could not connect to the database :("
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="k">break</span></p>
+break
 
-<p><span class="p">}</span>
-<span class="nb">write-host</span> <span class="s1">&#39;Connected to database&#39;</span>
-<span class="k">try</span> <span class="p">{</span></p>
+}
+write-host 'Connected to database'
+try {
 
-<p><span class="nv">$command</span> <span class="p">=</span> <span class="nv">$database_handler</span><span class="p">.</span><span class="n">CreateCommand</span><span class="p">()</span></p>
+$command = $database_handler.CreateCommand()
 
-<p><span class="nv">$command</span><span class="p">.</span><span class="n">CommandText</span> <span class="p">=</span> <span class="s2">&quot;select * from <code>queue</code> where <code>status</code> = &#39;n&#39;&quot;</span></p>
+$command.CommandText = "select * from `queue` where `status` = 'n'"
 
-<p><span class="nv">$data</span> <span class="p">=</span> <span class="nv">$command</span><span class="p">.</span><span class="n">ExecuteReader</span><span class="p">()</span></p>
+$data = $command.ExecuteReader()
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not run query against database&quot;</span></p>
+log "Could not run query against database"
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="k">continue</span></p>
+continue
 
-<p><span class="p">}</span>
-<span class="nb">write-host</span> <span class="s1">&#39;Got queue from database&#39;</span>
-<span class="c"># Array where we will put our tasks!</span></p>
+}
+write-host 'Got queue from database'
+# Array where we will put our tasks!
 
-<p><span class="nv">$tasks_to_run</span> <span class="p">=</span> <span class="p">@()</span>
-<span class="nb">write-host</span> <span class="s1">&#39;Loading queue&#39;</span>
-<span class="k">while</span> <span class="p">(</span><span class="nv">$data</span><span class="p">.</span><span class="n">Read</span><span class="p">())</span> <span class="p">{</span></p>
+$tasks_to_run = @()
+write-host 'Loading queue'
+while ($data.Read()) {
 
-<p><span class="c"># task</span></p>
+# task
 
-<p><span class="k">try</span> <span class="p">{</span></p>
+try {
 
-<p><span class="nv">$task</span> <span class="p">=</span> <span class="p">@{}</span></p>
+$task = @{}
 
-<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">1</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span></p>
+$task['type'] = $data.GetValue(1).ToString()
 
-<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">0</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span></p>
+$task['task_id'] = $data.GetValue(0).ToString()
 
-<p><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">]</span> <span class="p">=</span> <span class="nv">$data</span><span class="p">.</span><span class="n">GetValue</span><span class="p">(</span><span class="n">3</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span>
-<span class="c"># Add task to list of tasks to run</span></p>
+$task['machine_id'] = $data.GetValue(3).ToString()
+# Add task to list of tasks to run
 
-<p><span class="nv">$tasks_to_run</span> <span class="p">+=</span> <span class="nv">$task</span></p>
+$tasks_to_run += $task
 
-<p><span class="nb">write-host</span> <span class="s2">&quot;Entered task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> into queue&quot;</span></p>
+write-host "Entered task $($task['task_id']) into queue"
 
-<p><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span></p>
+} catch {
 
-<p><span class="n">log</span> <span class="s2">&quot;Could not add task to queue&quot;</span></p>
+log "Could not add task to queue"
 
-<p><span class="n">error</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Exception</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span></p>
+error $_.Exception.ToString()
 
-<p><span class="k">continue</span></p>
+continue
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="nv">$data</span><span class="p">.</span><span class="n">close</span><span class="p">()</span> <span class="c"># Close the data reader</span></p>
+$data.close() # Close the data reader
 
-<p><span class="nb">write-host</span> <span class="s1">&#39;Loaded queue&#39;</span>
-<span class="k">if</span><span class="p">(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span> <span class="o">-gt</span> <span class="n">0</span><span class="p">){</span></p>
+write-host 'Loaded queue'
+if($tasks_to_run.length -gt 0){
 
-<p><span class="nb">write-host</span> <span class="s2">&quot;Tasks to run: </span><span class="p">$(</span><span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">)</span><span class="s2">!&quot;</span>
-<span class="c"># Loop though the list of tasks to run</span></p>
+write-host "Tasks to run: $($tasks_to_run.length)!"
+# Loop though the list of tasks to run
 
-<p><span class="k">for</span> <span class="p">(</span> <span class="nv">$i</span> <span class="p">=</span> <span class="n">0</span> <span class="p">;</span> <span class="nv">$i</span> <span class="o">-lt</span> <span class="nv">$tasks_to_run</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="nv">$i</span><span class="p">++</span> <span class="p">){</span></p>
+for ( $i = 0 ; $i -lt $tasks_to_run.length; $i++ ){
 
-<p><span class="nv">$task</span> <span class="p">=</span> <span class="nv">$tasks_to_run</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span>
-<span class="n">log</span> <span class="s2">&quot;Running task </span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2"> (Action &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for instance &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;machine_id&#39;</span><span class="p">])</span><span class="s2">&#39;)&quot;</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_tasks</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
+$task = $tasks_to_run[$i]
+log "Running task $($task['task_id']) (Action '$($task['type'])' for instance '$($task['machine_id'])')"
+ if($run_tasks -eq 1){
 
-<p><span class="c"># The bit that decides what we are going to do</span></p>
+# The bit that decides what we are going to do
 
-<p><span class="k">switch</span> <span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span> <span class="p">{</span></p>
+switch ($task['type']) {
 
-<p><span class="n">poweron</span> <span class="p">{</span></p>
+poweron {
 
-<p><span class="k">if</span><span class="p">(</span><span class="nv">$run_powerups</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
+if($run_powerups -eq 1){
 
-<p><span class="p">&amp;</span><span class="n">poweronHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, powerup tasks are disabled&quot;</span>
- <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span></p>
+&amp;poweronHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', powerup tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
 
-<p><span class="p">}</span>
-<span class="n">poweroff</span> <span class="p">{</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_poweroffs</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
+}
+poweroff {
+ if($run_poweroffs -eq 1){
 
-<p><span class="p">&amp;</span><span class="n">poweroffHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, poweroff tasks are disabled&quot;</span>
- <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span></p>
+&amp;poweroffHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', poweroff tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
 
-<p><span class="p">}</span>
-<span class="n">reboot</span> <span class="p">{</span>
- <span class="k">if</span><span class="p">(</span><span class="nv">$run_reboots</span> <span class="o">-eq</span> <span class="n">1</span><span class="p">){</span></p>
+}
+reboot {
+ if($run_reboots -eq 1){
 
-<p><span class="p">&amp;</span><span class="n">rebootHyperVInstance</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, reboot tasks are disabled&quot;</span>
- <span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span></p>
+&amp;rebootHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', reboot tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
 
-<p><span class="p">}</span>
-<span class="k">default</span> <span class="p">{</span> <span class="c"># We were asked to do something we don&#39;t understand!</span></p>
+}
+default { # We were asked to do something we don't understand!
 
-<p><span class="n">log</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span></p>
+log "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
 
-<p><span class="n">mail</span> <span class="s2">&quot;Tried to run an unknown action: &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">])</span><span class="s2">&#39; for task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39; this will need running manually!&quot;</span></p>
+mail "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span></p>
+marktaskFailed($task['task_id'])
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="p">}</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="n">log</span> <span class="s2">&quot;Not running task &#39;</span><span class="p">$(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span><span class="s2">&#39;, tasks are disabled&quot;</span></p>
+}
+ }else{
+ log "Not running task '$($task['task_id'])', tasks are disabled"
 
-<p><span class="n">marktaskFailed</span><span class="p">(</span><span class="nv">$task</span><span class="p">[</span><span class="s1">&#39;task_id&#39;</span><span class="p">])</span>
- <span class="p">}</span></p>
+marktaskFailed($task['task_id'])
+ }
 
-<p><span class="p">}</span></p>
+}
 
-<p><span class="nb">write-host</span> <span class="s1">&#39;Tasks run&#39;</span></p>
+write-host 'Tasks run'
 
-<p><span class="p">}</span><span class="k">else</span><span class="p">{</span></p>
+}else{
 
-<p><span class="nb">write-host</span> <span class="s2">&quot;No tasks to run!&quot;</span></p>
+write-host "No tasks to run!"
 
-<p><span class="p">}</span>
-<span class="nb">write-host</span> <span class="s1">&#39;Run complete....&#39;</span></p>
+}
+write-host 'Run complete....'
 
-<p><span class="c"># Sleep 10 seconds until next run</span></p>
+# Sleep 10 seconds until next run
 
-<p><span class="nb">Start-Sleep</span> <span class="n">10</span></p>
+Start-Sleep 10
 
-<p><span class="p">}</span></code></pre></figure></p> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li> <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li> <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2010/07/powershell/";var disqus_url="http://damianzaremba.co.uk/2010/07/powershell/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
+}
+</code></pre> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li> <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li> <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2010/07/powershell/";var disqus_url="http://damianzaremba.co.uk/2010/07/powershell/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
