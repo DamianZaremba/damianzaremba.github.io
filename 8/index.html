@@ -1,4 +1,5 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/06/example-of-building-nagios-configs-from-ldap/">Example of building nagios configs from LDAP</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/06/example-of-building-nagios-configs-from-ldap/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/general'>General</a></li></ul> </div> <div class=entry> <p>Over at ClueNet we have a bunch of servers all stored in LDAP with owners and admins linked to user accounts also stored in LDAP! One thing we wanted to implement (as well as graphing, but cacti sorts that out) was service monitoring.</p> <p>After getting a box up and a bot in IRC to relay stuff I set about hacking up a script to add in servers and add owners/admins as contacts (so they can get notifications and access the Nagios web interface to disable checks and stuff (it uses mod_auth_krb to let people login over HTTPS)).</p> <p>Some notes about this script:</p> <ul> <li><p>Currently we don't store attributes in the servers entry relating to what services to monitor, this is something I'm looking at implementing</p></li> <li><p>IP addresses and SSH ports are stored in LDAP</p></li> <li><p>Server owners AND admins should have access to update the server in Nagios (they do in LDAP!)</p></li> <li><p>There is no attribute under the users entry to determine if we <em>should</em> notify them about alerts so we don't atm!</p></li> <li><p>The only way people know about alerts is the relay channel on IRC or the web interface</p></li> </ul> <p>The main thing I want to implement that would improve this script is per service attributes in the servers entry following the standard for ClueNet.</p> <p>I propose the attribute clueServiceMonitoring be added into the ldap scheme and added to the servers entries.</p> <p>An example is as below: Server: hex Services to be monitored:</p> <ul> <li><p>ping (via ICMP)</p></li> <li><p>ssh (will use port listed in LDAP)</p></li> <li><p>http (port 8080)</p></li> <li><p>ldap</p></li> <li><p>kerberos</p></li> </ul> <div class=highlight><pre><code class="language-text" data-lang="text">dn: cn=hex,ou=servers,dc=cluenet,dc=org
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/06/example-of-building-nagios-configs-from-ldap/">Example of building nagios configs from LDAP</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/06/example-of-building-nagios-configs-from-ldap/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/general'>General</a></li></ul> </div> <div class=entry> <p>Over at ClueNet we have a bunch of servers all stored in LDAP with owners and admins linked to user accounts also stored in LDAP! One thing we wanted to implement (as well as graphing, but cacti sorts that out) was service monitoring.</p> <p>After getting a box up and a bot in IRC to relay stuff I set about hacking up a script to add in servers and add owners/admins as contacts (so they can get notifications and access the Nagios web interface to disable checks and stuff (it uses mod_auth_krb to let people login over HTTPS)).</p> <p>Some notes about this script:</p> <ul> <li><p>Currently we don't store attributes in the servers entry relating to what services to monitor, this is something I'm looking at implementing</p></li> <li><p>IP addresses and SSH ports are stored in LDAP</p></li> <li><p>Server owners AND admins should have access to update the server in Nagios (they do in LDAP!)</p></li> <li><p>There is no attribute under the users entry to determine if we <em>should</em> notify them about alerts so we don't atm!</p></li> <li><p>The only way people know about alerts is the relay channel on IRC or the web interface</p></li> </ul> <p>The main thing I want to implement that would improve this script is per service attributes in the servers entry following the standard for ClueNet.</p> <p>I propose the attribute clueServiceMonitoring be added into the ldap scheme and added to the servers entries.</p> <p>An example is as below: Server: hex Services to be monitored:</p> <ul> <li><p>ping (via ICMP)</p></li> <li><p>ssh (will use port listed in LDAP)</p></li> <li><p>http (port 8080)</p></li> <li><p>ldap</p></li> <li><p>kerberos</p></li> </ul> <pre><code class="text">
+dn: cn=hex,ou=servers,dc=cluenet,dc=org
  changetype: modify
  add: clueServiceMonitoring
  clueServiceMonitoring: ping^ICMP
@@ -21,268 +22,271 @@ dn: cn=hex,ou=servers,dc=cluenet,dc=org
 dn: cn=hex,ou=servers,dc=cluenet,dc=org
  changetype: modify
  add: clueServiceMonitoring
- clueServiceMonitoring: kerberos</code></pre></div> <p>This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.</p> <p>Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.</p> <div class=highlight><pre><code class="language-perl" data-lang="perl"><span class="c1">#!/usr/bin/env perl</span>
-<span class="k">use</span> <span class="n">strict</span><span class="p">;</span>
-<span class="k">use</span> <span class="nn">File::</span><span class="n">Path</span><span class="p">;</span>
-<span class="k">use</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="p">;</span>
-<span class="k">use</span> <span class="nn">Data::</span><span class="n">Dumper</span><span class="p">;</span>
+ clueServiceMonitoring: kerberos
+</code></pre> <p>This would allow the script to check for the attributes and write out the services definitions as necessary. The current solution works but is a little inflexible.</p> <p>Also, the Perl could do with tidying up a little as I'm not the best Perl programmer on the planet.</p> <pre><code class="perl">#!/usr/bin/env perl
+use strict;
+use File::Path;
+use Net::LDAP;
+use Data::Dumper;
 
-<span class="c1"># Config stuff</span>
-<span class="k">my</span> <span class="nv">$base_dir</span> <span class="o">=</span> <span class="s">&quot;/usr/local/nagios/etc/cluenet/&quot;</span><span class="p">;</span>
+# Config stuff
+my $base_dir = "/usr/local/nagios/etc/cluenet/";
 
-<span class="c1"># Main code</span>
-<span class="k">my</span> <span class="nv">$ldap</span> <span class="o">=</span> <span class="nn">Net::</span><span class="n">LDAP</span><span class="o">-&gt;</span><span class="k">new</span><span class="p">(</span><span class="s">&quot;ldap.cluenet.org&quot;</span><span class="p">,</span> <span class="n">timeout</span> <span class="o">=&gt;</span> <span class="mi">30</span><span class="p">);</span>
-<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ldap</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">print</span> <span class="s">&quot;Could not connect to ldap\n&quot;</span><span class="p">;</span>
-<span class="p">}</span>
+# Main code
+my $ldap = Net::LDAP-&gt;new("ldap.cluenet.org", timeout =&gt; 30);
+if(!$ldap) {
+    print "Could not connect to ldap\n";
+}
 
-<span class="k">print</span> <span class="s">&quot;Clearing current configs\n&quot;</span><span class="p">;</span>
-<span class="n">rmtree</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
-<span class="nb">mkdir</span><span class="p">(</span><span class="nv">$base_dir</span><span class="p">);</span>
+print "Clearing current configs\n";
+rmtree($base_dir);
+mkdir($base_dir);
 
-<span class="k">my</span> <span class="nv">@admins</span> <span class="o">=</span> <span class="p">();</span>
-<span class="k">my</span> <span class="nv">@owners</span> <span class="o">=</span> <span class="p">();</span>
-<span class="k">my</span> <span class="nv">$mesg</span> <span class="o">=</span> <span class="nv">$ldap</span><span class="o">-&gt;</span><span class="n">search</span><span class="p">(</span>
-    <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=server)(isActive=TRUE))&quot;</span><span class="p">,</span>
-    <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=servers,dc=cluenet,dc=org&quot;</span>
-<span class="p">);</span>
-<span class="k">my</span> <span class="nv">@entries</span> <span class="o">=</span> <span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">;</span>
+my @admins = ();
+my @owners = ();
+my $mesg = $ldap-&gt;search(
+    filter =&gt; "(&amp;(objectClass=server)(isActive=TRUE))",
+    base =&gt; "ou=servers,dc=cluenet,dc=org"
+);
+my @entries = $mesg-&gt;entries;
 
-<span class="k">print</span> <span class="s">&quot;Starting server configs\n&quot;</span><span class="p">;</span>
-<span class="k">foreach</span> <span class="p">(</span><span class="nv">@entries</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-    <span class="k">print</span> <span class="s">&quot;Starting &quot;</span> <span class="o">.</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
+print "Starting server configs\n";
+foreach (@entries) {
+    my $entry = $_;
+    print "Starting " . $entry-&gt;get_value('cn') . "\n";
 
-    <span class="k">my</span> <span class="nv">$hostname</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$hostname</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">print</span> <span class="s">&quot;Skipping - missing hostname\n&quot;</span><span class="p">;</span>
-        <span class="k">next</span><span class="p">;</span>
-    <span class="p">}</span>
+    my $hostname = $entry-&gt;get_value('cn');
+    if(!$hostname) {
+        print "Skipping - missing hostname\n";
+        next;
+    }
 
-    <span class="k">my</span> <span class="nv">$servername</span> <span class="o">=</span> <span class="nv">$hostname</span><span class="p">;</span>
-    <span class="nv">$servername</span> <span class="o">=~</span> <span class="sr">s/\.cluenet\.org$//</span><span class="p">;</span>
+    my $servername = $hostname;
+    $servername =~ s/\.cluenet\.org$//;
 
-    <span class="k">my</span> <span class="nv">$owner</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;owner&#39;</span><span class="p">);</span>
-    <span class="nv">$owner</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
+    my $owner = $entry-&gt;get_value('owner');
+    $owner =~ s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/;
 
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$owner</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">print</span> <span class="s">&quot;Skipping - missing owner\n&quot;</span><span class="p">;</span>
-        <span class="k">next</span><span class="p">;</span>
-    <span class="p">}</span>
+    if(!$owner) {
+        print "Skipping - missing owner\n";
+        next;
+    }
 
-    <span class="k">my</span> <span class="nv">$ip_address</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;ipAddress&#39;</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$ip_address</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">print</span> <span class="s">&quot;Skipping - missing ip address\n&quot;</span><span class="p">;</span>
-        <span class="k">next</span><span class="p">;</span>
-    <span class="p">}</span>
+    my $ip_address = $entry-&gt;get_value('ipAddress');
+    if(!$ip_address) {
+        print "Skipping - missing ip address\n";
+        next;
+    }
 
-    <span class="k">my</span> <span class="nv">$ssh_port</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;sshPort&#39;</span><span class="p">);</span>
+    my $ssh_port = $entry-&gt;get_value('sshPort');
 
-    <span class="k">my</span> <span class="nv">$description</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;description&#39;</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$description</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$description</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">;</span>
-    <span class="p">}</span>
+    my $description = $entry-&gt;get_value('description');
+    if(!$description) {
+        $description = "";
+    }
 
-    <span class="k">my</span> <span class="nv">$os</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;operatingSystem&#39;</span><span class="p">);</span>
-    <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nv">$os</span><span class="p">)</span> <span class="p">{</span>
-        <span class="nv">$os</span> <span class="o">=</span> <span class="s">&#39;linux&#39;</span><span class="p">;</span> <span class="c1"># windows sux</span>
-    <span class="p">}</span>
+    my $os = $entry-&gt;get_value('operatingSystem');
+    if(!$os) {
+        $os = 'linux'; # windows sux
+    }
 
-    <span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/$hostname.cfg&quot;</span><span class="p">);</span>
-    <span class="c1"># Write the host out</span>
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">host</span> <span class="p">{</span>
-    <span class="n">host_name</span> <span class="nv">$hostname</span>
-    <span class="n">alias</span> <span class="nv">$servername</span>
-    <span class="n">address</span> <span class="nv">$ip_address</span>
-    <span class="n">hostgroups</span> <span class="nv">$owner</span><span class="o">\</span><span class="n">_servers</span>
-    <span class="n">max_check_attempts</span> <span class="mi">5</span>
-    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
-    <span class="n">contacts</span> <span class="nv">$owner</span>
-    <span class="n">contact_groups</span> <span class="nv">$servername</span><span class="o">\</span><span class="n">_admins</span>
-    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
-<span class="p">}</span>
+    open(FH, "&gt;", "$base_dir/$hostname.cfg");
+    # Write the host out
+    print FH &lt;define host {
+    host_name $hostname
+    alias $servername
+    address $ip_address
+    hostgroups $owner\_servers
+    max_check_attempts 5
+    check_period 24x7
+    contacts $owner
+    contact_groups $servername\_admins
+    notification_period 24x7
+}
 
-<span class="n">EOS</span>
-<span class="p">;</span>
+EOS
+;
 
-    <span class="c1"># Write out the services</span>
-    <span class="c1"># - I&#39;d like these to be ldap attributes but I&#39;m not sure how we can do shit for now so hardcoding</span>
-    <span class="k">print</span> <span class="s">&quot;Adding ping check\n&quot;</span><span class="p">;</span>
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">service</span> <span class="p">{</span>
-    <span class="n">host_name</span> <span class="nv">$hostname</span>
-    <span class="n">service_description</span> <span class="n">PING</span> <span class="n">check</span>
-    <span class="n">notification_period</span> <span class="mi">24</span><span class="n">x7</span>
-    <span class="n">check_period</span> <span class="mi">24</span><span class="n">x7</span>
-    <span class="n">max_check_attempts</span> <span class="mi">3</span>
-    <span class="n">normal_check_interval</span> <span class="mi">5</span>
-    <span class="n">retry_check_interval</span> <span class="mi">1</span>
-    <span class="n">notification_interval</span> <span class="mi">30</span>
-    <span class="n">notification_options</span> <span class="n">w</span><span class="p">,</span><span class="n">u</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">r</span><span class="p">,</span><span class="n">f</span><span class="p">,</span><span class="n">s</span>
-    <span class="n">check_command</span> <span class="n">check_ping</span><span class="o">!</span><span class="mf">100.0</span><span class="p">,</span><span class="mi">20</span><span class="nv">%</span><span class="err">!</span><span class="nv">500</span><span class="mf">.00</span><span class="p">,</span><span class="mi">60</span><span class="nv">%</span>
-<span class="err">}</span>
+    # Write out the services
+    # - I'd like these to be ldap attributes but I'm not sure how we can do shit for now so hardcoding
+    print "Adding ping check\n";
+    print FH &lt;define service {
+    host_name $hostname
+    service_description PING check
+    notification_period 24x7
+    check_period 24x7
+    max_check_attempts 3
+    normal_check_interval 5
+    retry_check_interval 1
+    notification_interval 30
+    notification_options w,u,c,r,f,s
+    check_command check_ping!100.0,20%!500.00,60%
+}
 
-<span class="nv">EOS</span>
-<span class="p">;</span>
+EOS
+;
 
-    <span class="k">if</span><span class="p">(</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/windows/i</span><span class="p">,</span> <span class="nv">$os</span><span class="p">))</span> <span class="p">{</span>
+    if(grep(/windows/i, $os)) {
 
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">if</span><span class="p">(</span><span class="nv">$ssh_port</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">print</span> <span class="s">&quot;Adding SSH check on port $ssh_port\n&quot;</span><span class="p">;</span>
-            <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;authorizedAdministrator&#39;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">my</span> <span class="nv">$user</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
-        <span class="nv">$user</span> <span class="o">=~</span> <span class="sr">s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/</span><span class="p">;</span>
-        <span class="nv">$members</span> <span class="o">=</span> <span class="nv">$members</span> <span class="o">.</span> <span class="s">&quot;, &quot;</span> <span class="o">.</span> <span class="nv">$user</span><span class="p">;</span>
+    } else {
+        if($ssh_port) {
+            print "Adding SSH check on port $ssh_port\n";
+            print FH &lt;get_value('authorizedAdministrator')) {
+        my $user = $_;
+        $user =~ s/uid=(.*),ou=people,dc=cluenet,dc=org/$1/;
+        $members = $members . ", " . $user;
 
-        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">grep</span><span class="p">(</span><span class="sr">/$user/</span><span class="p">,</span> <span class="nv">@admins</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nb">push</span><span class="p">(</span><span class="nv">@admins</span><span class="p">,</span> <span class="nv">$user</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+        if(!grep(/$user/, @admins)) {
+            push(@admins, $user);
+        }
+    }
 
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;cn&#39;</span><span class="p">)</span> <span class="o">.</span> <span class="s">&quot;\n&quot;</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">print</span> <span class="s">&quot;Finished server configs\n&quot;</span><span class="p">;</span>
+    print FH &lt;get_value('cn') . "\n";
+}
+print "Finished server configs\n";
 
-<span class="k">print</span> <span class="s">&quot;Starting user config\n&quot;</span><span class="p">;</span>
-<span class="nb">open</span><span class="p">(</span><span class="n">FH</span><span class="p">,</span> <span class="s">&quot;&gt;&quot;</span><span class="p">,</span> <span class="s">&quot;$base_dir/users.cfg&quot;</span><span class="p">);</span>
-<span class="k">print</span> <span class="s">&quot;Adding __nagiosbot__\n&quot;</span><span class="p">;</span>
-<span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">contact</span> <span class="p">{</span>
-    <span class="n">contact_name</span> <span class="n">__nagiosbot__</span>
-    <span class="n">alias</span> <span class="n">General</span> <span class="n">nagios</span> <span class="n">bot</span>
-    <span class="n">host_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
-    <span class="n">service_notification_period</span> <span class="mi">24</span><span class="n">x7</span>
-    <span class="n">host_notification_commands</span> <span class="n">host</span><span class="o">-</span><span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
-    <span class="n">service_notification_commands</span> <span class="n">notify</span><span class="o">-</span><span class="n">by</span><span class="o">-</span><span class="n">irc</span>
+print "Starting user config\n";
+open(FH, "&gt;", "$base_dir/users.cfg");
+print "Adding __nagiosbot__\n";
+print FH &lt;define contact {
+    contact_name __nagiosbot__
+    alias General nagios bot
+    host_notification_period 24x7
+    service_notification_period 24x7
+    host_notification_commands host-notify-by-irc
+    service_notification_commands notify-by-irc
 
-<span class="p">}</span>
-<span class="n">EOS</span>
-<span class="p">;</span>
+}
+EOS
+;
 
-<span class="k">foreach</span><span class="p">(</span><span class="nv">@admins</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">print</span> <span class="s">&quot;Adding user $_ \n&quot;</span><span class="p">;</span>
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">search</span><span class="p">(</span>
-        <span class="n">filter</span> <span class="o">=&gt;</span> <span class="s">&quot;(&amp;(objectClass=person)(uid=&quot;</span> <span class="o">.</span> <span class="nv">$_</span> <span class="o">.</span> <span class="s">&quot;))&quot;</span><span class="p">,</span>
-        <span class="n">base</span> <span class="o">=&gt;</span> <span class="s">&quot;ou=people,dc=cluenet,dc=org&quot;</span>
-    <span class="p">);</span>
+foreach(@admins) {
+    print "Adding user $_ \n";
+    print FH &lt;search(
+        filter =&gt; "(&amp;(objectClass=person)(uid=" . $_ . "))",
+        base =&gt; "ou=people,dc=cluenet,dc=org"
+    );
 
-    <span class="k">foreach</span><span class="p">(</span><span class="nv">$mesg</span><span class="o">-&gt;</span><span class="n">entries</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">my</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$_</span><span class="p">;</span>
+    foreach($mesg-&gt;entries) {
+        my $entry = $_;
 
-        <span class="k">my</span> <span class="nv">$gecos</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;gecos&#39;</span><span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span><span class="nv">$gecos</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;\talias $gecos\n&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
+        my $gecos = $entry-&gt;get_value('gecos');
+        if($gecos) {
+            print FH "\talias $gecos\n";
+        }
 
-        <span class="k">my</span> <span class="nv">$mail</span> <span class="o">=</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="n">get_value</span><span class="p">(</span><span class="s">&#39;mail&#39;</span><span class="p">);</span>
-        <span class="k">if</span><span class="p">(</span><span class="nv">$mail</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">print</span> <span class="n">FH</span> <span class="s">&quot;#\temail $mail\n&quot;</span><span class="p">;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="p">}</span>
+        my $mail = $entry-&gt;get_value('mail');
+        if($mail) {
+            print FH "#\temail $mail\n";
+        }
+    }
+    print FH &lt;}
 
-<span class="n">EOS</span>
-<span class="p">;</span>
-<span class="p">}</span>
+EOS
+;
+}
 
-<span class="k">foreach</span><span class="p">(</span><span class="nv">@owners</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">print</span> <span class="n">FH</span> <span class="o">&lt;</span><span class="n">define</span> <span class="n">hostgroup</span> <span class="p">{</span>
-    <span class="n">hostgroup_name</span> <span class="nv">$_</span><span class="o">\</span><span class="n">_servers</span>
-    <span class="n">alias</span> <span class="nv">$_</span><span class="o">\</span><span class="err">&#39;</span><span class="n">s</span> <span class="n">servers</span>
-<span class="p">}</span>
+foreach(@owners) {
+    print FH &lt;define hostgroup {
+    hostgroup_name $_\_servers
+    alias $_\'s servers
+}
 
-<span class="n">EOS</span>
-<span class="p">;</span>
-<span class="p">}</span>
+EOS
+;
+}
 
-<span class="nb">close</span><span class="p">(</span><span class="n">FH</span><span class="p">);</span>
-<span class="k">print</span> <span class="s">&quot;Finished user config\n&quot;</span><span class="p">;</span>
+close(FH);
+print "Finished user config\n";
 
-<span class="k">print</span> <span class="s">&quot;Reloading\n&quot;</span><span class="p">;</span>
-<span class="sb">`/etc/init.d/nagios reload`</span></code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul> </div> <div class=entry> <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Uber hack to download images from download website, kinda works.</span>
-<span class="sd">Very messy as I ripped most the code out of other scripts I&#39;ve written.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">urllib</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">Queue</span>
-<span class="kn">import</span> <span class="nn">urlparse</span>
-<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/home/damian/Pictures/download-2011&#39;</span>
+print "Reloading\n";
+`/etc/init.d/nagios reload`
+</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul> </div> <div class=entry> <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p> <pre><code class="python">#!/usr/bin/env python
+'''
+Uber hack to download images from download website, kinda works.
+Very messy as I ripped most the code out of other scripts I've written.
+'''
+import os
+import urllib
+import hashlib
+import threading
+import Queue
+import urlparse
+from BeautifulSoup import BeautifulSoup
+base_dir = '/home/damian/Pictures/download-2011'
 
-<span class="k">def</span> <span class="nf">get_total_pages</span><span class="p">():</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/&quot;</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+def get_total_pages():
+ uh = urllib.urlopen("http://photos.downloadfestival.co.uk/view/")
+ soup = BeautifulSoup(uh)
+ uh.close()
 
-<span class="n">count</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;page_count&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
- <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Page 1 of &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
- <span class="k">return</span> <span class="n">count</span>
+count = str(soup.find("div", {"class": "page_count"}).string.strip())
+ count = int(count.replace('Page 1 of ', ''))
+ return count
 
-<span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/?page=</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+def get_images(page):
+ images = []
+ uh = urllib.urlopen("http://photos.downloadfestival.co.uk/view/?page=%d" % page)
+ soup = BeautifulSoup(uh)
+ uh.close()
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ul&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;item_list&quot;</span><span class="p">})</span>
- <span class="k">for</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&quot;li&quot;</span><span class="p">):</span>
- <span class="n">image</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">img</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]</span>
- <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="k">return</span> <span class="n">images</span>
+r = soup.find("ul", {"class": "item_list"})
+ for sr in r.findAll("li"):
+ image = sr.a.img['src']
+ images.append(image)
+ return images
 
-<span class="k">class</span> <span class="nc">Runner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
- <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
- <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+class Runner(threading.Thread):
+ def __init__(self, queue):
+ threading.Thread.__init__(self)
+ self.queue = queue
 
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
- <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
- <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+def run(self):
+ while True:
+ url = self.queue.get()
+ self.get_image(url)
+ self.queue.task_done()
 
-<span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
- <span class="n">urldata</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+def get_image(self, url):
+ urldata = urlparse.urlparse(url)
 
-<span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">urldata</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
- <span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">ext</span><span class="p">)</span>
- <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+ext = '.'.join(urldata.path.split('.')[-1:])
+ file_name = "%s.%s" % (hashlib.md5(url).hexdigest(), ext)
+ file_path = os.path.join(base_dir, file_name)
 
-<span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="k">print</span> <span class="s">&quot;Downloaded image to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
+uh = urllib.urlopen(url)
+ fh = open(file_path, 'w')
+ fh.write(uh.read())
+ fh.close()
+ uh.close()
+ print "Downloaded image to %s" % file_path
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
- <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">):</span>
- <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+if __name__ == "__main__":
+ if not os.path.isdir(base_dir):
+ os.makedirs(base_dir)
 
-<span class="n">total</span> <span class="o">=</span> <span class="n">get_total_pages</span><span class="p">()</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+total = get_total_pages()
+ images = []
 
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> pages found&quot;</span> <span class="o">%</span> <span class="n">total</span>
- <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
- <span class="k">print</span> <span class="s">&quot;Processing page </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p</span>
- <span class="n">i</span> <span class="o">=</span> <span class="n">get_images</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+print "%d pages found" % total
+ for p in range(1, total):
+ print "Processing page %d" % p
+ i = get_images(p)
 
-<span class="k">print</span> <span class="s">&quot;Found </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
- <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+print "Found %d images" % len(i)
+ images.extend(i)
 
- <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
- <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
- <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
- <span class="n">thread</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+ print "Downloading %d images" % len(images)
+ queue = Queue.Queue()
+ for i in range(20):
+ thread = Runner(queue)
+ thread.setDaemon(True)
+ thread.start()
 
-<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></div> </div> </article> <article class=post> <h1 class=title><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul> </div> <div class=entry> <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p> <p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p> <p>I've included an example config below with comments</p> <div class=highlight><pre><code class="language-text" data-lang="text">!! Basic stuff
+for image in images:
+ queue.put(image)
+ queue.join()
+</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul> </div> <div class=entry> <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p> <p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p> <p>I've included an example config below with comments</p> <pre><code class="text">!! Basic stuff
 version 12.4
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -331,8 +335,8 @@ ntp server 147.231.100.5
 ntp server 193.55.167.1
 !
 !! Login stuff
-no aaa new-model !! I don&#39;t use a TACAS server for my house but you can!
-enable password enable !! This clearly isn&#39;t my enable password but I don&#39;t feel like putting the hash of it in public.
+no aaa new-model !! I don't use a TACAS server for my house but you can!
+enable password enable !! This clearly isn't my enable password but I don't feel like putting the hash of it in public.
 username myuser privilege 15 password mypass !! This will login directly to enable access, feel free to change the privilege level.
 !
 !! IP settings
@@ -422,9 +426,9 @@ ip route 0.0.0.0 0.0.0.0 Dialer1
 !
 !! NAT rules
 ip nat inside source list 1 interface Dialer1 overload !! You might want to change this if you have a pool if ips
-ip nat inside source static tcp xx.xx.xx.xx 8080 interface Dialer1 8080 !! Probably want to delete this - it&#39;s a webserver for my house
-ip nat inside source static tcp xx.xx.xx.xx 3406 interface Dialer1 3406 !! Probably want to delete this - it&#39;s a vpn endpoint for my house
-ip nat inside source static tcp xx.xx.xx.xx 22 interface Dialer1 2020 !! Probably want to delete this - it&#39;s a ssh gateway for my house
+ip nat inside source static tcp xx.xx.xx.xx 8080 interface Dialer1 8080 !! Probably want to delete this - it's a webserver for my house
+ip nat inside source static tcp xx.xx.xx.xx 3406 interface Dialer1 3406 !! Probably want to delete this - it's a vpn endpoint for my house
+ip nat inside source static tcp xx.xx.xx.xx 22 interface Dialer1 2020 !! Probably want to delete this - it's a ssh gateway for my house
 !
 !! ACLs
 access-list 1 remark Default traffic
@@ -446,7 +450,7 @@ ipv6 access-list IPV6_IN
 !
 ipv6 access-list IPV6_OUT
  remark Outgoing IPv6 Traffic
- permit ipv6 any any !! Permit any outgoing traffic - yeah I&#39;m lazy
+ permit ipv6 any any !! Permit any outgoing traffic - yeah I'm lazy
 !
 ip access-list extended IPV4_IN
  remark Incoming IPv4 Traffic
@@ -457,14 +461,14 @@ permit 41 xx.xx.xx.xx 255.255.255.255 any !! Allow 41 from the IPv6 tunnel serve
  permit tcp any any established !! Allow established TCP connections
  permit tcp any eq domain any !! Allow incoming TCP DNS stuff - might want to delete this
  permit udp any eq domain any !! Allow incoming UDP DNS stuff - might want to delete this
- permit tcp any any eq 3406 !! Probably want to delete this - it&#39;s a vpn endpoint for my house
- permit tcp any any eq 8080 !! Probably want to delete this - it&#39;s a webserver for my house
- permit tcp any any eq 2020 !! Probably want to delete this - it&#39;s a ssh gateway for my house
+ permit tcp any any eq 3406 !! Probably want to delete this - it's a vpn endpoint for my house
+ permit tcp any any eq 8080 !! Probably want to delete this - it's a webserver for my house
+ permit tcp any any eq 2020 !! Probably want to delete this - it's a ssh gateway for my house
  deny ip any any log !! Drop everything else
 !
 ip access-list extended IPV4_OUT
  remark Outgoing IPv4 Traffic
- permit ip any any !! Permit any outgoing traffic - yeah I&#39;m lazy
+ permit ip any any !! Permit any outgoing traffic - yeah I'm lazy
 !
 !! VTY lines
 line vty 0 15
@@ -474,81 +478,84 @@ line vty 0 15
  login local
  transport input ssh
 !
-end</code></pre></div> <p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job. One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I'll start playing with the configs, for now they work just fine.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />09 Apr 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul> </div> <div class=entry> <p>Hi to anyone that reads this.</p> <p>I wasn’t going to post about this as it is not something I think it neat or I should be proud of, but I seem to be getting a few links though to this blog so I thought I should post something!</p> <p>I recently was re-designing (if you can call it that) this blog and was looking to integrate mint. The plugin utilizes; * admin_menu &amp; admin_notices wordpress actions for displaying/allowing editing of settings. * wp_head wordpress action for outputting the mint integration code into the header. * rss_head, rss2_head, atom_header &amp; the_permalink_rss wordpress actions for integration of birdfeeder.</p> <p>The script goes out of its way to ensure it does not break html or xml output due to PHP errors.</p> <p>The plugin can be downloaded from <a href="http://wordpress.org/extend/plugins/mint/">here</a> and offers mint integration into the header (tracking code) &amp; bird feeder integration for the rss feeds. Both of these are optional and can be configured from the settings page.</p> <p>The requirements are;</p> <ul> <li>PHP</li> <li>A working wordpress install (use the latest :3)</li> <li>A working mint install (on the same server – due to how birdfeeder integration works this has to be the case without major hacking of the plugin)</li> <li>The ability to read the error messages and fill out the settings page</li> </ul> <p>Why mint? It has an awesome AJAX interface for viewing stats, remains fast on pretty large sites, supports plugins and best of all the code isn’t encoded in any way.</p> <p>The downside is a 30$ license per site but this is supporting an awesome developer who keeps the product updated. Because the code is open you can also hack it to your needs and release any plugins/themes back into the community.</p> <p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p> <p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/03/canhazip/">canhazip</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />30 Mar 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul> </div> <div class=entry> <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p> <h4>Basic Usage</h4> <p><a href="http://canhazip.info/">http://canhazip.info/</a></p> <p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p> <h4>Specific IP type</h4> <p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p> <p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p> <p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p> <p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p> <h4>Output format</h4> <p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format> to the end of the URL.</p> <p>Accepted formats are:</p> <ul> <li><p>xml</p></li> <li><p>json</p></li> <li><p>yaml</p></li> <li><p>PHP (serialize of an array)</p></li> <li><p>plain</p></li> </ul> <p>Example usage:</p> <p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p> <h4>FAQ</h4> <h5>icanhazip exists, why another service that does the same thing?</h5> <ol> <li> Because I can</li> <li> Because .info domains were on special offer ($1.87!)</li> <li> The servers hosting the site are in London and Manchester not the US (latency)</li> <li> The secondary service I was using previously no longer exists (I like basic redundancy)</li> </ol> <h5>Do you keep logs</h5> <p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p> <h5>Why different formats?</h5> <p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p> <h5>Is this reliable</h5> <p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p> <h5>Example usage</h5> <p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p> <div class=highlight><pre><code class="language-php" data-lang="php"><span class="x">#!/usr/bin/php</span>
-<span class="cp">&lt;?php</span>
- <span class="nv">$PASSWORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$TUNNELID</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
- <span class="nv">$USERID</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
- <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
- <span class="p">}</span>
+end
+</code></pre> <p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job. One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I'll start playing with the configs, for now they work just fine.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />09 Apr 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul> </div> <div class=entry> <p>Hi to anyone that reads this.</p> <p>I wasn’t going to post about this as it is not something I think it neat or I should be proud of, but I seem to be getting a few links though to this blog so I thought I should post something!</p> <p>I recently was re-designing (if you can call it that) this blog and was looking to integrate mint. The plugin utilizes; * admin_menu &amp; admin_notices wordpress actions for displaying/allowing editing of settings. * wp_head wordpress action for outputting the mint integration code into the header. * rss_head, rss2_head, atom_header &amp; the_permalink_rss wordpress actions for integration of birdfeeder.</p> <p>The script goes out of its way to ensure it does not break html or xml output due to PHP errors.</p> <p>The plugin can be downloaded from <a href="http://wordpress.org/extend/plugins/mint/">here</a> and offers mint integration into the header (tracking code) &amp; bird feeder integration for the rss feeds. Both of these are optional and can be configured from the settings page.</p> <p>The requirements are;</p> <ul> <li>PHP</li> <li>A working wordpress install (use the latest :3)</li> <li>A working mint install (on the same server – due to how birdfeeder integration works this has to be the case without major hacking of the plugin)</li> <li>The ability to read the error messages and fill out the settings page</li> </ul> <p>Why mint? It has an awesome AJAX interface for viewing stats, remains fast on pretty large sites, supports plugins and best of all the code isn’t encoded in any way.</p> <p>The downside is a 30$ license per site but this is supporting an awesome developer who keeps the product updated. Because the code is open you can also hack it to your needs and release any plugins/themes back into the community.</p> <p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p> <p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/03/canhazip/">canhazip</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />30 Mar 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul> </div> <div class=entry> <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p> <h4>Basic Usage</h4> <p><a href="http://canhazip.info/">http://canhazip.info/</a></p> <p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p> <h4>Specific IP type</h4> <p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p> <p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p> <p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p> <p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p> <h4>Output format</h4> <p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format> to the end of the URL.</p> <p>Accepted formats are:</p> <ul> <li><p>xml</p></li> <li><p>json</p></li> <li><p>yaml</p></li> <li><p>PHP (serialize of an array)</p></li> <li><p>plain</p></li> </ul> <p>Example usage:</p> <p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p> <h4>FAQ</h4> <h5>icanhazip exists, why another service that does the same thing?</h5> <ol> <li>Because I can</li> <li>Because .info domains were on special offer ($1.87!)</li> <li>The servers hosting the site are in London and Manchester not the US (latency)</li> <li>The secondary service I was using previously no longer exists (I like basic redundancy)</li> </ol> <h5>Do you keep logs</h5> <p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p> <h5>Why different formats?</h5> <p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p> <h5>Is this reliable</h5> <p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p> <h5>Example usage</h5> <p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p> <pre><code class="php">#!/usr/bin/php
+&lt;?php
+ $PASSWORD = "";
+ $TUNNELID = 0;
+ $USERID = "";
+ $currentIP = @file_get_contents('http://ipv4.canhazip.info/');
+ if(empty($currentIP)){
+ $currentIP = @file_get_contents('http://ipv4.icanhazip.com/');
+ }
 
-<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
+if(empty($currentIP)){
+ die('Could not get current IP'."\n");
+ }
 
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
- <span class="nv">$return</span> <span class="o">=</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="s2">&quot;https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=&quot;</span> <span class="o">.</span> <span class="nv">$currentIP</span> <span class="o">.</span> <span class="s2">&quot;&amp;pass=&quot;</span> <span class="o">.</span> <span class="nv">$PASSWORD</span> <span class="o">.</span> <span class="s2">&quot;&amp;user_id=&quot;</span> <span class="o">.</span> <span class="nv">$USERID</span> <span class="o">.</span> <span class="s2">&quot;&amp;tunnel_id=&quot;</span> <span class="o">.</span> <span class="nv">$TUNNELID</span><span class="p">);</span>
+$currentIP = trim($currentIP);
+ $return = file_get_contents("https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=" . $currentIP . "&amp;pass=" . $PASSWORD . "&amp;user_id=" . $USERID . "&amp;tunnel_id=" . $TUNNELID);
 
-<span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;That IPv4 endpoint is already in use.&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
- <span class="k">print</span> <span class="s2">&quot;IP has not changed&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span><span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="nb">strpos</span><span class="p">(</span><span class="nv">$return</span><span class="p">,</span> <span class="s2">&quot;Your tunnel endpoint has been updated to:&quot;</span><span class="p">)</span> <span class="o">!==</span> <span class="k">False</span><span class="p">){</span>
- <span class="k">print</span> <span class="s2">&quot;Tunnel endpoint has been updated&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span><span class="k">else</span><span class="p">{</span>
- <span class="k">print</span> <span class="s2">&quot;Unknown return!?!?!&quot;</span><span class="p">;</span>
- <span class="k">print</span> <span class="nv">$return</span><span class="p">;</span>
- <span class="k">print</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
- <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div> <h5>Another example</h5> <p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p> <div class=highlight><pre><code class="language-php" data-lang="php"><span class="x">#!/usr/bin/php</span>
-<span class="cp">&lt;?php</span>
- <span class="nv">$ACCESSKEY</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
- <span class="nv">$NODENAME</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+if(strpos($return, "That IPv4 endpoint is already in use.") !== False){
+ print "IP has not changed";
+ print "\n";
+ }else if(strpos($return, "Your tunnel endpoint has been updated to:") !== False){
+ print "Tunnel endpoint has been updated";
+ print "\n";
+ }else{
+ print "Unknown return!?!?!";
+ print $return;
+ print "\n";
+ }
+?&gt;
+</code></pre> <h5>Another example</h5> <p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p> <pre><code class="php">#!/usr/bin/php
+&lt;?php
+ $ACCESSKEY = "";
+ $NODENAME = "";
 
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.canhazip.info/&#39;</span><span class="p">);</span>
- <span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="nv">$currentIP</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://ipv4.icanhazip.com/&#39;</span><span class="p">);</span>
- <span class="p">}</span>
+$currentIP = @file_get_contents('http://ipv4.canhazip.info/');
+ if(empty($currentIP)){
+ $currentIP = @file_get_contents('http://ipv4.icanhazip.com/');
+ }
 
-<span class="k">if</span><span class="p">(</span><span class="k">empty</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">)){</span>
- <span class="k">die</span><span class="p">(</span><span class="s1">&#39;Could not get current IP&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
+if(empty($currentIP)){
+ die('Could not get current IP'."\n");
+ }
 
-<span class="nv">$currentIP</span> <span class="o">=</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$currentIP</span><span class="p">);</span>
- <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="o">@</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="s1">&#39;http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl&#39;</span><span class="p">);</span>
- <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;table border=6 class=\&quot;wikitable sortable\&quot;&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;/table&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/tr&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nv">$bnlTable</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;tr&gt;&#39;</span><span class="p">,</span> <span class="nv">$bnlTable</span><span class="p">);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="nb">unset</span><span class="p">(</span><span class="nv">$bnlTable</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
- <span class="nv">$nodes</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+$currentIP = trim($currentIP);
+ $bnlTable = @file_get_contents('http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl');
+ $bnlTable = explode('&lt;table border=6 class=\"wikitable sortable\"&gt;', $bnlTable); $bnlTable = explode('&lt;/table&gt;', $bnlTable[0]); $bnlTable = str_replace('&lt;/tr&gt;', "", $bnlTable[0]); $bnlTable = explode('&lt;tr&gt;', $bnlTable); unset($bnlTable[0]); unset($bnlTable[1]);
+ $nodes = array();
 
-<span class="k">foreach</span><span class="p">(</span><span class="nv">$bnlTable</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">){</span>
- <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;/td&gt;&#39;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span> <span class="nv">$entry</span> <span class="o">=</span> <span class="nb">explode</span><span class="p">(</span><span class="s1">&#39;&lt;td align=center&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
- <span class="nv">$nodes</span><span class="p">[</span><span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
- <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span>
- <span class="s1">&#39;ip&#39;</span> <span class="o">=&gt;</span> <span class="nb">trim</span><span class="p">(</span><span class="nv">$entry</span><span class="p">[</span><span class="mi">3</span><span class="p">]),</span>
- <span class="s1">&#39;ipv6′ =&gt; trim($entry[4]),</span>
-<span class="s1"> &#39;</span><span class="nx">port</span><span class="s1">&#39; =&gt; trim($entry[5]),</span>
-<span class="s1"> &#39;</span><span class="nx">ipv6pref</span><span class="s1">&#39; =&gt; trim($entry[6]),</span>
-<span class="s1"> &#39;</span><span class="nx">subnet</span><span class="s1">&#39; =&gt; trim($entry[7]),</span>
-<span class="s1"> );</span>
-<span class="s1"> }</span>
+foreach($bnlTable as $entry){
+ $entry = str_replace('&lt;/td&gt;', "", $entry); $entry = explode('&lt;td align=center&gt;', $entry);
+ $nodes[trim($entry[1])] = array(
+ 'id' =&gt; trim($entry[2]),
+ 'ip' =&gt; trim($entry[3]),
+ 'ipv6′ =&gt; trim($entry[4]),
+ 'port' =&gt; trim($entry[5]),
+ 'ipv6pref' =&gt; trim($entry[6]),
+ 'subnet' =&gt; trim($entry[7]),
+ );
+ }
 
-<span class="s1">$currentVPNIP = $nodes[$NODENAME][&#39;</span><span class="nx">ip</span><span class="s1">&#39;];</span>
-<span class="s1"> if($currentIP != $currentVPNIP){</span>
-<span class="s1"> /* Update IP */</span>
-<span class="s1"> $ch = curl_init (&quot;http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle&quot;);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_COOKIE, &#39;</span><span class="nx">clueauth_tokenstack</span><span class="o">=</span><span class="s1">&#39;.$ACCESSKEY);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_POSTFIELDS, &#39;</span><span class="nx">nodename</span><span class="o">=</span><span class="s1">&#39;.$NODENAME.&#39;</span><span class="o">&amp;</span><span class="nx">newip</span><span class="o">=</span><span class="s1">&#39;.$currentIP.&#39;</span><span class="o">&amp;</span><span class="nx">newport</span><span class="o">=</span><span class="mi">3406</span><span class="o">&amp;</span><span class="nx">submit</span><span class="o">=</span><span class="nx">Change</span><span class="s1">&#39;);</span>
-<span class="s1"> curl_setopt($ch, CURLOPT_POST, 1);</span>
-<span class="s1"> curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);</span>
-<span class="s1"> $output = curl_exec ($ch);</span>
+$currentVPNIP = $nodes[$NODENAME]['ip'];
+ if($currentIP != $currentVPNIP){
+ /* Update IP */
+ $ch = curl_init ("http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle");
+ curl_setopt($ch, CURLOPT_COOKIE, 'clueauth_tokenstack='.$ACCESSKEY);
+ curl_setopt($ch, CURLOPT_POSTFIELDS, 'nodename='.$NODENAME.'&amp;newip='.$currentIP.'&amp;newport=3406&amp;submit=Change');
+ curl_setopt($ch, CURLOPT_POST, 1);
+ curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+ $output = curl_exec ($ch);
 
-<span class="s1">if(strpos($output, &#39;</span><span class="nx">Success</span><span class="o">.</span><span class="s1">&#39;) != 0){</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
-<span class="s1"> }else{</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="k">Not</span> <span class="nx">Updated</span> <span class="nx">Successfully</span><span class="s1">&#39;.&quot;\n&quot;);</span>
-<span class="s1"> }</span>
-<span class="s1"> }else{</span>
-<span class="s1"> die(&#39;</span><span class="nx">IP</span> <span class="nx">has</span> <span class="k">not</span> <span class="nx">changed</span><span class="err">&#39;</span><span class="o">.</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
- <span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span></code></pre></div> </div> </article> <nav id=page_nav> <a href="/7/" class=prev>&laquo; Previous Page</a> <a href="/9/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script src="//mint.damianzaremba.co.uk/.js?v1" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
+if(strpos($output, 'Success.') != 0){
+ die('IP Updated Successfully'."\n");
+ }else{
+ die('IP Not Updated Successfully'."\n");
+ }
+ }else{
+ die('IP has not changed'."\n");
+ }
+?&gt;
+</code></pre> </div> </article> <nav id=page_nav> <a href="/7/" class=prev>&laquo; Previous Page</a> <a href="/9/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>

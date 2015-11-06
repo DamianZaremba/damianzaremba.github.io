@@ -1,8 +1,9 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - A very quick look at upgrading CentOS 6.5 to 7.0</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release</span>
-CentOS release 6.5 <span class="o">(</span>Final<span class="o">)</span>
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - A very quick look at upgrading CentOS 6.5 to 7.0</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <pre><code class="bash">[root@pingu ~]# cat /etc/redhat-release
+CentOS release 6.5 (Final)
 
-<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># uptime</span>
- 20:57:41 up 22:57,  <span class="m">1</span> user,  load average: 0.00, 0.04, 0.05</code></pre></div> <p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p> <p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p> <p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p> <h2>First update to the latest CentOS 6 release</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+[root@pingu ~]# uptime
+ 20:57:41 up 22:57,  1 user,  load average: 0.00, 0.04, 0.05
+</code></pre> <p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p> <p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p> <p>Since I have a new box that's not anywhere near production, what the hell... lets try this out.</p> <h2>First update to the latest CentOS 6 release</h2> <pre><code class="bash">[root@pingu ~]# yum update
 Loaded plugins: downloadonly, fastestmirror, security
 Loading mirror speeds from cached hostfile
  * base: mirrors.coreix.net
@@ -16,28 +17,28 @@ Resolving Dependencies
 ---&gt; Package initscripts.x86_64 0:9.03.40-2.el6.centos.2 will be an update
 --&gt; Finished Dependency Resolution
 
-Dependencies <span class="nv">Resolved</span>
+Dependencies Resolved
 
-<span class="o">=============================================================================================================================</span>
- Package                      Arch                    Version                                 Repository                <span class="nv">Size</span>
-<span class="o">=============================================================================================================================</span>
+=============================================================================================================================
+ Package                      Arch                    Version                                 Repository                Size
+=============================================================================================================================
 Updating:
- initscripts                  x86_64                  9.03.40-2.el6.centos.2                  updates                  <span class="m">940</span> k
+ initscripts                  x86_64                  9.03.40-2.el6.centos.2                  updates                  940 k
 
-Transaction <span class="nv">Summary</span>
-<span class="o">=============================================================================================================================</span>
-Upgrade       <span class="m">1</span> Package<span class="o">(</span>s<span class="o">)</span>
+Transaction Summary
+=============================================================================================================================
+Upgrade       1 Package(s)
 
-Total download size: <span class="m">940</span> k
-Is this ok <span class="o">[</span>y/N<span class="o">]</span>: y
+Total download size: 940 k
+Is this ok [y/N]: y
 Downloading Packages:
-initscripts-9.03.40-2.el6.centos.2.x86_64.rpm                                                         <span class="p">|</span> <span class="m">940</span> kB     00:00     
+initscripts-9.03.40-2.el6.centos.2.x86_64.rpm                                                         | 940 kB     00:00     
 Running rpm_check_debug
 Running Transaction Test
 Transaction Test Succeeded
 Running Transaction
   Updating   : initscripts-9.03.40-2.el6.centos.2.x86_64                                                                 1/2 
-Jul  <span class="m">8</span> 20:58:08 pingu yum<span class="o">[</span>6374<span class="o">]</span>: Updated: initscripts-9.03.40-2.el6.centos.2.x86_64
+Jul  8 20:58:08 pingu yum[6374]: Updated: initscripts-9.03.40-2.el6.centos.2.x86_64
   Cleanup    : initscripts-9.03.40-2.el6.centos.1.x86_64                                                                 2/2 
   Verifying  : initscripts-9.03.40-2.el6.centos.2.x86_64                                                                 1/2 
   Verifying  : initscripts-9.03.40-2.el6.centos.1.x86_64                                                                 2/2 
@@ -47,17 +48,18 @@ Updated:
 
 Complete!
 
-<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum upgrade</span>
+[root@pingu ~]# yum upgrade
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.clouvider.net
  * epel: mirror.vorboss.net
  * extras: centos.hyve.com
  * updates: centos.hyve.com
-No packages marked <span class="k">for</span> update</code></pre></div> <h2>Install the upgrade utils</h2> <p>These are still very much in dev and may explode all the things. See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm</span>
+No packages marked for update
+</code></pre> <h2>Install the upgrade utils</h2> <p>These are still very much in dev and may explode all the things. See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p> <pre><code class="bash">[root@pingu ~]# yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm
 Loaded plugins: downloadonly, fastestmirror, security
 Setting up Local Package Process
-preupgrade-assistant-1.0.2-33.el6.x86_64.rpm                                                          <span class="p">|</span> <span class="m">438</span> kB     00:01     
+preupgrade-assistant-1.0.2-33.el6.x86_64.rpm                                                          | 438 kB     00:01     
 Examining /var/tmp/yum-root-1lAuZF/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm: preupgrade-assistant-1.0.2-33.el6.x86_64
 Marking /var/tmp/yum-root-1lAuZF/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm to be installed
 Loading mirror speeds from cached hostfile
@@ -65,85 +67,85 @@ Loading mirror speeds from cached hostfile
  * epel: epel.mirror.constant.com
  * extras: mirrors.coreix.net
  * updates: mirrors.clouvider.net
-preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm                                                 <span class="p">|</span> <span class="m">588</span> kB     00:01     
+preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm                                                 | 588 kB     00:01     
 Examining /var/tmp/yum-root-1lAuZF/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm: preupgrade-assistant-contents-0.5.13-1.el6.noarch
 Marking /var/tmp/yum-root-1lAuZF/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm to be installed
-python-rhsm-1.9.7-1.el6.x86_64.rpm                                                                    <span class="p">|</span>  <span class="m">99</span> kB     00:00     
+python-rhsm-1.9.7-1.el6.x86_64.rpm                                                                    |  99 kB     00:00     
 Examining /var/tmp/yum-root-1lAuZF/python-rhsm-1.9.7-1.el6.x86_64.rpm: python-rhsm-1.9.7-1.el6.x86_64
 Marking /var/tmp/yum-root-1lAuZF/python-rhsm-1.9.7-1.el6.x86_64.rpm to be installed
-redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm                                                           <span class="p">|</span>  <span class="m">84</span> kB     00:00     
+redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm                                                           |  84 kB     00:00     
 Examining /var/tmp/yum-root-1lAuZF/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm: 1:redhat-upgrade-tool-0.7.22-1.el6.noarch
 Marking /var/tmp/yum-root-1lAuZF/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm to be installed
 Resolving Dependencies
 --&gt; Running transaction check
 ---&gt; Package preupgrade-assistant.x86_64 0:1.0.2-33.el6 will be installed
---&gt; Processing Dependency: openscap<span class="o">(</span>x86-64<span class="o">)</span> &gt;<span class="o">=</span> 0.9.3-1 <span class="k">for</span> package: preupgrade-assistant-1.0.2-33.el6.x86_64
---&gt; Processing Dependency: pkgconfig<span class="o">(</span>libpcre<span class="o">)</span> <span class="k">for</span> package: preupgrade-assistant-1.0.2-33.el6.x86_64
---&gt; Processing Dependency: pkgconfig<span class="o">(</span>libxml-2.0<span class="o">)</span> <span class="k">for</span> package: preupgrade-assistant-1.0.2-33.el6.x86_64
---&gt; Processing Dependency: pkgconfig<span class="o">(</span>libxslt<span class="o">)</span> <span class="k">for</span> package: preupgrade-assistant-1.0.2-33.el6.x86_64
+--&gt; Processing Dependency: openscap(x86-64) &gt;= 0.9.3-1 for package: preupgrade-assistant-1.0.2-33.el6.x86_64
+--&gt; Processing Dependency: pkgconfig(libpcre) for package: preupgrade-assistant-1.0.2-33.el6.x86_64
+--&gt; Processing Dependency: pkgconfig(libxml-2.0) for package: preupgrade-assistant-1.0.2-33.el6.x86_64
+--&gt; Processing Dependency: pkgconfig(libxslt) for package: preupgrade-assistant-1.0.2-33.el6.x86_64
 ---&gt; Package preupgrade-assistant-contents.noarch 0:0.5.13-1.el6 will be installed
 ---&gt; Package python-rhsm.x86_64 0:1.9.7-1.el6 will be installed
---&gt; Processing Dependency: m2crypto <span class="k">for</span> package: python-rhsm-1.9.7-1.el6.x86_64
---&gt; Processing Dependency: python-simplejson <span class="k">for</span> package: python-rhsm-1.9.7-1.el6.x86_64
+--&gt; Processing Dependency: m2crypto for package: python-rhsm-1.9.7-1.el6.x86_64
+--&gt; Processing Dependency: python-simplejson for package: python-rhsm-1.9.7-1.el6.x86_64
 ---&gt; Package redhat-upgrade-tool.noarch 1:0.7.22-1.el6 will be installed
 --&gt; Running transaction check
 ---&gt; Package libxml2-devel.x86_64 0:2.7.6-14.el6_5.2 will be installed
---&gt; Processing Dependency: zlib-devel <span class="k">for</span> package: libxml2-devel-2.7.6-14.el6_5.2.x86_64
+--&gt; Processing Dependency: zlib-devel for package: libxml2-devel-2.7.6-14.el6_5.2.x86_64
 ---&gt; Package libxslt-devel.x86_64 0:1.1.26-2.el6_3.1 will be installed
---&gt; Processing Dependency: libgcrypt-devel <span class="k">for</span> package: libxslt-devel-1.1.26-2.el6_3.1.x86_64
+--&gt; Processing Dependency: libgcrypt-devel for package: libxslt-devel-1.1.26-2.el6_3.1.x86_64
 ---&gt; Package m2crypto.x86_64 0:0.20.2-9.el6 will be installed
 ---&gt; Package openscap.x86_64 0:1.0.8-1.el6_5 will be installed
 ---&gt; Package pcre-devel.x86_64 0:7.8-6.el6 will be installed
 ---&gt; Package python-simplejson.x86_64 0:2.0.9-3.1.el6 will be installed
 --&gt; Running transaction check
 ---&gt; Package libgcrypt-devel.x86_64 0:1.4.5-11.el6_4 will be installed
---&gt; Processing Dependency: libgpg-error-devel <span class="k">for</span> package: libgcrypt-devel-1.4.5-11.el6_4.x86_64
+--&gt; Processing Dependency: libgpg-error-devel for package: libgcrypt-devel-1.4.5-11.el6_4.x86_64
 ---&gt; Package zlib-devel.x86_64 0:1.2.3-29.el6 will be installed
 --&gt; Running transaction check
 ---&gt; Package libgpg-error-devel.x86_64 0:1.7-4.el6 will be installed
 --&gt; Finished Dependency Resolution
 
-Dependencies <span class="nv">Resolved</span>
+Dependencies Resolved
 
-<span class="o">=============================================================================================================================</span>
- Package                          Arch      Version              Repository                                             <span class="nv">Size</span>
-<span class="o">=============================================================================================================================</span>
+=============================================================================================================================
+ Package                          Arch      Version              Repository                                             Size
+=============================================================================================================================
 Installing:
  preupgrade-assistant             x86_64    1.0.2-33.el6         /preupgrade-assistant-1.0.2-33.el6.x86_64             1.6 M
  preupgrade-assistant-contents    noarch    0.5.13-1.el6         /preupgrade-assistant-contents-0.5.13-1.el6.noarch    4.1 M
- python-rhsm                      x86_64    1.9.7-1.el6          /python-rhsm-1.9.7-1.el6.x86_64                       <span class="m">298</span> k
- redhat-upgrade-tool              noarch    1:0.7.22-1.el6       /redhat-upgrade-tool-0.7.22-1.el6.noarch              <span class="m">254</span> k
-Installing <span class="k">for</span> dependencies:
- libgcrypt-devel                  x86_64    1.4.5-11.el6_4       base                                                  <span class="m">118</span> k
- libgpg-error-devel               x86_64    1.7-4.el6            base                                                   <span class="m">14</span> k
+ python-rhsm                      x86_64    1.9.7-1.el6          /python-rhsm-1.9.7-1.el6.x86_64                       298 k
+ redhat-upgrade-tool              noarch    1:0.7.22-1.el6       /redhat-upgrade-tool-0.7.22-1.el6.noarch              254 k
+Installing for dependencies:
+ libgcrypt-devel                  x86_64    1.4.5-11.el6_4       base                                                  118 k
+ libgpg-error-devel               x86_64    1.7-4.el6            base                                                   14 k
  libxml2-devel                    x86_64    2.7.6-14.el6_5.2     updates                                               1.1 M
- libxslt-devel                    x86_64    1.1.26-2.el6_3.1     base                                                  <span class="m">561</span> k
- m2crypto                         x86_64    0.20.2-9.el6         base                                                  <span class="m">471</span> k
+ libxslt-devel                    x86_64    1.1.26-2.el6_3.1     base                                                  561 k
+ m2crypto                         x86_64    0.20.2-9.el6         base                                                  471 k
  openscap                         x86_64    1.0.8-1.el6_5        updates                                               2.9 M
- pcre-devel                       x86_64    7.8-6.el6            base                                                  <span class="m">318</span> k
- python-simplejson                x86_64    2.0.9-3.1.el6        base                                                  <span class="m">126</span> k
- zlib-devel                       x86_64    1.2.3-29.el6         base                                                   <span class="m">44</span> k
+ pcre-devel                       x86_64    7.8-6.el6            base                                                  318 k
+ python-simplejson                x86_64    2.0.9-3.1.el6        base                                                  126 k
+ zlib-devel                       x86_64    1.2.3-29.el6         base                                                   44 k
 
-Transaction <span class="nv">Summary</span>
-<span class="o">=============================================================================================================================</span>
-Install      <span class="m">13</span> Package<span class="o">(</span>s<span class="o">)</span>
+Transaction Summary
+=============================================================================================================================
+Install      13 Package(s)
 
-Total size: <span class="m">12</span> M
+Total size: 12 M
 Total download size: 5.6 M
-Installed size: <span class="m">64</span> M
-Is this ok <span class="o">[</span>y/N<span class="o">]</span>: y
+Installed size: 64 M
+Is this ok [y/N]: y
 Downloading Packages:
-<span class="o">(</span>1/9<span class="o">)</span>: libgcrypt-devel-1.4.5-11.el6_4.x86_64.rpm                                                      <span class="p">|</span> <span class="m">118</span> kB     00:00     
-<span class="o">(</span>2/9<span class="o">)</span>: libgpg-error-devel-1.7-4.el6.x86_64.rpm                                                        <span class="p">|</span>  <span class="m">14</span> kB     00:00     
-<span class="o">(</span>3/9<span class="o">)</span>: libxml2-devel-2.7.6-14.el6_5.2.x86_64.rpm                                                      <span class="p">|</span> 1.1 MB     00:00     
-<span class="o">(</span>4/9<span class="o">)</span>: libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm                                                      <span class="p">|</span> <span class="m">561</span> kB     00:00     
-<span class="o">(</span>5/9<span class="o">)</span>: m2crypto-0.20.2-9.el6.x86_64.rpm                                                               <span class="p">|</span> <span class="m">471</span> kB     00:00     
-<span class="o">(</span>6/9<span class="o">)</span>: openscap-1.0.8-1.el6_5.x86_64.rpm                                                              <span class="p">|</span> 2.9 MB     00:01     
-<span class="o">(</span>7/9<span class="o">)</span>: pcre-devel-7.8-6.el6.x86_64.rpm                                                                <span class="p">|</span> <span class="m">318</span> kB     00:00     
-<span class="o">(</span>8/9<span class="o">)</span>: python-simplejson-2.0.9-3.1.el6.x86_64.rpm                                                     <span class="p">|</span> <span class="m">126</span> kB     00:00     
-<span class="o">(</span>9/9<span class="o">)</span>: zlib-devel-1.2.3-29.el6.x86_64.rpm                                                             <span class="p">|</span>  <span class="m">44</span> kB     00:00     
+(1/9): libgcrypt-devel-1.4.5-11.el6_4.x86_64.rpm                                                      | 118 kB     00:00     
+(2/9): libgpg-error-devel-1.7-4.el6.x86_64.rpm                                                        |  14 kB     00:00     
+(3/9): libxml2-devel-2.7.6-14.el6_5.2.x86_64.rpm                                                      | 1.1 MB     00:00     
+(4/9): libxslt-devel-1.1.26-2.el6_3.1.x86_64.rpm                                                      | 561 kB     00:00     
+(5/9): m2crypto-0.20.2-9.el6.x86_64.rpm                                                               | 471 kB     00:00     
+(6/9): openscap-1.0.8-1.el6_5.x86_64.rpm                                                              | 2.9 MB     00:01     
+(7/9): pcre-devel-7.8-6.el6.x86_64.rpm                                                                | 318 kB     00:00     
+(8/9): python-simplejson-2.0.9-3.1.el6.x86_64.rpm                                                     | 126 kB     00:00     
+(9/9): zlib-devel-1.2.3-29.el6.x86_64.rpm                                                             |  44 kB     00:00     
 -----------------------------------------------------------------------------------------------------------------------------
-Total                                                                                        2.1 MB/s <span class="p">|</span> 5.6 MB     00:02     
+Total                                                                                        2.1 MB/s | 5.6 MB     00:02     
 Running rpm_check_debug
 Running Transaction Test
 Transaction Test Succeeded
@@ -184,279 +186,288 @@ Dependency Installed:
   libxslt-devel.x86_64 0:1.1.26-2.el6_3.1  m2crypto.x86_64 0:0.20.2-9.el6            openscap.x86_64 0:1.0.8-1.el6_5         
   pcre-devel.x86_64 0:7.8-6.el6            python-simplejson.x86_64 0:2.0.9-3.1.el6  zlib-devel.x86_64 0:1.2.3-29.el6        
 
-Complete!</code></pre></div> <h2>Check for potential problems</h2> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># preupg</span>
-Preupg tool doesn<span class="err">&#39;</span>t <span class="k">do</span> the actual upgrade.
+Complete!
+</code></pre> <h2>Check for potential problems</h2> <pre><code class="bash">[root@pingu ~]# preupg
+Preupg tool doesn't do the actual upgrade.
 Please ensure you have backed up your system and/or data in the event of a failed upgrade
  that would require a full re-install of the system from installation media.
-Do you want to <span class="k">continue</span>? y/n
+Do you want to continue? y/n
 y
 Gathering logs used by preupgrade assistant:
-All installed packages : 01/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-All changed files      : 02/10 ...finished <span class="o">(</span><span class="nb">time </span>01:09s<span class="o">)</span>
-Changed config files   : 03/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-All users              : 04/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-All groups             : 05/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-Service statuses       : 06/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-All installed files    : 07/10 ...finished <span class="o">(</span><span class="nb">time </span>00:01s<span class="o">)</span>
-All <span class="nb">local </span>files        : 08/10 ...finished <span class="o">(</span><span class="nb">time </span>00:01s<span class="o">)</span>
-All executable files   : 09/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-RedHat signed packages : 10/10 ...finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
+All installed packages : 01/10 ...finished (time 00:00s)
+All changed files      : 02/10 ...finished (time 01:09s)
+Changed config files   : 03/10 ...finished (time 00:00s)
+All users              : 04/10 ...finished (time 00:00s)
+All groups             : 05/10 ...finished (time 00:00s)
+Service statuses       : 06/10 ...finished (time 00:00s)
+All installed files    : 07/10 ...finished (time 00:01s)
+All local files        : 08/10 ...finished (time 00:01s)
+All executable files   : 09/10 ...finished (time 00:00s)
+RedHat signed packages : 10/10 ...finished (time 00:00s)
 Assessment of the system, running checks / SCE scripts:
-001/100 ...done    <span class="o">(</span>Configuration Files to Review<span class="o">)</span>
-002/100 ...done    <span class="o">(</span>File Lists <span class="k">for</span> Manual Migration<span class="o">)</span>
-003/100 ...done    <span class="o">(</span>Bacula Backup Software<span class="o">)</span>
-004/100 ...done    <span class="o">(</span>MySQL configuration<span class="o">)</span>
-005/100 ...done    <span class="o">(</span>Migration of the MySQL data stack<span class="o">)</span>
-006/100 ...done    <span class="o">(</span>General changes in default MySQL implementation<span class="o">)</span>
-007/100 ...done    <span class="o">(</span>PostgreSQL upgrade content<span class="o">)</span>
-008/100 ...done    <span class="o">(</span>GNOME Desktop Environment underwent several design modifications in Red Hat Enterprise Linux <span class="m">7</span> release<span class="o">)</span>
-009/100 ...done    <span class="o">(</span>KDE Desktop Environment underwent several design modifications in Red Hat Enterprise Linux <span class="m">7</span> release<span class="o">)</span>
-010/100 ...done    <span class="o">(</span>several graphic drivers not supported in Red Hat Enterprise Linux 7<span class="o">)</span>
-011/100 ...done    <span class="o">(</span>several input drivers not supported in Red Hat Enterprise Linux 7<span class="o">)</span>
-012/100 ...done    <span class="o">(</span>several kernel networking drivers not available in Red Hat Enterprise Linux 7<span class="o">)</span>
-013/100 ...done    <span class="o">(</span>several kernel storage drivers not available in Red Hat Enterprise Linux 7<span class="o">)</span>
-014/100 ...done    <span class="o">(</span>Names, Options and Output Format Changes in arptables<span class="o">)</span>
-015/100 ...done    <span class="o">(</span>BIND9 running in a chroot environment check.<span class="o">)</span>
-016/100 ...done    <span class="o">(</span>BIND9 configuration compatibility check<span class="o">)</span>
-017/100 ...done    <span class="o">(</span>Move dhcpd/dhcprelay arguments from /etc/sysconfig/* to *.service files<span class="o">)</span>
-018/100 ...done    <span class="o">(</span>DNSMASQ configuration compatibility check<span class="o">)</span>
-019/100 ...done    <span class="o">(</span>Dovecot configuration compatibility check<span class="o">)</span>
-020/100 ...done    <span class="o">(</span>Compatibility Between iptables and ip6tables<span class="o">)</span>
-021/100 ...done    <span class="o">(</span>Net-SNMP check<span class="o">)</span>
-022/100 ...done    <span class="o">(</span>Squid configuration compatibility check<span class="o">)</span>
-023/100 ...done    <span class="o">(</span>Reusable Configuration Files<span class="o">)</span>
-024/100 ...done    <span class="o">(</span>VCS repositories<span class="o">)</span>
-025/100 ...done    <span class="o">(</span>Added and extended options <span class="k">for</span> BIND9 configuration<span class="o">)</span>
-026/100 ...done    <span class="o">(</span>Added options in DNSMASQ configuration<span class="o">)</span>
-027/100 ...done    <span class="o">(</span>Packages not signed by Red Hat<span class="o">)</span>
-028/100 ...done    <span class="o">(</span>Obsoleted rpms<span class="o">)</span>
-029/100 ...done    <span class="o">(</span>w3m not available in Red Hat Enterprise Linux 7<span class="o">)</span>
-030/100 ...done    <span class="o">(</span>report incompatibilities between Red Hat Enterprise Linux <span class="m">6</span> and <span class="m">7</span> in qemu-guest-agent package<span class="o">)</span>
-031/100 ...done    <span class="o">(</span>Removed options in coreutils binaries<span class="o">)</span>
-032/100 ...done    <span class="o">(</span>Removed options in gawk binaries<span class="o">)</span>
-033/100 ...done    <span class="o">(</span>Removed options in netstat binary<span class="o">)</span>
-034/100 ...done    <span class="o">(</span>Removed options in quota tools<span class="o">)</span>
-035/100 ...done    <span class="o">(</span>Removed rpms<span class="o">)</span>
-036/100 ...done    <span class="o">(</span>Replaced rpms<span class="o">)</span>
-037/100 ...done    <span class="o">(</span>GMP library incompatibilities<span class="o">)</span>
-038/100 ...done    <span class="o">(</span>optional channel problems<span class="o">)</span>
-039/100 ...done    <span class="o">(</span>package downgrades<span class="o">)</span>
-040/100 ...done    <span class="o">(</span>restore custom selinux configuration<span class="o">)</span>
-041/100 ...done    <span class="o">(</span>General<span class="o">)</span>
-042/100 ...done    <span class="o">(</span>samba shared directories selinux<span class="o">)</span>
-043/100 ...done    <span class="o">(</span>CUPS Browsing/BrowsePoll configuration<span class="o">)</span>
-044/100 ...done    <span class="o">(</span>CVS Package Split<span class="o">)</span>
-045/100 ...done    <span class="o">(</span>FreeRADIUS Upgrade Verification<span class="o">)</span>
-046/100 ...done    <span class="o">(</span>httpd configuration compatibility check<span class="o">)</span>
-047/100 ...done    <span class="o">(</span><span class="nb">bind</span>-dyndb-ldap<span class="o">)</span>
-048/100 ...done    <span class="o">(</span>Identity Management Server compatibility check<span class="o">)</span>
-049/100 ...done    <span class="o">(</span>IPA Server CA Verification<span class="o">)</span>
-050/100 ...done    <span class="o">(</span>NTP configuration<span class="o">)</span>
-051/100 ...done    <span class="o">(</span>Information on <span class="nb">time</span>-sync.target<span class="o">)</span>
-052/100 ...done    <span class="o">(</span>OpenLDAP /etc/sysconfig and data compatibility<span class="o">)</span>
-053/100 ...done    <span class="o">(</span>OpenSSH sshd_config migration content<span class="o">)</span>
-054/100 ...done    <span class="o">(</span>OpenSSH sysconfig migration content<span class="o">)</span>
-055/100 ...done    <span class="o">(</span>Configuration <span class="k">for</span> quota_nld service<span class="o">)</span>
-056/100 ...done    <span class="o">(</span>Disk quota netlink message daemon moved into quota-nld package<span class="o">)</span>
-057/100 ...done    <span class="o">(</span>SSSD compatibility check<span class="o">)</span>
-058/100 ...done    <span class="o">(</span>Luks encrypted partition<span class="o">)</span>
-059/100 ...done    <span class="o">(</span>Clvmd and cmirrord daemon management.<span class="o">)</span>
-060/100 ...done    <span class="o">(</span>State of LVM2 services.<span class="o">)</span>
-061/100 ...done    <span class="o">(</span>device-mapper-multipath configuration compatibility check<span class="o">)</span>
-062/100 ...done    <span class="o">(</span>Removal of scsi-target-utils<span class="o">)</span>
-063/100 ...done    <span class="o">(</span>Configuration <span class="k">for</span> warnquota tool<span class="o">)</span>
-064/100 ...done    <span class="o">(</span>Disk quota tool warnquota moved into quota-warnquota package<span class="o">)</span>
-065/100 ...done    <span class="o">(</span>Check <span class="k">for</span> Add-On availability<span class="o">)</span>
-066/100 ...done    <span class="o">(</span>Architecture Support<span class="o">)</span>
-067/100 ...done    <span class="o">(</span>Binary rebuilds<span class="o">)</span>
-068/100 ...done    <span class="o">(</span>Debuginfo packages<span class="o">)</span>
-069/100 ...done    <span class="o">(</span>Cluster and High Availablility<span class="o">)</span>
-070/100 ...done    <span class="o">(</span>fix krb5kdc config file<span class="o">)</span>
-071/100 ...done    <span class="o">(</span>File Systems, Partitions and Mounts Configuration Review<span class="o">)</span>
-072/100 ...done    <span class="o">(</span>Read Only FHS directories<span class="o">)</span>
-073/100 ...done    <span class="o">(</span>Red Hat Enterprise Linux Server variant<span class="o">)</span>
-074/100 ...done    <span class="o">(</span>Sonamebumped libs<span class="o">)</span>
-075/100 ...done    <span class="o">(</span>SonameKept Reusable Dynamic Libraries<span class="o">)</span>
-076/100 ...done    <span class="o">(</span>Removed .so libs<span class="o">)</span>
-077/100 ...done    <span class="o">(</span>In-place Upgrade Requirements <span class="k">for</span> the /usr/ Directory<span class="o">)</span>
-078/100 ...done    <span class="o">(</span>CA certificate bundles modified<span class="o">)</span>
-079/100 ...done    <span class="o">(</span>Developer Tool Set packages<span class="o">)</span>
-080/100 ...done    <span class="o">(</span>Hyper-V<span class="o">)</span>
-081/100 ...done    <span class="o">(</span>Content <span class="k">for</span> enabling and disabling services based on RHEL <span class="m">6</span> system<span class="o">)</span>
-082/100 ...done    <span class="o">(</span>Check <span class="k">for</span> ethernet interface naming<span class="o">)</span>
-083/100 ...done    <span class="o">(</span>User modification in /etc/rc.local and /etc/rc.d/rc.local<span class="o">)</span>
-084/100 ...done    <span class="o">(</span>cgroups configuration compatibility check<span class="o">)</span>
-085/100 ...done    <span class="o">(</span>Plugable authentication modules <span class="o">(</span>PAM<span class="o">))</span>
-086/100 ...done    <span class="o">(</span>Foreign Perl modules<span class="o">)</span>
-087/100 ...done    <span class="o">(</span>Python 2.7.5<span class="o">)</span>
-088/100 ...done    <span class="o">(</span>Ruby 2.0.0<span class="o">)</span>
-089/100 ...done    <span class="o">(</span>SCL collections<span class="o">)</span>
-090/100 ...done    <span class="o">(</span>Red Hat Subscription Manager<span class="o">)</span>
-091/100 ...done    <span class="o">(</span>Red Hat Network Classic Unsupported<span class="o">)</span>
-092/100 ...done    <span class="o">(</span>System kickstart<span class="o">)</span>
-093/100 ...done    <span class="o">(</span>YUM<span class="o">)</span>
-094/100 ...done    <span class="o">(</span>Check <span class="k">for</span> usage of dangerous range of UID/GIDs<span class="o">)</span>
-095/100 ...done    <span class="o">(</span>Incorrect usage of reserved UID/GIDs<span class="o">)</span>
-096/100 ...done    <span class="o">(</span>NIS ypbind config files back-up<span class="o">)</span>
-097/100 ...done    <span class="o">(</span>NIS Makefile back-up<span class="o">)</span>
-098/100 ...done    <span class="o">(</span>NIS server maps check<span class="o">)</span>
-099/100 ...done    <span class="o">(</span>NIS server MAXUID and MAXGID limits check<span class="o">)</span>
-100/100 ...done    <span class="o">(</span>NIS server config file back-up<span class="o">)</span>
-Assessment finished <span class="o">(</span><span class="nb">time </span>00:00s<span class="o">)</span>
-Result table with checks and their results <span class="k">for</span> main contents:
+001/100 ...done    (Configuration Files to Review)
+002/100 ...done    (File Lists for Manual Migration)
+003/100 ...done    (Bacula Backup Software)
+004/100 ...done    (MySQL configuration)
+005/100 ...done    (Migration of the MySQL data stack)
+006/100 ...done    (General changes in default MySQL implementation)
+007/100 ...done    (PostgreSQL upgrade content)
+008/100 ...done    (GNOME Desktop Environment underwent several design modifications in Red Hat Enterprise Linux 7 release)
+009/100 ...done    (KDE Desktop Environment underwent several design modifications in Red Hat Enterprise Linux 7 release)
+010/100 ...done    (several graphic drivers not supported in Red Hat Enterprise Linux 7)
+011/100 ...done    (several input drivers not supported in Red Hat Enterprise Linux 7)
+012/100 ...done    (several kernel networking drivers not available in Red Hat Enterprise Linux 7)
+013/100 ...done    (several kernel storage drivers not available in Red Hat Enterprise Linux 7)
+014/100 ...done    (Names, Options and Output Format Changes in arptables)
+015/100 ...done    (BIND9 running in a chroot environment check.)
+016/100 ...done    (BIND9 configuration compatibility check)
+017/100 ...done    (Move dhcpd/dhcprelay arguments from /etc/sysconfig/* to *.service files)
+018/100 ...done    (DNSMASQ configuration compatibility check)
+019/100 ...done    (Dovecot configuration compatibility check)
+020/100 ...done    (Compatibility Between iptables and ip6tables)
+021/100 ...done    (Net-SNMP check)
+022/100 ...done    (Squid configuration compatibility check)
+023/100 ...done    (Reusable Configuration Files)
+024/100 ...done    (VCS repositories)
+025/100 ...done    (Added and extended options for BIND9 configuration)
+026/100 ...done    (Added options in DNSMASQ configuration)
+027/100 ...done    (Packages not signed by Red Hat)
+028/100 ...done    (Obsoleted rpms)
+029/100 ...done    (w3m not available in Red Hat Enterprise Linux 7)
+030/100 ...done    (report incompatibilities between Red Hat Enterprise Linux 6 and 7 in qemu-guest-agent package)
+031/100 ...done    (Removed options in coreutils binaries)
+032/100 ...done    (Removed options in gawk binaries)
+033/100 ...done    (Removed options in netstat binary)
+034/100 ...done    (Removed options in quota tools)
+035/100 ...done    (Removed rpms)
+036/100 ...done    (Replaced rpms)
+037/100 ...done    (GMP library incompatibilities)
+038/100 ...done    (optional channel problems)
+039/100 ...done    (package downgrades)
+040/100 ...done    (restore custom selinux configuration)
+041/100 ...done    (General)
+042/100 ...done    (samba shared directories selinux)
+043/100 ...done    (CUPS Browsing/BrowsePoll configuration)
+044/100 ...done    (CVS Package Split)
+045/100 ...done    (FreeRADIUS Upgrade Verification)
+046/100 ...done    (httpd configuration compatibility check)
+047/100 ...done    (bind-dyndb-ldap)
+048/100 ...done    (Identity Management Server compatibility check)
+049/100 ...done    (IPA Server CA Verification)
+050/100 ...done    (NTP configuration)
+051/100 ...done    (Information on time-sync.target)
+052/100 ...done    (OpenLDAP /etc/sysconfig and data compatibility)
+053/100 ...done    (OpenSSH sshd_config migration content)
+054/100 ...done    (OpenSSH sysconfig migration content)
+055/100 ...done    (Configuration for quota_nld service)
+056/100 ...done    (Disk quota netlink message daemon moved into quota-nld package)
+057/100 ...done    (SSSD compatibility check)
+058/100 ...done    (Luks encrypted partition)
+059/100 ...done    (Clvmd and cmirrord daemon management.)
+060/100 ...done    (State of LVM2 services.)
+061/100 ...done    (device-mapper-multipath configuration compatibility check)
+062/100 ...done    (Removal of scsi-target-utils)
+063/100 ...done    (Configuration for warnquota tool)
+064/100 ...done    (Disk quota tool warnquota moved into quota-warnquota package)
+065/100 ...done    (Check for Add-On availability)
+066/100 ...done    (Architecture Support)
+067/100 ...done    (Binary rebuilds)
+068/100 ...done    (Debuginfo packages)
+069/100 ...done    (Cluster and High Availablility)
+070/100 ...done    (fix krb5kdc config file)
+071/100 ...done    (File Systems, Partitions and Mounts Configuration Review)
+072/100 ...done    (Read Only FHS directories)
+073/100 ...done    (Red Hat Enterprise Linux Server variant)
+074/100 ...done    (Sonamebumped libs)
+075/100 ...done    (SonameKept Reusable Dynamic Libraries)
+076/100 ...done    (Removed .so libs)
+077/100 ...done    (In-place Upgrade Requirements for the /usr/ Directory)
+078/100 ...done    (CA certificate bundles modified)
+079/100 ...done    (Developer Tool Set packages)
+080/100 ...done    (Hyper-V)
+081/100 ...done    (Content for enabling and disabling services based on RHEL 6 system)
+082/100 ...done    (Check for ethernet interface naming)
+083/100 ...done    (User modification in /etc/rc.local and /etc/rc.d/rc.local)
+084/100 ...done    (cgroups configuration compatibility check)
+085/100 ...done    (Plugable authentication modules (PAM))
+086/100 ...done    (Foreign Perl modules)
+087/100 ...done    (Python 2.7.5)
+088/100 ...done    (Ruby 2.0.0)
+089/100 ...done    (SCL collections)
+090/100 ...done    (Red Hat Subscription Manager)
+091/100 ...done    (Red Hat Network Classic Unsupported)
+092/100 ...done    (System kickstart)
+093/100 ...done    (YUM)
+094/100 ...done    (Check for usage of dangerous range of UID/GIDs)
+095/100 ...done    (Incorrect usage of reserved UID/GIDs)
+096/100 ...done    (NIS ypbind config files back-up)
+097/100 ...done    (NIS Makefile back-up)
+098/100 ...done    (NIS server maps check)
+099/100 ...done    (NIS server MAXUID and MAXGID limits check)
+100/100 ...done    (NIS server config file back-up)
+Assessment finished (time 00:00s)
+Result table with checks and their results for main contents:
 ------------------------------------------------------------------------------------------------------------------------------
-<span class="p">|</span>Configuration Files to Review                                                                               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>File Lists <span class="k">for</span> Manual Migration                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Bacula Backup Software                                                                                      <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>MySQL configuration                                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Migration of the MySQL data stack                                                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>General changes in default MySQL implementation                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>PostgreSQL upgrade content                                                                                  <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>GNOME Desktop Environment underwent several design modifications in Red Hat Enterprise Linux <span class="m">7</span> release      <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>KDE Desktop Environment underwent several design modifications in Red Hat Enterprise Linux <span class="m">7</span> release        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>several graphic drivers not supported in Red Hat Enterprise Linux <span class="m">7</span>                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>several input drivers not supported in Red Hat Enterprise Linux <span class="m">7</span>                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>several kernel networking drivers not available in Red Hat Enterprise Linux <span class="m">7</span>                               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>several kernel storage drivers not available in Red Hat Enterprise Linux <span class="m">7</span>                                  <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Names, Options and Output Format Changes in arptables                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>BIND9 running in a chroot environment check.                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>BIND9 configuration compatibility check                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Move dhcpd/dhcprelay arguments from /etc/sysconfig/* to *.service files                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>DNSMASQ configuration compatibility check                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Dovecot configuration compatibility check                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Compatibility Between iptables and ip6tables                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Net-SNMP check                                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Squid configuration compatibility check                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Reusable Configuration Files                                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>VCS repositories                                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Added and extended options <span class="k">for</span> BIND9 configuration                                                          <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Added options in DNSMASQ configuration                                                                      <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Packages not signed by Red Hat                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Obsoleted rpms                                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>w3m not available in Red Hat Enterprise Linux <span class="m">7</span>                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>report incompatibilities between Red Hat Enterprise Linux <span class="m">6</span> and <span class="m">7</span> in qemu-guest-agent package               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed options in coreutils binaries                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed options in gawk binaries                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed options in netstat binary                                                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed options in quota tools                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed rpms                                                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Replaced rpms                                                                                               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>GMP library incompatibilities                                                                               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>optional channel problems                                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>package downgrades                                                                                          <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>restore custom selinux configuration                                                                        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>General                                                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>samba shared directories selinux                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>CUPS Browsing/BrowsePoll configuration                                                                      <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>CVS Package Split                                                                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>FreeRADIUS Upgrade Verification                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>httpd configuration compatibility check                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span><span class="nb">bind</span>-dyndb-ldap                                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Identity Management Server compatibility check                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>IPA Server CA Verification                                                                                  <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NTP configuration                                                                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Information on <span class="nb">time</span>-sync.target                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>OpenLDAP /etc/sysconfig and data compatibility                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>OpenSSH sshd_config migration content                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>OpenSSH sysconfig migration content                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Configuration <span class="k">for</span> quota_nld service                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Disk quota netlink message daemon moved into quota-nld package                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>SSSD compatibility check                                                                                    <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Luks encrypted partition                                                                                    <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Clvmd and cmirrord daemon management.                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>State of LVM2 services.                                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>device-mapper-multipath configuration compatibility check                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removal of scsi-target-utils                                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Configuration <span class="k">for</span> warnquota tool                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Disk quota tool warnquota moved into quota-warnquota package                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Check <span class="k">for</span> Add-On availability                                                                               <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Architecture Support                                                                                        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Binary rebuilds                                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Debuginfo packages                                                                                          <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Cluster and High Availablility                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>fix krb5kdc config file                                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>File Systems, Partitions and Mounts Configuration Review                                                    <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Read Only FHS directories                                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Red Hat Enterprise Linux Server variant                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Sonamebumped libs                                                                                           <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>SonameKept Reusable Dynamic Libraries                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Removed .so libs                                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>In-place Upgrade Requirements <span class="k">for</span> the /usr/ Directory                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>CA certificate bundles modified                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Developer Tool Set packages                                                                                 <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Hyper-V                                                                                                     <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Content <span class="k">for</span> enabling and disabling services based on RHEL <span class="m">6</span> system                                          <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Check <span class="k">for</span> ethernet interface naming                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>User modification in /etc/rc.local and /etc/rc.d/rc.local                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>cgroups configuration compatibility check                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Plugable authentication modules <span class="o">(</span>PAM<span class="o">)</span>                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Foreign Perl modules                                                                                        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Python 2.7.5                                                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Ruby 2.0.0                                                                                                  <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>SCL collections                                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Red Hat Network Classic Unsupported                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Red Hat Subscription Manager                                                                                <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>System kickstart                                                                                            <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>YUM                                                                                                         <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Check <span class="k">for</span> usage of dangerous range of UID/GIDs                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>Incorrect usage of reserved UID/GIDs                                                                        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NIS ypbind config files back-up                                                                             <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NIS Makefile back-up                                                                                        <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NIS server maps check                                                                                       <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NIS server MAXUID and MAXGID limits check                                                                   <span class="p">|</span>notapplicable  <span class="p">|</span>
-<span class="p">|</span>NIS server config file back-up                                                                              <span class="p">|</span>notapplicable  <span class="p">|</span>
+|Configuration Files to Review                                                                               |notapplicable  |
+|File Lists for Manual Migration                                                                             |notapplicable  |
+|Bacula Backup Software                                                                                      |notapplicable  |
+|MySQL configuration                                                                                         |notapplicable  |
+|Migration of the MySQL data stack                                                                           |notapplicable  |
+|General changes in default MySQL implementation                                                             |notapplicable  |
+|PostgreSQL upgrade content                                                                                  |notapplicable  |
+|GNOME Desktop Environment underwent several design modifications in Red Hat Enterprise Linux 7 release      |notapplicable  |
+|KDE Desktop Environment underwent several design modifications in Red Hat Enterprise Linux 7 release        |notapplicable  |
+|several graphic drivers not supported in Red Hat Enterprise Linux 7                                         |notapplicable  |
+|several input drivers not supported in Red Hat Enterprise Linux 7                                           |notapplicable  |
+|several kernel networking drivers not available in Red Hat Enterprise Linux 7                               |notapplicable  |
+|several kernel storage drivers not available in Red Hat Enterprise Linux 7                                  |notapplicable  |
+|Names, Options and Output Format Changes in arptables                                                       |notapplicable  |
+|BIND9 running in a chroot environment check.                                                                |notapplicable  |
+|BIND9 configuration compatibility check                                                                     |notapplicable  |
+|Move dhcpd/dhcprelay arguments from /etc/sysconfig/* to *.service files                                     |notapplicable  |
+|DNSMASQ configuration compatibility check                                                                   |notapplicable  |
+|Dovecot configuration compatibility check                                                                   |notapplicable  |
+|Compatibility Between iptables and ip6tables                                                                |notapplicable  |
+|Net-SNMP check                                                                                              |notapplicable  |
+|Squid configuration compatibility check                                                                     |notapplicable  |
+|Reusable Configuration Files                                                                                |notapplicable  |
+|VCS repositories                                                                                            |notapplicable  |
+|Added and extended options for BIND9 configuration                                                          |notapplicable  |
+|Added options in DNSMASQ configuration                                                                      |notapplicable  |
+|Packages not signed by Red Hat                                                                              |notapplicable  |
+|Obsoleted rpms                                                                                              |notapplicable  |
+|w3m not available in Red Hat Enterprise Linux 7                                                             |notapplicable  |
+|report incompatibilities between Red Hat Enterprise Linux 6 and 7 in qemu-guest-agent package               |notapplicable  |
+|Removed options in coreutils binaries                                                                       |notapplicable  |
+|Removed options in gawk binaries                                                                            |notapplicable  |
+|Removed options in netstat binary                                                                           |notapplicable  |
+|Removed options in quota tools                                                                              |notapplicable  |
+|Removed rpms                                                                                                |notapplicable  |
+|Replaced rpms                                                                                               |notapplicable  |
+|GMP library incompatibilities                                                                               |notapplicable  |
+|optional channel problems                                                                                   |notapplicable  |
+|package downgrades                                                                                          |notapplicable  |
+|restore custom selinux configuration                                                                        |notapplicable  |
+|General                                                                                                     |notapplicable  |
+|samba shared directories selinux                                                                            |notapplicable  |
+|CUPS Browsing/BrowsePoll configuration                                                                      |notapplicable  |
+|CVS Package Split                                                                                           |notapplicable  |
+|FreeRADIUS Upgrade Verification                                                                             |notapplicable  |
+|httpd configuration compatibility check                                                                     |notapplicable  |
+|bind-dyndb-ldap                                                                                             |notapplicable  |
+|Identity Management Server compatibility check                                                              |notapplicable  |
+|IPA Server CA Verification                                                                                  |notapplicable  |
+|NTP configuration                                                                                           |notapplicable  |
+|Information on time-sync.target                                                                             |notapplicable  |
+|OpenLDAP /etc/sysconfig and data compatibility                                                              |notapplicable  |
+|OpenSSH sshd_config migration content                                                                       |notapplicable  |
+|OpenSSH sysconfig migration content                                                                         |notapplicable  |
+|Configuration for quota_nld service                                                                         |notapplicable  |
+|Disk quota netlink message daemon moved into quota-nld package                                              |notapplicable  |
+|SSSD compatibility check                                                                                    |notapplicable  |
+|Luks encrypted partition                                                                                    |notapplicable  |
+|Clvmd and cmirrord daemon management.                                                                       |notapplicable  |
+|State of LVM2 services.                                                                                     |notapplicable  |
+|device-mapper-multipath configuration compatibility check                                                   |notapplicable  |
+|Removal of scsi-target-utils                                                                                |notapplicable  |
+|Configuration for warnquota tool                                                                            |notapplicable  |
+|Disk quota tool warnquota moved into quota-warnquota package                                                |notapplicable  |
+|Check for Add-On availability                                                                               |notapplicable  |
+|Architecture Support                                                                                        |notapplicable  |
+|Binary rebuilds                                                                                             |notapplicable  |
+|Debuginfo packages                                                                                          |notapplicable  |
+|Cluster and High Availablility                                                                              |notapplicable  |
+|fix krb5kdc config file                                                                                     |notapplicable  |
+|File Systems, Partitions and Mounts Configuration Review                                                    |notapplicable  |
+|Read Only FHS directories                                                                                   |notapplicable  |
+|Red Hat Enterprise Linux Server variant                                                                     |notapplicable  |
+|Sonamebumped libs                                                                                           |notapplicable  |
+|SonameKept Reusable Dynamic Libraries                                                                       |notapplicable  |
+|Removed .so libs                                                                                            |notapplicable  |
+|In-place Upgrade Requirements for the /usr/ Directory                                                       |notapplicable  |
+|CA certificate bundles modified                                                                             |notapplicable  |
+|Developer Tool Set packages                                                                                 |notapplicable  |
+|Hyper-V                                                                                                     |notapplicable  |
+|Content for enabling and disabling services based on RHEL 6 system                                          |notapplicable  |
+|Check for ethernet interface naming                                                                         |notapplicable  |
+|User modification in /etc/rc.local and /etc/rc.d/rc.local                                                   |notapplicable  |
+|cgroups configuration compatibility check                                                                   |notapplicable  |
+|Plugable authentication modules (PAM)                                                                       |notapplicable  |
+|Foreign Perl modules                                                                                        |notapplicable  |
+|Python 2.7.5                                                                                                |notapplicable  |
+|Ruby 2.0.0                                                                                                  |notapplicable  |
+|SCL collections                                                                                             |notapplicable  |
+|Red Hat Network Classic Unsupported                                                                         |notapplicable  |
+|Red Hat Subscription Manager                                                                                |notapplicable  |
+|System kickstart                                                                                            |notapplicable  |
+|YUM                                                                                                         |notapplicable  |
+|Check for usage of dangerous range of UID/GIDs                                                              |notapplicable  |
+|Incorrect usage of reserved UID/GIDs                                                                        |notapplicable  |
+|NIS ypbind config files back-up                                                                             |notapplicable  |
+|NIS Makefile back-up                                                                                        |notapplicable  |
+|NIS server maps check                                                                                       |notapplicable  |
+|NIS server MAXUID and MAXGID limits check                                                                   |notapplicable  |
+|NIS server config file back-up                                                                              |notapplicable  |
 ------------------------------------------------------------------------------------------------------------------------------
 Tarball with results is stored here /root/preupgrade-results/preupg_results-140708210602.tar.gz .
 The latest assessment is stored in directory /root/preupgrade .
-Upload results to UI by <span class="nb">command</span>:
-e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .</code></pre></div> <p>Hopefully everything looks ok and you can continue with the upgrade.</p> <h2>Run the upgrade</h2> <p>This tool basically downloads a custom kernel which does the actual upgrade.</p> <p>This should work</p> <div class=highlight><pre><code class="language-bash" data-lang="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/</code></pre></div> <p>However it fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel</span>
+Upload results to UI by command:
+e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .
+</code></pre> <p>Hopefully everything looks ok and you can continue with the upgrade.</p> <h2>Run the upgrade</h2> <p>This tool basically downloads a custom kernel which does the actual upgrade.</p> <p>This should work</p> <pre><code class="bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/
+</code></pre> <p>However it fails as below</p> <pre><code class="bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel
 setting up repos...
-No upgrade available <span class="k">for</span> the following repos: scl
-.treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
+No upgrade available for the following repos: scl
+.treeinfo                                                                                                                        | 1.1 kB     00:00     
 getting boot images...
 setting up update...
-verify <span class="nb">local </span>files 100% <span class="o">[==============================================================================================================================]</span>
-<span class="o">(</span>1/5<span class="o">)</span>: libdwarf-20130207-3.el7.x86_64.rpm                                                                                        <span class="p">|</span> <span class="m">109</span> kB     00:00     
-<span class="o">(</span>2/5<span class="o">)</span>: python-dns-1.10.0-5.el7.noarch.rpm                                                                                        <span class="p">|</span> <span class="m">220</span> kB     00:00     
-<span class="o">(</span>3/5<span class="o">)</span>: qpdf-libs-5.0.1-3.el7.x86_64.rpm                                                                                          <span class="p">|</span> <span class="m">328</span> kB     00:00     
-<span class="o">(</span>4/5<span class="o">)</span>: qrencode-libs-3.4.1-3.el7.x86_64.rpm                                                                                      <span class="p">|</span>  <span class="m">50</span> kB     00:00     
-<span class="o">(</span>5/5<span class="o">)</span>: satyr-0.13-4.el7.x86_64.rpm                                                                                               <span class="p">|</span> <span class="m">500</span> kB     00:00     
+verify local files 100% [==============================================================================================================================]
+(1/5): libdwarf-20130207-3.el7.x86_64.rpm                                                                                        | 109 kB     00:00     
+(2/5): python-dns-1.10.0-5.el7.noarch.rpm                                                                                        | 220 kB     00:00     
+(3/5): qpdf-libs-5.0.1-3.el7.x86_64.rpm                                                                                          | 328 kB     00:00     
+(4/5): qrencode-libs-3.4.1-3.el7.x86_64.rpm                                                                                      |  50 kB     00:00     
+(5/5): satyr-0.13-4.el7.x86_64.rpm                                                                                               | 500 kB     00:00     
 warning: rpmts_HdrFromFdno: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOKEY
 
-Downloading failed: The GPG keys listed <span class="k">for</span> the <span class="s2">&quot;CentOS-7.0 - Base&quot;</span> repository are already installed but they are not correct <span class="k">for</span> this package.
-Check that the correct key URLs are configured <span class="k">for</span> this repository.</code></pre></div> <p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg. We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck</span>
+Downloading failed: The GPG keys listed for the "CentOS-7.0 - Base" repository are already installed but they are not correct for this package.
+Check that the correct key URLs are configured for this repository.
+</code></pre> <p>So I thought.... ok, for now we'll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg. We ran preupg first, to check the system however the upgrade tool thinks we havn't and fails as below</p> <pre><code class="bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck
 setting up repos...
-base                                                                                                                             <span class="p">|</span> 3.6 kB     00:00     
-base/primary_db                                                                                                                  <span class="p">|</span> 4.9 MB     00:01     
-cmdline-instrepo                                                                                                                 <span class="p">|</span> 3.6 kB     00:00     
-cmdline-instrepo/primary_db                                                                                                      <span class="p">|</span> 4.9 MB     00:01     
-epel/metalink                                                                                                                    <span class="p">|</span>  <span class="m">26</span> kB     00:00     
-epel                                                                                                                             <span class="p">|</span> 4.4 kB     00:00     
-epel/primary_db                                                                                                                  <span class="p">|</span> 6.2 MB     00:03     
-extras                                                                                                                           <span class="p">|</span> 2.9 kB     00:00     
-extras/primary_db                                                                                                                <span class="p">|</span>  <span class="m">15</span> kB     00:00     
-updates                                                                                                                          <span class="p">|</span> 2.9 kB     00:00     
-updates/primary_db                                                                                                               <span class="p">|</span> 1.4 MB     00:00     
-No upgrade available <span class="k">for</span> the following repos: scl
-.treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
+base                                                                                                                             | 3.6 kB     00:00     
+base/primary_db                                                                                                                  | 4.9 MB     00:01     
+cmdline-instrepo                                                                                                                 | 3.6 kB     00:00     
+cmdline-instrepo/primary_db                                                                                                      | 4.9 MB     00:01     
+epel/metalink                                                                                                                    |  26 kB     00:00     
+epel                                                                                                                             | 4.4 kB     00:00     
+epel/primary_db                                                                                                                  | 6.2 MB     00:03     
+extras                                                                                                                           | 2.9 kB     00:00     
+extras/primary_db                                                                                                                |  15 kB     00:00     
+updates                                                                                                                          | 2.9 kB     00:00     
+updates/primary_db                                                                                                               | 1.4 MB     00:00     
+No upgrade available for the following repos: scl
+.treeinfo                                                                                                                        | 1.1 kB     00:00     
 preupgrade-assistant has not been run.
-To perform this upgrade, either run preupg or run redhat-upgrade-tool --force</code></pre></div> <p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck</span>
+To perform this upgrade, either run preupg or run redhat-upgrade-tool --force
+</code></pre> <p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p> <pre><code class="bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck
 setting up repos...
-No upgrade available <span class="k">for</span> the following repos: scl
-.treeinfo                                                                                                                        <span class="p">|</span> 1.1 kB     00:00     
+No upgrade available for the following repos: scl
+.treeinfo                                                                                                                        | 1.1 kB     00:00     
 getting boot images...
 setting up update...
-verify <span class="nb">local </span>files 100% <span class="o">[==============================================================================================================================]</span>
-redhat_upgrade_tool.yum WARNING: Error loading productid metadata <span class="k">for</span> base.
-redhat_upgrade_tool.yum WARNING: Error loading productid metadata <span class="k">for</span> epel.
-redhat_upgrade_tool.yum WARNING: Error loading productid metadata <span class="k">for</span> extras.
-redhat_upgrade_tool.yum WARNING: Error loading productid metadata <span class="k">for</span> updates.
+verify local files 100% [==============================================================================================================================]
+redhat_upgrade_tool.yum WARNING: Error loading productid metadata for base.
+redhat_upgrade_tool.yum WARNING: Error loading productid metadata for epel.
+redhat_upgrade_tool.yum WARNING: Error loading productid metadata for extras.
+redhat_upgrade_tool.yum WARNING: Error loading productid metadata for updates.
 testing upgrade transaction
-rpm transaction 100% <span class="o">[=================================================================================================================================]</span>
-rpm install 100% <span class="o">[=====================================================================================================================================]</span>
-setting up system <span class="k">for</span> upgrade
-Finished. Reboot to start upgrade.</code></pre></div> <p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p> <h2>The system booted up!</h2> <p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># rm -f /etc/yum.repos.d/CentOS-SCL.repo</span></code></pre></div> <p>I also have EPEL installed on this server - lets fix that up.....</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7</span>
-<span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># sed -i &#39;s/6/7/g&#39; /etc/yum.repos.d/epel.repo</span></code></pre></div> <h2>Update packages</h2> <p>At this point CentOS 7 should update cleanly</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># yum update</span>
+rpm transaction 100% [=================================================================================================================================]
+rpm install 100% [=====================================================================================================================================]
+setting up system for upgrade
+Finished. Reboot to start upgrade.
+</code></pre> <p>Booom - we're getting somewhere. Now we reboot into the kernel that has been installed.</p> <pre><code class="bash">[root@pingu ~]# reboot
+</code></pre> <p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p> <h2>The system booted up!</h2> <p>Since there isn't a SCL repo for 7 yet - we need to clean this up</p> <pre><code class="bash">[root@pingu ~]# rm -f /etc/yum.repos.d/CentOS-SCL.repo
+</code></pre> <p>I also have EPEL installed on this server - lets fix that up.....</p> <pre><code class="bash">[root@pingu ~]# wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7
+[root@pingu ~]# sed -i 's/6/7/g' /etc/yum.repos.d/epel.repo 
+</code></pre> <h2>Update packages</h2> <p>At this point CentOS 7 should update cleanly</p> <pre><code class="bash">[root@pingu ~]# yum update
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.clouvider.net
@@ -477,58 +488,58 @@ Resolving Dependencies
 ---&gt; Package python-simplejson.x86_64 0:3.3.3-1.el7 will be an update
 --&gt; Finished Dependency Resolution
 
-Dependencies <span class="nv">Resolved</span>
+Dependencies Resolved
 
-<span class="o">========================================================================================================================================================</span>
- Package                                    Arch                            Version                                 Repository                     <span class="nv">Size</span>
-<span class="o">========================================================================================================================================================</span>
+========================================================================================================================================================
+ Package                                    Arch                            Version                                 Repository                     Size
+========================================================================================================================================================
 Updating:
- epel-release                               noarch                          7-0.2                                   epel                           <span class="m">13</span> k
- htop                                       x86_64                          1.0.3-3.el7                             epel                           <span class="m">87</span> k
- python-crypto                              x86_64                          2.6.1-1.el7                             epel                          <span class="m">469</span> k
- python-paramiko                            noarch                          1.11.3-1.el7                            epel                          <span class="m">678</span> k
- python-simplejson                          x86_64                          3.3.3-1.el7                             epel                          <span class="m">171</span> k
+ epel-release                               noarch                          7-0.2                                   epel                           13 k
+ htop                                       x86_64                          1.0.3-3.el7                             epel                           87 k
+ python-crypto                              x86_64                          2.6.1-1.el7                             epel                          469 k
+ python-paramiko                            noarch                          1.11.3-1.el7                            epel                          678 k
+ python-simplejson                          x86_64                          3.3.3-1.el7                             epel                          171 k
 
-Transaction <span class="nv">Summary</span>
-<span class="o">========================================================================================================================================================</span>
-Upgrade  <span class="m">5</span> Packages
+Transaction Summary
+========================================================================================================================================================
+Upgrade  5 Packages
 
 Total size: 1.4 M
-Is this ok <span class="o">[</span>y/d/N<span class="o">]</span>: y
+Is this ok [y/d/N]: y
 Downloading packages:
 warning: /var/cache/yum/x86_64/7/epel/packages/epel-release-7-0.2.noarch.rpm: Header V3 RSA/SHA256 Signature, key ID 352c64e5: NOKEY
 Retrieving key from file:///etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
 Importing GPG key 0x352C64E5:
- Userid     : <span class="s2">&quot;Fedora EPEL (7) &lt;epel@fedoraproject.org&gt;&quot;</span>
+ Userid     : "Fedora EPEL (7) &lt;epel@fedoraproject.org&gt;"
  Fingerprint: 91e9 7d7c 4a5e 96f1 7f3e 888f 6a2f aea2 352c 64e5
  From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7
-Is this ok <span class="o">[</span>y/N<span class="o">]</span>: y
+Is this ok [y/N]: y
 Running transaction check
-Running transaction <span class="nb">test</span>
-Transaction <span class="nb">test </span>succeeded
+Running transaction test
+Transaction test succeeded
 Running transaction
 Warning: RPMDB altered outside of yum.
-** Found <span class="m">20</span> pre-existing rpmdb problem<span class="o">(</span>s<span class="o">)</span>, <span class="s1">&#39;yum check&#39;</span> output follows:
-aiccu-2007.01.15-7.el6.x86_64 has missing requires of libgnutls.so.26<span class="o">()(</span>64bit<span class="o">)</span>
-aiccu-2007.01.15-7.el6.x86_64 has missing requires of libgnutls.so.26<span class="o">(</span>GNUTLS_1_4<span class="o">)(</span>64bit<span class="o">)</span>
-cas-0.15-1.el6.1.noarch has missing requires of python<span class="o">(</span>abi<span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;2.6&#39;</span>, None<span class="o">)</span>
-10:centos-release-SCL-6-5.el6.centos.x86_64 has missing requires of centos-release <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;6&#39;</span>, None<span class="o">)</span>
-cloog-ppl-0.15.7-1.2.el6.x86_64 has missing requires of libgmp.so.3<span class="o">()(</span>64bit<span class="o">)</span>
-hal-info-20090716-3.1.el6.noarch has missing requires of hal &gt;<span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;0.5.10&#39;</span>, None<span class="o">)</span>
-openscap-1.0.8-1.el6_5.x86_64 has missing requires of libpcre.so.0<span class="o">()(</span>64bit<span class="o">)</span>
-openscap-1.0.8-1.el6_5.x86_64 has missing requires of librpm.so.1<span class="o">()(</span>64bit<span class="o">)</span>
-openscap-1.0.8-1.el6_5.x86_64 has missing requires of librpmio.so.1<span class="o">()(</span>64bit<span class="o">)</span>
-ppl-0.10.2-11.el6.x86_64 has missing requires of libgmp.so.3<span class="o">()(</span>64bit<span class="o">)</span>
-preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of libpcre.so.0<span class="o">()(</span>64bit<span class="o">)</span>
-preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of librpm.so.1<span class="o">()(</span>64bit<span class="o">)</span>
-preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of librpmio.so.1<span class="o">()(</span>64bit<span class="o">)</span>
-preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of python<span class="o">(</span>abi<span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;2.6&#39;</span>, None<span class="o">)</span>
-python-dns-1.11.1-2.el6.noarch has missing requires of python<span class="o">(</span>abi<span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;2.6&#39;</span>, None<span class="o">)</span>
-python-iwlib-0.1-1.2.el6.x86_64 has missing requires of libpython2.6.so.1.0<span class="o">()(</span>64bit<span class="o">)</span>
-python-iwlib-0.1-1.2.el6.x86_64 has missing requires of python<span class="o">(</span>abi<span class="o">)</span> <span class="o">=</span> <span class="o">(</span><span class="s1">&#39;0&#39;</span>, <span class="s1">&#39;2.6&#39;</span>, None<span class="o">)</span>
-qpdf-libs-5.1.1-2.el6.x86_64 has missing requires of libpcre.so.0<span class="o">()(</span>64bit<span class="o">)</span>
+** Found 20 pre-existing rpmdb problem(s), 'yum check' output follows:
+aiccu-2007.01.15-7.el6.x86_64 has missing requires of libgnutls.so.26()(64bit)
+aiccu-2007.01.15-7.el6.x86_64 has missing requires of libgnutls.so.26(GNUTLS_1_4)(64bit)
+cas-0.15-1.el6.1.noarch has missing requires of python(abi) = ('0', '2.6', None)
+10:centos-release-SCL-6-5.el6.centos.x86_64 has missing requires of centos-release = ('0', '6', None)
+cloog-ppl-0.15.7-1.2.el6.x86_64 has missing requires of libgmp.so.3()(64bit)
+hal-info-20090716-3.1.el6.noarch has missing requires of hal &gt;= ('0', '0.5.10', None)
+openscap-1.0.8-1.el6_5.x86_64 has missing requires of libpcre.so.0()(64bit)
+openscap-1.0.8-1.el6_5.x86_64 has missing requires of librpm.so.1()(64bit)
+openscap-1.0.8-1.el6_5.x86_64 has missing requires of librpmio.so.1()(64bit)
+ppl-0.10.2-11.el6.x86_64 has missing requires of libgmp.so.3()(64bit)
+preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of libpcre.so.0()(64bit)
+preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of librpm.so.1()(64bit)
+preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of librpmio.so.1()(64bit)
+preupgrade-assistant-1.0.2-33.el6.x86_64 has missing requires of python(abi) = ('0', '2.6', None)
+python-dns-1.11.1-2.el6.noarch has missing requires of python(abi) = ('0', '2.6', None)
+python-iwlib-0.1-1.2.el6.x86_64 has missing requires of libpython2.6.so.1.0()(64bit)
+python-iwlib-0.1-1.2.el6.x86_64 has missing requires of python(abi) = ('0', '2.6', None)
+qpdf-libs-5.1.1-2.el6.x86_64 has missing requires of libpcre.so.0()(64bit)
 1:readahead-1.5.6-2.el6.x86_64 has missing requires of upstart
-satyr-0.14-1.el6.x86_64 has missing requires of librpm.so.1<span class="o">()(</span>64bit<span class="o">)</span>
+satyr-0.14-1.el6.x86_64 has missing requires of librpm.so.1()(64bit)
   Updating   : python-crypto-2.6.1-1.el7.x86_64                                                                                                    1/10 
   Updating   : python-paramiko-1.11.3-1.el7.noarch                                                                                                 2/10 
   Updating   : python-simplejson-3.3.3-1.el7.x86_64                                                                                                3/10 
@@ -555,5 +566,8 @@ Updated:
   epel-release.noarch 0:7-0.2               htop.x86_64 0:1.0.3-3.el7    python-crypto.x86_64 0:2.6.1-1.el7    python-paramiko.noarch 0:1.11.3-1.el7   
   python-simplejson.x86_64 0:3.3.3-1.el7   
 
-Complete!</code></pre></div> <p>Let's reboot once more to make sure things are all cleanly started...</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># reboot</span></code></pre></div> <p>Oh hey, it's a CentOS 7 box</p> <div class=highlight><pre><code class="language-bash" data-lang="bash"><span class="o">[</span>root@pingu ~<span class="o">]</span><span class="c"># cat /etc/redhat-release </span>
-CentOS Linux release 7.0.1406 <span class="o">(</span>Core<span class="o">)</span></code></pre></div> <h2>Roundup</h2> <p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p> <p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p> <p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p> <p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li> <li>&raquo; <a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></li> <li>&raquo; <a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";var disqus_url="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script src="//mint.damianzaremba.co.uk/.js?v1" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
+Complete!
+</code></pre> <p>Let's reboot once more to make sure things are all cleanly started...</p> <pre><code class="bash">[root@pingu ~]# reboot
+</code></pre> <p>Oh hey, it's a CentOS 7 box</p> <pre><code class="bash">[root@pingu ~]# cat /etc/redhat-release 
+CentOS Linux release 7.0.1406 (Core) 
+</code></pre> <h2>Roundup</h2> <p>While it's too new to try out anywhere near production kit, for a set of tools that 'will need some patching to work properly' everything works pretty well.</p> <p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p> <p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p> <p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li> <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li> <li>&raquo; <a href="/2012/09/kvirc-update-breaks-irssi-proxy/">KVIrc update breaks Irssi Proxy</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";var disqus_url="http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>

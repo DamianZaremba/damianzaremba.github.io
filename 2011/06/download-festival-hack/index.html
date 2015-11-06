@@ -1,85 +1,86 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Download festival hack</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?v1" rel=stylesheet> <link href="/assests/css/main.css?v1" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?v1" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?v1" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?v1" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul> </div> <div class=entry> <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p> <div class=highlight><pre><code class="language-python" data-lang="python"><span class="c">#!/usr/bin/env python</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">Uber hack to download images from download website, kinda works.</span>
-<span class="sd">Very messy as I ripped most the code out of other scripts I&#39;ve written.</span>
-<span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">urllib</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
-<span class="kn">import</span> <span class="nn">threading</span>
-<span class="kn">import</span> <span class="nn">Queue</span>
-<span class="kn">import</span> <span class="nn">urlparse</span>
-<span class="kn">from</span> <span class="nn">BeautifulSoup</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="n">base_dir</span> <span class="o">=</span> <span class="s">&#39;/home/damian/Pictures/download-2011&#39;</span>
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Download festival hack</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/06/download-festival-hack/">Download festival hack</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/06/download-festival-hack/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/scraper'>Scraper</a></li></ul> </div> <div class=entry> <p>I didn't make it to download this year but the pictures look awesome, before they disappear into nowhere I wanted to grab a copy so I hacked up a bit of Python to do some scraping and it works (not very well, but it was more of a 5min thing rather than a let's make a good job of it thing.). Script is as below:</p> <pre><code class="python">#!/usr/bin/env python
+'''
+Uber hack to download images from download website, kinda works.
+Very messy as I ripped most the code out of other scripts I've written.
+'''
+import os
+import urllib
+import hashlib
+import threading
+import Queue
+import urlparse
+from BeautifulSoup import BeautifulSoup
+base_dir = '/home/damian/Pictures/download-2011'
 
-<span class="k">def</span> <span class="nf">get_total_pages</span><span class="p">():</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/&quot;</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+def get_total_pages():
+ uh = urllib.urlopen("http://photos.downloadfestival.co.uk/view/")
+ soup = BeautifulSoup(uh)
+ uh.close()
 
-<span class="n">count</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;div&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;page_count&quot;</span><span class="p">})</span><span class="o">.</span><span class="n">string</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
- <span class="n">count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;Page 1 of &#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">))</span>
- <span class="k">return</span> <span class="n">count</span>
+count = str(soup.find("div", {"class": "page_count"}).string.strip())
+ count = int(count.replace('Page 1 of ', ''))
+ return count
 
-<span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="n">page</span><span class="p">):</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
- <span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="s">&quot;http://photos.downloadfestival.co.uk/view/?page=</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">page</span><span class="p">)</span>
- <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">uh</span><span class="p">)</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+def get_images(page):
+ images = []
+ uh = urllib.urlopen("http://photos.downloadfestival.co.uk/view/?page=%d" % page)
+ soup = BeautifulSoup(uh)
+ uh.close()
 
-<span class="n">r</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;ul&quot;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;class&quot;</span><span class="p">:</span> <span class="s">&quot;item_list&quot;</span><span class="p">})</span>
- <span class="k">for</span> <span class="n">sr</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">findAll</span><span class="p">(</span><span class="s">&quot;li&quot;</span><span class="p">):</span>
- <span class="n">image</span> <span class="o">=</span> <span class="n">sr</span><span class="o">.</span><span class="n">a</span><span class="o">.</span><span class="n">img</span><span class="p">[</span><span class="s">&#39;src&#39;</span><span class="p">]</span>
- <span class="n">images</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="k">return</span> <span class="n">images</span>
+r = soup.find("ul", {"class": "item_list"})
+ for sr in r.findAll("li"):
+ image = sr.a.img['src']
+ images.append(image)
+ return images
 
-<span class="k">class</span> <span class="nc">Runner</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
- <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
- <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+class Runner(threading.Thread):
+ def __init__(self, queue):
+ threading.Thread.__init__(self)
+ self.queue = queue
 
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
- <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
- <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">get_image</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+def run(self):
+ while True:
+ url = self.queue.get()
+ self.get_image(url)
+ self.queue.task_done()
 
-<span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
- <span class="n">urldata</span> <span class="o">=</span> <span class="n">urlparse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+def get_image(self, url):
+ urldata = urlparse.urlparse(url)
 
-<span class="n">ext</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">urldata</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">:])</span>
- <span class="n">file_name</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">.</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">(),</span> <span class="n">ext</span><span class="p">)</span>
- <span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+ext = '.'.join(urldata.path.split('.')[-1:])
+ file_name = "%s.%s" % (hashlib.md5(url).hexdigest(), ext)
+ file_path = os.path.join(base_dir, file_name)
 
-<span class="n">uh</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
- <span class="n">fh</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">uh</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
- <span class="n">fh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="n">uh</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
- <span class="k">print</span> <span class="s">&quot;Downloaded image to </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">file_path</span>
+uh = urllib.urlopen(url)
+ fh = open(file_path, 'w')
+ fh.write(uh.read())
+ fh.close()
+ uh.close()
+ print "Downloaded image to %s" % file_path
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
- <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">base_dir</span><span class="p">):</span>
- <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">base_dir</span><span class="p">)</span>
+if __name__ == "__main__":
+ if not os.path.isdir(base_dir):
+ os.makedirs(base_dir)
 
-<span class="n">total</span> <span class="o">=</span> <span class="n">get_total_pages</span><span class="p">()</span>
- <span class="n">images</span> <span class="o">=</span> <span class="p">[]</span>
+total = get_total_pages()
+ images = []
 
-<span class="k">print</span> <span class="s">&quot;</span><span class="si">%d</span><span class="s"> pages found&quot;</span> <span class="o">%</span> <span class="n">total</span>
- <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">total</span><span class="p">):</span>
- <span class="k">print</span> <span class="s">&quot;Processing page </span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">p</span>
- <span class="n">i</span> <span class="o">=</span> <span class="n">get_images</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+print "%d pages found" % total
+ for p in range(1, total):
+ print "Processing page %d" % p
+ i = get_images(p)
 
-<span class="k">print</span> <span class="s">&quot;Found </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
- <span class="n">images</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+print "Found %d images" % len(i)
+ images.extend(i)
 
- <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%d</span><span class="s"> images&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">images</span><span class="p">)</span>
- <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
- <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
- <span class="n">thread</span> <span class="o">=</span> <span class="n">Runner</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
- <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+ print "Downloading %d images" % len(images)
+ queue = Queue.Queue()
+ for i in range(20):
+ thread = Runner(queue)
+ thread.setDaemon(True)
+ thread.start()
 
-<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">images</span><span class="p">:</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
- <span class="n">queue</span><span class="o">.</span><span class="n">join</span><span class="p">()</span></code></pre></div> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2010/12/system-activity-reporter/">System activity reporter</a></li> <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li> <li>&raquo; <a href="/2010/06/5min-hack-in-python/">5min hack in python</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2011/06/download-festival-hack/";var disqus_url="http://damianzaremba.co.uk/2011/06/download-festival-hack/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?v1"></script> <script src="/assests/js/bootstrap.min.js?v1"></script> <script src="//mint.damianzaremba.co.uk/.js?v1" type="text/javascript"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?v1"></script> <script src="/assests/js/respond.min.js?v1"></script><![endif]--> </body> </html>
+for image in images:
+ queue.put(image)
+ queue.join()
+</code></pre> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></li> <li>&raquo; <a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></li> <li>&raquo; <a href="/2012/09/slow-ssh-to-new-centos-servers/">Slow SSH to new CentOS servers</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2011/06/download-festival-hack/";var disqus_url="http://damianzaremba.co.uk/2011/06/download-festival-hack/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2015 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
