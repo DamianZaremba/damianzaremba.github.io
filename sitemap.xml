@@ -1,689 +1,539 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/</loc>
-    <lastmod>2014-08-08T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/</loc>
-    <lastmod>2013-01-20T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/</loc>
-    <lastmod>2012-09-08T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/</loc>
-    <lastmod>2012-09-04T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/</loc>
-    <lastmod>2012-08-20T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/</loc>
-    <lastmod>2012-08-20T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</loc>
-    <lastmod>2012-04-01T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-    <lastmod>2012-04-01T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</loc>
-    <lastmod>2012-03-18T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-    <lastmod>2012-03-18T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</loc>
-    <lastmod>2011-11-02T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</loc>
-    <lastmod>2011-08-25T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</loc>
-    <lastmod>2011-08-25T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/spoon/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/apache-process-id/</loc>
-    <lastmod>2011-08-23T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</loc>
-    <lastmod>2011-08-18T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</loc>
-    <lastmod>2011-07-10T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/twitter/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/quick-update/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/meth-stove/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/download-festival-hack/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</loc>
-    <lastmod>2011-06-28T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/04/wordpress-plugin/</loc>
-    <lastmod>2011-04-09T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2011/03/canhazip/</loc>
-    <lastmod>2011-03-30T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</loc>
-    <lastmod>2010-12-12T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/12/system-activity-reporter/</loc>
-    <lastmod>2010-12-07T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</loc>
-    <lastmod>2010-12-01T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</loc>
-    <lastmod>2010-11-29T00:00:00+00:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/07/powershell/</loc>
-    <lastmod>2010-07-21T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</loc>
-    <lastmod>2010-07-06T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/06/coding-help/</loc>
-    <lastmod>2010-06-09T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</loc>
-    <lastmod>2010-06-06T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/05/the-difference/</loc>
-    <lastmod>2010-05-08T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/2010/04/why-i-love-python/</loc>
-    <lastmod>2010-04-17T00:00:00+01:00</lastmod>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/10xx/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/404/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/5xx/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/always_online/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/blocked/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/archive/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/about/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cv/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/projects/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/todo/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/security_pitstop/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/cf-pages/under_attack/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/fun/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/python/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/general/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/kvm/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/virsh/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/foss/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/how-to/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/knowledge-base/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/work/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/security/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cisco/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cisco-1700/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/scraper/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/iscout/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/anaconda/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/kickstart/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/linux/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/curl/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/php/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/apache/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/logformat/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/process/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/core-dumps/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/segfault/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cve/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/rpm/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cpanel/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/exim/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/compliance/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/hardening/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/pci/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/software/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/email/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/helo/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/multiple-ips/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/shared-server/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/smtp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/firewall/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ftp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/iptables/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/passive-ftp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/pecl/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/x64/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/error/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ipcheck/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/authentication/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/htaccess/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/http-basic/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/postgresql/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/hack/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/pgsql/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cpanel.config/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/mysql/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/bash/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ips/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/nat/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/deleted-files/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/file-recovery/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/proc/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/postfix/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/camping/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/knife-skills/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/hand-made/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/soon/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/spoon-knife/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/tree/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/clamav/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/eol/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/update/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/data/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/paths/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/my.cnf/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/prompt/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/wordpress/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/category-to-tag/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/tag-to-category/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cat/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/cdn/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/edgecast/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/mod_rewrite/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/sed/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/hp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/network/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ntp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/sntp/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/switch/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/radius/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/dell/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/wsgi/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/gunicorn/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/irc/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/irssi/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/kvirc/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ssh/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/centos/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/dns/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ipv4/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/ipv6/</loc>
-  </url>
-  <url>
-    <loc>http://damianzaremba.co.uk/tag/anycast/</loc>
-  </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/04/why-i-love-python/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/05/the-difference/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/06/coding-help/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/07/powershell/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/12/system-activity-reporter/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/03/canhazip/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/04/wordpress-plugin/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/download-festival-hack/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/meth-stove/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/quick-update/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/06/twitter/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/apache-process-id/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/spoon/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/</loc>
-    </url>
-    <url>
-      <loc>http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/</loc>
-    </url>
+<url>
+<loc>http://damianzaremba.co.uk/2014/08/quick-look-at-upgrading-to-centos-7/</loc>
+<lastmod>2014-08-08T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/</loc>
+<lastmod>2013-01-20T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/09/slow-ssh-to-new-centos-servers/</loc>
+<lastmod>2012-09-08T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/09/kvirc-update-breaks-irssi-proxy/</loc>
+<lastmod>2012-09-04T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/08/running-a-wsgi-app-via-gunicorn-from-python/</loc>
+<lastmod>2012-08-20T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/</loc>
+<lastmod>2012-08-20T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-procurve-switch/</loc>
+<lastmod>2012-04-01T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
+<lastmod>2012-04-01T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-procurve-switch/</loc>
+<lastmod>2012-03-18T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2012/03/sntp-on-a-hp-gbe2c-l2-l3-blade-switch/</loc>
+<lastmod>2012-03-18T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/11/restricting-access-to-edgecast-nodes/</loc>
+<lastmod>2011-11-02T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/changing-wordpress-tag-to-category/</loc>
+<lastmod>2011-08-25T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/changing-the-mysql-client-prompt/</loc>
+<lastmod>2011-08-25T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/useful-cpanel-paths/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/upgrade-eol-clamav/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/spoon/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/smtp-authentication-in-postfix-using-local-system-accounts/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/recovering-deleted-files-from-the-handlers-in-proc/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/quick-script-to-get-public-ips-on-a-natd-server/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/mysql-uses-no-space-on-cpanel/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/install-postgresql-on-cpanel/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/http-basic-authentication-apache/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/getting-rid-of-cpanel-ip-check-errors/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/force-pecl-to-install-64bit-modules/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/fixing-iptables-for-passive-ftp/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/common-pci-compliance-issues-cpanel/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/check-for-cve-fixs/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/apache-segmentation-fault-debugging/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/apache-process-id/</loc>
+<lastmod>2011-08-23T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/08/php-curl-dual-stack-issue/</loc>
+<lastmod>2011-08-18T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/07/centos-6-0-kickstart-partitioning-issue/</loc>
+<lastmod>2011-07-10T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/twitter/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/quick-update/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/meth-stove/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/example-of-building-nagios-configs-from-ldap/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/download-festival-hack/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/</loc>
+<lastmod>2011-06-28T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/04/wordpress-plugin/</loc>
+<lastmod>2011-04-09T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2011/03/canhazip/</loc>
+<lastmod>2011-03-30T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/12/unix-time-to-human-readable/</loc>
+<lastmod>2010-12-12T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/12/system-activity-reporter/</loc>
+<lastmod>2010-12-07T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/12/lots-of-files-to-remove/</loc>
+<lastmod>2010-12-01T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/11/compiling-nginx-and-php-fpm-on-centos-5/</loc>
+<lastmod>2010-11-29T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/07/powershell/</loc>
+<lastmod>2010-07-21T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/07/virt-install-is-a-life-server/</loc>
+<lastmod>2010-07-06T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/06/coding-help/</loc>
+<lastmod>2010-06-09T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/06/5min-hack-in-python/</loc>
+<lastmod>2010-06-06T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/05/the-difference/</loc>
+<lastmod>2010-05-08T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/2010/04/why-i-love-python/</loc>
+<lastmod>2010-04-17T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/10xx/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/404/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/5xx/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/always_online/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/blocked/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/archive/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/about/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cv/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/projects/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/todo/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/security_pitstop/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/cf-pages/under_attack/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/fun/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/python/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/general/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/kvm/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/virsh/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/foss/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/how-to/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/knowledge-base/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/work/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/security/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cisco/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cisco-1700/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/scraper/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/iscout/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/anaconda/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/kickstart/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/linux/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/curl/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/php/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/apache/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/logformat/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/process/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/core-dumps/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/segfault/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cve/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/rpm/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cpanel/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/exim/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/compliance/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/hardening/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/pci/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/software/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/email/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/helo/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/multiple-ips/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/shared-server/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/smtp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/firewall/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ftp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/iptables/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/passive-ftp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/pecl/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/x64/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/error/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ipcheck/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/authentication/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/htaccess/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/http-basic/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/postgresql/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/hack/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/pgsql/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cpanel.config/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/mysql/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/bash/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ips/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/nat/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/deleted-files/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/file-recovery/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/proc/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/postfix/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/camping/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/knife-skills/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/hand-made/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/soon/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/spoon-knife/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/tree/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/clamav/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/eol/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/update/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/data/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/paths/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/my.cnf/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/prompt/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/wordpress/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/category-to-tag/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/tag-to-category/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cat/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/cdn/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/edgecast/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/mod_rewrite/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/sed/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/hp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/network/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ntp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/sntp/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/switch/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/radius/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/dell/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/wsgi/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/gunicorn/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/irc/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/irssi/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/kvirc/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ssh/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/centos/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/dns/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ipv4/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/ipv6/</loc>
+</url>
+<url>
+<loc>http://damianzaremba.co.uk/tag/anycast/</loc>
+</url>
 </urlset>
