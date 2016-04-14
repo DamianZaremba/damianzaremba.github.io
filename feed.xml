@@ -3,12 +3,19 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2014-08-08T00:00:00+00:00</updated>
+    <updated>2016-04-09T00:00:00+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
         <email>damian@damianzaremba.co.uk</email>
     </author>
+    
+    <entry>
+        <title>Test Post</title>
+        <link href="http://damianzaremba.co.uk/2016/04/test/"/>
+        <updated>2016-04-09T00:00:00+00:00</updated>
+        <id>http://damianzaremba.co.uk/2016/04/test</id>
+    </entry>
     
     <entry>
         <title>A very quick look at upgrading CentOS 6.5 to 7.0</title>
