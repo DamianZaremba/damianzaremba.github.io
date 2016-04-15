@@ -1,83 +1,4 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/03/canhazip/">canhazip</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />30 Mar 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul> </div> <div class=entry> <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p> <h4>Basic Usage</h4> <p><a href="http://canhazip.info/">http://canhazip.info/</a></p> <p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p> <h4>Specific IP type</h4> <p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p> <p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p> <p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p> <p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p> <h4>Output format</h4> <p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format> to the end of the URL.</p> <p>Accepted formats are:</p> <ul> <li><p>xml</p></li> <li><p>json</p></li> <li><p>yaml</p></li> <li><p>PHP (serialize of an array)</p></li> <li><p>plain</p></li> </ul> <p>Example usage:</p> <p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p> <h4>FAQ</h4> <h5>icanhazip exists, why another service that does the same thing?</h5> <ol> <li>Because I can</li> <li>Because .info domains were on special offer ($1.87!)</li> <li>The servers hosting the site are in London and Manchester not the US (latency)</li> <li>The secondary service I was using previously no longer exists (I like basic redundancy)</li> </ol> <h5>Do you keep logs</h5> <p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p> <h5>Why different formats?</h5> <p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p> <h5>Is this reliable</h5> <p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p> <h5>Example usage</h5> <p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p> <pre><code class="php">#!/usr/bin/php
-&lt;?php
- $PASSWORD = "";
- $TUNNELID = 0;
- $USERID = "";
- $currentIP = @file_get_contents('http://ipv4.canhazip.info/');
- if(empty($currentIP)){
- $currentIP = @file_get_contents('http://ipv4.icanhazip.com/');
- }
-
-if(empty($currentIP)){
- die('Could not get current IP'."\n");
- }
-
-$currentIP = trim($currentIP);
- $return = file_get_contents("https://ipv4.tunnelbroker.net/ipv4_end.php?ipv4b=" . $currentIP . "&amp;pass=" . $PASSWORD . "&amp;user_id=" . $USERID . "&amp;tunnel_id=" . $TUNNELID);
-
-if(strpos($return, "That IPv4 endpoint is already in use.") !== False){
- print "IP has not changed";
- print "\n";
- }else if(strpos($return, "Your tunnel endpoint has been updated to:") !== False){
- print "Tunnel endpoint has been updated";
- print "\n";
- }else{
- print "Unknown return!?!?!";
- print $return;
- print "\n";
- }
-?&gt;
-</code></pre> <h5>Another example</h5> <p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p> <pre><code class="php">#!/usr/bin/php
-&lt;?php
- $ACCESSKEY = "";
- $NODENAME = "";
-
-$currentIP = @file_get_contents('http://ipv4.canhazip.info/');
- if(empty($currentIP)){
- $currentIP = @file_get_contents('http://ipv4.icanhazip.com/');
- }
-
-if(empty($currentIP)){
- die('Could not get current IP'."\n");
- }
-
-$currentIP = trim($currentIP);
- $bnlTable = @file_get_contents('http://a.core.cluenet.org/main/cluevpnpanel.php?page=printbnl');
- $bnlTable = explode('&lt;table border=6 class=\"wikitable sortable\"&gt;', $bnlTable); $bnlTable = explode('&lt;/table&gt;', $bnlTable[0]); $bnlTable = str_replace('&lt;/tr&gt;', "", $bnlTable[0]); $bnlTable = explode('&lt;tr&gt;', $bnlTable); unset($bnlTable[0]); unset($bnlTable[1]);
- $nodes = array();
-
-foreach($bnlTable as $entry){
- $entry = str_replace('&lt;/td&gt;', "", $entry); $entry = explode('&lt;td align=center&gt;', $entry);
- $nodes[trim($entry[1])] = array(
- 'id' =&gt; trim($entry[2]),
- 'ip' =&gt; trim($entry[3]),
- 'ipv6′ =&gt; trim($entry[4]),
- 'port' =&gt; trim($entry[5]),
- 'ipv6pref' =&gt; trim($entry[6]),
- 'subnet' =&gt; trim($entry[7]),
- );
- }
-
-$currentVPNIP = $nodes[$NODENAME]['ip'];
- if($currentIP != $currentVPNIP){
- /* Update IP */
- $ch = curl_init ("http://a.core.cluenet.org/main/cluevpnpanel.php?page=updateiphandle");
- curl_setopt($ch, CURLOPT_COOKIE, 'clueauth_tokenstack='.$ACCESSKEY);
- curl_setopt($ch, CURLOPT_POSTFIELDS, 'nodename='.$NODENAME.'&amp;newip='.$currentIP.'&amp;newport=3406&amp;submit=Change');
- curl_setopt($ch, CURLOPT_POST, 1);
- curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
- $output = curl_exec ($ch);
-
-if(strpos($output, 'Success.') != 0){
- die('IP Updated Successfully'."\n");
- }else{
- die('IP Not Updated Successfully'."\n");
- }
- }else{
- die('IP has not changed'."\n");
- }
-?&gt;
-</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p> <p>Quick example:</p> <pre><code class="bash">root@localhost [/]# date -d @1290705757
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=628744fb77a1130b2b8d63e77a95b03a" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Open navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar> <div class="collapse navbar-collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> <li class=""><a href="/todo/">Todo</a></li> </ul> <div class="social-icons navbar-right"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don't feel like calling out to Perl.</p> <p>Quick example:</p> <pre><code class="bash">root@localhost [/]# date -d @1290705757
 Thu Nov 25 18:22:37 CET 2010
 </code></pre> <p>You can also format the output of date to suit your needs, for example:</p> <pre><code class="bash">root@localhost [/]# date -d@1290705757 +"%H:%M:%S %d/%m/%Y"
 18:22:37 25/11/2010
@@ -303,4 +224,406 @@ rm -rf "$base_dir"
 /tmp/repoup1291034701/live/.git
 </code></pre> <p>xargs just converts from standard input to command line arguments as can be seen below:</p> <pre><code class="bash">[root@localhost]# find /tmp/ | head -n 1 | xargs echo rm
 rm /tmp/repoup1291034701
-</code></pre> <p>Hope this helps</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />29 Nov 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p> <ul> <li><p><a href="http://GitHub.com">GitHub</a></p></li> <li><p><a href="http://Wordpress.com">Wordpress</a></p></li> <li><p><a href="http://Ohloh.net">Ohloh</a></p></li> <li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li> </ul> <p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p> <p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p> <p>Some features you'll probably love:</p> <ul> <li><p>Modules for load balancing</p></li> <li><p>Direct memcached integration</p></li> <li><p>Simple proxy configuration</p></li> <li><p>Passenger integration</p></li> <li><p>Ability to serve over 50,000 simultaneous connections</p></li> <li><p>Statistics module</p></li> <li><p>Low memory footprint</p></li> <li><p>Clean simple to edit configuration files</p></li> <li><p>Zero downtime configuration and binary updates</p></li> <li><p>PCRE based rewrite rules</p></li> </ul> <p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p> </div> </article> <nav id=page_nav> <a href="/8/" class=prev>&laquo; Previous Page</a> <a href="/10/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2016 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
+</code></pre> <p>Hope this helps</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/">Compiling nginx and PHP-FPM on CentOS 5</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />29 Nov 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/11/compiling-nginx-and-php-fpm-on-centos-5/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p><a href="http://lukecarrier.me/">Luke Carrier</a>, founder and lead developer at <a href="http://CloudFlux.net">CloudFlux</a> recently wrote a how-to on compiling Nginx and PHP-FPM (can be found <a href="http://lukecarrier.me/?p=59">here</a>). Nginx is well known for being a high-performance HTTP server and reverse proxy, in fact this very website is running on-top of Nginx. A few websites you might know that run Nginx are:</p> <ul> <li><p><a href="http://GitHub.com">GitHub</a></p></li> <li><p><a href="http://Wordpress.com">Wordpress</a></p></li> <li><p><a href="http://Ohloh.net">Ohloh</a></p></li> <li><p><a href="http://CloudFlux.net">CloudFlux</a></p></li> </ul> <p>These sites show how Nginx can be deployed in many high traffic configurations, GitHub being well know for the use of RoR, Wordpress the use of PHP etc. Whether you are deploying PHP under FPM, RoR under Passenger, static files or data from memcached Nginx can outperform many other web servers.</p> <p>The main advantage to using Nginx is it's event-driven (asynchronous) architecture, this means that alongside providing high-performance there is a small predictable memory footprint. All the features make the server a good performer in all environments from single VPS systems to web clusters.</p> <p>Some features you'll probably love:</p> <ul> <li><p>Modules for load balancing</p></li> <li><p>Direct memcached integration</p></li> <li><p>Simple proxy configuration</p></li> <li><p>Passenger integration</p></li> <li><p>Ability to serve over 50,000 simultaneous connections</p></li> <li><p>Statistics module</p></li> <li><p>Low memory footprint</p></li> <li><p>Clean simple to edit configuration files</p></li> <li><p>Zero downtime configuration and binary updates</p></li> <li><p>PCRE based rewrite rules</p></li> </ul> <p>As you can see from <a href="http://wiki.nginx.org/NginxWhyUseIt">their site</a> Nginx as a server is highly regarded and recommended. I'd suggest taking a look, having a play and revealing what it can do for you.</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <pre><code class="powershell"># Settings
+
+## Email
+
+$email_system = ""
+
+$email_contact = ""
+
+$email_host = ''
+
+$email_username = ''
+
+$email_password = ''
+## Database
+
+$database_host = ""
+
+$database_name = ""
+
+$database_user = ""
+
+$database_pass = ""
+## Run task settings
+
+$run_tasks = 1
+
+$run_reboots = 1
+
+$run_poweroffs = 1
+
+$run_powerups = 1
+# Log file directory
+
+$file_log_dir = 'C:\automation_logs\'
+#
+
+#
+
+#
+
+# Don't touch below here
+
+#
+
+#
+
+#
+# Session varibles
+$base_log_name = $file_log_dir+$(Get-Date -format 'd-M-y-h-m-s')+'-'
+# Functions
+## Core functions
+
+function log([string]$message, [string]$type = 'info')
+
+{
+
+if ((Test-Path -path $file_log_dir) -ne $True){
+
+# Make log dir if it dosn't exist
+
+write-host 'Making log dir'
+
+New-Item $file_log_dir -type directory
+
+}
+$log_file = $base_log_name+$($type)+'.log'
+
+write-host $message
+
+add-content $log_file $message
+
+}
+function error([string]$traceback)
+
+{
+
+$error = 'Hit exception:'+$traceback
+
+log $error 'error'
+
+mail 'Exception encountered' $error
+
+}
+function mail([string]$subject, [string]$message)
+
+{
+
+#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)
+
+#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)
+
+#$smtp_handler.Send($email_system, $email_contact, $subject, $message)
+
+}
+function marktaskFailed([int]$task_id)
+
+{
+
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
+ $command = $database_handler.CreateCommand()
+ $command.CommandText = "update queue set status = 'f', run_time = '$($time)' where id = '$($task_id)'"
+
+$command.ExecuteNonQuery()
+
+} catch {
+
+log "Could not set status = failed for task id $task_id"
+
+error $_.Exception.ToString()
+
+}
+
+}
+function marktaskSuccess([int]$task_id)
+
+{
+
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
+
+$command = $database_handler.CreateCommand()
+
+$command.CommandText = "update queue set status = 'c', run_time = '$($time)' where id = '$($task_id)'"
+
+$command.ExecuteNonQuery()
+
+} catch {
+
+log "Could not set status = complete for task id $task_id"
+
+error $_.Exception.ToString()
+
+}
+
+}
+## Action functions
+
+function rebootHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not shutdown vm"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+function poweroffHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue reboot"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+function poweronHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+
+&amp;nbsp;
+
+# Main code
+## Load what we need!
+
+try{
+
+[void][System.Reflection.Assembly]::LoadWithPartialName("MySql.Data")
+
+} catch {
+
+log "Could not load mysql.net connector"
+
+error $_.Exception.ToString()
+
+break
+
+}
+## Main loop
+
+while (1) {
+
+write-host 'Doing run....'
+## Connect to the database
+
+try{
+
+$database_handler = New-Object MySql.Data.MySqlClient.MySqlConnection
+
+$database_handler.ConnectionString = "server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;"
+
+$database_handler.Open()
+
+} catch {
+
+log "Could not connect to the database :("
+
+error $_.Exception.ToString()
+
+break
+
+}
+write-host 'Connected to database'
+try {
+
+$command = $database_handler.CreateCommand()
+
+$command.CommandText = "select * from `queue` where `status` = 'n'"
+
+$data = $command.ExecuteReader()
+
+} catch {
+
+log "Could not run query against database"
+
+error $_.Exception.ToString()
+
+continue
+
+}
+write-host 'Got queue from database'
+# Array where we will put our tasks!
+
+$tasks_to_run = @()
+write-host 'Loading queue'
+while ($data.Read()) {
+
+# task
+
+try {
+
+$task = @{}
+
+$task['type'] = $data.GetValue(1).ToString()
+
+$task['task_id'] = $data.GetValue(0).ToString()
+
+$task['machine_id'] = $data.GetValue(3).ToString()
+# Add task to list of tasks to run
+
+$tasks_to_run += $task
+
+write-host "Entered task $($task['task_id']) into queue"
+
+} catch {
+
+log "Could not add task to queue"
+
+error $_.Exception.ToString()
+
+continue
+
+}
+
+}
+
+$data.close() # Close the data reader
+
+write-host 'Loaded queue'
+if($tasks_to_run.length -gt 0){
+
+write-host "Tasks to run: $($tasks_to_run.length)!"
+# Loop though the list of tasks to run
+
+for ( $i = 0 ; $i -lt $tasks_to_run.length; $i++ ){
+
+$task = $tasks_to_run[$i]
+log "Running task $($task['task_id']) (Action '$($task['type'])' for instance '$($task['machine_id'])')"
+ if($run_tasks -eq 1){
+
+# The bit that decides what we are going to do
+
+switch ($task['type']) {
+
+poweron {
+
+if($run_powerups -eq 1){
+
+&amp;poweronHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', powerup tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+poweroff {
+ if($run_poweroffs -eq 1){
+
+&amp;poweroffHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', poweroff tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+reboot {
+ if($run_reboots -eq 1){
+
+&amp;rebootHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', reboot tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+default { # We were asked to do something we don't understand!
+
+log "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
+
+mail "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+ }else{
+ log "Not running task '$($task['task_id'])', tasks are disabled"
+
+marktaskFailed($task['task_id'])
+ }
+
+}
+
+write-host 'Tasks run'
+
+}else{
+
+write-host "No tasks to run!"
+
+}
+write-host 'Run complete....'
+
+# Sleep 10 seconds until next run
+
+Start-Sleep 10
+
+}
+</code></pre> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <nav id=page_nav> <a href="/8/" class=prev>&laquo; Previous Page</a> <a href="/10/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2016 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error logging? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
