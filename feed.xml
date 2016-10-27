@@ -3,12 +3,19 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2016-10-19T00:00:00+00:00</updated>
+    <updated>2016-10-20T00:00:00+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
         <email>damian@damianzaremba.co.uk</email>
     </author>
+    
+    <entry>
+        <title>Percona Live Amsterdam 2016 Notes</title>
+        <link href="http://damianzaremba.co.uk/2016/10/plam16-notes/"/>
+        <updated>2016-10-20T00:00:00+00:00</updated>
+        <id>http://damianzaremba.co.uk/2016/10/plam16-notes</id>
+    </entry>
     
     <entry>
         <title>GNS3 crash after upgrade</title>
