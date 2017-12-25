@@ -1,4 +1,15 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />01 Apr 2012</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul> </div> <div class=entry> <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p> <pre><code class="text">radius-server host serverIp key "SecretKeyHere"
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/">RADIUS authentication on a Dell PowerConnect M6220 switch</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />20 Aug 2012</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2012/08/radius-authentication-on-a-dell-powerconnect-m6220-switch/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/dell'>Dell</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul> </div> <div class=entry> <p>A while back I posted the 'how-to' on setting up HP switches for RADIUS authentication (<a href="/2012/04/radius-authentication-on-a-hp-gbe2c-l2-l3-blade-switch/">here</a> for GbE2c L2/L3 switches and <a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">here</a> for ProCurve switches).</p> <p>I also had to setup some Dell PowerConnect M6220 switches; these proved to be slightly more complicated than the HP's, but followed the Cisco style config.</p> <p>First we need add a custom login and enable method</p> <pre><code class="text">aaa authentication login "LineName" radius local
+aaa authentication enable "LineName" none
+</code></pre> <p>These are used for connections over SSH - "LineName" can be anything, I tend to use the company name to keep things standard.</p> <p>On the second line, you could also use radius local - this would require a password to enter enable mode. Personally I control the login mode from the RADIUS server and find having to enter a password to get to enable again a hassle.</p> <p>Next we need to setup the RADIUS server</p> <pre><code class="text">radius-server host auth serverIpHere
+name "server1"
+usage login
+key "SecretKeyHere"
+exit
+</code></pre> <p>Now we just need to configure the ssh line to use our aaa methods</p> <pre><code class="text">login authentication LineName
+enable authentication LineName
+</code></pre> <p>Once complete you should be able to login via ssh using your RADIUS details.</p> <p>If you require access to the switch over http(s) you can also configure the HTTP server to authenticate against RADIUS</p> <pre><code class="text">ip http authentication radius local
+ip https authentication radius local
+</code></pre> <p>We include local on every method to ensure we don't get locked out the switch.</p> </div> </article> <article class=post> <h1 class=title><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/">RADIUS authentication on a HP ProCurve switch</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />01 Apr 2012</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2012/04/radius-authentication-on-a-hp-procurve-switch/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/work'>Work</a></li><li><a href='/tag/authentication'>Authentication</a></li><li><a href='/tag/hp'>Hp</a></li><li><a href='/tag/network'>Network</a></li><li><a href='/tag/radius'>Radius</a></li><li><a href='/tag/switch'>Switch</a></li></ul> </div> <div class=entry> <p>To configure a HP ProCurve switch for RADIUS authentication you need to use radius-server with the following syntax.</p> <pre><code class="text">radius-server host serverIp key "SecretKeyHere"
 </code></pre> <p>Once this is setup you need to configure the switch to authenticate against the radius server.</p> <pre><code class="text">aaa authentication login privilege-mode 
 aaa authentication console login radius local 
 aaa authentication console enable radius local 
@@ -84,151 +95,4 @@ Switch(config)# ntp secondary-server 217.147.208.1
 Switch(config)# exit
 Switch# copy run start
 Switch# logout
-</code></pre> <p>Your switches should now keep their time in sync :)</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/11/restricting-access-to-edgecast-nodes/">Restricting access to EdgeCast nodes</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />02 Nov 2011</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2011/11/restricting-access-to-edgecast-nodes/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cat'>Cat</a></li><li><a href='/tag/cdn'>CDN</a></li><li><a href='/tag/edgecast'>Edgecast</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/mod_rewrite'>Mod_rewrite</a></li><li><a href='/tag/sed'>Sed</a></li></ul> </div> <div class=entry> <p>Today one of our clients published a mix track that was around 140mb, hosted on their account. This was no problem until he started to get hundreds of people downloading the mix which resulted in silly amounts of bandwidth being used.</p> <p>We quickly had to move him on to the CDN to ensure the traffic impact wasn't affecting performance for him or others as well as reduce his bandwidth charges substantially.</p> <p>Once the CDN was all set up and the content pushed out onto the nodes we started to send traffic over.</p> <p>Due to the impact of social media and people linking directly to the content we had to devise a plan to enable access to the content for the CDN but redirect anyone linking directly to the CDNified subdomain.</p> <p>In comes mod_rewrite. Now it appears EdgeCast don't publish their IP ranges in any format that helps my sanity, they are in fact published in a html table. To find them, login to my.edgecast.com, browse to HTTP Large, click on Customer Origin and scroll down to the bottom.</p> <p>Linux to the rescue! First we just copy the list into a file:</p> <pre><code class="bash">[damian@finnix ~]$ cat &gt; edgecast_ranges
-Asia Hong Kong 117.18.234.0 - 117.18.234.255
-110.232.176.0 - 110.232.176.255
-Asia Singapore 117.18.236.0 - 117.18.236.255
-46.22.71.0 - 46.22.71.255
-Asia Tokyo 117.18.233.0 - 117.18.233.255
-110.232.177.0 - 110.232.177.255
-Australia Sydney 117.18.235.0 - 117.18.235.255
-110.232.179.0 - 110.232.179.255
-Europe Amsterdam 93.184.208.0 - 93.184.208.255
-93.184.209.0 - 93.184.209.255
-93.184.217.0 - 93.184.217.255
-46.22.70.0 - 46.22.70.255
-46.22.72.0 - 46.22.73.255
-Europe Frankfurt 72.21.89.0 - 72.21.89.255
-93.184.212.0 - 93.184.212.255
-93.184.213.0 - 93.184.213.255
-Europe London 72.21.90.0 - 72.21.90.255
-93.184.210.0 - 93.184.210.255
-93.184.211.0 - 93.184.211.255
-46.22.74.0 - 46.22.75.255
-Europe Madrid 46.22.66.0 - 46.22.67.255
-Europe Paris 93.184.214.0 - 93.184.214.255
-North America Ashburn 72.21.83.0 - 72.21.83.255
-68.232.36.0 - 68.232.36.255
-North America Atlanta 72.21.88.0 - 72.21.88.255
-72.21.93.0 - 72.21.93.255
-North America Chicago 72.21.87.0 - 72.21.87.255
-68.232.38.0 - 68.232.38.255
-North America Dallas 72.21.86.0 - 72.21.86.255
-68.232.39.0 - 68.232.39.255
-North America Los Angeles 72.21.84.0 - 72.21.84.255
-68.232.40.0 - 68.232.40.255
-72.21.94.0 - 72.21.94.255
-93.184.218.0 - 93.184.218.255
-46.22.69.0 - 46.22.69.255
-North America Miami 46.22.64.0 - 46.22.65.255
-North America New York 72.21.95.0 - 72.21.95.255
-68.232.37.0 - 68.232.37.255
-North America San Jose
-North America San Jose 72.21.82.0 - 72.21.82.255
-68.232.41.0 - 68.232.41.255
-North America Seattle 72.21.85.0 - 72.21.85.255
-Other N/A 72.21.80.0 - 72.21.80.255
-72.21.81.0 - 72.21.81.255
-72.21.91.0 - 72.21.91.255
-72.21.92.0 - 72.21.92.255
-117.18.232.0 - 117.18.232.255
-93.184.221.0 - 93.184.221.255
-93.184.220.0 - 93.184.220.255
-93.184.219.0 - 93.184.219.255
-117.18.237.0 - 117.18.237.255
-93.184.215.0 - 93.184.215.255
-93.184.216.0 - 93.184.216.255
-68.232.32.0 - 68.232.32.255
-68.232.33.0 - 68.232.33.255
-68.232.34.0 - 68.232.34.255
-68.232.35.0 - 68.232.35.255
-68.232.42.0 - 68.232.42.255
-68.232.43.0 - 68.232.43.255
-68.232.44.0 - 68.232.44.255
-68.232.45.0 - 68.232.45.255
-68.232.46.0 - 68.232.46.255
-68.232.47.0 - 68.232.47.255
-93.184.222.0 - 93.184.222.255
-93.184.223.0 - 93.184.223.255
-110.232.178.0 - 110.232.178.255
-117.18.237.0 - 117.18.237.255
-117.18.238.0 - 117.18.238.255
-117.18.239.0 - 117.18.239.255
-</code></pre> <p>Next we need to clear out all the names etc that are randomly dumped in the file:</p> <pre><code class="bash">[damian@finnix ~]$ sed -i 's/^.*\s.*\s//g' edgecast_ranges # Get rid of place names
-[damian@finnix ~]$ sed -i '/^\s*$/d' edgecast_ranges # Get rid of blank lines
-</code></pre> <p>Now let's actually turn these IP ranges into something Apache can understand (they are all /24's so we can cheat):</p> <pre><code class="bash">[damian@finnix ~]$ sed -i 's/^/RewriteCond %{REMOTE_ADDR} !^/g' edgecast_ranges # Add the rewrite cond
-[damian@finnix ~]$ sed -i 's/\.255$/.*$/g' edgecast_ranges # Add the wildcard
-</code></pre> <p>Now let's create the actual htaccess file:</p> <pre><code class="bash">[damian@finnix ~]$ echo 'RewriteEngine On' &gt;&gt; .htaccess
-[damian@finnix ~]$ cat edgecast_ranges &gt;&gt; .htaccess
-[damian@finnix ~]$ echo 'RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]' &gt;&gt; .htaccess
-</code></pre> <p>You should end up with something looking like this:</p> <pre><code class="bash">RewriteEngine On
-RewriteCond %{REMOTE_ADDR} !^117.18.234.*$
-RewriteCond %{REMOTE_ADDR} !^110.232.176.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.236.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.71.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.233.*$
-RewriteCond %{REMOTE_ADDR} !^110.232.177.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.235.*$
-RewriteCond %{REMOTE_ADDR} !^110.232.179.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.208.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.209.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.217.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.70.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.72.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.89.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.212.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.213.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.90.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.210.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.211.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.74.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.66.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.214.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.83.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.36.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.88.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.93.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.87.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.38.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.86.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.39.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.84.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.40.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.94.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.218.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.69.*$
-RewriteCond %{REMOTE_ADDR} !^46.22.64.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.95.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.37.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.82.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.41.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.85.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.80.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.81.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.91.*$
-RewriteCond %{REMOTE_ADDR} !^72.21.92.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.232.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.221.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.220.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.219.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.237.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.215.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.216.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.32.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.33.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.34.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.35.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.42.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.43.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.44.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.45.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.46.*$
-RewriteCond %{REMOTE_ADDR} !^68.232.47.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.222.*$
-RewriteCond %{REMOTE_ADDR} !^93.184.223.*$
-RewriteCond %{REMOTE_ADDR} !^110.232.178.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.237.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.238.*$
-RewriteCond %{REMOTE_ADDR} !^117.18.239.*$
-RewriteRule ^downloads/(.*)$ http://media.example.com/$1 [R,L]
-</code></pre> <p>If you browse to http://example.com/downloads/ you should be redirected to http://media.example.com/ unless you are coming from an Edgecast IP range.</p> <p>Now you can go back to reading slashdot ;)</p> </div> </article> <nav id=page_nav> <a href="/2/" class=prev>&laquo; Previous Page</a> <a href="/4/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
+</code></pre> <p>Your switches should now keep their time in sync :)</p> </div> </article> <nav id=page_nav> <a href="/2/" class=prev>&laquo; Previous Page</a> <a href="/4/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
