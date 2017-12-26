@@ -1,4 +1,406 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />06 Jul 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul> </div> <div class=entry> <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility, I got bored with having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p> <pre><code class="bash">#!/bin/bash
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2010/07/powershell/">Powershell!?!?!?!</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />21 Jul 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/07/powershell/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li></ul> </div> <div class=entry> <p>Most of been bored last night, decided to have my first bash at automation in windows using powershell, kinda impressed but now where near the level that you can get in *nix :D Hack of an attempt can be seen below (it works mainly but is pretty untested for the function actions as I don't have a windows server that can run hyperv, looks right per the docs though!):</p> <pre><code class="powershell"># Settings
+
+## Email
+
+$email_system = ""
+
+$email_contact = ""
+
+$email_host = ''
+
+$email_username = ''
+
+$email_password = ''
+## Database
+
+$database_host = ""
+
+$database_name = ""
+
+$database_user = ""
+
+$database_pass = ""
+## Run task settings
+
+$run_tasks = 1
+
+$run_reboots = 1
+
+$run_poweroffs = 1
+
+$run_powerups = 1
+# Log file directory
+
+$file_log_dir = 'C:\automation_logs\'
+#
+
+#
+
+#
+
+# Don't touch below here
+
+#
+
+#
+
+#
+# Session varibles
+$base_log_name = $file_log_dir+$(Get-Date -format 'd-M-y-h-m-s')+'-'
+# Functions
+## Core functions
+
+function log([string]$message, [string]$type = 'info')
+
+{
+
+if ((Test-Path -path $file_log_dir) -ne $True){
+
+# Make log dir if it dosn't exist
+
+write-host 'Making log dir'
+
+New-Item $file_log_dir -type directory
+
+}
+$log_file = $base_log_name+$($type)+'.log'
+
+write-host $message
+
+add-content $log_file $message
+
+}
+function error([string]$traceback)
+
+{
+
+$error = 'Hit exception:'+$traceback
+
+log $error 'error'
+
+mail 'Exception encountered' $error
+
+}
+function mail([string]$subject, [string]$message)
+
+{
+
+#$smtp_handler = new-object Net.Mail.SmtpClient($email_host)
+
+#$smtp_handler.Credentials = New-Object System.Net.NetworkCredential($email_username, $email_password)
+
+#$smtp_handler.Send($email_system, $email_contact, $subject, $message)
+
+}
+function marktaskFailed([int]$task_id)
+
+{
+
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
+ $command = $database_handler.CreateCommand()
+ $command.CommandText = "update queue set status = 'f', run_time = '$($time)' where id = '$($task_id)'"
+
+$command.ExecuteNonQuery()
+
+} catch {
+
+log "Could not set status = failed for task id $task_id"
+
+error $_.Exception.ToString()
+
+}
+
+}
+function marktaskSuccess([int]$task_id)
+
+{
+
+$time = [int][double]::Parse((Get-Date -UFormat %s))
+try {
+
+$command = $database_handler.CreateCommand()
+
+$command.CommandText = "update queue set status = 'c', run_time = '$($time)' where id = '$($task_id)'"
+
+$command.ExecuteNonQuery()
+
+} catch {
+
+log "Could not set status = complete for task id $task_id"
+
+error $_.Exception.ToString()
+
+}
+
+}
+## Action functions
+
+function rebootHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not shutdown vm"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+function poweroffHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM Msvm_ShutdownComponent WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.InitiateShutdown("$true", "Automated shutdown requested")
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue reboot"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+function poweronHyperVInstance($task)
+
+{
+
+# Un-tested bit but this is right according to the bizzare docs
+
+$vm = gwmi -namespace root\virtualization -query "SELECT * FROM msvm_computersystem WHERE SystemName = '$($task['machine_id'])'"
+
+$result = $vm.requeststatechange(2)
+if($result.returnvalue -match "0"){
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with success status"
+
+marktaskSuccess($task['task_id'])
+
+}else{
+
+log "Task '$($task['task_id'])' ($($task['type'])) completed with failed status, could not issue powerup"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+
+&amp;nbsp;
+
+# Main code
+## Load what we need!
+
+try{
+
+[void][System.Reflection.Assembly]::LoadWithPartialName("MySql.Data")
+
+} catch {
+
+log "Could not load mysql.net connector"
+
+error $_.Exception.ToString()
+
+break
+
+}
+## Main loop
+
+while (1) {
+
+write-host 'Doing run....'
+## Connect to the database
+
+try{
+
+$database_handler = New-Object MySql.Data.MySqlClient.MySqlConnection
+
+$database_handler.ConnectionString = "server=$database_host;uid=$database_user;pwd=$database_pass;database=$database_name;"
+
+$database_handler.Open()
+
+} catch {
+
+log "Could not connect to the database :("
+
+error $_.Exception.ToString()
+
+break
+
+}
+write-host 'Connected to database'
+try {
+
+$command = $database_handler.CreateCommand()
+
+$command.CommandText = "select * from `queue` where `status` = 'n'"
+
+$data = $command.ExecuteReader()
+
+} catch {
+
+log "Could not run query against database"
+
+error $_.Exception.ToString()
+
+continue
+
+}
+write-host 'Got queue from database'
+# Array where we will put our tasks!
+
+$tasks_to_run = @()
+write-host 'Loading queue'
+while ($data.Read()) {
+
+# task
+
+try {
+
+$task = @{}
+
+$task['type'] = $data.GetValue(1).ToString()
+
+$task['task_id'] = $data.GetValue(0).ToString()
+
+$task['machine_id'] = $data.GetValue(3).ToString()
+# Add task to list of tasks to run
+
+$tasks_to_run += $task
+
+write-host "Entered task $($task['task_id']) into queue"
+
+} catch {
+
+log "Could not add task to queue"
+
+error $_.Exception.ToString()
+
+continue
+
+}
+
+}
+
+$data.close() # Close the data reader
+
+write-host 'Loaded queue'
+if($tasks_to_run.length -gt 0){
+
+write-host "Tasks to run: $($tasks_to_run.length)!"
+# Loop though the list of tasks to run
+
+for ( $i = 0 ; $i -lt $tasks_to_run.length; $i++ ){
+
+$task = $tasks_to_run[$i]
+log "Running task $($task['task_id']) (Action '$($task['type'])' for instance '$($task['machine_id'])')"
+ if($run_tasks -eq 1){
+
+# The bit that decides what we are going to do
+
+switch ($task['type']) {
+
+poweron {
+
+if($run_powerups -eq 1){
+
+&amp;poweronHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', powerup tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+poweroff {
+ if($run_poweroffs -eq 1){
+
+&amp;poweroffHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', poweroff tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+reboot {
+ if($run_reboots -eq 1){
+
+&amp;rebootHyperVInstance($task)
+ }else{
+ log "Not running task '$($task['task_id'])', reboot tasks are disabled"
+ marktaskFailed($task['task_id'])
+ }
+
+}
+default { # We were asked to do something we don't understand!
+
+log "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
+
+mail "Tried to run an unknown action: '$($task['type'])' for task '$($task['task_id'])' this will need running manually!"
+
+marktaskFailed($task['task_id'])
+
+}
+
+}
+ }else{
+ log "Not running task '$($task['task_id'])', tasks are disabled"
+
+marktaskFailed($task['task_id'])
+ }
+
+}
+
+write-host 'Tasks run'
+
+}else{
+
+write-host "No tasks to run!"
+
+}
+write-host 'Run complete....'
+
+# Sleep 10 seconds until next run
+
+Start-Sleep 10
+
+}
+</code></pre> <p>Anyway back to making this CSS I'm working on look half decent in IE!</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/07/virt-install-is-a-life-server/">virt-install is a life server</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />06 Jul 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/07/virt-install-is-a-life-server/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/kvm'>Kvm</a></li><li><a href='/tag/virsh'>Virsh</a></li></ul> </div> <div class=entry> <p>So on one of my many servers that sit around doing nothing all day I have KVM installed, recently I've been playing about with this quite a bit. Still trying to figure out libvirt and the api to it which is like a black hole when it comes to documented functions as the Python classes (which is what I'm using) are generated pretty much straight off the C api stuff. Anyway as I was playing with that and rrdtool trying to make a cool graphing utility, I got bored with having to type loads to install a new dom. So thanks to the power of lighttpd to serve my kickstats, virt-install to do the leg work and the amazing thing called lvm I hacked up a bash script to do the hard work for me. Find it as follows:</p> <pre><code class="bash">#!/bin/bash
 VG='/dev/virtual_disks'
 KS_ADDR='http://192.168.100.1:5843/kickstarts'
 
@@ -223,70 +625,4 @@ sd-15684.dedibox.fr not already banned, banning for 1014 failed attempts
 </code></pre> <p>Oh yeah and I know the code is rubbish, it was very much a make it work thing ;) Also even though this "makes" the chain in iptables you still need to do:</p> <pre><code class="bash">iptables -I INPUT -j BadIp
 iptables -I OUTPUT -j BadIp
 iptables -I FORWARD -j BadIp
-</code></pre> <p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/05/the-difference/">The difference</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />08 May 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/05/the-difference/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/general'>General</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>I have nothing but Python to post at the moment so I shall post the difference instead! Once I have some cool stable python up I will be posting more. <img src="/2010/05/the-difference/the_difference.jpg" alt=""/></p> </div> </article> <article class=post> <h1 class=title><a href="/2010/04/why-i-love-python/">Why I love Python</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />17 Apr 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/04/why-i-love-python/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>So I've been playing with Python a lot recently and it is just so amazing!</p> <p>Here are some quick example that all took less than 10mins to write:</p> <p>SMTP proxy to allow you to connect to a server via the specified port and have it silently forwarded to another server on another port! (Note: it's a bad idea to use localhost as it will make you an open proxy)</p> <pre><code class="python">#!/usr/bin/python
-'''
-Meta data
-'''
-__author__="Damian Zaremba"
-
-'''
-Import modules
-'''
-import smtpd
-import asyncore
-
-smtpd.PureProxy(('localhost', 2535), ('mail.damianzaremba.co.uk', 25))
-asyncore.loop()
-</code></pre> <p>Email parser to allow you to process email using a IMAP connection. This is really slow currently and would be improved massively by threading but it's still really cool and took about 10min to write!</p> <pre><code class="python">#!/usr/bin/python
-'''
-Meta data
-'''
-__author__="Damian Zaremba"
-
-'''
-Import modules
-'''
-import imaplib
-import string
-
-MH = imaplib.IMAP4('mail.damianzaremba.co.uk')
-MH.login('inboximporter-text@damianzaremba.co.uk', 'testy')
-MH.select('INBOX')
-
-emails = {}
-typ, data = MH.search(None, 'ALL')
-for num in data[0].split():
- typ, data = MH.fetch(num, '(RFC822)')
- if typ == 'OK':
- data = data[0][1].split("\r\n\r\n"); headers = data[0]; message = data[1]; attachments = data[2:]
-
-email_data = emails[num] = {
- 'body': message,
- 'message_id': None,
- 'date': None,
- 'subject': None,
- 'from': None,
- 'to': None,
- 'attachments': []
- }
-
-for header in headers.strip().split('\r\n'):
- data = header.split(); key = data[0]; value = string.join(data[1:])
- if key == 'Message-ID:':
- email_data['message_id'] = value
- elif key == 'Date:':
- email_data['date'] = value
- elif key == 'Subject:':
- email_data['subject'] = value
- elif key == 'From:':
- email_data['from'] = value
- elif key == 'To:':
- email_data['to'] = value
-
-for attachment in attachments:
- email_data['attachments'].append(attachment)
-
-MH.close()
-MH.logout()
-print emails
-</code></pre> <p>Now I just need to learn Django properly and I can do some really cool socket based interfaces to things! Hopefully if I can get what I'm working on at the moment to function correctly I can reveal some cool things in the future!</p> </div> </article> <nav id=page_nav> <a href="/10/" class=prev>&laquo; Previous Page</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
+</code></pre> <p>Because I didn't add in any code to check if they existed, nor the chain for that matter. Without them traffic won't get processed by these rules, also make sure they go near the top above any other allow rule C=</p> </div> </article> <article class=post> <h1 class=title><a href="/2010/05/the-difference/">The difference</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />08 May 2010</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2010/05/the-difference/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/general'>General</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>I have nothing but Python to post at the moment so I shall post the difference instead! Once I have some cool stable python up I will be posting more. <img src="/2010/05/the-difference/the_difference.jpg" alt=""/></p> </div> </article> <nav id=page_nav> <a href="/10/" class=prev>&laquo; Previous Page</a> <a href="/12/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>

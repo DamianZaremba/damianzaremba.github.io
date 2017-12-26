@@ -3,12 +3,19 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2017-12-25T00:00:00+00:00</updated>
+    <updated>2017-12-26T00:00:00+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
         <email>damian@damianzaremba.co.uk</email>
     </author>
+    
+    <entry>
+        <title>A look at traffic encryption options</title>
+        <link href="http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options/"/>
+        <updated>2017-12-26T00:00:00+00:00</updated>
+        <id>http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options</id>
+    </entry>
     
     <entry>
         <title>A look at low-cost tap aggregation</title>

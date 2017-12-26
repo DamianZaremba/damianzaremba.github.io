@@ -1,4 +1,54 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <pre><code class="bash">[root@pingu ~]# cat /etc/redhat-release
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2016/10/gns3-crash-on-upgrade/">GNS3 crash after upgrade</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />19 Oct 2016</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2016/10/gns3-crash-on-upgrade/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>Recently I upgraded the GNS3 version on my Macbook and afterwards, immediately after trying to open the app it would close.</p> <p>Attempting to start the processes on the command line revealed some additional information:</p> <ul> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3server</code> was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3shell</code> also was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3</code> was crashing with <code>ImportError: No module named 'gns3.main'</code></li> <li><code>/Applications/GNS3.app/Contents/MacOS/Python</code> was not executable</li> </ul> <p>Having also recently updated <a href="http://brew.sh/">homebrew</a> and upon deciding to google the error, a good 30min was wasted tracking down possible python path issues.</p> <p>As it turns out, GNS3 on OSX is built using <a href="https://cx-freeze.readthedocs.io/en/latest/">cx_Freeze</a>, ensuring there are minimal dependencies on the system.</p> <p>So, what is the problem? To find that out, lets look at the full output:</p> <pre><code class="bash">m00m00:~ damian$ /Applications/GNS3.app/Contents/MacOS/gns3
+Application frozen with cx_Freeze
+GNS3 GUI version 1.5.2
+Copyright (c) 2007-2016 GNS3 Technologies Inc.
+INFO logger.py:107 Log level: INFO
+INFO servers.py:689 New remote server connection http://192.168.95.128:8000 registered
+INFO local_config.py:294 Section LocalServer has changed. Saving configuration
+INFO local_config.py:190 Configuration save to /Users/damian/.config/GNS3/gns3_gui.conf
+****** Exception detected, traceback information saved in /Users/damian/.config/GNS3/exceptions.log ******
+
+PLEASE REPORT ON https://www.gns3.com
+
+Traceback (most recent call last):
+  File "/Users/gns3/Jenkins/workspace/Release MacOSX/OSX/../boot.py", line 35, in &lt;module&gt;
+  File "/usr/local/Cellar/python3/3.5.1/Frameworks/Python.framework/Versions/3.5/lib/python3.5/importlib/__init__.py", line 126, in import_module
+  File "&lt;frozen importlib._bootstrap&gt;", line 986, in _gcd_import
+  File "&lt;frozen importlib._bootstrap&gt;", line 969, in _find_and_load
+  File "&lt;frozen importlib._bootstrap&gt;", line 956, in _find_and_load_unlocked
+ImportError: No module named 'gns3.main'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/gns3/Jenkins/workspace/Release MacOSX/OSX/../boot.py", line 46, in &lt;module&gt;
+  File "gns3-gui/gns3/main.py", line 281, in &lt;module&gt;
+  File "gns3-gui/gns3/main.py", line 244, in main
+  File "./gns3-gui/gns3/main_window.py", line 109, in __init__
+  File "./gns3-gui/gns3/ui/main_window_ui.py", line 188, in setupUi
+  File "./gns3-gui/gns3/server_summary_view.py", line 101, in __init__
+  File "./gns3-gui/gns3/servers.py", line 875, in instance
+  File "./gns3-gui/gns3/servers.py", line 74, in __init__
+  File "./gns3-gui/gns3/servers.py", line 268, in _loadSettings
+  File "./gns3-gui/gns3/servers.py", line 277, in _saveSettings
+  File "./gns3-gui/gns3/servers.py", line 277, in &lt;listcomp&gt;
+KeyError: 'url'
+</code></pre> <p>As it turns out, the issue appears to be in loading the config file.</p> <p>There is no 'url' key within the config file I have on disk, so let's remove it and try again.</p> <p>Same problem, <a href="https://linux.die.net/man/1/strace">strace</a>...err <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> to the rescue!</p> <pre><code class="bash">m00m00:~ damian$ sudo dtruss /Applications/GNS3.app/Contents/MacOS/gns3
+
+Application frozen with cx_Freeze
+GNS3 GUI version 1.5.2
+Copyright (c) 2007-2016 GNS3 Technologies Inc.
+[....]
+stat64("/Users/damian/.config/GNS3/GNS3.ini\0", 0x7FFF57315A68, 0x0)                = 0 0
+[....]
+</code></pre> <p>As some of you may have noticed in the stacktrace, the config that is being correctly saved is <code>/Users/damian/.config/GNS3/gns3_gui.conf</code>, yet we're loading <code>/Users/damian/.config/GNS3/GNS3.ini</code>.</p> <p>We have 2 configs?</p> <pre><code class="bash">m00m00:~ damian$ ls /Users/damian/.config/GNS3/
+GNS3.ini          base_configs/     exceptions.log    gns3_gui.log      gns3_server.log
+GNS3_client.log   exception.log     gns3_gui.conf     gns3_server.conf
+m00m00:~ damian$ ls /Users/damian/.config/GNS3/
+gns3_gui.conf        gns3_gui.pid        gns3_server.log
+gns3_gui.log        gns3_server.conf
+</code></pre> <p><img src="http://weknowmemes.com/wp-content/uploads/2011/12/i-have-no-memory-of-this-place.jpg" alt=""/></p> <p>Let's clear up these old config entries and start with a clean setup</p> <pre><code class="bash">m00m00:~ damian$ rm -rf ~/.config/gns3.net ~/.config/GNS3
+</code></pre> <p>And it works!</p> <p>Perhaps this was handled in an intermediary release I missed, but it comes across as a pretty poor compatibility issue, especially considering the error only being visible on the command line.</p> </div> </article> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <pre><code class="bash">[root@pingu ~]# cat /etc/redhat-release
 CentOS release 6.5 (Final)
 
 [root@pingu ~]# uptime
@@ -657,63 +707,4 @@ NickName=MyNick
 0_RealName=MyName
 0_User=MyUser
 UserName=Damian
-</code></pre> <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide scale settings changes.</p> </div> </article> <article class=post> <h1 class=title><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/">Running a WSGI app via Gunicorn from Python</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />20 Aug 2012</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2012/08/running-a-wsgi-app-via-gunicorn-from-python/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/python'>Python</a></li><li><a href='/tag/wsgi'>WSGI</a></li><li><a href='/tag/gunicorn'>Gunicorn</a></li></ul> </div> <div class=entry> <p>Anyone who's familiar with Gunicorn will know just how simple it is to get up and running; <code>gunicorn myapp.wsgi</code>.</p> <p>For a little project I'm working on I wanted to take this up a level and run Gunicorn from a Python script, passing in any options as required and not relying on sys.argv.</p> <p>Because of the way most the Gunicorn application classes are written they expect to be run from the console_scripts setup and have rather close integration.</p> <p>Unfortunately this made getting to the point of running <code>run.py</code> and having Gunicorn start, rather harder than it needed to be.</p> <p>For the purposes of this post my WSGI application is the example Flask app;</p> <pre><code class="python"># myapp.wsgi
-from flask import Flask
-
-application = Flask(__name__)
-
-@application.route("/")
-def hello():
-    return "Hello World!"
-
-if __name__ == "__main__":
-    application.run()
-</code></pre> <p>Now, to get this running under Gunicorn we need to create a custom application</p> <pre><code class="python"># myapp.mycustomapplication
-from gunicorn.app.base import Application
-from gunicorn import util
-
-class MyCustomApplication(Application):
-    '''
-    Custom Gunicorn Application
-    '''
-
-    def __init__(self, options={}):
-        '''__init__ method
-
-        Load the base config and assign some core attributes.
-        '''
-        self.usage = None
-        self.callable = None
-        self.options = options
-        self.do_load_config()
-
-    def init(self, *args):
-        '''init method
-
-        Takes our custom options from self.options and creates a config
-        dict which specifies custom settings.
-        '''
-        cfg = {}
-        for k, v in self.options.items():
-            if k.lower() in self.cfg.settings and v is not None:
-                cfg[k.lower()] = v
-        return cfg
-
-    def load(self):
-        '''load method
-
-        Imports our application and returns it to be run.
-        '''        
-        return util.import_app("myapp.wsgi")
-</code></pre> <p>As far as I can tell the minimum methods you can define is 3;</p> <ol> <li><code>__init__</code> - This sets up our base attributes</li> <li><p><code>init</code> - This is called to load option settings, we use self.options to set the cfg items.</p></li> <li><p><code>load</code> - This loads the application so when <code>wsgi()</code> is called the app runs!</p></li> </ol> <p>To run the application we just need to initialize the MyCustomApplication class, passing any options as required.</p> <pre><code class="python">#!/usr/bin/env python
-# myapp.run
-
-from myapp.mycustomapplication import MyCustomApplication
-
-if __name__ == "__main__":
-    options = {
-        'bind': 'localhost:8080',
-    }
-
-    MyCustomApplication(options).run()
-</code></pre> <p>In practice you'd probably load the options from a config file in your program.</p> <p>Hopefully this should help you getting Gunicorn running smoothly in a more integrated manner :)</p> </div> </article> <nav id=page_nav> <a href="/" class=prev>&laquo; Previous Page</a> <a href="/3/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
+</code></pre> <p>This also makes it quite easy to generally manage servers in KVIrc, outside of wide scale settings changes.</p> </div> </article> <nav id=page_nav> <a href="/" class=prev>&laquo; Previous Page</a> <a href="/3/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>
