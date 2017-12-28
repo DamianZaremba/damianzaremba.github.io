@@ -1,0 +1,138 @@
+<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Decoding IPFIX options using Go</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css?_v=58a49b3689d699cb72ffda7252d99fcb" rel=stylesheet> <link href="/assests/css/main.css?_v=d2c89647dc3d0886383e347a9048f62c" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="http://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png?_v=5c9d07bd2ff1f5224934583b6be57b0a" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png?_v=438c17272c5f0e9f4a6da34d3e4bc5bd" alt=GitHub /> </a> <a href="http://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png?_v=f6fa89d6cfe5f5e95f0f87205d8c4b11" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></h1> <div class=meta> <span><img src="/assests/images/date.png?_v=1673aede74ad16063dfcd243a3d61d41" title=Date alt=Date />28 Dec 2017</span> <span><img src="/assests/images/comments.png?_v=33159642eac6a274ec5483d1bc54f52c" title=Content alt=Content /><a href="/2017/12/decoding-ipfix-options-using-go/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/go'>Go</a></li></ul> </div> <div class=entry> <p>The IPFIX (IP Flow Information Export) protocol provides an extensible standard for transmitting network flow data.</p> <p>A key difference compared to the likes of <a href="http://www.sflow.org/">sflow</a>, is the template-based nature of data.</p> <p>While very similar to NetFlow version 9, IPFIX enables variable length fields and vendor extensions. This makes the protocol suitable for different types of performance data, as desired by any vendor.</p> <p>A recent project required some processing of IPFIX flow data, which this post will focus on.</p> <p><em>TL;DR The full implementation can be found on <a href="https://github.com/DamianZaremba/ipfix_options_demo">Github</a></em></p> <h2>Parsing options</h2> <p>A number of IPFIX decoder implementations exist in Go, most are included in flow decoder implementations, rather than standalone libraries.</p> <p>The best stand-alone library I could fix is <a href="https://github.com/calmh/ipfix">github.com/calmh/ipfix</a>, but this doesn't support <a href="https://github.com/calmh/ipfix/blob/master/parser.go#L296-L301">decoding options</a>.</p> <p>To better understand the scope of implementation and overall structure of IPFIX, a stand-alone decoder was implemented.</p> <h2>Data structure</h2> <p>To begin implementing our own decoder, we first need to understand the format of packets used in IPFIX.</p> <p>We can use both the <a href="https://www.iana.org/assignments/ipfix/ipfix.xhtml">IANA field assignments</a> and <a href="https://tools.ietf.org/html/rfc7011">RFC</a> to construct our base expectations.</p> <p>At a high level, there is 1 common header then 3 different payload types</p> <ul> <li>Data template</li> <li>Options template</li> <li>Data set</li> </ul> <p>We are interested in the options template and data set (where we have a matching template ID, more on this later).</p> <h2>Decoding the header</h2> <p>As described in the <a href="https://tools.ietf.org/html/rfc7011#section-3.1">RFC</a>, we can expect 5 fields.</p> <p>Followed by the message header we have a set identifier, which describes the message contents; for our purposes, we will use this as part of the header.</p> <pre><code class="go">header := IpfixHeader{
+    Version:        binary.BigEndian.Uint16(payload[0:2]),
+    MessageLength:  binary.BigEndian.Uint16(payload[2:4]),
+    ExportTime:     binary.BigEndian.Uint32(payload[4:8]),
+    SequenceNumber: binary.BigEndian.Uint32(payload[8:12]),
+    DomainId:       binary.BigEndian.Uint32(payload[12:16]),
+    SetId:          binary.BigEndian.Uint16(payload[16:20]),
+}
+</code></pre> <p>We are interested in any SetId that is 3 (options template) or >= 256 (data set).</p> <h2>Decoding the template</h2> <p>Before any data can be decoded, we must have a matching template.</p> <p>Without the template, there is no way to know how the fields are mapped inside the data set.</p> <p>Each template payload (SetId 2 or 3) has a header containing the ID and field counts.</p> <pre><code class="go">template := OptionsTemplate{
+  TemplateId:      binary.BigEndian.Uint16(payload[0:2]),
+  FieldCount:      binary.BigEndian.Uint16(payload[2:4]),
+  ScopeFieldCount: binary.BigEndian.Uint16(payload[4:6]),
+}
+</code></pre> <p>Once again, using the <a href="https://tools.ietf.org/html/rfc7011#section-3.4.1">RFC</a>, we can determine the payload is a sequence of field separators.</p> <p>The number of separators corresponds to the values in the header we just decoded.</p> <p>The ordering of these fields is critical for us to maintain.</p> <p>Note: Unlike a data template, the options template has a set of scope fields.</p> <h3>Decode the fields</h3> <p>Both scope fields and fields have the same structure, thus can be decoded using the same logic.</p> <pre><code class="go">func decodeSingleTemplateField(payload []byte) (TemplateField, int) {
+  tf := TemplateField{
+    ElementId: binary.BigEndian.Uint16(payload[0:2]),
+    Length:    binary.BigEndian.Uint16(payload[2:4]),
+  }
+
+  if tf.ElementId &gt; 0x8000 {
+    tf.ElementId = tf.ElementId &amp; 0x7fff
+    tf.EnterpriseNumber = binary.BigEndian.Uint32(payload[0:4])
+    return tf, 8
+  }
+
+  return tf, 4
+}
+</code></pre> <p>It's then simply a case of decoding each field in sequence and storing them for later</p> <pre><code class="go">// Get all scope entries
+for i := template.ScopeFieldCount; i &gt; 0; i-- {
+  tf, cut := decodeSingleTemplateField(byteSlice)
+  template.ScopeField = append(template.ScopeField, tf)
+
+  if len(byteSlice) &lt; cut {
+    break
+  }
+  byteSlice = byteSlice[cut:]
+}
+
+// Get all field entries
+for i := template.FieldCount - template.ScopeFieldCount; i &gt; 0; i-- {
+  tf, cut := decodeSingleTemplateField(byteSlice)
+  template.Field = append(template.Field, tf)
+
+  if len(byteSlice) &lt; cut {
+    break
+  }
+  byteSlice = byteSlice[cut:]
+}
+</code></pre> <h3>Cache the template</h3> <p>Now we have the template decoded, it is important to store it. The fields described in the template need to be used when decoding the data set, which we will look at next.</p> <p>A simple way to store this is using the LRU cache implementation from Hashicorp, <a href="github.com/hashicorp/golang-lru">github.com/hashicorp/golang-lru</a>.</p> <p>All future lookups will be via the ID, so using this as the key make sense.</p> <pre><code class="go">templateCache, err := lru.New(10240)
+if err != nil {
+  log.Fatalf("Failed to setup options template cache: %v", err)
+}
+
+templateCache.Add(template.Id, template)
+</code></pre> <h2>Decoding the data set</h2> <p>Any set ID over 255 represents a data set, the set ID refers to the template we need to use when decoding the data set.</p> <p>First, we need to ensure we have a matching template for this payload.</p> <pre><code class="go">cacheEntry, ok := templateCache.Get(header.SetId)
+if !ok {
+  return nil, true
+}
+template := cacheEntry.(OptionsTemplate)
+</code></pre> <p>Once we have the template, it's a case of decoding each option in sequence.</p> <p>Again, both scope fields and fields can be decoded using the same logic.</p> <h3>Field decoding</h3> <p>The option decoding logic has 3 main tasks:</p> <ul> <li>Read the correct length of bytes off the payload</li> <li>Lookup the associated name of the field from the identifier</li> <li>Cast the byte array into the correct data type for the identifier</li> </ul> <p>The <a href="https://www.iana.org/assignments/ipfix/ipfix.xhtml">IANA field assignments</a> accurately describe the field data we need to complete these tasks.</p> <pre><code class="go">func decodeSingleOption(byteSlice []byte, field TemplateField, options Options) {
+    // Check we have enough data
+    if len(byteSlice) &lt; int(field.Length) {
+        return
+    }
+
+    // Handle each enterprise
+    switch field.EnterpriseNumber {
+    case 0:
+        // Handle elements for enterprise 0
+        switch field.ElementId {
+        case 34:
+            // samplingInterval
+            options["samplingInterval"] = binary.BigEndian.Uint32(byteSlice[:int(field.Length)])
+        case 36:
+            // flowActiveTimeout
+            options["flowActiveTimeout"] = binary.BigEndian.Uint16(byteSlice[:int(field.Length)])
+        case 37:
+            // flowIdleTimeout
+            options["flowIdleTimeout"] = binary.BigEndian.Uint16(byteSlice[:int(field.Length)])
+        case 41:
+            // exportedMessageTotalCount
+            options["exportedMessageTotalCount"] = binary.BigEndian.Uint64(byteSlice[:int(field.Length)])
+        case 42:
+            // exportedFlowRecordTotalCount
+            options["exportedFlowRecordTotalCount"] = binary.BigEndian.Uint64(byteSlice[:int(field.Length)])
+        case 130:
+            // exporterIPv4Address
+            options["exporterIPv4Address"] = net.IP(byteSlice[:int(field.Length)])
+        case 131:
+            // exporterIPv6Address
+            options["exporterIPv6Address"] = net.IP(byteSlice[:int(field.Length)])
+        case 144:
+            // exportingProcessId
+            options["exportingProcessId"] = binary.BigEndian.Uint32(byteSlice[:int(field.Length)])
+        case 160:
+            // systemInitTimeMilliseconds
+            options["exportingProcessId"] = int64(binary.BigEndian.Uint64(byteSlice[:int(field.Length)]))
+        case 214:
+            // exportProtocolVersion
+            options["exportProtocolVersion"] = uint8(byteSlice[0])
+        case 215:
+            // exportTransportProtocol
+            options["exportTransportProtocol"] = uint8(byteSlice[0])
+        }
+    }
+}
+</code></pre> <p>The order of fields in the data set is identical to the order in the template, so once again it's just a case of looping over them.</p> <pre><code class="go">// Read all scope field separators
+for i := 0; i &lt; len(template.ScopeField); i++ {
+  decodeSingleOption(byteSlice, template.ScopeField[i], options)
+
+  if len(byteSlice) &lt; int(template.ScopeField[i].Length) {
+    break
+  }
+  byteSlice = byteSlice[int(template.ScopeField[i].Length):]
+}
+
+// Read all field separators
+for i := 0; i &lt; len(template.Field); i++ {
+  decodeSingleOption(byteSlice, template.Field[i], options)
+
+  if len(byteSlice) &lt; int(template.Field[i].Length) {
+    break
+  }
+  byteSlice = byteSlice[int(template.Field[i].Length):]
+}
+</code></pre> <h2>Result</h2> <p>We now have a subset of the IANA fields supported in our decoder.</p> <p>Given a correct template and data payload, the result is a map of received options.</p> <pre><code class="go">map[
+  exportedMessageTotalCount: 250
+  exportedFlowRecordTotalCount: 10
+  samplingInterval: 10
+  flowIdleTimeout: 15
+  exportingProcessId: 72
+  exporterIPv4Address: 192.168.0.1
+  exporterIPv6Address: ::
+  flowActiveTimeout: 60
+  exportProtocolVersion: 10
+  exportTransportProtocol: 17
+]
+</code></pre> <h2>Summary</h2> <p>IPFIX is a highly flexible protocol with a relatively simple data format, allowing parsing to be easily implemented.</p> <p>While the implementation's boundary checking could be improved, the exercise of creating an actual implementation from documented implementation I would recommend to all.</p> <p>You may also find that some vendors have interesting assumptions within their options handling, with many configuration knobs missing compared to data templates.</p> <p>Having this functionality separated from <a href="https://github.com/calmh/ipfix">upstream code</a> proved to be fruitful, allowing certain options to be stored and distributed outside of normal flow collection.</p> <p>The full implementation can be found on <a href="https://github.com/DamianZaremba/ipfix_options_demo">Github</a>, with basic test cases added for each implemented field.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> <li>&raquo; <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">A look at low-cost tap aggregation</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2017/12/decoding-ipfix-options-using-go/";var disqus_url="http://damianzaremba.co.uk/2017/12/decoding-ipfix-options-using-go/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2017 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js?_v=5790ead7ad3ba27397aedfa3d263b867"></script> <script src="/assests/js/bootstrap.min.js?_v=046ba2b5f4cff7d2eaaa1af55caa9fd8"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js?_v=3044234175ac91f49b03ff999c592b85"></script> <script src="/assests/js/respond.min.js?_v=afc1984a3d17110449dc90cf22de0c27"></script><![endif]--> </body> </html>

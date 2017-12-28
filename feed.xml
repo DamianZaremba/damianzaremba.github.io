@@ -3,12 +3,19 @@
     <title>Damian Zaremba</title>
     <link href="http://damianzaremba.co.uk/feed.xml" rel="self"/>
     <link href="http://damianzaremba.co.uk/"/>
-    <updated>2017-12-27T00:00:00+00:00</updated>
+    <updated>2017-12-28T00:00:00+00:00</updated>
     <id>http://damianzaremba.co.uk/</id>
     <author>
         <name>Damian Zaremba</name>
         <email>damian@damianzaremba.co.uk</email>
     </author>
+    
+    <entry>
+        <title>Decoding IPFIX options using Go</title>
+        <link href="http://damianzaremba.co.uk/2017/12/decoding-ipfix-options-using-go/"/>
+        <updated>2017-12-28T00:00:00+00:00</updated>
+        <id>http://damianzaremba.co.uk/2017/12/decoding-ipfix-options-using-go</id>
+    </entry>
     
     <entry>
         <title>Decoding Arista EtherType headers with gopacket</title>
