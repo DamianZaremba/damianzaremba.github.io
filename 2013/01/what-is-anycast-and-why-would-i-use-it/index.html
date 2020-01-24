@@ -1,4 +1,94 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - What's Anycast and why would I use it?</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />20 Jan 2013</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul> </div> <div class=entry> <p>Recently I’ve heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p> <p>While I’m not a network dude, hopefully this post will give you an overview of what Anycast is, how it’s useful and what to watch out for.</p> <h2 id=overview>Overview</h2> <p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p> <p>As far as the ‘client’ is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p> <p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p> <pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - What's Anycast and why would I use it?</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Jan 2013</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>Recently I’ve heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p>
+
+<p>While I’m not a network dude, hopefully this post will give you an overview of what Anycast is, how it’s useful and what to watch out for.</p>
+
+<h2 id="overview">Overview</h2>
+<p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p>
+
+<p>As far as the ‘client’ is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p>
+
+<p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p>
+
+<pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1 (10.44.200.254)  15.334 ms  17.279 ms  19.183 ms
  2  host-92-23-160-1.as13285.net (92.23.160.1)  29.204 ms  32.556 ms  36.016 ms
  3  host-78-151-225-101.static.as13285.net (78.151.225.101)  38.386 ms  40.704 ms  42.598 ms
@@ -8,7 +98,9 @@
  7  host-78-144-0-180.as13285.net (78.144.0.180)  42.400 ms host-78-144-0-116.as13285.net (78.144.0.116)  39.599 ms host-78-144-0-164.as13285.net (78.144.0.164)  37.310 ms
  8  195.66.225.179 (195.66.225.179)  38.239 ms  73.818 ms  72.494 ms
  9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms
-</code></pre> <pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+</code></pre>
+
+<pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1-dal.linode.com (67.18.7.161)  19.229 ms  19.291 ms  19.392 ms
  2  xe-2-0-0.car03.dllstx2.networklayer.com (67.18.7.89)  0.197 ms  0.220 ms  0.202 ms
  3  po101.dsr01.dllstx2.networklayer.com (70.87.254.73)  0.513 ms  0.537 ms  0.624 ms
@@ -16,7 +108,71 @@
  5  ae16.bbr01.eq01.dal03.networklayer.com (173.192.18.224)  16.145 ms  16.138 ms  16.112 ms
  6  141.101.74.253 (141.101.74.253)  0.602 ms  0.566 ms  0.549 ms
  7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms
-</code></pre> <p>Note that the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p> <p>The ‘magic’ here happens at the routing layer, a router will have multiple ‘paths’ to the IP (173.245.59.118) and chooses the best one based on its metrics.</p> <p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p> <h1 id=for-those-used-to-dealing-with-internal-networks>For those used to dealing with internal networks</h1> <p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt=""/></p> <p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p> <p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would unblock and start forwarding traffic.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt=""/></p> <p>The problem here is you are having to go via Scotland to access Wales from England, when they have a direct link. You can’t have both links up because you’d cause a loop and no traffic would pass.</p> <p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you’d want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p> <p>I’m not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn’t hugely matter. Let’s assume both links are the same speed and are direct (1 hop away).</p> <p>The topology looks something like</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt=""/></p> <p>This means if any of the offices want to talk to another office, they are only 1 hop away and don’t have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt=""/></p> <p>In summary using routing between the 3 offices allows for transparent fail over and best-performance access. In a more complicated topology this is very useful.</p> <p>Essentially, this is also how ‘Anycast’ works - the main difference being is we’re dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn’t care either way - it will choose the ‘best’ path based on what it knows about.</p> <h2 id=why-is-this-useful>Why is this useful?</h2> <p>Anycast gives you a number of benefits such as</p> <ul> <li>Higher reliability/availability</li> <li>Higher performance</li> <li>Localisation/migration of DoS/DDoS attacks</li> <li>Client agnostic</li> </ul> <h2 id=why-doesnt-everyone-use-it>Why doesn’t everyone use it?</h2> <p>There are some drawbacks to using Anycast addressing</p> <ul> <li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li> <li>Can be expensive - IP space, network infrastructure, training</li> <li>Harder to troubleshoot</li> <li>Harder to monitor</li> </ul> <h2 id=how-would-i-use-it>How would I use it?</h2> <p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk ‘breaking’ connections across 2 nodes.</p> <p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p> <p>A common thing to do would be create 3 NS entries pointing to servers in each location</p> <pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+</code></pre>
+
+<p>Note that the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p>
+
+<p>The ‘magic’ here happens at the routing layer, a router will have multiple ‘paths’ to the IP (173.245.59.118) and chooses the best one based on its metrics.</p>
+
+<p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p>
+
+<h1 id="for-those-used-to-dealing-with-internal-networks">For those used to dealing with internal networks</h1>
+<p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt="" /></p>
+
+<p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p>
+
+<p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would unblock and start forwarding traffic.</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt="" /></p>
+
+<p>The problem here is you are having to go via Scotland to access Wales from England, when they have a direct link. You can’t have both links up because you’d cause a loop and no traffic would pass.</p>
+
+<p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you’d want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p>
+
+<p>I’m not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn’t hugely matter. Let’s assume both links are the same speed and are direct (1 hop away).</p>
+
+<p>The topology looks something like</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt="" /></p>
+
+<p>This means if any of the offices want to talk to another office, they are only 1 hop away and don’t have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt="" /></p>
+
+<p>In summary using routing between the 3 offices allows for transparent fail over and best-performance access. In a more complicated topology this is very useful.</p>
+
+<p>Essentially, this is also how ‘Anycast’ works - the main difference being is we’re dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn’t care either way - it will choose the ‘best’ path based on what it knows about.</p>
+
+<h2 id="why-is-this-useful">Why is this useful?</h2>
+<p>Anycast gives you a number of benefits such as</p>
+
+<ul>
+  <li>Higher reliability/availability</li>
+  <li>Higher performance</li>
+  <li>Localisation/migration of DoS/DDoS attacks</li>
+  <li>Client agnostic</li>
+</ul>
+
+<h2 id="why-doesnt-everyone-use-it">Why doesn’t everyone use it?</h2>
+<p>There are some drawbacks to using Anycast addressing</p>
+
+<ul>
+  <li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li>
+  <li>Can be expensive - IP space, network infrastructure, training</li>
+  <li>Harder to troubleshoot</li>
+  <li>Harder to monitor</li>
+</ul>
+
+<h2 id="how-would-i-use-it">How would I use it?</h2>
+<p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk ‘breaking’ connections across 2 nodes.</p>
+
+<p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p>
+
+<p>A common thing to do would be create 3 NS entries pointing to servers in each location</p>
+
+<pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something.	360	IN	NS	ns1.myawesomedns.something.
 myawesomedns.something.	360	IN	NS	ns2.myawesomedns.something.
@@ -30,7 +186,31 @@ ns2	360	IN	A	192.168.0.1
 
 ; US
 ns3	360	IN	A	172.16.0.1
-</code></pre> <p>These NS records would then be “glued” on the root nameservers, so the first resolver can find the NS servers IP address.</p> <p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to fail over (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the ‘local’ one to them.</p> <p>Anycast helps to solve both these issues.</p> <p>If a server goes down you can withdraw the route and (as long as you’re not flapping routes) your peers should pick it up in a few minutes.</p> <p>In the case of a user making a request to the Anycast IP, the request will be routed to the ‘nearest’ node - in normal operation this would be the ‘local’ one, if that had failed it would automatically (after the route withdrawal) go to the next ‘nearest’.</p> <p>Now I’m quoting ‘nearest’ and ‘local’ and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p> <p>The routing before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt=""/></p> <p>So lets start using Anycast, we’re going to keep the original IPs as ‘maintenance’ IPs - ones we know only go to that single host and create a new block.</p> <pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+</code></pre>
+
+<p>These NS records would then be “glued” on the root nameservers, so the first resolver can find the NS servers IP address.</p>
+
+<p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to fail over (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the ‘local’ one to them.</p>
+
+<p>Anycast helps to solve both these issues.</p>
+
+<p>If a server goes down you can withdraw the route and (as long as you’re not flapping routes) your peers should pick it up in a few minutes.</p>
+
+<p>In the case of a user making a request to the Anycast IP, the request will be routed to the ‘nearest’ node - in normal operation this would be the ‘local’ one, if that had failed it would automatically (after the route withdrawal) go to the next ‘nearest’.</p>
+
+<p>Now I’m quoting ‘nearest’ and ‘local’ and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p>
+
+<p>The routing before we start using Anycast</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt="" /></p>
+
+<p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt="" /></p>
+
+<p>So lets start using Anycast, we’re going to keep the original IPs as ‘maintenance’ IPs - ones we know only go to that single host and create a new block.</p>
+
+<pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something.	360	IN	NS	ns1.myawesomedns.something.
 myawesomedns.something.	360	IN	NS	ns2.myawesomedns.something.
@@ -49,4 +229,120 @@ srv-ns3	360	IN	A	172.16.0.1
 ns1 360 IN A 10.1.0.1
 ns2 360 IN A 10.1.0.2
 ns3 360 IN A 10.1.0.3
-</code></pre> <p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p> <p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p> <p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p> <p>I won’t go into the BGP configuration in this post as it’s a little lengthy to explain/draw how routing tables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p> <p>The routing after we start using ‘Anycast’ IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using ‘Anycast’ IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt=""/></p> <p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt=""/></p> <p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt=""/></p> <p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/";var disqus_url="http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p>
+
+<p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p>
+
+<p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p>
+
+<p>I won’t go into the BGP configuration in this post as it’s a little lengthy to explain/draw how routing tables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p>
+
+<p>The routing after we start using ‘Anycast’ IPs</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt="" /></p>
+
+<p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using ‘Anycast’ IPs</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt="" /></p>
+
+<p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt="" /></p>
+
+<p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt="" /></p>
+
+<p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/';
+    var disqus_url = 'http://damianzaremba.co.uk/2013/01/what-is-anycast-and-why-would-i-use-it/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

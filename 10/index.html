@@ -1,4 +1,91 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jun 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul> </div> <div class=entry> <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p> <p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p> <p>I’ve included an example config below with comments</p> <pre><code class="language-text">!! Basic stuff
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - Blog</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Damian Zaremba's Blog" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/">Configuring a Cisco 1700 series access router for an ADSL connection with tunneled IPv6</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />28 Jun 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/06/configuring-a-cisco-1700-series-access-router-for-an-adsl-connection-with-tunneled-ipv6/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/security'>Security</a></li><li><a href='/tag/cisco'>Cisco</a></li><li><a href='/tag/cisco-1700'>Cisco 1700</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I decided to re-configure my home router from scratch so that I could tidy up the config and ACLs which had been messily generated over time.</p>
+
+<p>The main reason being my old IPv6 ACLs pretty much where non-existent and before properly configuring my lan for auto assigning v6 IPs, I wanted to limit the incoming traffic.</p>
+
+<p>I’ve included an example config below with comments</p>
+
+<pre><code class="language-text">!! Basic stuff
 version 12.4
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -191,7 +278,147 @@ line vty 0 15
  transport input ssh
 !
 end
-</code></pre> <p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job. One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I’ll start playing with the configs, for now they work just fine.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />09 Apr 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul> </div> <div class=entry> <p>Hi to anyone that reads this.</p> <p>I wasn’t going to post about this as it is not something I think it neat or I should be proud of, but I seem to be getting a few links though to this blog so I thought I should post something!</p> <p>I recently was re-designing (if you can call it that) this blog and was looking to integrate mint. The plugin utilizes;</p> <ul> <li>admin_menu &amp; admin_notices wordpress actions for displaying/allowing editing of settings.</li> <li>wp_head wordpress action for outputting the mint integration code into the header.</li> <li>rss_head, rss2_head, atom_header &amp; the_permalink_rss wordpress actions for integration of birdfeeder.</li> </ul> <p>The script goes out of its way to ensure it does not break html or xml output due to PHP errors.</p> <p>The plugin can be downloaded from <a href="http://wordpress.org/extend/plugins/mint/">here</a> and offers mint integration into the header (tracking code) &amp; bird feeder integration for the rss feeds. Both of these are optional and can be configured from the settings page.</p> <p>The requirements are;</p> <ul> <li>PHP</li> <li>A working wordpress install (use the latest :3)</li> <li>A working mint install (on the same server – due to how birdfeeder integration works this has to be the case without major hacking of the plugin)</li> <li>The ability to read the error messages and fill out the settings page</li> </ul> <p>Why mint? It has an awesome AJAX interface for viewing stats, remains fast on pretty large sites, supports plugins and best of all the code isn’t encoded in any way.</p> <p>The downside is a 30$ license per site but this is supporting an awesome developer who keeps the product updated. Because the code is open you can also hack it to your needs and release any plugins/themes back into the community.</p> <p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p> <p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/03/canhazip/">canhazip</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />30 Mar 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul> </div> <div class=entry> <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p> <h4 id=basic-usage>Basic Usage</h4> <p><a href="http://canhazip.info/">http://canhazip.info/</a></p> <p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p> <h4 id=specific-ip-type>Specific IP type</h4> <p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p> <p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p> <p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p> <p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p> <h4 id=output-format>Output format</h4> <p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format=""> to the end of the URL.</your></p> <p>Accepted formats are:</p> <ul> <li> <p>xml</p> </li> <li> <p>json</p> </li> <li> <p>yaml</p> </li> <li> <p>PHP (serialize of an array)</p> </li> <li> <p>plain</p> </li> </ul> <p>Example usage:</p> <p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p> <h4 id=faq>FAQ</h4> <h5 id=icanhazip-exists-why-another-service-that-does-the-same-thing>icanhazip exists, why another service that does the same thing?</h5> <ol> <li>Because I can</li> <li>Because .info domains were on special offer ($1.87!)</li> <li>The servers hosting the site are in London and Manchester not the US (latency)</li> <li>The secondary service I was using previously no longer exists (I like basic redundancy)</li> </ol> <h5 id=do-you-keep-logs>Do you keep logs</h5> <p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p> <h5 id=why-different-formats>Why different formats?</h5> <p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p> <h5 id=is-this-reliable>Is this reliable</h5> <p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p> <h5 id=example-usage>Example usage</h5> <p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p> <pre><code class="language-php">#!/usr/bin/php
+</code></pre>
+
+<p>I might update it to support VPN connections rather than tunnelling them though to a openvpn box, but openvpn + SSL certs just work for when I want lan access (not that often..). For the rest of the time just plain old SSH with a little tunnelling where needed does the job.
+One thing that does need doing is sending the system logs over to the syslog box - Currently things like NAT table overflow warnings just spam the console. Once I get a bit of time to re-configure rancid I’ll start playing with the configs, for now they work just fine.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/04/wordpress-plugin/">Wordpress plugin</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />09 Apr 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/04/wordpress-plugin/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/general'>General</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Hi to anyone that reads this.</p>
+
+<p>I wasn’t going to post about this as it is not something I think it neat or I should be proud of, but I seem to be getting a few links though to this blog so I thought I should post something!</p>
+
+<p>I recently was re-designing (if you can call it that) this blog and was looking to integrate mint. The plugin utilizes;</p>
+<ul>
+  <li>admin_menu &amp; admin_notices wordpress actions for displaying/allowing editing of settings.</li>
+  <li>wp_head wordpress action for outputting the mint integration code into the header.</li>
+  <li>rss_head, rss2_head, atom_header &amp; the_permalink_rss wordpress actions for integration of birdfeeder.</li>
+</ul>
+
+<p>The script goes out of its way to ensure it does not break html or xml output due to PHP errors.</p>
+
+<p>The plugin can be downloaded from <a href="http://wordpress.org/extend/plugins/mint/">here</a> and offers mint integration into the header (tracking code) &amp; bird feeder integration for the rss feeds.
+Both of these are optional and can be configured from the settings page.</p>
+
+<p>The requirements are;</p>
+
+<ul>
+  <li>PHP</li>
+  <li>A working wordpress install (use the latest :3)</li>
+  <li>A working mint install (on the same server – due to how birdfeeder integration works this has to be the case without major hacking of the plugin)</li>
+  <li>The ability to read the error messages and fill out the settings page</li>
+</ul>
+
+<p>Why mint? It has an awesome AJAX interface for viewing stats, remains fast on pretty large sites, supports plugins and best of all the code isn’t encoded in any way.</p>
+
+<p>The downside is a 30$ license per site but this is supporting an awesome developer who keeps the product updated. Because the code is open you can also hack it to your needs and release any plugins/themes back into the community.</p>
+
+<p>License? It is licensed under GPLv3 and I take no responsibility if it breaks your site ;) But I might fix it if you tell me it broke something (I’m running it in production and have noticed no issues in testing or live use).</p>
+
+<p>Developing for wordpress was easier than I first though – the action hooks makes life very easy even if it is a little tricky to figure out how plugins are stored and tracked in extend it’s self. I don’t think I’ll be making a habit of developing plugins but will feel happy hacking them up as needed.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/03/canhazip/">canhazip</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />30 Mar 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/03/canhazip/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/fun'>Fun</a></li><li><a href='/tag/work'>Work</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I was a little bored this afternoon so made <a href="http://canhazip.info">canhazip.info</a>! Inspired by the awesome service <a href="http://icanhazip.com/">icanhazip.com</a> run by <a href="http://rackerhacker.com/">RackerHacker</a>, it basically does the same thing but there are some differences.</p>
+
+<h4 id="basic-usage">Basic Usage</h4>
+
+<p><a href="http://canhazip.info/">http://canhazip.info/</a></p>
+
+<p>This will return your public IP - if you have dual stack (IPv4 and IPv6) then it will return your v6 address.</p>
+
+<h4 id="specific-ip-type">Specific IP type</h4>
+
+<p><a href="http://ipv4.canhazip.info/">http://ipv4.canhazip.info/</a></p>
+
+<p>This will return your public IPv4 address if you are have a working one, else it will time-out (uses an A record).</p>
+
+<p><a href="http://ipv6.canhazip.info/">http://ipv6.canhazip.info/</a></p>
+
+<p>This will return your public IPv6 address if you are have a working one, else it will time-out (uses an AAAA record).</p>
+
+<h4 id="output-format">Output format</h4>
+
+<p>By default the output will be plain text however you can optionally pass a format to be returned. To pass a format simply add /<your format="">
+to the end of the URL.</your></p>
+
+<p>Accepted formats are:</p>
+
+<ul>
+  <li>
+    <p>xml</p>
+  </li>
+  <li>
+    <p>json</p>
+  </li>
+  <li>
+    <p>yaml</p>
+  </li>
+  <li>
+    <p>PHP (serialize of an array)</p>
+  </li>
+  <li>
+    <p>plain</p>
+  </li>
+</ul>
+
+<p>Example usage:</p>
+
+<p><a href="http://canhazip.info/xml">http://canhazip.info/xml</a></p>
+
+<h4 id="faq">FAQ</h4>
+
+<h5 id="icanhazip-exists-why-another-service-that-does-the-same-thing">icanhazip exists, why another service that does the same thing?</h5>
+
+<ol>
+  <li>Because I can</li>
+  <li>Because .info domains were on special offer ($1.87!)</li>
+  <li>The servers hosting the site are in London and Manchester not the US (latency)</li>
+  <li>The secondary service I was using previously no longer exists (I like basic redundancy)</li>
+</ol>
+
+<h5 id="do-you-keep-logs">Do you keep logs</h5>
+
+<p>I have logs from the web server which I keep for a few days just in case there is any abuse. These are not shared with anyone and access to the server is heavily restricted.</p>
+
+<h5 id="why-different-formats">Why different formats?</h5>
+
+<p>For developers wanting more than plain text. I plan to add in extended information such as GeoIP and the option to specify an IP to get the info for. This will appear in time as I get randomly bored.</p>
+
+<h5 id="is-this-reliable">Is this reliable</h5>
+
+<p>I make no guarantee but the 2 servers are split between two data centres with multiple A/AAAA records per name. The NS servers are also split between 3 providers and in total there are 7.</p>
+
+<h5 id="example-usage">Example usage</h5>
+
+<p>(I currently use this to keep my TunnelBroker endpoint updated) - It could probably be done much nicer but this kinda just works.</p>
+
+<pre><code class="language-php">#!/usr/bin/php
 &lt;?php
  $PASSWORD = "";
  $TUNNELID = 0;
@@ -220,7 +447,13 @@ if(strpos($return, "That IPv4 endpoint is already in use.") !== False){
  print "\n";
  }
 ?&gt;
-</code></pre> <h5 id=another-example>Another example</h5> <p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p> <pre><code class="language-php">#!/usr/bin/php
+</code></pre>
+
+<h5 id="another-example">Another example</h5>
+
+<p>Basic screen scraping example (I use this to keep my Cluenet VPN endpoint updated)</p>
+
+<pre><code class="language-php">#!/usr/bin/php
 &lt;?php
  $ACCESSKEY = "";
  $NODENAME = "";
@@ -270,15 +503,65 @@ if(strpos($output, 'Success.') != 0){
  die('IP has not changed'."\n");
  }
 ?&gt;
-</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />12 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul> </div> <div class=entry> <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don’t feel like calling out to Perl.</p> <p>Quick example:</p> <pre><code class="language-bash">root@localhost [/]# date -d @1290705757
+</code></pre>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/12/unix-time-to-human-readable/">Unix time to human readable?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />12 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/unix-time-to-human-readable/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>You can quickly convert Unix time to a human readable format by using the date command. This proves to be very helpful for bash scripts etc when you don’t feel like calling out to Perl.</p>
+
+<p>Quick example:</p>
+
+<pre><code class="language-bash">root@localhost [/]# date -d @1290705757
 Thu Nov 25 18:22:37 CET 2010
-</code></pre> <p>You can also format the output of date to suit your needs, for example:</p> <pre><code class="language-bash">root@localhost [/]# date -d@1290705757 +"%H:%M:%S %d/%m/%Y"
+</code></pre>
+
+<p>You can also format the output of date to suit your needs, for example:</p>
+
+<pre><code class="language-bash">root@localhost [/]# date -d@1290705757 +"%H:%M:%S %d/%m/%Y"
 18:22:37 25/11/2010
-</code></pre> <p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p> <pre><code class="language-bash">root@localhost [/var/cpanel/users]# for user in *; do echo -n "$user: "; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done
+</code></pre>
+
+<p>As expect this can very easily be scripted for example I was checking create times on some cPanel accounts:</p>
+
+<pre><code class="language-bash">root@localhost [/var/cpanel/users]# for user in *; do echo -n "$user: "; date -d@$(grep STARTDATE $user | cut -d’=’ -f2); done
 damian: Thu Nov 18 21:17:44 CET 2010
 test: Mon Nov 8 00:01:04 CET 2010
 bob: Mon Nov 15 17:34:18 CET 2010
-</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />07 Dec 2010</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don’t even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p> <p>A nice simple program is the system activity reporter or SAR.</p> <p>To get started you’ll want to install and start sysstat, on a centos box this can be done as below:</p> <pre><code class="language-bash"># Make sure the system is up to date
+</code></pre>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2010/12/system-activity-reporter/">System activity reporter</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />07 Dec 2010</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2010/12/system-activity-reporter/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Ever wanted to be able to get historical performance data on your linux system without setting up an entire rrd based graphing system? Maybe you don’t even want graphs you just want to know that if needed you can find out what your memory usage was last week.</p>
+
+<p>A nice simple program is the system activity reporter or SAR.</p>
+
+<p>To get started you’ll want to install and start sysstat, on a centos box this can be done as below:</p>
+
+<pre><code class="language-bash"># Make sure the system is up to date
 yum update
 
 # Install the sysstat program (includes sar and iostat)
@@ -289,7 +572,15 @@ chkconfig sysstat on
 
 # Start sysstat – this starts the system activity data collector
 service sysstat start
-</code></pre> <p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I’ll only be covering the 2). I’ll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p> <p><strong>IOStat</strong></p> <p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p> <pre><code class="language-bash">[root@xxx ~]# iostat
+</code></pre>
+
+<p>Ok once we have sysstat installed there are a few programs we can use to get performance data, iostat and sar (there are loads of other things such as mpstat, pidstat, nfsiostat, cifsiostat etc but for this post I’ll only be covering the 2). I’ll give you some basic examples of what we can do with these tools but they are very extensive so I suggest that you check out the man pages (man sar + man iostat)</p>
+
+<p><strong>IOStat</strong></p>
+
+<p>iostat is mainly for reporting CPU statistics and input/output statistics for devices/partitions. Some examples of this can be seen below:</p>
+
+<pre><code class="language-bash">[root@xxx ~]# iostat
 Linux my.kernel.version (my.hostname) 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
@@ -297,7 +588,11 @@ Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 11.04 174.56 96.57 1575022426 871286088
 xvdb 0.92 14.90 10.14 134403952 91524480
 xvdc 0.91 12.16 10.53 109676480 95014488
-</code></pre> <p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isn’t helpful to you so lets get the current values at 2 second intervals instead:</p> <pre><code class="language-bash">[root@xxx ~]# iostat -d 2
+</code></pre>
+
+<p>The above output is avg history since last boot, now if your debugging a current issue on the system this probably isn’t helpful to you so lets get the current values at 2 second intervals instead:</p>
+
+<pre><code class="language-bash">[root@xxx ~]# iostat -d 2
 Linux my.kernel.version (my.hostname) 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
@@ -315,7 +610,11 @@ Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 0 0
 xvdb 0.00 0.00 0.00 0 0
 xvdc 0.00 0.00 0.00 0 0
-</code></pre> <p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p> <pre><code class="language-bash">[root@xxx ~]# iostat -d 2 2
+</code></pre>
+
+<p>This output actually just carries on adding a new entry every 2 seconds, to limit the entries then just specify the number as below:</p>
+
+<pre><code class="language-bash">[root@xxx ~]# iostat -d 2 2
 Linux my.kernel.version (my.hostname) 12/07/10
 avg-cpu: %user %nice %system %iowait %steal %idle
 0.35 0.00 0.19 0.61 0.01 98.84
@@ -328,7 +627,11 @@ Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
 xvda 0.00 0.00 0.00 0 0
 xvdb 0.00 0.00 0.00 0 0
 xvdc 0.00 0.00 0.00 0 0
-</code></pre> <p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p> <pre><code class="language-bash">root@xxx:~# iostat -d 2 2
+</code></pre>
+
+<p>As you can see this testing vm is actually currently doing nothing but if I run this on a production machine you can see why this information is helpful for spotting bottle necks etc:</p>
+
+<pre><code class="language-bash">root@xxx:~# iostat -d 2 2
 Linux my.kernel.version (my.hostname) 12/07/10 _x86_64_
 
 Device: tps Blk_read/s Blk_wrtn/s Blk_read Blk_wrtn
@@ -346,11 +649,66 @@ sdb 15.00 8.00 416.00 16 832
 sdb1 15.00 8.00 416.00 16 832
 sdc 71.00 12.00 752.00 24 1504
 sdc1 71.00 12.00 752.00 24 1504
-</code></pre> <p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p> <p><strong>System activity reporter (Sar)</strong> As the name suggests it’s not for reporting io data, it is mainly for reporting system data. What do we mean by “system data”? Well this covers lots of things such as:</p> <ul> <li> <p>CPU</p> </li> <li> <p>Load avg</p> </li> <li> <p>Memory usage</p> </li> <li> <p>Inode/file/kernel table usage</p> </li> <li> <p>Swapping stats</p> </li> <li> <p>Process statistics</p> </li> <li> <p>TTY device activity</p> </li> <li> <p>Much much more….</p> </li> </ul> <p>Some common things your probably want to look at; CPU usage:</p> <pre><code class="language-bash">sar -u
-</code></pre> <p>Memory usage:</p> <pre><code class="language-bash">sar -r
-</code></pre> <p>Load avg (and queue length):</p> <pre><code class="language-bash">sar -q
-</code></pre> <p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p> <p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p> <pre><code class="language-bash">sar -s -f /var/log/sa/sa06
-</code></pre> <p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p> <pre><code class="language-bash">[root@xxx~]# sar -s | head
+</code></pre>
+
+<p>Yes I know I started talking about memory, cpu etc at the start of this post but you should care about your disks too! Anyway onto sar..</p>
+
+<p><strong>System activity reporter (Sar)</strong>
+As the name suggests it’s not for reporting io data, it is mainly for reporting system data. What do we mean by “system data”? Well this covers lots of things such as:</p>
+
+<ul>
+  <li>
+    <p>CPU</p>
+  </li>
+  <li>
+    <p>Load avg</p>
+  </li>
+  <li>
+    <p>Memory usage</p>
+  </li>
+  <li>
+    <p>Inode/file/kernel table usage</p>
+  </li>
+  <li>
+    <p>Swapping stats</p>
+  </li>
+  <li>
+    <p>Process statistics</p>
+  </li>
+  <li>
+    <p>TTY device activity</p>
+  </li>
+  <li>
+    <p>Much much more….</p>
+  </li>
+</ul>
+
+<p>Some common things your probably want to look at;
+CPU usage:</p>
+
+<pre><code class="language-bash">sar -u
+</code></pre>
+
+<p>Memory usage:</p>
+
+<pre><code class="language-bash">sar -r
+</code></pre>
+
+<p>Load avg (and queue length):</p>
+
+<pre><code class="language-bash">sar -q
+</code></pre>
+
+<p>Now without any other options sar is going to return you information from the current sar file, to get a different days content then specify the file.</p>
+
+<p>Today is the 7th, say I wanted to see CPU data for yesterday I would run:</p>
+
+<pre><code class="language-bash">sar -s -f /var/log/sa/sa06
+</code></pre>
+
+<p>Now depending on what data you are requesting (please read the man page on what data you can retrive and how you can format it, I am refering to the defaults!) the output will vary, example output for CPU data is as follows:</p>
+
+<pre><code class="language-bash">[root@xxx~]# sar -s | head
 Linux my.kernel.version (my.hostname) 12/07/10
 
 08:00:01 CPU %user %nice %system %iowait %steal %idle
@@ -361,8 +719,18 @@ Linux my.kernel.version (my.hostname) 12/07/10
 08:50:01 all 0.29 0.00 0.28 0.04 0.01 99.39
 09:00:01 all 0.21 0.00 0.26 0.02 0.01 99.50
 09:10:01 all 0.66 0.00 0.41 0.34 0.03 98.57
-</code></pre> <p><strong>But I want some graphs!</strong> Awesome, let’s make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily. You like excel? I’m sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p> <pre><code class="language-bash">sadf -- -u | awk '/%idle/ {print $3","$6}'
-</code></pre> <p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p> <pre><code class="language-bash"># Make a tmp file
+</code></pre>
+
+<p><strong>But I want some graphs!</strong>
+Awesome, let’s make some using gnuplot! We are going to use sadf, this is a program that lets us format/display sar data in different formats really easily.
+You like excel? I’m sorry to hear that, here is an example of outputting cpu idle data in csv form anyway (just to keep you happy):</p>
+
+<pre><code class="language-bash">sadf -- -u | awk '/%idle/ {print $3","$6}'
+</code></pre>
+
+<p>Anyway for those geeks among us lets make some pretty stuff in gnuplot:</p>
+
+<pre><code class="language-bash"># Make a tmp file
 cpu_data_file=$(mktemp /tmp/cpu_data.XXX);
 # Fill the file with stuff
 sadf -- -u | awk '/%idle/ {print $3" "$6}' &gt; $cpu_data_file
@@ -375,7 +743,13 @@ set xlabel 'Time';
 plot '$cpu_data_file' using 1:2 with lines title 'CPU usage';" | gnuplot
 # Remove tmp file
 rm -f $cpu_data_file
-</code></pre> <p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p> <p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p> <pre><code class="language-bash">#!/bin/bash
+</code></pre>
+
+<p>If your not a ASCII type of guy then change set terminal dump; to set terminal png; and pipe the output to file for some nice images.</p>
+
+<p>If your interested then I hacked up a quick example of making graphs for displaying on the web:</p>
+
+<pre><code class="language-bash">#!/bin/bash
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 # sar_graph.sh - Makes pretty web pages from sar
 # Written by Damian Zaremba - Released under GPLv3
@@ -487,4 +861,73 @@ echo $HTML &gt; "$HTML_DST/index.html"
 
 # Tidy
 rm -rf "$base_dir"
-</code></pre> </div> </article> <nav id=page_nav> <a href="/9/" class=prev>&laquo; Previous Page</a> <a href="/11/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+        </div>
+    </article>
+    
+
+
+
+<nav id="page_nav">
+    
+    
+    <a href="/9/" class="prev">&laquo; Previous Page</a>
+    
+    
+
+    
+    <a href="/11/" class="next">Next Page &raquo;</a>
+    
+</nav>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

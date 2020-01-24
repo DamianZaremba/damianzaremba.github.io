@@ -1,20 +1,142 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - A look at Arista's configuration session</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/01/a-look-at-aristas-configuration-session/">A look at Arista's configuration session</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jan 2017</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2017/01/a-look-at-aristas-configuration-session/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li><li><a href='/tag/automation'>Automation</a></li></ul> </div> <div class=entry> <p>When making changes it’s generally advisable to have a few things:</p> <ul> <li>A rollback plan</li> <li>Atomic changes</li> <li>Control around releases</li> </ul> <p>This is a given in the land of Juniper, but sadly has been lacking on Cisco, Arista, HP and other network kit based on the familiar syntax.</p> <p>Thankfully Arista added in a feature last year, which brings initial support for this and some nice use cases with it!</p> <p>We’ll take a look at what Arista offers and how we can use it.</p> <h1 id=the-basics>The basics</h1> <p><code>configure session</code> as added in EOS 14.4 (mid-2015), enables changes to be staged, reviewed, rollback and committed as required.</p> <p>The most basic usage is to use <code>configure session</code> rather than <code>configure terminal</code> and <code>commit</code> before exiting the configuration mode.</p> <p>Lets take a basic example; changing the IP on the Management interface:</p> <pre><code>localhost#configure terminal
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - A look at Arista's configuration session</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2017/01/a-look-at-aristas-configuration-session/">A look at Arista's configuration session</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />28 Jan 2017</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2017/01/a-look-at-aristas-configuration-session/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li><li><a href='/tag/automation'>Automation</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>When making changes it’s generally advisable to have a few things:</p>
+
+<ul>
+  <li>A rollback plan</li>
+  <li>Atomic changes</li>
+  <li>Control around releases</li>
+</ul>
+
+<p>This is a given in the land of Juniper, but sadly has been lacking
+on Cisco, Arista, HP and other network kit based on the familiar syntax.</p>
+
+<p>Thankfully Arista added in a feature last year, which brings initial
+support for this and some nice use cases with it!</p>
+
+<p>We’ll take a look at what Arista offers and how we can use it.</p>
+
+<h1 id="the-basics">The basics</h1>
+
+<p><code>configure session</code> as added in EOS 14.4 (mid-2015), enables changes to
+be staged, reviewed, rollback and committed as required.</p>
+
+<p>The most basic usage is to use <code>configure session</code> rather than <code>configure terminal</code> and <code>commit</code> before exiting the configuration mode.</p>
+
+<p>Lets take a basic example; changing the IP on the Management interface:</p>
+
+<pre><code>localhost#configure terminal
 localhost(config)#interface management 1
 localhost(config-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-if-Ma1)#
-</code></pre> <p>Completing the same using a configuration session is nearly identical:</p> <pre><code>localhost#configure session example1
+</code></pre>
+
+<p>Completing the same using a configuration session is nearly identical:</p>
+
+<pre><code>localhost#configure session example1
 localhost(config-s-exampl)#interface management 1
 localhost(config-s-exampl-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-s-exampl-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-exampl-if-Ma1)#commit
-</code></pre> <p>However, there is 1 key difference. In the first example, the IP is changed to 4.3.2.1, in the second the IP is never set to this.</p> <p>This can be seen as below:</p> <pre><code>localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
+</code></pre>
+
+<p>However, there is 1 key difference. In the first example, the IP is changed
+to 4.3.2.1, in the second the IP is never set to this.</p>
+
+<p>This can be seen as below:</p>
+
+<pre><code>localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-s-exampl-if-Ma1)#show ip int ma1 brief
 Interface              IP Address         Status     Protocol         MTU
 Management1            1.2.3.4/24         up         up              1500
-</code></pre> <p>This is due to the config not actually being applied until the ‘commit’ command has completed.</p> <p>Naturally, you also have the usual commands, including aborting, computing the diff etc:</p> <pre><code>localhost(config-s-sess1)#show session-config diffs
+</code></pre>
+<p>This is due to the config not actually being applied until the ‘commit’ command
+has completed.</p>
+
+<p>Naturally, you also have the usual commands, including aborting, computing the
+diff etc:</p>
+
+<pre><code>localhost(config-s-sess1)#show session-config diffs
 --- system:/running-config
 +++ session:/sess1-session-config
 @@ -35,7 +35,6 @@
@@ -28,7 +150,12 @@ Management1            1.2.3.4/24         up         up              1500
 
 localhost(config-s-sess2)#abort
 localhost#
-</code></pre> <p>These also work when not in configure mode, by passing the session name (see below);</p> <pre><code>localhost#show session-config named sess2 diffs
+</code></pre>
+
+<p>These also work when not in configure mode, by passing the session name
+(see below);</p>
+
+<pre><code>localhost#show session-config named sess2 diffs
 --- system:/running-config
 +++ session:/sess2-session-config
 @@ -35,7 +35,6 @@
@@ -39,7 +166,19 @@ localhost#
     ip address 1.2.3.4/24
  !
  no ip routing
-</code></pre> <h1 id=the-difference>The difference</h1> <p>At a basic level, this is familiar to the Juniper world of ‘configure &amp; commit’, but we get much more.</p> <p>You can have multiple pending configuration sessions, disconnecting from the device and re-entering the same session by name later, or passing it to another engineer for review.</p> <p>To view all sessions you can issue the <code>show configuration sessions</code> command:</p> <pre><code>localhost#show configuration sessions detail
+</code></pre>
+
+<h1 id="the-difference">The difference</h1>
+<p>At a basic level, this is familiar to the Juniper world of ‘configure &amp; commit’,
+but we get much more.</p>
+
+<p>You can have multiple pending configuration sessions, disconnecting from the
+device and re-entering the same session by name later, or passing it to another
+engineer for review.</p>
+
+<p>To view all sessions you can issue the <code>show configuration sessions</code> command:</p>
+
+<pre><code>localhost#show configuration sessions detail
 Maximum number of completed sessions: 1
 Maximum number of pending sessions: 5
 
@@ -48,7 +187,40 @@ Maximum number of pending sessions: 5
   example1    completed                                  
   example2    pending                                    
   sess1       pending                                                         
-</code></pre> <p>A simple use case for this feature may be continuing earlier work, a more complex example could be enforcing 2 users are involved in a config change; this has a very nice appear for environments with high compliance requirements.</p> <h3 id=limitations>Limitations</h3> <p>Currently, there is no <code>rollback</code> command, once the change is committed trying to display the diff or inverse diff is not possible.</p> <p>It’s also not super easy to hook into config events to backup the config just before a config commit happens. You’re still going to be relying on access logs or scheduled config backups to figure out what changed if you don’t have the session-config diff to hand.</p> <p>This would be a really nice feature, that I hope they implement soon.</p> <p>For any configs on the flash, these can either be restored (<code>config replace flash:startup-config.xxxx</code>), or the differences displayed (<code>diff running-config flash:startup-config.xxxx</code>) pretty easily, so most the functionality is already there.</p> <h3 id=an-example-four-eye-change>An example ‘four-eye’ change</h3> <p>Let’s establish some ground rules:</p> <ul> <li>Operations staff can ‘request’ config changes</li> <li>Operations staff have no access to the advanced shells (i.e. APIs directly)</li> <li>Engineering staff can ‘approve’ (commit) requested config changes</li> <li>Engineering staff can do anything they want</li> </ul> <p>To enforce this, we can create 2 groups with relevant permissions;</p> <pre><code>localhost(config)#role operations
+</code></pre>
+
+<p>A simple use case for this feature may be continuing earlier work, a more
+complex example could be enforcing 2 users are involved in a config change;
+this has a very nice appear for environments with high compliance requirements.</p>
+
+<h3 id="limitations">Limitations</h3>
+<p>Currently, there is no <code>rollback</code> command, once the change is committed trying
+to display the diff or inverse diff is not possible.</p>
+
+<p>It’s also not super easy to hook into config events to backup the config just
+before a config commit happens. You’re still going to be relying on access logs
+or scheduled config backups to figure out what changed if you don’t have the session-config
+diff to hand.</p>
+
+<p>This would be a really nice feature, that I hope they implement soon.</p>
+
+<p>For any configs on the flash, these can either be restored
+(<code>config replace flash:startup-config.xxxx</code>), or the differences displayed (<code>diff running-config flash:startup-config.xxxx</code>) pretty easily,
+so most the functionality is already there.</p>
+
+<h3 id="an-example-four-eye-change">An example ‘four-eye’ change</h3>
+<p>Let’s establish some ground rules:</p>
+
+<ul>
+  <li>Operations staff can ‘request’ config changes</li>
+  <li>Operations staff have no access to the advanced shells (i.e. APIs directly)</li>
+  <li>Engineering staff can ‘approve’ (commit) requested config changes</li>
+  <li>Engineering staff can do anything they want</li>
+</ul>
+
+<p>To enforce this, we can create 2 groups with relevant permissions;</p>
+
+<pre><code>localhost(config)#role operations
 localhost(config-role-operations)#10 permit mode exec command configure session
 localhost(config-role-operations)#20 deny mode exec command configure|bash|python-shell
 localhost(config-role-operations)#30 deny mode config command commit
@@ -56,10 +228,22 @@ localhost(config-role-operations)#40 permit mode exec command .*
 
 localhost(config)#role engineering
 localhost(config-role-engineering)#10 permit command .*
-</code></pre> <p>Next, let’s define some test users;</p> <pre><code>localhost(config)#username ops1 role operations nopassword
+</code></pre>
+
+<p>Next, let’s define some test users;</p>
+
+<pre><code>localhost(config)#username ops1 role operations nopassword
 localhost(config)#username eng1 role engineering nopassword
-</code></pre> <p>Trying a standard <code>configure</code> command as ops1, results in an error;</p> <pre><code>localhost#configure terminal % Authorization denied for command 'configure'
-</code></pre> <p>However, using <code>configure session</code> is allowed;</p> <pre><code>localhost#configure session
+</code></pre>
+
+<p>Trying a standard <code>configure</code> command as ops1, results in an error;</p>
+
+<pre><code>localhost#configure terminal % Authorization denied for command 'configure'
+</code></pre>
+
+<p>However, using <code>configure session</code> is allowed;</p>
+
+<pre><code>localhost#configure session
 localhost(config-s-sess4)#hostname super-cool-001
 localhost(config-s-sess4)#show session-config diff
 --- system:/running-config
@@ -73,9 +257,19 @@ localhost(config-s-sess4)#show session-config diff
  !
  spanning-tree mode mstp
  !
-</code></pre> <p>We’ve successfully staged the config change but cannot commit it.</p> <pre><code>localhost(config-s-sess4)#commit
+</code></pre>
+
+<p>We’ve successfully staged the config change but cannot commit it.</p>
+
+<pre><code>localhost(config-s-sess4)#commit
 % Authorization denied for command 'commit'
-</code></pre> <p>Let’s ask our eng1 user to proceed;</p> <p>First, lets review the change:</p> <pre><code>localhost#configure session sess4
+</code></pre>
+
+<p>Let’s ask our eng1 user to proceed;</p>
+
+<p>First, lets review the change:</p>
+
+<pre><code>localhost#configure session sess4
 localhost(config-s-sess4)#show session-config diffs
 --- system:/running-config
 +++ session:/sess4-session-config
@@ -88,11 +282,29 @@ localhost(config-s-sess4)#show session-config diffs
  !
  spanning-tree mode mstp
  !
-</code></pre> <p>As you can see, this is identical to what the ops1 user sees. We can then commit the change as normal, changing the status to completed:</p> <pre><code>localhost(config-s-sess4)#commit
+</code></pre>
+
+<p>As you can see, this is identical to what the ops1 user sees. We can then commit
+the change as normal, changing the status to completed:</p>
+
+<pre><code>localhost(config-s-sess4)#commit
 
 super-cool-001#show configuration sessions detail | inc sess4
   sess4    completed
-</code></pre> <p>Now the change has been completed, no further changes can be made.</p> <h1 id=real-life-examples>Real life examples</h1> <p>When is this a life saver? Simply whenever you need atomic changes.</p> <h3 id=migrating-management-interfaces-into-a-different-vrf>Migrating management interfaces into a different VRF</h3> <p>Using a separate routing domain for management traffic is attractive in certain environments.</p> <p>Let’s look at the simplest change:</p> <pre><code>localhost&gt;show ip int management 1 brief
+</code></pre>
+
+<p>Now the change has been completed, no further changes can be made.</p>
+
+<h1 id="real-life-examples">Real life examples</h1>
+<p>When is this a life saver? Simply whenever you need atomic changes.</p>
+
+<h3 id="migrating-management-interfaces-into-a-different-vrf">Migrating management interfaces into a different VRF</h3>
+<p>Using a separate routing domain for management traffic is attractive in certain
+environments.</p>
+
+<p>Let’s look at the simplest change:</p>
+
+<pre><code>localhost&gt;show ip int management 1 brief
 Interface              IP Address         Status     Protocol         MTU
 Management1            1.2.3.4/24         up         up              1500
 
@@ -106,7 +318,14 @@ localhost(config-if-Ma1)#vrf forwarding management
 ! We've now lost access to the device!
 Interface              IP Address         Status     Protocol         MTU
 Management1            unassigned         up         up              1500
-</code></pre> <p>This makes the migration tricky, without another form of access (console, loopbacks etc).</p> <p>Using a config session we can make the change and re-apply the IP, resulting in only a short interruption:</p> <pre><code>localhost(config-s-sess0)#interface management 1
+</code></pre>
+
+<p>This makes the migration tricky, without another form of access (console, loopbacks etc).</p>
+
+<p>Using a config session we can make the change and re-apply the IP, resulting in only
+a short interruption:</p>
+
+<pre><code>localhost(config-s-sess0)#interface management 1
 localhost(config-s-sess0-if-Ma1)#vrf forwarding management
 localhost(config-s-sess0-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-sess0-if-Ma1)#commit
@@ -119,7 +338,52 @@ localhost#show vrf management
 ---------------- --------- --------------- -------------------- -----------
    management       0:0       ipv4,ipv6       v4:no routing,    Management1
                                               v6:no routing                
-</code></pre> <p>This can be extended as required; RADIUS, DNS, NTP, SNMP config sections are a few places that come to mind as requiring changes under these circumstances.</p> <h3 id=changing-acls>Changing ACLs</h3> <p>When building access control lists, it’s common practice to space the entries, allowing for future entries to fit into the list, preventing access issues due to ordering.</p> <p>Sometimes it’s useful to change these on mass:</p> <ul> <li>ACLs come from an external system, computing the diff is required</li> <li>Re-ordering of the entries needs to take place to allow for growth</li> <li>Standardisation of ACLs across multiple devices</li> </ul> <p>Typically, this is a painful process as you cannot remove an ACL, without directly impacting traffic.</p> <p>Once again, due to the staging aspect of commit sessions, we can make all of our changes and have a single change resulting in our desired config.</p> <p>A similar approach can be taken for more complex objects, such as route maps.</p> <h3 id=staging-config>Staging config</h3> <p>Simply, the ability to stage config is very useful.</p> <p>Let’s imagine you have a maintenance window that requires 3 steps:</p> <ul> <li>Placing BGP peers into maintenance mode</li> <li>Re-configuring said peers for BFD</li> <li>Reverting step 1</li> </ul> <p>Rather than having this in text files and copying it in sequence, we can stage the configs and simply apply them as required.</p> <p>The rollback config can also be staged, allowing a very fast rollback with little confusion.</p> <p>This could play out along the lines of;</p> <pre><code>localhost#show configuration sessions | inc maint-10001
+</code></pre>
+
+<p>This can be extended as required; RADIUS, DNS, NTP, SNMP config sections are a few places
+that come to mind as requiring changes under these circumstances.</p>
+
+<h3 id="changing-acls">Changing ACLs</h3>
+<p>When building access control lists, it’s common practice to space the entries,
+allowing for future entries to fit into the list, preventing access issues due
+to ordering.</p>
+
+<p>Sometimes it’s useful to change these on mass:</p>
+
+<ul>
+  <li>ACLs come from an external system, computing the diff is required</li>
+  <li>Re-ordering of the entries needs to take place to allow for growth</li>
+  <li>Standardisation of ACLs across multiple devices</li>
+</ul>
+
+<p>Typically, this is a painful process as you cannot remove an ACL, without
+directly impacting traffic.</p>
+
+<p>Once again, due to the staging aspect of commit sessions, we can make all of our
+changes and have a single change resulting in our desired config.</p>
+
+<p>A similar approach can be taken for more complex objects, such as route maps.</p>
+
+<h3 id="staging-config">Staging config</h3>
+<p>Simply, the ability to stage config is very useful.</p>
+
+<p>Let’s imagine you have a maintenance window that requires 3 steps:</p>
+
+<ul>
+  <li>Placing BGP peers into maintenance mode</li>
+  <li>Re-configuring said peers for BFD</li>
+  <li>Reverting step 1</li>
+</ul>
+
+<p>Rather than having this in text files and copying it in sequence, we can stage
+the configs and simply apply them as required.</p>
+
+<p>The rollback config can also be staged, allowing a very fast rollback with little
+confusion.</p>
+
+<p>This could play out along the lines of;</p>
+
+<pre><code>localhost#show configuration sessions | inc maint-10001
   maint-10001-step-1           pending                        
   maint-10001-step-1-revert    pending     
 
@@ -130,4 +394,108 @@ localhost(config-s-maint-)#commit
 
 localhost#configure session maint-10001-step-1-revert
 localhost(config-s-maint-)#commit
-</code></pre> <h1 id=api-support>API support</h1> <p>The <code>configuration session</code> command is also supported via the eAPI, which has a nice side effect, ensuring any config errors submitted remotely do not result in partially applied configs.</p> <h1 id=summary>Summary</h1> <p>While not perfect, this certainly gives you some nice features. I hope further features are built, extending the functionality.</p> <p>Ideally, the changes are being versioned and pushed via an external service, but we all know in reality that sometimes it’s easier/quicker to check a single device in question. Old habits die hard!</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2017/01/a-look-at-aristas-configuration-session/";var disqus_url="http://damianzaremba.co.uk/2017/01/a-look-at-aristas-configuration-session/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<h1 id="api-support">API support</h1>
+
+<p>The <code>configuration session</code> command is also supported via the eAPI, which has a
+nice side effect, ensuring any config errors submitted remotely do not result in
+partially applied configs.</p>
+
+<h1 id="summary">Summary</h1>
+<p>While not perfect, this certainly gives you some nice features. I hope further
+features are built, extending the functionality.</p>
+
+<p>Ideally, the changes are being versioned and pushed via an external service,
+but we all know in reality that sometimes it’s easier/quicker to check a single
+device in question. Old habits die hard!</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2017/01/a-look-at-aristas-configuration-session/';
+    var disqus_url = 'http://damianzaremba.co.uk/2017/01/a-look-at-aristas-configuration-session/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

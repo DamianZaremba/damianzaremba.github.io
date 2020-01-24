@@ -1,20 +1,144 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/01/a-look-at-aristas-configuration-session/">A look at Arista's configuration session</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />28 Jan 2017</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2017/01/a-look-at-aristas-configuration-session/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li><li><a href='/tag/automation'>Automation</a></li></ul> </div> <div class=entry> <p>When making changes it’s generally advisable to have a few things:</p> <ul> <li>A rollback plan</li> <li>Atomic changes</li> <li>Control around releases</li> </ul> <p>This is a given in the land of Juniper, but sadly has been lacking on Cisco, Arista, HP and other network kit based on the familiar syntax.</p> <p>Thankfully Arista added in a feature last year, which brings initial support for this and some nice use cases with it!</p> <p>We’ll take a look at what Arista offers and how we can use it.</p> <h1 id=the-basics>The basics</h1> <p><code>configure session</code> as added in EOS 14.4 (mid-2015), enables changes to be staged, reviewed, rollback and committed as required.</p> <p>The most basic usage is to use <code>configure session</code> rather than <code>configure terminal</code> and <code>commit</code> before exiting the configuration mode.</p> <p>Lets take a basic example; changing the IP on the Management interface:</p> <pre><code>localhost#configure terminal
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - Blog</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Damian Zaremba's Blog" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+
+    
+    <article class="post">
+        <h1 class="title"><a href="/2017/01/a-look-at-aristas-configuration-session/">A look at Arista's configuration session</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />28 Jan 2017</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2017/01/a-look-at-aristas-configuration-session/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li><li><a href='/tag/automation'>Automation</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>When making changes it’s generally advisable to have a few things:</p>
+
+<ul>
+  <li>A rollback plan</li>
+  <li>Atomic changes</li>
+  <li>Control around releases</li>
+</ul>
+
+<p>This is a given in the land of Juniper, but sadly has been lacking
+on Cisco, Arista, HP and other network kit based on the familiar syntax.</p>
+
+<p>Thankfully Arista added in a feature last year, which brings initial
+support for this and some nice use cases with it!</p>
+
+<p>We’ll take a look at what Arista offers and how we can use it.</p>
+
+<h1 id="the-basics">The basics</h1>
+
+<p><code>configure session</code> as added in EOS 14.4 (mid-2015), enables changes to
+be staged, reviewed, rollback and committed as required.</p>
+
+<p>The most basic usage is to use <code>configure session</code> rather than <code>configure terminal</code> and <code>commit</code> before exiting the configuration mode.</p>
+
+<p>Lets take a basic example; changing the IP on the Management interface:</p>
+
+<pre><code>localhost#configure terminal
 localhost(config)#interface management 1
 localhost(config-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-if-Ma1)#
-</code></pre> <p>Completing the same using a configuration session is nearly identical:</p> <pre><code>localhost#configure session example1
+</code></pre>
+
+<p>Completing the same using a configuration session is nearly identical:</p>
+
+<pre><code>localhost#configure session example1
 localhost(config-s-exampl)#interface management 1
 localhost(config-s-exampl-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-s-exampl-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-exampl-if-Ma1)#commit
-</code></pre> <p>However, there is 1 key difference. In the first example, the IP is changed to 4.3.2.1, in the second the IP is never set to this.</p> <p>This can be seen as below:</p> <pre><code>localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
+</code></pre>
+
+<p>However, there is 1 key difference. In the first example, the IP is changed
+to 4.3.2.1, in the second the IP is never set to this.</p>
+
+<p>This can be seen as below:</p>
+
+<pre><code>localhost(config-s-exampl-if-Ma1)#ip address 4.3.2.1/24
 localhost(config-s-exampl-if-Ma1)#show ip int ma1 brief
 Interface              IP Address         Status     Protocol         MTU
 Management1            1.2.3.4/24         up         up              1500
-</code></pre> <p>This is due to the config not actually being applied until the ‘commit’ command has completed.</p> <p>Naturally, you also have the usual commands, including aborting, computing the diff etc:</p> <pre><code>localhost(config-s-sess1)#show session-config diffs
+</code></pre>
+<p>This is due to the config not actually being applied until the ‘commit’ command
+has completed.</p>
+
+<p>Naturally, you also have the usual commands, including aborting, computing the
+diff etc:</p>
+
+<pre><code>localhost(config-s-sess1)#show session-config diffs
 --- system:/running-config
 +++ session:/sess1-session-config
 @@ -35,7 +35,6 @@
@@ -28,7 +152,12 @@ Management1            1.2.3.4/24         up         up              1500
 
 localhost(config-s-sess2)#abort
 localhost#
-</code></pre> <p>These also work when not in configure mode, by passing the session name (see below);</p> <pre><code>localhost#show session-config named sess2 diffs
+</code></pre>
+
+<p>These also work when not in configure mode, by passing the session name
+(see below);</p>
+
+<pre><code>localhost#show session-config named sess2 diffs
 --- system:/running-config
 +++ session:/sess2-session-config
 @@ -35,7 +35,6 @@
@@ -39,7 +168,19 @@ localhost#
     ip address 1.2.3.4/24
  !
  no ip routing
-</code></pre> <h1 id=the-difference>The difference</h1> <p>At a basic level, this is familiar to the Juniper world of ‘configure &amp; commit’, but we get much more.</p> <p>You can have multiple pending configuration sessions, disconnecting from the device and re-entering the same session by name later, or passing it to another engineer for review.</p> <p>To view all sessions you can issue the <code>show configuration sessions</code> command:</p> <pre><code>localhost#show configuration sessions detail
+</code></pre>
+
+<h1 id="the-difference">The difference</h1>
+<p>At a basic level, this is familiar to the Juniper world of ‘configure &amp; commit’,
+but we get much more.</p>
+
+<p>You can have multiple pending configuration sessions, disconnecting from the
+device and re-entering the same session by name later, or passing it to another
+engineer for review.</p>
+
+<p>To view all sessions you can issue the <code>show configuration sessions</code> command:</p>
+
+<pre><code>localhost#show configuration sessions detail
 Maximum number of completed sessions: 1
 Maximum number of pending sessions: 5
 
@@ -48,7 +189,40 @@ Maximum number of pending sessions: 5
   example1    completed                                  
   example2    pending                                    
   sess1       pending                                                         
-</code></pre> <p>A simple use case for this feature may be continuing earlier work, a more complex example could be enforcing 2 users are involved in a config change; this has a very nice appear for environments with high compliance requirements.</p> <h3 id=limitations>Limitations</h3> <p>Currently, there is no <code>rollback</code> command, once the change is committed trying to display the diff or inverse diff is not possible.</p> <p>It’s also not super easy to hook into config events to backup the config just before a config commit happens. You’re still going to be relying on access logs or scheduled config backups to figure out what changed if you don’t have the session-config diff to hand.</p> <p>This would be a really nice feature, that I hope they implement soon.</p> <p>For any configs on the flash, these can either be restored (<code>config replace flash:startup-config.xxxx</code>), or the differences displayed (<code>diff running-config flash:startup-config.xxxx</code>) pretty easily, so most the functionality is already there.</p> <h3 id=an-example-four-eye-change>An example ‘four-eye’ change</h3> <p>Let’s establish some ground rules:</p> <ul> <li>Operations staff can ‘request’ config changes</li> <li>Operations staff have no access to the advanced shells (i.e. APIs directly)</li> <li>Engineering staff can ‘approve’ (commit) requested config changes</li> <li>Engineering staff can do anything they want</li> </ul> <p>To enforce this, we can create 2 groups with relevant permissions;</p> <pre><code>localhost(config)#role operations
+</code></pre>
+
+<p>A simple use case for this feature may be continuing earlier work, a more
+complex example could be enforcing 2 users are involved in a config change;
+this has a very nice appear for environments with high compliance requirements.</p>
+
+<h3 id="limitations">Limitations</h3>
+<p>Currently, there is no <code>rollback</code> command, once the change is committed trying
+to display the diff or inverse diff is not possible.</p>
+
+<p>It’s also not super easy to hook into config events to backup the config just
+before a config commit happens. You’re still going to be relying on access logs
+or scheduled config backups to figure out what changed if you don’t have the session-config
+diff to hand.</p>
+
+<p>This would be a really nice feature, that I hope they implement soon.</p>
+
+<p>For any configs on the flash, these can either be restored
+(<code>config replace flash:startup-config.xxxx</code>), or the differences displayed (<code>diff running-config flash:startup-config.xxxx</code>) pretty easily,
+so most the functionality is already there.</p>
+
+<h3 id="an-example-four-eye-change">An example ‘four-eye’ change</h3>
+<p>Let’s establish some ground rules:</p>
+
+<ul>
+  <li>Operations staff can ‘request’ config changes</li>
+  <li>Operations staff have no access to the advanced shells (i.e. APIs directly)</li>
+  <li>Engineering staff can ‘approve’ (commit) requested config changes</li>
+  <li>Engineering staff can do anything they want</li>
+</ul>
+
+<p>To enforce this, we can create 2 groups with relevant permissions;</p>
+
+<pre><code>localhost(config)#role operations
 localhost(config-role-operations)#10 permit mode exec command configure session
 localhost(config-role-operations)#20 deny mode exec command configure|bash|python-shell
 localhost(config-role-operations)#30 deny mode config command commit
@@ -56,10 +230,22 @@ localhost(config-role-operations)#40 permit mode exec command .*
 
 localhost(config)#role engineering
 localhost(config-role-engineering)#10 permit command .*
-</code></pre> <p>Next, let’s define some test users;</p> <pre><code>localhost(config)#username ops1 role operations nopassword
+</code></pre>
+
+<p>Next, let’s define some test users;</p>
+
+<pre><code>localhost(config)#username ops1 role operations nopassword
 localhost(config)#username eng1 role engineering nopassword
-</code></pre> <p>Trying a standard <code>configure</code> command as ops1, results in an error;</p> <pre><code>localhost#configure terminal % Authorization denied for command 'configure'
-</code></pre> <p>However, using <code>configure session</code> is allowed;</p> <pre><code>localhost#configure session
+</code></pre>
+
+<p>Trying a standard <code>configure</code> command as ops1, results in an error;</p>
+
+<pre><code>localhost#configure terminal % Authorization denied for command 'configure'
+</code></pre>
+
+<p>However, using <code>configure session</code> is allowed;</p>
+
+<pre><code>localhost#configure session
 localhost(config-s-sess4)#hostname super-cool-001
 localhost(config-s-sess4)#show session-config diff
 --- system:/running-config
@@ -73,9 +259,19 @@ localhost(config-s-sess4)#show session-config diff
  !
  spanning-tree mode mstp
  !
-</code></pre> <p>We’ve successfully staged the config change but cannot commit it.</p> <pre><code>localhost(config-s-sess4)#commit
+</code></pre>
+
+<p>We’ve successfully staged the config change but cannot commit it.</p>
+
+<pre><code>localhost(config-s-sess4)#commit
 % Authorization denied for command 'commit'
-</code></pre> <p>Let’s ask our eng1 user to proceed;</p> <p>First, lets review the change:</p> <pre><code>localhost#configure session sess4
+</code></pre>
+
+<p>Let’s ask our eng1 user to proceed;</p>
+
+<p>First, lets review the change:</p>
+
+<pre><code>localhost#configure session sess4
 localhost(config-s-sess4)#show session-config diffs
 --- system:/running-config
 +++ session:/sess4-session-config
@@ -88,11 +284,29 @@ localhost(config-s-sess4)#show session-config diffs
  !
  spanning-tree mode mstp
  !
-</code></pre> <p>As you can see, this is identical to what the ops1 user sees. We can then commit the change as normal, changing the status to completed:</p> <pre><code>localhost(config-s-sess4)#commit
+</code></pre>
+
+<p>As you can see, this is identical to what the ops1 user sees. We can then commit
+the change as normal, changing the status to completed:</p>
+
+<pre><code>localhost(config-s-sess4)#commit
 
 super-cool-001#show configuration sessions detail | inc sess4
   sess4    completed
-</code></pre> <p>Now the change has been completed, no further changes can be made.</p> <h1 id=real-life-examples>Real life examples</h1> <p>When is this a life saver? Simply whenever you need atomic changes.</p> <h3 id=migrating-management-interfaces-into-a-different-vrf>Migrating management interfaces into a different VRF</h3> <p>Using a separate routing domain for management traffic is attractive in certain environments.</p> <p>Let’s look at the simplest change:</p> <pre><code>localhost&gt;show ip int management 1 brief
+</code></pre>
+
+<p>Now the change has been completed, no further changes can be made.</p>
+
+<h1 id="real-life-examples">Real life examples</h1>
+<p>When is this a life saver? Simply whenever you need atomic changes.</p>
+
+<h3 id="migrating-management-interfaces-into-a-different-vrf">Migrating management interfaces into a different VRF</h3>
+<p>Using a separate routing domain for management traffic is attractive in certain
+environments.</p>
+
+<p>Let’s look at the simplest change:</p>
+
+<pre><code>localhost&gt;show ip int management 1 brief
 Interface              IP Address         Status     Protocol         MTU
 Management1            1.2.3.4/24         up         up              1500
 
@@ -106,7 +320,14 @@ localhost(config-if-Ma1)#vrf forwarding management
 ! We've now lost access to the device!
 Interface              IP Address         Status     Protocol         MTU
 Management1            unassigned         up         up              1500
-</code></pre> <p>This makes the migration tricky, without another form of access (console, loopbacks etc).</p> <p>Using a config session we can make the change and re-apply the IP, resulting in only a short interruption:</p> <pre><code>localhost(config-s-sess0)#interface management 1
+</code></pre>
+
+<p>This makes the migration tricky, without another form of access (console, loopbacks etc).</p>
+
+<p>Using a config session we can make the change and re-apply the IP, resulting in only
+a short interruption:</p>
+
+<pre><code>localhost(config-s-sess0)#interface management 1
 localhost(config-s-sess0-if-Ma1)#vrf forwarding management
 localhost(config-s-sess0-if-Ma1)#ip address 1.2.3.4/24
 localhost(config-s-sess0-if-Ma1)#commit
@@ -119,7 +340,52 @@ localhost#show vrf management
 ---------------- --------- --------------- -------------------- -----------
    management       0:0       ipv4,ipv6       v4:no routing,    Management1
                                               v6:no routing                
-</code></pre> <p>This can be extended as required; RADIUS, DNS, NTP, SNMP config sections are a few places that come to mind as requiring changes under these circumstances.</p> <h3 id=changing-acls>Changing ACLs</h3> <p>When building access control lists, it’s common practice to space the entries, allowing for future entries to fit into the list, preventing access issues due to ordering.</p> <p>Sometimes it’s useful to change these on mass:</p> <ul> <li>ACLs come from an external system, computing the diff is required</li> <li>Re-ordering of the entries needs to take place to allow for growth</li> <li>Standardisation of ACLs across multiple devices</li> </ul> <p>Typically, this is a painful process as you cannot remove an ACL, without directly impacting traffic.</p> <p>Once again, due to the staging aspect of commit sessions, we can make all of our changes and have a single change resulting in our desired config.</p> <p>A similar approach can be taken for more complex objects, such as route maps.</p> <h3 id=staging-config>Staging config</h3> <p>Simply, the ability to stage config is very useful.</p> <p>Let’s imagine you have a maintenance window that requires 3 steps:</p> <ul> <li>Placing BGP peers into maintenance mode</li> <li>Re-configuring said peers for BFD</li> <li>Reverting step 1</li> </ul> <p>Rather than having this in text files and copying it in sequence, we can stage the configs and simply apply them as required.</p> <p>The rollback config can also be staged, allowing a very fast rollback with little confusion.</p> <p>This could play out along the lines of;</p> <pre><code>localhost#show configuration sessions | inc maint-10001
+</code></pre>
+
+<p>This can be extended as required; RADIUS, DNS, NTP, SNMP config sections are a few places
+that come to mind as requiring changes under these circumstances.</p>
+
+<h3 id="changing-acls">Changing ACLs</h3>
+<p>When building access control lists, it’s common practice to space the entries,
+allowing for future entries to fit into the list, preventing access issues due
+to ordering.</p>
+
+<p>Sometimes it’s useful to change these on mass:</p>
+
+<ul>
+  <li>ACLs come from an external system, computing the diff is required</li>
+  <li>Re-ordering of the entries needs to take place to allow for growth</li>
+  <li>Standardisation of ACLs across multiple devices</li>
+</ul>
+
+<p>Typically, this is a painful process as you cannot remove an ACL, without
+directly impacting traffic.</p>
+
+<p>Once again, due to the staging aspect of commit sessions, we can make all of our
+changes and have a single change resulting in our desired config.</p>
+
+<p>A similar approach can be taken for more complex objects, such as route maps.</p>
+
+<h3 id="staging-config">Staging config</h3>
+<p>Simply, the ability to stage config is very useful.</p>
+
+<p>Let’s imagine you have a maintenance window that requires 3 steps:</p>
+
+<ul>
+  <li>Placing BGP peers into maintenance mode</li>
+  <li>Re-configuring said peers for BFD</li>
+  <li>Reverting step 1</li>
+</ul>
+
+<p>Rather than having this in text files and copying it in sequence, we can stage
+the configs and simply apply them as required.</p>
+
+<p>The rollback config can also be staged, allowing a very fast rollback with little
+confusion.</p>
+
+<p>This could play out along the lines of;</p>
+
+<pre><code>localhost#show configuration sessions | inc maint-10001
   maint-10001-step-1           pending                        
   maint-10001-step-1-revert    pending     
 
@@ -130,7 +396,104 @@ localhost(config-s-maint-)#commit
 
 localhost#configure session maint-10001-step-1-revert
 localhost(config-s-maint-)#commit
-</code></pre> <h1 id=api-support>API support</h1> <p>The <code>configuration session</code> command is also supported via the eAPI, which has a nice side effect, ensuring any config errors submitted remotely do not result in partially applied configs.</p> <h1 id=summary>Summary</h1> <p>While not perfect, this certainly gives you some nice features. I hope further features are built, extending the functionality.</p> <p>Ideally, the changes are being versioned and pushed via an external service, but we all know in reality that sometimes it’s easier/quicker to check a single device in question. Old habits die hard!</p> </div> </article> <article class=post> <h1 class=title><a href="/2016/10/plam16-notes/">Percona Live Amsterdam 2016 Notes</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />20 Oct 2016</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2016/10/plam16-notes/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/conferences'>Conferences</a></li></ul> </div> <div class=entry> <p>Early this month I attended Percona Live, below are some random notes:</p> <h1 id=mysql-80>MySQL 8.0</h1> <p>MySQL 8.0 is currently quite far out, with a DMR available. While there is no official release date yet, another 2 years or so is likely.</p> <p>Some companies are testing the DMR in production to weed out potential issues during the development.</p> <p>Some exciting features include</p> <h3 id=innodb-by-default>InnoDB by default!</h3> <p>MySQL 5.7 is still using MyISAM for system tables, 8.0 will see MyISAM still shipped, but completely optional due to the new <a href="https://dev.mysql.com/doc/refman/8.0/en/data-dictionary.html">data dictionary</a>.</p> <p>Another <a href="http://bugs.mysql.com/bug.php?id=78553">feature request</a> has been raised to move the storage engine to a plugin, with some comments suggesting a separate package.</p> <p>All the features in MyISAM have been implemented in InnoDB (5.6, 5.7), with MyISAM still performing better in some cases.</p> <p>Some key reasons why not to use MyISAM unless there’s a specific use case (also applies to 5.6/5.7):</p> <ul> <li>Not ACID compliant</li> <li>Not transactional</li> <li>Repair + index rebuild required on crashes</li> <li>Table level locking</li> </ul> <h3 id=invisible-indexes>Invisible indexes</h3> <p>A very interesting feature, allowing you to hide an index from the query optimizer, but critically keep the index updated.</p> <p>There is a feature in MyISAM called ‘disabled indexes’, which has differing behaviour; this stops the index being maintained, requiring a rebuild of the index when it’s re-enabled.</p> <p>Why is this useful?</p> <ul> <li> <p>Dropping an index; once dropped rebuilding the index could be very time-consuming and in a production setting, this could have a significant effect on your applications. Hiding the index would reveal the same performance hit, with a low-cost rollback.</p> </li> <li> <p>Adding an index; creating a new index can cause the query plan to change, sometimes negatively. Currently, it’s not possible to ‘force’ a hidden index to be on, this would be an interesting feature; enabling testing of critical queries.</p> </li> </ul> <h3 id=ipv6-comparisons>IPv6 comparisons</h3> <p>INET6_ATON / INET6_NTOA were added in MySQL 5.6 however binary comparison has never worked properly. <a href="http://dev.mysql.com/worklog/task/?id=8699">WL#8699</a> has changed that.</p> <p>You can now do <code>INET6_ATON(address) &amp; INET6_ATON(network)</code> and the result is correct.</p> <p>A small change, but for certain applications, a lot of logic around v6 can now be treated the same way as v4.</p> <h3 id=json-support>JSON support</h3> <p>The JSON support continues to mature, with 2 new functions added in 8.0; JSON_ARRAYAGG &amp; JSON_OBJECTAGG.</p> <p>These functions work on tables without JSON fields, allowing logic such as:</p> <pre><code class="language-sql">mysql&gt; SELECT JSON_ARRAYAGG(`name`) AS `devices` FROM `assets` where `active` = b'1';
+</code></pre>
+
+<h1 id="api-support">API support</h1>
+
+<p>The <code>configuration session</code> command is also supported via the eAPI, which has a
+nice side effect, ensuring any config errors submitted remotely do not result in
+partially applied configs.</p>
+
+<h1 id="summary">Summary</h1>
+<p>While not perfect, this certainly gives you some nice features. I hope further
+features are built, extending the functionality.</p>
+
+<p>Ideally, the changes are being versioned and pushed via an external service,
+but we all know in reality that sometimes it’s easier/quicker to check a single
+device in question. Old habits die hard!</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2016/10/plam16-notes/">Percona Live Amsterdam 2016 Notes</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Oct 2016</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2016/10/plam16-notes/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/conferences'>Conferences</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Early this month I attended Percona Live, below are some random notes:</p>
+
+<h1 id="mysql-80">MySQL 8.0</h1>
+
+<p>MySQL 8.0 is currently quite far out, with a DMR available. While there is no
+official release date yet, another 2 years or so is likely.</p>
+
+<p>Some companies are testing the DMR in production to weed out potential issues
+during the development.</p>
+
+<p>Some exciting features include</p>
+
+<h3 id="innodb-by-default">InnoDB by default!</h3>
+<p>MySQL 5.7 is still using MyISAM for system tables, 8.0 will see MyISAM
+still shipped, but completely optional due to the new <a href="https://dev.mysql.com/doc/refman/8.0/en/data-dictionary.html">data dictionary</a>.</p>
+
+<p>Another <a href="http://bugs.mysql.com/bug.php?id=78553">feature request</a> has been raised
+to move the storage engine to a plugin, with some comments suggesting a separate package.</p>
+
+<p>All the features in MyISAM have been implemented in InnoDB (5.6, 5.7), with MyISAM
+still performing better in some cases.</p>
+
+<p>Some key reasons why not to use MyISAM unless there’s a specific use case (also applies to 5.6/5.7):</p>
+
+<ul>
+  <li>Not ACID compliant</li>
+  <li>Not transactional</li>
+  <li>Repair + index rebuild required on crashes</li>
+  <li>Table level locking</li>
+</ul>
+
+<h3 id="invisible-indexes">Invisible indexes</h3>
+<p>A very interesting feature, allowing you to hide an index from the query optimizer,
+but critically keep the index updated.</p>
+
+<p>There is a feature in MyISAM called ‘disabled indexes’, which has differing behaviour;
+this stops the index being maintained, requiring a rebuild of the index when it’s re-enabled.</p>
+
+<p>Why is this useful?</p>
+
+<ul>
+  <li>
+    <p>Dropping an index; once dropped rebuilding the index could be very time-consuming and
+in a production setting, this could have a significant effect on your applications.
+Hiding the index would reveal the same performance hit, with a low-cost rollback.</p>
+  </li>
+  <li>
+    <p>Adding an index; creating a new index can cause the query plan to change,
+sometimes negatively. Currently, it’s not possible to ‘force’ a hidden index to be on,
+this would be an interesting feature; enabling testing of critical queries.</p>
+  </li>
+</ul>
+
+<h3 id="ipv6-comparisons">IPv6 comparisons</h3>
+<p>INET6_ATON / INET6_NTOA were added in MySQL 5.6 however binary comparison has never
+worked properly. <a href="http://dev.mysql.com/worklog/task/?id=8699">WL#8699</a> has changed that.</p>
+
+<p>You can now do <code>INET6_ATON(address) &amp; INET6_ATON(network)</code> and the result is correct.</p>
+
+<p>A small change, but for certain applications, a lot of logic around v6 can now be treated the same way as v4.</p>
+
+<h3 id="json-support">JSON support</h3>
+<p>The JSON support continues to mature, with 2 new functions added in 8.0;
+JSON_ARRAYAGG &amp; JSON_OBJECTAGG.</p>
+
+<p>These functions work on tables without JSON fields, allowing logic such as:</p>
+
+<pre><code class="language-sql">mysql&gt; SELECT JSON_ARRAYAGG(`name`) AS `devices` FROM `assets` where `active` = b'1';
 +--------------------------+
 | devices                  |
 +--------------------------+
@@ -139,7 +502,11 @@ localhost(config-s-maint-)#commit
     "device3" ]
 |
 +--------------------------+
-</code></pre> <p>Or</p> <pre><code class="language-sql">mysql&gt; SELECT JSON_OBJECTAGG(`name`, `ip`) AS `devices` FROM `assets` where `active` = b'1';
+</code></pre>
+
+<p>Or</p>
+
+<pre><code class="language-sql">mysql&gt; SELECT JSON_OBJECTAGG(`name`, `ip`) AS `devices` FROM `assets` where `active` = b'1';
 +--------------------------+
 | devices                  |
 +--------------------------+
@@ -148,14 +515,35 @@ localhost(config-s-maint-)#commit
     "device3": "127.0.0.3" }
 |
 +--------------------------+
-</code></pre> <p>Other SQL logic should as grouping or joins can also be performed</p> <pre><code class="language-sql">mysql&gt; SELECT `location`, JSON_OBJECTAGG(`name`, `ip`) AS `devices` FROM `assets` where `active` = b'1' group by `location`;
+</code></pre>
+
+<p>Other SQL logic should as grouping or joins can also be performed</p>
+
+<pre><code class="language-sql">mysql&gt; SELECT `location`, JSON_OBJECTAGG(`name`, `ip`) AS `devices` FROM `assets` where `active` = b'1' group by `location`;
 +--------------+--------------------------------------------------+
 | location     | devices                                          |
 +--------------+--------------------------------------------------+
 | Amsterdam    | {"device1": "127.0.0.1", "device2": "127.0.0.2"} |
 | Manchester   | {"device3": "127.0.0.3"}                         |
 +--------------+--------------------------------------------------+
-</code></pre> <p>I’m not sure how much application/serialisation logic I want in my database, but this is definitely powerful.</p> <h3 id=cte>CTE</h3> <p>This literally hurts my brain, seemingly it can be used in place of derived tables, with 1 powerful feature; you can recurse over the statement.</p> <p>In the case of a table being referenced to its self, it’s now simple (and in some cases possible) to query the data in 1 pass.</p> <p>The CTE only knows about 1 row at a time, so for really complex items, columns have to be passed around (see <a href="http://mysqlserverteam.com/mysql-8-0-labs-recursive-common-table-expressions-in-mysql-ctes-part-two-how-to-generate-series/">this post</a> for a Fibonacci example).</p> <p>A simple example is as below:</p> <pre><code class="language-sql">WITH RECURSIVE crazy AS
+</code></pre>
+
+<p>I’m not sure how much application/serialisation logic I want in my database,
+but this is definitely powerful.</p>
+
+<h3 id="cte">CTE</h3>
+<p>This literally hurts my brain, seemingly it can be used in place of derived tables,
+with 1 powerful feature; you can recurse over the statement.</p>
+
+<p>In the case of a table being referenced to its self, it’s now simple (and in some cases possible)
+to query the data in 1 pass.</p>
+
+<p>The CTE only knows about 1 row at a time, so for really complex items,
+columns have to be passed around (see <a href="http://mysqlserverteam.com/mysql-8-0-labs-recursive-common-table-expressions-in-mysql-ctes-part-two-how-to-generate-series/">this post</a> for a Fibonacci example).</p>
+
+<p>A simple example is as below:</p>
+
+<pre><code class="language-sql">WITH RECURSIVE crazy AS
 (
   SELECT 1 AS counter
   UNION ALL
@@ -172,7 +560,46 @@ SELECT * FROM crazy;
 |       7 |
 |       9 |
 +---------+
-</code></pre> <h3 id=other-stuff>Other stuff</h3> <p>Lots of other nice features have been added such as:</p> <ul> <li>Better docs</li> <li>Better GIS support</li> <li>Performance improvements</li> <li>Improved security models</li> <li>Query optimizer cost model improvements</li> <li>Support for the latest Unicode 9.0 standard</li> <li>UTF8MB4 as the default character set (work started in 5.7)</li> </ul> <p>Follow the <a href="http://mysqlserverteam.com/">MySQL server team</a> blog for updates.</p> <h1 id=proxysql>ProxySQL</h1> <p>ProxySQL is a high-performance SQL proxy, supporting a number of interesting features:</p> <ul> <li>Query rewriting / blocking</li> <li>Load balancing / query routing</li> <li>Caching</li> <li>HA (when used with a topology manager)</li> <li>Traffic mirroring</li> </ul> <p>The HA part is especially interesting for a few reasons:</p> <ul> <li>Applications have their connection held, so you can have ‘no downtime, increased latency’ master failovers</li> <li>Servers can be promoted based on their read_only status</li> <li>Integration with cluster managers (Galera etc) is possible</li> </ul> <p><a href="http://www.tusacentral.net/joomla/">Marco Tusa</a> had a presentation on deploying ProxySQL, with an interesting overview of failover techniques and what ‘HA’ means:</p> <pre><code>90.000% (36 days) MySQL Replication
+</code></pre>
+
+<h3 id="other-stuff">Other stuff</h3>
+<p>Lots of other nice features have been added such as:</p>
+
+<ul>
+  <li>Better docs</li>
+  <li>Better GIS support</li>
+  <li>Performance improvements</li>
+  <li>Improved security models</li>
+  <li>Query optimizer cost model improvements</li>
+  <li>Support for the latest Unicode 9.0 standard</li>
+  <li>UTF8MB4 as the default character set (work started in 5.7)</li>
+</ul>
+
+<p>Follow the <a href="http://mysqlserverteam.com/">MySQL server team</a> blog for updates.</p>
+
+<h1 id="proxysql">ProxySQL</h1>
+<p>ProxySQL is a high-performance SQL proxy, supporting a number of interesting features:</p>
+
+<ul>
+  <li>Query rewriting / blocking</li>
+  <li>Load balancing / query routing</li>
+  <li>Caching</li>
+  <li>HA (when used with a topology manager)</li>
+  <li>Traffic mirroring</li>
+</ul>
+
+<p>The HA part is especially interesting for a few reasons:</p>
+
+<ul>
+  <li>Applications have their connection held, so you can have ‘no downtime, increased latency’ master failovers</li>
+  <li>Servers can be promoted based on their read_only status</li>
+  <li>Integration with cluster managers (Galera etc) is possible</li>
+</ul>
+
+<p><a href="http://www.tusacentral.net/joomla/">Marco Tusa</a> had a presentation on deploying ProxySQL,
+with an interesting overview of failover techniques and what ‘HA’ means:</p>
+
+<pre><code>90.000% (36 days) MySQL Replication
 99.900% (8 hours) Linux Heartbeat with DRBD
 99.900% (8 hours) RHCS with Shared Storage (Active/Passive)
 99.990% (52 minutes) MHA with at least 3 nodes
@@ -180,7 +607,144 @@ SELECT * FROM crazy;
 99.990% (52 minutes) Linux Heartbeat with Shared Storage and Replication
 99.995% (26 minutes) Multi-Master (Galera - Percona cluster) 3 node minimum
 99.999% (5 minutes) MySQL Cluster
-</code></pre> <h1 id=gh-ost>gh-ost</h1> <p>Think pt-online-schema-change without triggers, on steroids.</p> <p>The killer features include:</p> <ul> <li>No triggers, so 0 performance overhead when paused</li> <li>Dynamic throttling</li> <li>Hooks for notifications / cut-over</li> <li>Re-configurable at runtime</li> <li>Pauseable</li> </ul> <p>Currently, they’re still using the <code>INSERT INTO xxx SELECT FROM yyy</code> pattern for the bulk row copy (binlog events played over the top), there is a feature request for this to be done via the gh-ost process; if that happens a number of really cool possibilities open up:</p> <ul> <li>No extra read load on the masters (and no touching the source table) - read data from slaves</li> <li>Live table migrations - no complex intermediary master setup for migrations/vertical sharding</li> <li>Sharding - with support for conditionals, slicing a table in 2 could be done in the same way as a live table migration</li> </ul> <p>The only catch is you need row based binlogs (binlog_row_image=FULL, though MINIMAL <a href="https://github.com/github/gh-ost/issues/230">has been requested</a>); this can be supported in a statement or mixed topology by having 1 slave log changes in the row format.</p> <h1 id=facebook-backups--binlog-server>Facebook backups / binlog server</h1> <p>Facebook had a number of talks, 2 of which were on the topic of binlogs and backups.</p> <p>Interestingly their strategy is along the lines of:</p> <ul> <li>Backup binlogs as they rotate</li> <li>Stream binlogs into HDFS</li> <li><code>mysqldump</code> all databases every day</li> </ul> <p>The dumping process is interesting, as they take a full backup, but only save that every 5 days. The rest of the days, they compute the updated (+inserted) and deleted rows, then store that.</p> <p>When restoring a database/table they:</p> <ol> <li>Download the last full backup</li> <li>Download the diff backups between full…now</li> <li>Combine the full + diffs into 1 file</li> <li>Restore that file</li> <li>Replay the binlogs</li> </ol> <p>The only benefit I can see to this (over just storing the full backups) is saving on storage space (assuming &lt; 100% churn of the data).</p> <p>They have made multiple additions to the <code>mysqldump</code> binary (available in their <a href="https://github.com/facebook/mysql-5.6">mysql-5.6</a> branch), such as storing table offsets in comments.</p> <p>For restores, there is an orchestrated pipeline with a scheduler submitting automated restore requests to test backups; this has picked up failures in the process previously.</p> <p>To handle binlogs, they wrote their own binlog server, which can serve the files out of HDFS upon request; this is used to seed slaves and replay entries on restores.</p> <h1 id=myrocks>MyRocks</h1> <p>It was <a href="https://www.percona.com/blog/2016/10/24/announcing-myrocks-in-percona-server-for-mysql/">announced</a> that Percona Server will be supporting MyRocks, this is exciting as previously you needed to run <a href="https://github.com/facebook/mysql-5.6">Facebook’s branch</a> of MySQL.</p> <p>I’ve not yet had time to play with MyRocks, but some key stats posted by others when compared to InnoDB:</p> <ul> <li>1.5x more queries per second</li> <li>8x-14x less data written per transaction</li> <li>2x-3x less space used</li> </ul> <p>Follow <a href="http://smalldatum.blogspot.nl/">Mark Callaghan</a> for interesting RocksDB updates.</p> <h1 id=percona-monitoring-and-management>Percona Monitoring and Management</h1> <p>This is still pretty new, but there’s a nice bundle of tools. I’m interested to see how this project matures and if the pain of MySQL Enterprise Monitor can be forgotten.</p> <p>There’s an <a href="https://pmmdemo.percona.com/">online demo</a> if you want to play with it.</p> <h1 id=database-engine-licensing>Database engine licensing</h1> <p>Peter Zaitsev’s keynote reminded me of the excellent <a href="http://db-engines.com">db-engines.com</a> and their trends on licensing and usage.</p> <p>The <a href="http://db-engines.com/en/ranking_osvsc">popularity of Opensource engine</a>’s is growing with some of the biggest users of commercial licenses being their owners (Microsoft, Oracle).</p> <p>It also highlighted that most commercial offerings are around relational stores, with Opensource heavily present in wide column, graph, key-value and time series stores.</p> <p>A key takeaway for this segment was ‘free’ really means reduced TCO for business; they pay the support cost in people/consultancy etc but with a 3-10x reduction in TCO.</p> </div> </article> <article class=post> <h1 class=title><a href="/2016/10/gns3-crash-on-upgrade/">GNS3 crash after upgrade</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />19 Oct 2016</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2016/10/gns3-crash-on-upgrade/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>Recently I upgraded the GNS3 version on my Macbook and afterwards, immediately after trying to open the app it would close.</p> <p>Attempting to start the processes on the command line revealed some additional information:</p> <ul> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3server</code> was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3shell</code> also was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3</code> was crashing with <code>ImportError: No module named 'gns3.main'</code></li> <li><code>/Applications/GNS3.app/Contents/MacOS/Python</code> was not executable</li> </ul> <p>Having also recently updated <a href="http://brew.sh/">homebrew</a> and upon deciding to google the error, a good 30min was wasted tracking down possible python path issues.</p> <p>As it turns out, GNS3 on OSX is built using <a href="https://cx-freeze.readthedocs.io/en/latest/">cx_Freeze</a>, ensuring there are minimal dependencies on the system.</p> <p>So, what is the problem? To find that out, lets look at the full output:</p> <pre><code class="language-bash">m00m00:~ damian$ /Applications/GNS3.app/Contents/MacOS/gns3
+</code></pre>
+
+<h1 id="gh-ost">gh-ost</h1>
+<p>Think pt-online-schema-change without triggers, on steroids.</p>
+
+<p>The killer features include:</p>
+
+<ul>
+  <li>No triggers, so 0 performance overhead when paused</li>
+  <li>Dynamic throttling</li>
+  <li>Hooks for notifications / cut-over</li>
+  <li>Re-configurable at runtime</li>
+  <li>Pauseable</li>
+</ul>
+
+<p>Currently, they’re still using the <code>INSERT INTO xxx SELECT FROM yyy</code> pattern for
+the bulk row copy (binlog events played over the top), there is a feature
+request for this to be done via the gh-ost process; if that happens a number of
+really cool possibilities open up:</p>
+
+<ul>
+  <li>No extra read load on the masters (and no touching the source table) - read data from slaves</li>
+  <li>Live table migrations - no complex intermediary master setup for migrations/vertical sharding</li>
+  <li>Sharding - with support for conditionals, slicing a table in 2 could be done in the same way as a live table migration</li>
+</ul>
+
+<p>The only catch is you need row based binlogs (binlog_row_image=FULL, though MINIMAL <a href="https://github.com/github/gh-ost/issues/230">has been requested</a>); this can be supported in a
+statement or mixed topology by having 1 slave log changes in the row format.</p>
+
+<h1 id="facebook-backups--binlog-server">Facebook backups / binlog server</h1>
+
+<p>Facebook had a number of talks, 2 of which were on the topic of binlogs and backups.</p>
+
+<p>Interestingly their strategy is along the lines of:</p>
+
+<ul>
+  <li>Backup binlogs as they rotate</li>
+  <li>Stream binlogs into HDFS</li>
+  <li><code>mysqldump</code> all databases every day</li>
+</ul>
+
+<p>The dumping process is interesting, as they take a full backup, but only save that
+every 5 days. The rest of the days, they compute the updated (+inserted) and deleted rows, then store that.</p>
+
+<p>When restoring a database/table they:</p>
+
+<ol>
+  <li>Download the last full backup</li>
+  <li>Download the diff backups between full…now</li>
+  <li>Combine the full + diffs into 1 file</li>
+  <li>Restore that file</li>
+  <li>Replay the binlogs</li>
+</ol>
+
+<p>The only benefit I can see to this (over just storing the full backups) is
+saving on storage space (assuming &lt; 100% churn of the data).</p>
+
+<p>They have made multiple additions to the <code>mysqldump</code> binary (available in their <a href="https://github.com/facebook/mysql-5.6">mysql-5.6</a> branch),
+such as storing table offsets in comments.</p>
+
+<p>For restores, there is an orchestrated pipeline with a scheduler submitting
+automated restore requests to test backups; this has picked up failures in the
+process previously.</p>
+
+<p>To handle binlogs, they wrote their own binlog server, which can serve the files
+out of HDFS upon request; this is used to seed slaves and replay entries on restores.</p>
+
+<h1 id="myrocks">MyRocks</h1>
+<p>It was <a href="https://www.percona.com/blog/2016/10/24/announcing-myrocks-in-percona-server-for-mysql/">announced</a>
+that Percona Server will be supporting MyRocks, this is exciting as previously
+you needed to run <a href="https://github.com/facebook/mysql-5.6">Facebook’s branch</a> of MySQL.</p>
+
+<p>I’ve not yet had time to play with MyRocks, but some key stats posted by others when compared to InnoDB:</p>
+
+<ul>
+  <li>1.5x more queries per second</li>
+  <li>8x-14x less data written per transaction</li>
+  <li>2x-3x less space used</li>
+</ul>
+
+<p>Follow <a href="http://smalldatum.blogspot.nl/">Mark Callaghan</a> for interesting RocksDB updates.</p>
+
+<h1 id="percona-monitoring-and-management">Percona Monitoring and Management</h1>
+<p>This is still pretty new, but there’s a nice bundle of tools.
+I’m interested to see how this project matures and if the pain of MySQL
+Enterprise Monitor can be forgotten.</p>
+
+<p>There’s an <a href="https://pmmdemo.percona.com/">online demo</a> if you want to play with it.</p>
+
+<h1 id="database-engine-licensing">Database engine licensing</h1>
+<p>Peter Zaitsev’s keynote reminded me of the excellent
+<a href="http://db-engines.com">db-engines.com</a> and their trends on licensing and usage.</p>
+
+<p>The <a href="http://db-engines.com/en/ranking_osvsc">popularity of Opensource engine</a>’s is growing
+with some of the biggest users of commercial licenses being their owners (Microsoft, Oracle).</p>
+
+<p>It also highlighted that most commercial offerings are around relational stores,
+with Opensource heavily present in wide column, graph, key-value and time series stores.</p>
+
+<p>A key takeaway for this segment was ‘free’ really means reduced TCO for business;
+they pay the support cost in people/consultancy etc but with a 3-10x reduction in TCO.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2016/10/gns3-crash-on-upgrade/">GNS3 crash after upgrade</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />19 Oct 2016</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2016/10/gns3-crash-on-upgrade/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Recently I upgraded the GNS3 version on my Macbook and afterwards,
+immediately after trying to open the app it would close.</p>
+
+<p>Attempting to start the processes on the command line revealed some
+additional information:</p>
+
+<ul>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3server</code> was working as expected</li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3shell</code> also was working as expected</li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3</code> was crashing with <code>ImportError: No module named 'gns3.main'</code></li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/Python</code> was not executable</li>
+</ul>
+
+<p>Having also recently updated <a href="http://brew.sh/">homebrew</a> and upon deciding to google the error,
+a good 30min was wasted tracking down possible python path issues.</p>
+
+<p>As it turns out, GNS3 on OSX is built using <a href="https://cx-freeze.readthedocs.io/en/latest/">cx_Freeze</a>,
+ensuring there are minimal dependencies on the system.</p>
+
+<p>So, what is the problem? To find that out, lets look at the full output:</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ /Applications/GNS3.app/Contents/MacOS/gns3
 Application frozen with cx_Freeze
 GNS3 GUI version 1.5.2
 Copyright (c) 2007-2016 GNS3 Technologies Inc.
@@ -215,7 +779,15 @@ Traceback (most recent call last):
   File "./gns3-gui/gns3/servers.py", line 277, in _saveSettings
   File "./gns3-gui/gns3/servers.py", line 277, in &lt;listcomp&gt;
 KeyError: 'url'
-</code></pre> <p>As it turns out, the issue appears to be in loading the config file.</p> <p>There is no ‘url’ key within the config file I have on disk, so let’s remove it and try again.</p> <p>Same problem, <a href="https://linux.die.net/man/1/strace">strace</a>…err <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> to the rescue!</p> <pre><code class="language-bash">m00m00:~ damian$ sudo dtruss /Applications/GNS3.app/Contents/MacOS/gns3
+</code></pre>
+
+<p>As it turns out, the issue appears to be in loading the config file.</p>
+
+<p>There is no ‘url’ key within the config file I have on disk, so let’s remove it and try again.</p>
+
+<p>Same problem, <a href="https://linux.die.net/man/1/strace">strace</a>…err <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> to the rescue!</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ sudo dtruss /Applications/GNS3.app/Contents/MacOS/gns3
 
 Application frozen with cx_Freeze
 GNS3 GUI version 1.5.2
@@ -223,19 +795,67 @@ Copyright (c) 2007-2016 GNS3 Technologies Inc.
 [....]
 stat64("/Users/damian/.config/GNS3/GNS3.ini\0", 0x7FFF57315A68, 0x0)                = 0 0
 [....]
-</code></pre> <p>As some of you may have noticed in the stacktrace, the config that is being correctly saved is <code>/Users/damian/.config/GNS3/gns3_gui.conf</code>, yet we’re loading <code>/Users/damian/.config/GNS3/GNS3.ini</code>.</p> <p>We have 2 configs?</p> <pre><code class="language-bash">m00m00:~ damian$ ls /Users/damian/.config/GNS3/
+</code></pre>
+
+<p>As some of you may have noticed in the stacktrace, the config that is being correctly saved is <code>/Users/damian/.config/GNS3/gns3_gui.conf</code>, yet we’re loading <code>/Users/damian/.config/GNS3/GNS3.ini</code>.</p>
+
+<p>We have 2 configs?</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ ls /Users/damian/.config/GNS3/
 GNS3.ini          base_configs/     exceptions.log    gns3_gui.log      gns3_server.log
 GNS3_client.log   exception.log     gns3_gui.conf     gns3_server.conf
 m00m00:~ damian$ ls /Users/damian/.config/GNS3/
 gns3_gui.conf        gns3_gui.pid        gns3_server.log
 gns3_gui.log        gns3_server.conf
-</code></pre> <p><img src="http://weknowmemes.com/wp-content/uploads/2011/12/i-have-no-memory-of-this-place.jpg" alt=""/></p> <p>Let’s clear up these old config entries and start with a clean setup</p> <pre><code class="language-bash">m00m00:~ damian$ rm -rf ~/.config/gns3.net ~/.config/GNS3
-</code></pre> <p>And it works!</p> <p>Perhaps this was handled in an intermediary release I missed, but it comes across as a pretty poor compatibility issue, especially considering the error only being visible on the command line.</p> </div> </article> <article class=post> <h1 class=title><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />08 Aug 2014</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul> </div> <div class=entry> <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p> <p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p> <pre><code class="language-bash">[root@pingu ~]# cat /etc/redhat-release
+</code></pre>
+
+<p><img src="http://weknowmemes.com/wp-content/uploads/2011/12/i-have-no-memory-of-this-place.jpg" alt="" /></p>
+
+<p>Let’s clear up these old config entries and start with a clean setup</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ rm -rf ~/.config/gns3.net ~/.config/GNS3
+</code></pre>
+
+<p>And it works!</p>
+
+<p>Perhaps this was handled in an intermediary release I missed,
+but it comes across as a pretty poor compatibility issue, especially considering
+the error only being visible on the command line.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2014/08/quick-look-at-upgrading-to-centos-7/">A very quick look at upgrading CentOS 6.5 to 7.0</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />08 Aug 2014</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2014/08/quick-look-at-upgrading-to-centos-7/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/update'>Update</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>After some serious <a href="http://seven.centos.org/2014/07/guess-whats-coming/">seeding action</a> yesterday, today <a href="http://seven.centos.org/2014/07/release-announcement-for-centos-7x86_64/">CentOS 7</a> was released!</p>
+
+<p>As it happens I installed a new MSI Wind Box with CentOS 6.5 yesterday:</p>
+
+<pre><code class="language-bash">[root@pingu ~]# cat /etc/redhat-release
 CentOS release 6.5 (Final)
 
 [root@pingu ~]# uptime
  20:57:41 up 22:57,  1 user,  load average: 0.00, 0.04, 0.05
-</code></pre> <p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p> <p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p> <p>Since I have a new box that’s not anywhere near production, what the hell… lets try this out.</p> <h2 id=first-update-to-the-latest-centos-6-release>First update to the latest CentOS 6 release</h2> <pre><code class="language-bash">[root@pingu ~]# yum update
+</code></pre>
+
+<p>For the first time, there is a supported path for upgrading RHEL 6 to RHEL 7. Previously this would have been a reinstall.</p>
+
+<p>Disclaimer: I would not attempt the following upgrade on a production server yet. The upgrade tools are still under development and not considered to be working properly (See the <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">development mailing list post</a> if you want to help out).</p>
+
+<p>Since I have a new box that’s not anywhere near production, what the hell… lets try this out.</p>
+
+<h2 id="first-update-to-the-latest-centos-6-release">First update to the latest CentOS 6 release</h2>
+
+<pre><code class="language-bash">[root@pingu ~]# yum update
 Loaded plugins: downloadonly, fastestmirror, security
 Loading mirror speeds from cached hostfile
  * base: mirrors.coreix.net
@@ -288,7 +908,14 @@ Loading mirror speeds from cached hostfile
  * extras: centos.hyve.com
  * updates: centos.hyve.com
 No packages marked for update
-</code></pre> <h2 id=install-the-upgrade-utils>Install the upgrade utils</h2> <p>These are still very much in dev and may explode all the things. See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p> <pre><code class="language-bash">[root@pingu ~]# yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm
+</code></pre>
+
+<h2 id="install-the-upgrade-utils">Install the upgrade utils</h2>
+
+<p>These are still very much in dev and may explode all the things.
+See <a href="http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html">http://lists.centos.org/pipermail/centos-devel/2014-July/011277.html</a> for details.</p>
+
+<pre><code class="language-bash">[root@pingu ~]# yum localinstall http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-1.0.2-33.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/preupgrade-assistant-contents-0.5.13-1.el6.noarch.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/python-rhsm-1.9.7-1.el6.x86_64.rpm http://dev.centos.org/centos/6/upg/x86_64/Packages/redhat-upgrade-tool-0.7.22-1.el6.noarch.rpm
 Loaded plugins: downloadonly, fastestmirror, security
 Setting up Local Package Process
 preupgrade-assistant-1.0.2-33.el6.x86_64.rpm                                                          | 438 kB     00:01     
@@ -419,7 +1046,11 @@ Dependency Installed:
   pcre-devel.x86_64 0:7.8-6.el6            python-simplejson.x86_64 0:2.0.9-3.1.el6  zlib-devel.x86_64 0:1.2.3-29.el6        
 
 Complete!
-</code></pre> <h2 id=check-for-potential-problems>Check for potential problems</h2> <pre><code class="language-bash">[root@pingu ~]# preupg
+</code></pre>
+
+<h2 id="check-for-potential-problems">Check for potential problems</h2>
+
+<pre><code class="language-bash">[root@pingu ~]# preupg
 Preupg tool doesn't do the actual upgrade.
 Please ensure you have backed up your system and/or data in the event of a failed upgrade
  that would require a full re-install of the system from installation media.
@@ -645,8 +1276,22 @@ Tarball with results is stored here /root/preupgrade-results/preupg_results-1407
 The latest assessment is stored in directory /root/preupgrade .
 Upload results to UI by command:
 e.g. preupg -u http://127.0.0.1:8099/submit/ -r /root/preupgrade-results/preupg_results-*.tar.gz .
-</code></pre> <p>Hopefully everything looks ok and you can continue with the upgrade.</p> <h2 id=run-the-upgrade>Run the upgrade</h2> <p>This tool basically downloads a custom kernel which does the actual upgrade.</p> <p>This should work</p> <pre><code class="language-bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/
-</code></pre> <p>However it fails as below</p> <pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel
+</code></pre>
+
+<p>Hopefully everything looks ok and you can continue with the upgrade.</p>
+
+<h2 id="run-the-upgrade">Run the upgrade</h2>
+
+<p>This tool basically downloads a custom kernel which does the actual upgrade.</p>
+
+<p>This should work</p>
+
+<pre><code class="language-bash">redhat-upgrade-tool-cli http://mirror.bytemark.co.uk/centos/7/os/x86_64/
+</code></pre>
+
+<p>However it fails as below</p>
+
+<pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --disablerepo=epel
 setting up repos...
 No upgrade available for the following repos: scl
 .treeinfo                                                                                                                        | 1.1 kB     00:00     
@@ -662,7 +1307,12 @@ warning: rpmts_HdrFromFdno: Header V3 RSA/SHA256 Signature, key ID f4a80eb5: NOK
 
 Downloading failed: The GPG keys listed for the "CentOS-7.0 - Base" repository are already installed but they are not correct for this package.
 Check that the correct key URLs are configured for this repository.
-</code></pre> <p>So I thought…. ok, for now we’ll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg. We ran preupg first, to check the system however the upgrade tool thinks we havn’t and fails as below</p> <pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck
+</code></pre>
+
+<p>So I thought…. ok, for now we’ll trust the packages and not check the GPG keys. However there also seems to be a problem in detecting preupg.
+We ran preupg first, to check the system however the upgrade tool thinks we havn’t and fails as below</p>
+
+<pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --nogpgcheck
 setting up repos...
 base                                                                                                                             | 3.6 kB     00:00     
 base/primary_db                                                                                                                  | 4.9 MB     00:01     
@@ -679,7 +1329,11 @@ No upgrade available for the following repos: scl
 .treeinfo                                                                                                                        | 1.1 kB     00:00     
 preupgrade-assistant has not been run.
 To perform this upgrade, either run preupg or run redhat-upgrade-tool --force
-</code></pre> <p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p> <pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck
+</code></pre>
+
+<p>I finally ended up disabling both GPG encryption and forcing the run (to skip the preupg)</p>
+
+<pre><code class="language-bash">[root@pingu ~]# redhat-upgrade-tool-cli --instrepo=http://mirror.bytemark.co.uk/centos/7/os/x86_64/ --network=7 --force --nogpgcheck
 setting up repos...
 No upgrade available for the following repos: scl
 .treeinfo                                                                                                                        | 1.1 kB     00:00     
@@ -695,11 +1349,33 @@ rpm transaction 100% [==========================================================
 rpm install 100% [=====================================================================================================================================]
 setting up system for upgrade
 Finished. Reboot to start upgrade.
-</code></pre> <p>Booom - we’re getting somewhere. Now we reboot into the kernel that has been installed.</p> <pre><code class="language-bash">[root@pingu ~]# reboot
-</code></pre> <p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p> <h2 id=the-system-booted-up>The system booted up!</h2> <p>Since there isn’t a SCL repo for 7 yet - we need to clean this up</p> <pre><code class="language-bash">[root@pingu ~]# rm -f /etc/yum.repos.d/CentOS-SCL.repo
-</code></pre> <p>I also have EPEL installed on this server - lets fix that up…..</p> <pre><code class="language-bash">[root@pingu ~]# wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7
+</code></pre>
+
+<p>Booom - we’re getting somewhere. Now we reboot into the kernel that has been installed.</p>
+
+<pre><code class="language-bash">[root@pingu ~]# reboot
+</code></pre>
+
+<p>At this point go get a cup of tea or something - the upgrade kernel basically downloads all the required packages from yum and then reboots into a working system.</p>
+
+<h2 id="the-system-booted-up">The system booted up!</h2>
+
+<p>Since there isn’t a SCL repo for 7 yet - we need to clean this up</p>
+
+<pre><code class="language-bash">[root@pingu ~]# rm -f /etc/yum.repos.d/CentOS-SCL.repo
+</code></pre>
+
+<p>I also have EPEL installed on this server - lets fix that up…..</p>
+
+<pre><code class="language-bash">[root@pingu ~]# wget -O /etc/pki/rpm-gpg/RPM-GPG-KEY-EPEL-7 http://mirror.bytemark.co.uk/fedora/epel/RPM-GPG-KEY-EPEL-7
 [root@pingu ~]# sed -i 's/6/7/g' /etc/yum.repos.d/epel.repo 
-</code></pre> <h2 id=update-packages>Update packages</h2> <p>At this point CentOS 7 should update cleanly</p> <pre><code class="language-bash">[root@pingu ~]# yum update
+</code></pre>
+
+<h2 id="update-packages">Update packages</h2>
+
+<p>At this point CentOS 7 should update cleanly</p>
+
+<pre><code class="language-bash">[root@pingu ~]# yum update
 Loaded plugins: fastestmirror
 Loading mirror speeds from cached hostfile
  * base: mirrors.clouvider.net
@@ -799,10 +1475,54 @@ Updated:
   python-simplejson.x86_64 0:3.3.3-1.el7   
 
 Complete!
-</code></pre> <p>Let’s reboot once more to make sure things are all cleanly started…</p> <pre><code class="language-bash">[root@pingu ~]# reboot
-</code></pre> <p>Oh hey, it’s a CentOS 7 box</p> <pre><code class="language-bash">[root@pingu ~]# cat /etc/redhat-release 
+</code></pre>
+
+<p>Let’s reboot once more to make sure things are all cleanly started…</p>
+
+<pre><code class="language-bash">[root@pingu ~]# reboot
+</code></pre>
+
+<p>Oh hey, it’s a CentOS 7 box</p>
+
+<pre><code class="language-bash">[root@pingu ~]# cat /etc/redhat-release 
 CentOS Linux release 7.0.1406 (Core) 
-</code></pre> <h2 id=roundup>Roundup</h2> <p>While it’s too new to try out anywhere near production kit, for a set of tools that ‘will need some patching to work properly’ everything works pretty well.</p> <p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p> <p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p> <p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p> </div> </article> <article class=post> <h1 class=title><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />20 Jan 2013</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul> </div> <div class=entry> <p>Recently I’ve heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p> <p>While I’m not a network dude, hopefully this post will give you an overview of what Anycast is, how it’s useful and what to watch out for.</p> <h2 id=overview>Overview</h2> <p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p> <p>As far as the ‘client’ is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p> <p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p> <pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+</code></pre>
+
+<h2 id="roundup">Roundup</h2>
+<p>While it’s too new to try out anywhere near production kit, for a set of tools that ‘will need some patching to work properly’ everything works pretty well.</p>
+
+<p>Hopefully with a few minor tweaks the packages will land on the normal mirrors and upgrading boxes will be bliss.</p>
+
+<p>Go play with <a href="http://seven.centos.org/">CentOS 7</a> and try out some of the neat features in the 3.10 kernel.</p>
+
+<p>As always, remember to <a href="http://stopdisablingselinux.com/">leave SELinux turned on</a>.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/">What's Anycast and why would I use it?</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />20 Jan 2013</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2013/01/what-is-anycast-and-why-would-i-use-it/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/network'>Network</a></li><li><a href='/tag/dns'>DNS</a></li><li><a href='/tag/ipv4'>IPv4</a></li><li><a href='/tag/ipv6'>IPv6</a></li><li><a href='/tag/anycast'>Anycast</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Recently I’ve heard some confusion as to what Anycast is, ranging from it being part of the IPv6 specification to multicast.</p>
+
+<p>While I’m not a network dude, hopefully this post will give you an overview of what Anycast is, how it’s useful and what to watch out for.</p>
+
+<h2 id="overview">Overview</h2>
+<p>Firstly to clear up some confusion, Anycast is not a protocol (TCP/UDP) or protocol version (IPv4/IPv6), but a type of addressing such as Unicast or Broadcast.</p>
+
+<p>As far as the ‘client’ is concerned, they are talking unicast (to a single node), but this may be routed to one of many nodes depending on the routing table.</p>
+
+<p>A quick example of this happening can be seen if you traceroute to an Anycast IP address from different locations in the world as seen below</p>
+
+<pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1 (10.44.200.254)  15.334 ms  17.279 ms  19.183 ms
  2  host-92-23-160-1.as13285.net (92.23.160.1)  29.204 ms  32.556 ms  36.016 ms
  3  host-78-151-225-101.static.as13285.net (78.151.225.101)  38.386 ms  40.704 ms  42.598 ms
@@ -812,7 +1532,9 @@ CentOS Linux release 7.0.1406 (Core)
  7  host-78-144-0-180.as13285.net (78.144.0.180)  42.400 ms host-78-144-0-116.as13285.net (78.144.0.116)  39.599 ms host-78-144-0-164.as13285.net (78.144.0.164)  37.310 ms
  8  195.66.225.179 (195.66.225.179)  38.239 ms  73.818 ms  72.494 ms
  9  ian.ns.cloudflare.com (173.245.59.118)  38.989 ms  37.828 ms  38.971 ms
-</code></pre> <pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
+</code></pre>
+
+<pre><code class="language-text">traceroute to ian.ns.cloudflare.com (173.245.59.118), 30 hops max, 60 byte packets
  1  router1-dal.linode.com (67.18.7.161)  19.229 ms  19.291 ms  19.392 ms
  2  xe-2-0-0.car03.dllstx2.networklayer.com (67.18.7.89)  0.197 ms  0.220 ms  0.202 ms
  3  po101.dsr01.dllstx2.networklayer.com (70.87.254.73)  0.513 ms  0.537 ms  0.624 ms
@@ -820,7 +1542,71 @@ CentOS Linux release 7.0.1406 (Core)
  5  ae16.bbr01.eq01.dal03.networklayer.com (173.192.18.224)  16.145 ms  16.138 ms  16.112 ms
  6  141.101.74.253 (141.101.74.253)  0.602 ms  0.566 ms  0.549 ms
  7  ian.ns.cloudflare.com (173.245.59.118)  0.523 ms  0.670 ms  0.493 ms
-</code></pre> <p>Note that the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p> <p>The ‘magic’ here happens at the routing layer, a router will have multiple ‘paths’ to the IP (173.245.59.118) and chooses the best one based on its metrics.</p> <p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p> <h1 id=for-those-used-to-dealing-with-internal-networks>For those used to dealing with internal networks</h1> <p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt=""/></p> <p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p> <p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would unblock and start forwarding traffic.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt=""/></p> <p>The problem here is you are having to go via Scotland to access Wales from England, when they have a direct link. You can’t have both links up because you’d cause a loop and no traffic would pass.</p> <p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you’d want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p> <p>I’m not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn’t hugely matter. Let’s assume both links are the same speed and are direct (1 hop away).</p> <p>The topology looks something like</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt=""/></p> <p>This means if any of the offices want to talk to another office, they are only 1 hop away and don’t have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt=""/></p> <p>In summary using routing between the 3 offices allows for transparent fail over and best-performance access. In a more complicated topology this is very useful.</p> <p>Essentially, this is also how ‘Anycast’ works - the main difference being is we’re dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn’t care either way - it will choose the ‘best’ path based on what it knows about.</p> <h2 id=why-is-this-useful>Why is this useful?</h2> <p>Anycast gives you a number of benefits such as</p> <ul> <li>Higher reliability/availability</li> <li>Higher performance</li> <li>Localisation/migration of DoS/DDoS attacks</li> <li>Client agnostic</li> </ul> <h2 id=why-doesnt-everyone-use-it>Why doesn’t everyone use it?</h2> <p>There are some drawbacks to using Anycast addressing</p> <ul> <li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li> <li>Can be expensive - IP space, network infrastructure, training</li> <li>Harder to troubleshoot</li> <li>Harder to monitor</li> </ul> <h2 id=how-would-i-use-it>How would I use it?</h2> <p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk ‘breaking’ connections across 2 nodes.</p> <p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p> <p>A common thing to do would be create 3 NS entries pointing to servers in each location</p> <pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+</code></pre>
+
+<p>Note that the DNS (ian.ns.cloudflare.com) resolves to the same IP (173.245.59.118), but the traffic goes to different routers (141.101.74.253 vs 195.66.225.179).</p>
+
+<p>The ‘magic’ here happens at the routing layer, a router will have multiple ‘paths’ to the IP (173.245.59.118) and chooses the best one based on its metrics.</p>
+
+<p>A large (public) example of Anycast being used is the <a href="http://root-servers.org/">root nameservers</a> - combined there are something like 13 (v4) IP addresses serving NS entries, with ~350 servers behind those 13 IPs distributed throughout the world.</p>
+
+<h1 id="for-those-used-to-dealing-with-internal-networks">For those used to dealing with internal networks</h1>
+<p>Imagine you have 3 offices configured in a L2 triangle for redundancy:</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle.jpeg" alt="" /></p>
+
+<p>Your gateway is England, Scotland and Wales need to access it if either of their links fail. You also have servers in each of the offices and want to access them as fast as possible.</p>
+
+<p>Keeping the links at layer 2 and blocking one (via something like STP) would give you gateway redundancy - if link A failed, link B would unblock and start forwarding traffic.</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l2-failover.jpeg" alt="" /></p>
+
+<p>The problem here is you are having to go via Scotland to access Wales from England, when they have a direct link. You can’t have both links up because you’d cause a loop and no traffic would pass.</p>
+
+<p>The solution is to make both links layer 3 and use a routing protocol to advertise the ranges over the top of them - there are reasons you’d want to use layer 2, or have one layer 2 and one layer 3, this is outside the scope of this example though.</p>
+
+<p>I’m not going to get into how to configure a routing protocol - there are a few to choose from, for this use case it doesn’t hugely matter. Let’s assume both links are the same speed and are direct (1 hop away).</p>
+
+<p>The topology looks something like</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes.jpeg" alt="" /></p>
+
+<p>This means if any of the offices want to talk to another office, they are only 1 hop away and don’t have to go though a middle man gateway - but if the direct link fails, they can be re-routed the long (2 hops) way around.</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/e-s-w_triangle-l3-routes-failure.jpeg" alt="" /></p>
+
+<p>In summary using routing between the 3 offices allows for transparent fail over and best-performance access. In a more complicated topology this is very useful.</p>
+
+<p>Essentially, this is also how ‘Anycast’ works - the main difference being is we’re dealing with multiple nodes, rather than just re-advertising a single node (route). The routing doesn’t care either way - it will choose the ‘best’ path based on what it knows about.</p>
+
+<h2 id="why-is-this-useful">Why is this useful?</h2>
+<p>Anycast gives you a number of benefits such as</p>
+
+<ul>
+  <li>Higher reliability/availability</li>
+  <li>Higher performance</li>
+  <li>Localisation/migration of DoS/DDoS attacks</li>
+  <li>Client agnostic</li>
+</ul>
+
+<h2 id="why-doesnt-everyone-use-it">Why doesn’t everyone use it?</h2>
+<p>There are some drawbacks to using Anycast addressing</p>
+
+<ul>
+  <li>Can be complex to deploy - requires an AS, addressing/routing management, more routes being advertised</li>
+  <li>Can be expensive - IP space, network infrastructure, training</li>
+  <li>Harder to troubleshoot</li>
+  <li>Harder to monitor</li>
+</ul>
+
+<h2 id="how-would-i-use-it">How would I use it?</h2>
+<p>One of the most common use in for DNS services, however any stateless protocol can take advantage of Anycast - it is possible to use stateful protocols, however you need a much higher level of control and risk ‘breaking’ connections across 2 nodes.</p>
+
+<p>Imagine you where serving users out of Europe, US and Asia-Pacific.</p>
+
+<p>A common thing to do would be create 3 NS entries pointing to servers in each location</p>
+
+<pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something.	360	IN	NS	ns1.myawesomedns.something.
 myawesomedns.something.	360	IN	NS	ns2.myawesomedns.something.
@@ -834,7 +1620,31 @@ ns2	360	IN	A	192.168.0.1
 
 ; US
 ns3	360	IN	A	172.16.0.1
-</code></pre> <p>These NS records would then be “glued” on the root nameservers, so the first resolver can find the NS servers IP address.</p> <p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to fail over (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the ‘local’ one to them.</p> <p>Anycast helps to solve both these issues.</p> <p>If a server goes down you can withdraw the route and (as long as you’re not flapping routes) your peers should pick it up in a few minutes.</p> <p>In the case of a user making a request to the Anycast IP, the request will be routed to the ‘nearest’ node - in normal operation this would be the ‘local’ one, if that had failed it would automatically (after the route withdrawal) go to the next ‘nearest’.</p> <p>Now I’m quoting ‘nearest’ and ‘local’ and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p> <p>The routing before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt=""/></p> <p>So lets start using Anycast, we’re going to keep the original IPs as ‘maintenance’ IPs - ones we know only go to that single host and create a new block.</p> <pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
+</code></pre>
+
+<p>These NS records would then be “glued” on the root nameservers, so the first resolver can find the NS servers IP address.</p>
+
+<p>Now there are 2 problems with this, if you loose a server the resolver (client) will be slow to fail over (probably timing out a few requests) and a user in the US might end up going to the server in APAC rather than the ‘local’ one to them.</p>
+
+<p>Anycast helps to solve both these issues.</p>
+
+<p>If a server goes down you can withdraw the route and (as long as you’re not flapping routes) your peers should pick it up in a few minutes.</p>
+
+<p>In the case of a user making a request to the Anycast IP, the request will be routed to the ‘nearest’ node - in normal operation this would be the ‘local’ one, if that had failed it would automatically (after the route withdrawal) go to the next ‘nearest’.</p>
+
+<p>Now I’m quoting ‘nearest’ and ‘local’ and these are determined by your routing protocol, normally based on metrics such as weight, hops or speed, rather than physical location.</p>
+
+<p>The routing before we start using Anycast</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-routing.jpeg" alt="" /></p>
+
+<p>Requests to ns{1..3} (192.168.0.1, 127.16.0.1, 10.0.0.1) before we start using Anycast</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-pre-anycast-requests.jpeg" alt="" /></p>
+
+<p>So lets start using Anycast, we’re going to keep the original IPs as ‘maintenance’ IPs - ones we know only go to that single host and create a new block.</p>
+
+<pre><code class="language-text">myawesomedns.something.	360	IN	SOA	ns1.myawesomedns.something. root.myawesomedns.something. (1303702991 14400 14400 1209600 86400)
 
 myawesomedns.something.	360	IN	NS	ns1.myawesomedns.something.
 myawesomedns.something.	360	IN	NS	ns2.myawesomedns.something.
@@ -853,4 +1663,99 @@ srv-ns3	360	IN	A	172.16.0.1
 ns1 360 IN A 10.1.0.1
 ns2 360 IN A 10.1.0.2
 ns3 360 IN A 10.1.0.3
-</code></pre> <p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p> <p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p> <p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p> <p>I won’t go into the BGP configuration in this post as it’s a little lengthy to explain/draw how routing tables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p> <p>The routing after we start using ‘Anycast’ IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt=""/></p> <p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using ‘Anycast’ IPs</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt=""/></p> <p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt=""/></p> <p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p> <p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt=""/></p> <p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p> </div> </article> <nav id=page_nav> <a href="/" class=prev>&laquo; Previous Page</a> <a href="/3/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p>10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 now need to be advertised from the EU, APAC and US routers as /32 blocks - with no summary route for 10.1.0.0 0.0.0.255. 10.1.0.1, 10.1.0.2 &amp; 10.1.0.3 also need to be brought up on loopback interfaces on the server and the DNS server configured to bind to them.</p>
+
+<p>Once this propagates out routing will take care of sending your traffic to the right place, in the event of an outage or maintenance just withdraw the routes so they are no longer advertised and traffic will be re-routed.</p>
+
+<p>This is slightly oversimplified as there is a certain level of tuning needed to stop flapping, which can cause your updates to be delayed (due to dampening timers etc).</p>
+
+<p>I won’t go into the BGP configuration in this post as it’s a little lengthy to explain/draw how routing tables look, essentially you configure your neighbours and send them /32 routes - <a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a008009456d.shtml">cisco</a> have a nice example for configuring BGP on IOS. Be careful (use filters) when dealing with BGP/EGP protocols as you can do really weird things ;)</p>
+
+<p>The routing after we start using ‘Anycast’ IPs</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-routing.jpeg" alt="" /></p>
+
+<p>Requests to ns{1..3} (10.1.0.{1..3}) after we start using ‘Anycast’ IPs</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-requests.jpeg" alt="" /></p>
+
+<p>In the case of the EU site failing the routes would withdraw and requests would be re-routed</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure.jpeg" alt="" /></p>
+
+<p>In the case of the EU and the US sites failing, requests would be re-routed in the same manner</p>
+
+<p><img src="/2013/01/what-is-anycast-and-why-would-i-use-it/dns-post-anycast-failure2.jpeg" alt="" /></p>
+
+<p>All this happens at layer 3 - in the DNS service scenario we would probably use GeoIP logic at layer 7 to localise the response and then serve the request.</p>
+
+        </div>
+    </article>
+    
+
+
+
+<nav id="page_nav">
+    
+    
+    <a href="/" class="prev">&laquo; Previous Page</a>
+    
+    
+
+    
+    <a href="/3/" class="next">Next Page &raquo;</a>
+    
+</nav>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

@@ -1,19 +1,380 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - ClueBot Wikimedia Labs Setup</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/12/cluebot-wikimedia-labs-setup/">ClueBot Wikimedia Labs Setup</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />24 Dec 2017</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2017/12/cluebot-wikimedia-labs-setup/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/foss'>FOSS</a></li></ul> </div> <div class=entry> <p>A few years ago (was it really that long?!), <a href="https://en.wikipedia.org/wiki/User:ClueBot_III">ClueBot III</a> &amp; <a href="https://en.wikipedia.org/wiki/User:ClueBot_NG">ClueBot NG</a> where moved into <a href="https://wikitech.wikimedia.org/wiki/Portal:Wikimedia_Labs">Wikimedia Labs</a> from personal/community servers on <a href="https://www.cluenet.org/">Cluenet</a>.</p> <p>A while later, they were migrated again from <a href="https://wikitech.wikimedia.org/wiki/Portal:Wikimedia_Labs">Wikimedia Labs</a> into <a href="https://wikitech.wikimedia.org/wiki/Portal:Tool_Labs">Wikimedia Tool Labs</a>, providing more resources via the <a href="http://gridscheduler.sourceforge.net/">Open Grid Manager</a> cluster as well as <a href="https://wikitech.wikimedia.org/wiki/Help:Tool_Labs/Web">web services</a> and other shared community things.</p> <p>Recently due to <a href="http://releases.ubuntu.com/12.04/">Ubuntu Precise LTS</a> hitting EOL, the <a href="https://wikitech.wikimedia.org/wiki/Portal:Tool_Labs">Tool Labs</a> containers where migrated to run under <a href="http://releases.ubuntu.com/14.04/">Ubuntu Trusty LTS</a>.</p> <p>During the latest migration, the tool accounts where re-created from scratch. This post will outline how things are configured for a point of reference in the future.</p> <h1 id=overview>Overview</h1> <p>Accounts:</p> <ul> <li><code>tools.cluebot</code> - Legacy account - only a web service redirect is running</li> <li><code>tools.cluebot3</code> - Dedicated account for <a href="https://en.wikipedia.org/wiki/User:ClueBot_III">ClueBot III</a></li> <li><code>tools.cluebotng</code> - Account for all things related to <a href="https://en.wikipedia.org/wiki/User:ClueBot_NG">ClueBot NG</a></li> </ul> <p>Databases:</p> <ul> <li><code>s51109__cb</code> - Legacy database, no longer updated</li> <li><code>s52585__cb</code> - Migrated database, now master</li> </ul> <p>Key Directories/Files:</p> <p><strong>tools.cluebot3</strong></p> <ul> <li>~/cluebot3 - Clone of <a href="https://github.com/DamianZaremba/cluebot3">https://github.com/DamianZaremba/cluebot3</a></li> <li>~/cluebot3/cluebot3.config.php - Config file</li> <li>~/.bigbrotherrc - Job Supervisor</li> </ul> <p><strong>tools.cluebotng</strong></p> <ul> <li>~/apps/bot - Clone of <a href="https://github.com/DamianZaremba/cluebotng">https://github.com/DamianZaremba/cluebotng</a></li> <li>~/apps/report_interface - Clone of <a href="https://github.com/DamianZaremba/cluebotng-report">https://github.com/DamianZaremba/cluebotng-report</a></li> <li>~/apps/utils - Clone of <a href="https://github.com/DamianZaremba/cbng-utils">https://github.com/DamianZaremba/cbng-utils</a></li> <li>~/apps/core - Downloads of ANN binaries from bintray</li> <li>~/public_html - Symlink to ~/apps/report_interface</li> <li>~/.cluebotng.password.only - Wikimedia password</li> <li>~/.bigbrotherrc - Job Supervisor</li> <li>~/mysql_backups - Database dumps</li> <li>crontab - Database backup/clean crons</li> </ul> <h4 id=hosted-externally>Hosted externally</h4> <ul> <li>check_cluebot3.pl / check_cluebotng.pl - Scripts to check last edit time + email alerts</li> </ul> <h1 id=cluebot-iii>ClueBot III</h1> <h2 id=setup>Setup</h2> <p>This is a very simple bot, relying on a config file only.</p> <p>The server-side setup, assuming a clean account can be done following the below (locally):</p> <ul> <li><code>pip install fabric</code></li> <li><code>git clone git@github.com:DamianZaremba/cluebot3.git</code></li> <li><code>cd cluebot3</code></li> <li><code>fab init</code></li> </ul> <p>A manual setup is required to create the config file.</p> <p>This should be created as <code>~/cluebot3/cluebot3.config.php</code> under the tool account, containing the below:</p> <pre><code class="language-php">&lt;?php
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - ClueBot Wikimedia Labs Setup</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2017/12/cluebot-wikimedia-labs-setup/">ClueBot Wikimedia Labs Setup</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />24 Dec 2017</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2017/12/cluebot-wikimedia-labs-setup/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/foss'>FOSS</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>A few years ago (was it really that long?!), <a href="https://en.wikipedia.org/wiki/User:ClueBot_III">ClueBot III</a> &amp; <a href="https://en.wikipedia.org/wiki/User:ClueBot_NG">ClueBot NG</a> where moved into <a href="https://wikitech.wikimedia.org/wiki/Portal:Wikimedia_Labs">Wikimedia Labs</a> from personal/community servers on <a href="https://www.cluenet.org/">Cluenet</a>.</p>
+
+<p>A while later, they were migrated again from <a href="https://wikitech.wikimedia.org/wiki/Portal:Wikimedia_Labs">Wikimedia Labs</a> into <a href="https://wikitech.wikimedia.org/wiki/Portal:Tool_Labs">Wikimedia Tool Labs</a>, providing more resources via the <a href="http://gridscheduler.sourceforge.net/">Open Grid Manager</a> cluster as well as <a href="https://wikitech.wikimedia.org/wiki/Help:Tool_Labs/Web">web services</a> and other shared community things.</p>
+
+<p>Recently due to <a href="http://releases.ubuntu.com/12.04/">Ubuntu Precise LTS</a> hitting EOL, the <a href="https://wikitech.wikimedia.org/wiki/Portal:Tool_Labs">Tool Labs</a> containers where migrated to run under <a href="http://releases.ubuntu.com/14.04/">Ubuntu Trusty LTS</a>.</p>
+
+<p>During the latest migration, the tool accounts where re-created from scratch. This post will outline how things are configured for a point of reference in the future.</p>
+
+<h1 id="overview">Overview</h1>
+<p>Accounts:</p>
+
+<ul>
+  <li><code>tools.cluebot</code> - Legacy account - only a web service redirect is running</li>
+  <li><code>tools.cluebot3</code> - Dedicated account for <a href="https://en.wikipedia.org/wiki/User:ClueBot_III">ClueBot III</a></li>
+  <li><code>tools.cluebotng</code> - Account for all things related to <a href="https://en.wikipedia.org/wiki/User:ClueBot_NG">ClueBot NG</a></li>
+</ul>
+
+<p>Databases:</p>
+
+<ul>
+  <li><code>s51109__cb</code> - Legacy database, no longer updated</li>
+  <li><code>s52585__cb</code> - Migrated database, now master</li>
+</ul>
+
+<p>Key Directories/Files:</p>
+
+<p><strong>tools.cluebot3</strong></p>
+
+<ul>
+  <li>~/cluebot3 - Clone of <a href="https://github.com/DamianZaremba/cluebot3">https://github.com/DamianZaremba/cluebot3</a></li>
+  <li>~/cluebot3/cluebot3.config.php - Config file</li>
+  <li>~/.bigbrotherrc - Job Supervisor</li>
+</ul>
+
+<p><strong>tools.cluebotng</strong></p>
+
+<ul>
+  <li>~/apps/bot - Clone of <a href="https://github.com/DamianZaremba/cluebotng">https://github.com/DamianZaremba/cluebotng</a></li>
+  <li>~/apps/report_interface - Clone of <a href="https://github.com/DamianZaremba/cluebotng-report">https://github.com/DamianZaremba/cluebotng-report</a></li>
+  <li>~/apps/utils - Clone of <a href="https://github.com/DamianZaremba/cbng-utils">https://github.com/DamianZaremba/cbng-utils</a></li>
+  <li>~/apps/core - Downloads of ANN binaries from bintray</li>
+  <li>~/public_html - Symlink to ~/apps/report_interface</li>
+  <li>~/.cluebotng.password.only - Wikimedia password</li>
+  <li>~/.bigbrotherrc - Job Supervisor</li>
+  <li>~/mysql_backups - Database dumps</li>
+  <li>crontab - Database backup/clean crons</li>
+</ul>
+
+<h4 id="hosted-externally">Hosted externally</h4>
+
+<ul>
+  <li>check_cluebot3.pl / check_cluebotng.pl - Scripts to check last edit time + email alerts</li>
+</ul>
+
+<h1 id="cluebot-iii">ClueBot III</h1>
+
+<h2 id="setup">Setup</h2>
+
+<p>This is a very simple bot, relying on a config file only.</p>
+
+<p>The server-side setup, assuming a clean account can be done following the below (locally):</p>
+
+<ul>
+  <li><code>pip install fabric</code></li>
+  <li><code>git clone git@github.com:DamianZaremba/cluebot3.git</code></li>
+  <li><code>cd cluebot3</code></li>
+  <li><code>fab init</code></li>
+</ul>
+
+<p>A manual setup is required to create the config file.</p>
+
+<p>This should be created as <code>~/cluebot3/cluebot3.config.php</code> under the tool account, containing the below:</p>
+
+<pre><code class="language-php">&lt;?php
 	$owner = 'Cobi';
 	$user = 'ClueBot III';
 	$pass = 'Clearly this is not the actual password';
 	$status = 'rw';
 	$maxlag = 2;
 	$maxlagkeepgoing = true;
-</code></pre> <p>In your local git clone, you can now do a full deploy (this starts the bot):</p> <ul> <li><code>fab deploy</code></li> </ul> <p>Things should be running, check the job status/logs under the tool account to confirm this.</p> <pre><code class="language-bash">tools.cluebot3@tools-bastion-03:~$ qstat
+</code></pre>
+
+<p>In your local git clone, you can now do a full deploy (this starts the bot):</p>
+
+<ul>
+  <li><code>fab deploy</code></li>
+</ul>
+
+<p>Things should be running, check the job status/logs under the tool account to confirm this.</p>
+
+<pre><code class="language-bash">tools.cluebot3@tools-bastion-03:~$ qstat
 job-ID  prior   name       user         state submit/start at     queue                          slots ja-task-ID
 -----------------------------------------------------------------------------------------------------------------
 xxxxxxx 0.30169 cluebot3   tools.cluebo r     03/04/2017 10:23:33 continuous@tools-exec-xxxx.eqi     1
 
 tools.cluebot3@tools-bastion-03:~$ tail -f ~/logs/cluebot3-2017-03-05.log
 cluebot3.INFO: doarchive(xxxxxxxxxxxx) [] []
-</code></pre> <p>You should also see <a href="https://en.wikipedia.org/wiki/Special:Contributions/ClueBot_III">edits</a> from the bot after a while (a number of index pages need to be checked first).</p> <h2 id=debugging>Debugging</h2> <p>The main bot log is normally somewhat insightful. Sometimes the bot will die due to memory usage when processing large pages, this generally isn’t seen in the logs and is hard to replicate running manually; looking for restarts is an indicator.</p> <h1 id=cluebot-ng>ClueBot NG</h1> <p>This bot is slightly more complicated and has numerous parts. The main part is fully scripted, but a number of (non-obvious) configs need to be in place.</p> <h2 id=architecture>Architecture</h2> <p>This is not a depiction of request flow, but service dependencies.</p> <div class=graphviz-wrapper> <svg role=img aria-label="layer 1 encryption" width=888pt height=332pt viewBox="0.00 0.00 888.18 332.00"> <title>layer 1 encryption</title> <desc>digraph &quot;layer 1 encryption&quot; { &quot;Wikipedia IRC RC Feed&quot; -&gt; &quot;Main BOT&quot; [dir=back]; &quot;Main BOT&quot; -&gt; {&quot;Wikimedia Labs Tools Database&quot;, &quot;Wikipedia Database Replica&quot;, &quot;ANN Core&quot;, &quot;Wikimedia API&quot;, &quot;IRC Relay&quot;} &quot;Review Interface&quot; -&gt; {&quot;Wikimedia Labs Tools Database&quot;, &quot;Wikimedia API&quot;, &quot;IRC Relay&quot;} &quot;IRC Relay&quot; -&gt; &quot;ClueNet IRC&quot;; &quot;ClueNet IRC&quot; -&gt; &quot;Huggle / External Tools&quot; [dir=back]; }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 328)"> <title>layer 1 encryption</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-328 884.1788,-328 884.1788,4 -4,4"/> <g id=node1 class=node> <title>Wikipedia IRC RC Feed</title> <ellipse fill=none stroke="#000000" cx="477.3887" cy=-306 rx="98.5829" ry=18 /> <text text-anchor=middle x="477.3887" y="-302.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikipedia IRC RC Feed</text> </g> <g id=node2 class=node> <title>Main BOT</title> <ellipse fill=none stroke="#000000" cx="477.3887" cy=-234 rx="50.0912" ry=18 /> <text text-anchor=middle x="477.3887" y="-230.3" font-family="Times,serif" font-size="14.00" fill="#000000">Main BOT</text> </g> <g id=edge1 class=edge> <title>Wikipedia IRC RC Feed&#45;&gt;Main BOT</title> <path fill=none stroke="#000000" d="M477.3887,-277.5726C477.3887,-269.1084 477.3887,-260.0593 477.3887,-252.4133"/> <polygon fill="#000000" stroke="#000000" points="473.8888,-277.8313 477.3887,-287.8314 480.8888,-277.8314 473.8888,-277.8313"/> </g> <g id=node3 class=node> <title>Wikimedia Labs Tools Database</title> <ellipse fill=none stroke="#000000" cx="127.3887" cy=-162 rx="127.2775" ry=18 /> <text text-anchor=middle x="127.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikimedia Labs Tools Database</text> </g> <g id=edge2 class=edge> <title>Main BOT&#45;&gt;Wikimedia Labs Tools Database</title> <path fill=none stroke="#000000" d="M439.7895,-222.0474C432.4019,-219.8899 424.6815,-217.7675 417.3887,-216 352.9463,-200.3816 279.5076,-186.7485 222.6571,-177.0878"/> <polygon fill="#000000" stroke="#000000" points="223.0449,-173.6038 212.6019,-175.391 221.8801,-180.5062 223.0449,-173.6038"/> </g> <g id=node4 class=node> <title>Wikipedia Database Replica</title> <ellipse fill=none stroke="#000000" cx="768.3887" cy=-162 rx="111.5806" ry=18 /> <text text-anchor=middle x="768.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikipedia Database Replica</text> </g> <g id=edge3 class=edge> <title>Main BOT&#45;&gt;Wikipedia Database Replica</title> <path fill=none stroke="#000000" d="M518.7729,-223.7606C565.2531,-212.2604 641.5014,-193.3948 697.5159,-179.5355"/> <polygon fill="#000000" stroke="#000000" points="698.5092,-182.8954 707.3759,-177.096 696.8279,-176.1003 698.5092,-182.8954"/> </g> <g id=node5 class=node> <title>ANN Core</title> <ellipse fill=none stroke="#000000" cx="589.3887" cy=-162 rx="49.2915" ry=18 /> <text text-anchor=middle x="589.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">ANN Core</text> </g> <g id=edge4 class=edge> <title>Main BOT&#45;&gt;ANN Core</title> <path fill=none stroke="#000000" d="M501.9676,-218.1993C517.8695,-207.9766 538.7694,-194.541 556.1464,-183.3701"/> <polygon fill="#000000" stroke="#000000" points="558.348,-186.1156 564.8672,-177.7638 554.5627,-180.2273 558.348,-186.1156"/> </g> <g id=node6 class=node> <title>Wikimedia API</title> <ellipse fill=none stroke="#000000" cx="340.3887" cy=-162 rx="67.6881" ry=18 /> <text text-anchor=middle x="340.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikimedia API</text> </g> <g id=edge5 class=edge> <title>Main BOT&#45;&gt;Wikimedia API</title> <path fill=none stroke="#000000" d="M449.0022,-219.0816C429.1145,-208.6296 402.2615,-194.5171 380.2323,-182.9397"/> <polygon fill="#000000" stroke="#000000" points="381.6011,-179.7052 371.1208,-178.1512 378.3446,-185.9016 381.6011,-179.7052"/> </g> <g id=node7 class=node> <title>IRC Relay</title> <ellipse fill=none stroke="#000000" cx="474.3887" cy=-162 rx="48.1917" ry=18 /> <text text-anchor=middle x="474.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">IRC Relay</text> </g> <g id=edge6 class=edge> <title>Main BOT&#45;&gt;IRC Relay</title> <path fill=none stroke="#000000" d="M476.6317,-215.8314C476.3108,-208.131 475.9293,-198.9743 475.5727,-190.4166"/> <polygon fill="#000000" stroke="#000000" points="479.0693,-190.2589 475.1559,-180.4133 472.0754,-190.5503 479.0693,-190.2589"/> </g> <g id=node9 class=node> <title>ClueNet IRC</title> <ellipse fill=none stroke="#000000" cx="474.3887" cy=-90 rx="57.3905" ry=18 /> <text text-anchor=middle x="474.3887" y="-86.3" font-family="Times,serif" font-size="14.00" fill="#000000">ClueNet IRC</text> </g> <g id=edge10 class=edge> <title>IRC Relay&#45;&gt;ClueNet IRC</title> <path fill=none stroke="#000000" d="M474.3887,-143.8314C474.3887,-136.131 474.3887,-126.9743 474.3887,-118.4166"/> <polygon fill="#000000" stroke="#000000" points="477.8888,-118.4132 474.3887,-108.4133 470.8888,-118.4133 477.8888,-118.4132"/> </g> <g id=node8 class=node> <title>Review Interface</title> <ellipse fill=none stroke="#000000" cx="337.3887" cy=-234 rx="71.4873" ry=18 /> <text text-anchor=middle x="337.3887" y="-230.3" font-family="Times,serif" font-size="14.00" fill="#000000">Review Interface</text> </g> <g id=edge7 class=edge> <title>Review Interface&#45;&gt;Wikimedia Labs Tools Database</title> <path fill=none stroke="#000000" d="M294.8921,-219.4297C263.4514,-208.6501 220.2552,-193.84 185.604,-181.9595"/> <polygon fill="#000000" stroke="#000000" points="186.6687,-178.6246 176.0741,-178.6921 184.3984,-185.2463 186.6687,-178.6246"/> </g> <g id=edge8 class=edge> <title>Review Interface&#45;&gt;Wikimedia API</title> <path fill=none stroke="#000000" d="M338.1457,-215.8314C338.4666,-208.131 338.8481,-198.9743 339.2047,-190.4166"/> <polygon fill="#000000" stroke="#000000" points="342.702,-190.5503 339.6215,-180.4133 335.7081,-190.2589 342.702,-190.5503"/> </g> <g id=edge9 class=edge> <title>Review Interface&#45;&gt;IRC Relay</title> <path fill=none stroke="#000000" d="M368.4761,-217.6621C388.9233,-206.9161 415.7861,-192.7985 437.3413,-181.4702"/> <polygon fill="#000000" stroke="#000000" points="438.9964,-184.5543 446.2202,-176.8039 435.7399,-178.3579 438.9964,-184.5543"/> </g> <g id=node10 class=node> <title>Huggle / External Tools</title> <ellipse fill=none stroke="#000000" cx="474.3887" cy=-18 rx="96.3833" ry=18 /> <text text-anchor=middle x="474.3887" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">Huggle / External Tools</text> </g> <g id=edge11 class=edge> <title>ClueNet IRC&#45;&gt;Huggle / External Tools</title> <path fill=none stroke="#000000" d="M474.3887,-61.5726C474.3887,-53.1084 474.3887,-44.0593 474.3887,-36.4133"/> <polygon fill="#000000" stroke="#000000" points="470.8888,-61.8313 474.3887,-71.8314 477.8888,-61.8314 470.8888,-61.8313"/> </g> </g> </svg> </div> <p>Critical services for basic bot functionality include:</p> <ul> <li>Wikipedia API (For downloading changes + reverts)</li> <li>Tools DB (For creating vandalism IDs + recording action)</li> <li>Wikipedia DB Replicas (up to date) (For fetching extra metadata)</li> <li>Wikipedia IRC RC Feed (For the change feed)</li> <li>Main Bot (Processor)</li> <li>Core (For edit scoring)</li> </ul> <h2 id=setup-1>Setup</h2> <p>The server-side setup, assuming a clean account can be done following the below (locally):</p> <ul> <li><code>pip install fabric</code></li> <li><code>git clone git@github.com:DamianZaremba/cluebotng.git</code></li> <li><code>cd cluebotng</code></li> <li><code>fab deploy</code></li> </ul> <h3 id=config-files>Config Files</h3> <p>A number of config files need to be created manually.</p> <h4 id=cluebotngpasswordonly>~/.cluebotng.password.only</h4> <pre><code class="language-plain">The Wikipedia ClueBot NG user password
-</code></pre> <h4 id=appsbotbotcluebot-ngconfigphp>~/apps/bot/bot/cluebot-ng.config.php</h4> <pre><code class="language-php">&lt;?php
+</code></pre>
+
+<p>You should also see <a href="https://en.wikipedia.org/wiki/Special:Contributions/ClueBot_III">edits</a> from the bot after a while (a number of index pages need to be checked first).</p>
+
+<h2 id="debugging">Debugging</h2>
+
+<p>The main bot log is normally somewhat insightful. Sometimes the bot will die due to memory usage when processing large pages,
+this generally isn’t seen in the logs and is hard to replicate running manually; looking for restarts is an indicator.</p>
+
+<h1 id="cluebot-ng">ClueBot NG</h1>
+
+<p>This bot is slightly more complicated and has numerous parts. The main part is fully scripted, but a number of (non-obvious) configs need to be in place.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>This is not a depiction of request flow, but service dependencies.</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: layer 1 encryption Pages: 1 -->
+<svg role="img" aria-label="layer 1 encryption" width="888pt" height="332pt" viewBox="0.00 0.00 888.18 332.00">
+<title>layer 1 encryption</title>
+<desc>digraph &quot;layer 1 encryption&quot; {
+
+&quot;Wikipedia IRC RC Feed&quot; -&gt; &quot;Main BOT&quot; [dir=back];
+&quot;Main BOT&quot; -&gt; {&quot;Wikimedia Labs Tools Database&quot;, &quot;Wikipedia Database Replica&quot;, &quot;ANN Core&quot;, &quot;Wikimedia API&quot;, &quot;IRC Relay&quot;}
+&quot;Review Interface&quot; -&gt; {&quot;Wikimedia Labs Tools Database&quot;, &quot;Wikimedia API&quot;, &quot;IRC Relay&quot;}
+&quot;IRC Relay&quot; -&gt; &quot;ClueNet IRC&quot;;
+&quot;ClueNet IRC&quot; -&gt; &quot;Huggle / External Tools&quot; [dir=back];
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 328)">
+<title>layer 1 encryption</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-328 884.1788,-328 884.1788,4 -4,4" />
+<!-- Wikipedia IRC RC Feed -->
+<g id="node1" class="node">
+<title>Wikipedia IRC RC Feed</title>
+<ellipse fill="none" stroke="#000000" cx="477.3887" cy="-306" rx="98.5829" ry="18" />
+<text text-anchor="middle" x="477.3887" y="-302.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikipedia IRC RC Feed</text>
+</g>
+<!-- Main BOT -->
+<g id="node2" class="node">
+<title>Main BOT</title>
+<ellipse fill="none" stroke="#000000" cx="477.3887" cy="-234" rx="50.0912" ry="18" />
+<text text-anchor="middle" x="477.3887" y="-230.3" font-family="Times,serif" font-size="14.00" fill="#000000">Main BOT</text>
+</g>
+<!-- Wikipedia IRC RC Feed&#45;&gt;Main BOT -->
+<g id="edge1" class="edge">
+<title>Wikipedia IRC RC Feed&#45;&gt;Main BOT</title>
+<path fill="none" stroke="#000000" d="M477.3887,-277.5726C477.3887,-269.1084 477.3887,-260.0593 477.3887,-252.4133" />
+<polygon fill="#000000" stroke="#000000" points="473.8888,-277.8313 477.3887,-287.8314 480.8888,-277.8314 473.8888,-277.8313" />
+</g>
+<!-- Wikimedia Labs Tools Database -->
+<g id="node3" class="node">
+<title>Wikimedia Labs Tools Database</title>
+<ellipse fill="none" stroke="#000000" cx="127.3887" cy="-162" rx="127.2775" ry="18" />
+<text text-anchor="middle" x="127.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikimedia Labs Tools Database</text>
+</g>
+<!-- Main BOT&#45;&gt;Wikimedia Labs Tools Database -->
+<g id="edge2" class="edge">
+<title>Main BOT&#45;&gt;Wikimedia Labs Tools Database</title>
+<path fill="none" stroke="#000000" d="M439.7895,-222.0474C432.4019,-219.8899 424.6815,-217.7675 417.3887,-216 352.9463,-200.3816 279.5076,-186.7485 222.6571,-177.0878" />
+<polygon fill="#000000" stroke="#000000" points="223.0449,-173.6038 212.6019,-175.391 221.8801,-180.5062 223.0449,-173.6038" />
+</g>
+<!-- Wikipedia Database Replica -->
+<g id="node4" class="node">
+<title>Wikipedia Database Replica</title>
+<ellipse fill="none" stroke="#000000" cx="768.3887" cy="-162" rx="111.5806" ry="18" />
+<text text-anchor="middle" x="768.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikipedia Database Replica</text>
+</g>
+<!-- Main BOT&#45;&gt;Wikipedia Database Replica -->
+<g id="edge3" class="edge">
+<title>Main BOT&#45;&gt;Wikipedia Database Replica</title>
+<path fill="none" stroke="#000000" d="M518.7729,-223.7606C565.2531,-212.2604 641.5014,-193.3948 697.5159,-179.5355" />
+<polygon fill="#000000" stroke="#000000" points="698.5092,-182.8954 707.3759,-177.096 696.8279,-176.1003 698.5092,-182.8954" />
+</g>
+<!-- ANN Core -->
+<g id="node5" class="node">
+<title>ANN Core</title>
+<ellipse fill="none" stroke="#000000" cx="589.3887" cy="-162" rx="49.2915" ry="18" />
+<text text-anchor="middle" x="589.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">ANN Core</text>
+</g>
+<!-- Main BOT&#45;&gt;ANN Core -->
+<g id="edge4" class="edge">
+<title>Main BOT&#45;&gt;ANN Core</title>
+<path fill="none" stroke="#000000" d="M501.9676,-218.1993C517.8695,-207.9766 538.7694,-194.541 556.1464,-183.3701" />
+<polygon fill="#000000" stroke="#000000" points="558.348,-186.1156 564.8672,-177.7638 554.5627,-180.2273 558.348,-186.1156" />
+</g>
+<!-- Wikimedia API -->
+<g id="node6" class="node">
+<title>Wikimedia API</title>
+<ellipse fill="none" stroke="#000000" cx="340.3887" cy="-162" rx="67.6881" ry="18" />
+<text text-anchor="middle" x="340.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">Wikimedia API</text>
+</g>
+<!-- Main BOT&#45;&gt;Wikimedia API -->
+<g id="edge5" class="edge">
+<title>Main BOT&#45;&gt;Wikimedia API</title>
+<path fill="none" stroke="#000000" d="M449.0022,-219.0816C429.1145,-208.6296 402.2615,-194.5171 380.2323,-182.9397" />
+<polygon fill="#000000" stroke="#000000" points="381.6011,-179.7052 371.1208,-178.1512 378.3446,-185.9016 381.6011,-179.7052" />
+</g>
+<!-- IRC Relay -->
+<g id="node7" class="node">
+<title>IRC Relay</title>
+<ellipse fill="none" stroke="#000000" cx="474.3887" cy="-162" rx="48.1917" ry="18" />
+<text text-anchor="middle" x="474.3887" y="-158.3" font-family="Times,serif" font-size="14.00" fill="#000000">IRC Relay</text>
+</g>
+<!-- Main BOT&#45;&gt;IRC Relay -->
+<g id="edge6" class="edge">
+<title>Main BOT&#45;&gt;IRC Relay</title>
+<path fill="none" stroke="#000000" d="M476.6317,-215.8314C476.3108,-208.131 475.9293,-198.9743 475.5727,-190.4166" />
+<polygon fill="#000000" stroke="#000000" points="479.0693,-190.2589 475.1559,-180.4133 472.0754,-190.5503 479.0693,-190.2589" />
+</g>
+<!-- ClueNet IRC -->
+<g id="node9" class="node">
+<title>ClueNet IRC</title>
+<ellipse fill="none" stroke="#000000" cx="474.3887" cy="-90" rx="57.3905" ry="18" />
+<text text-anchor="middle" x="474.3887" y="-86.3" font-family="Times,serif" font-size="14.00" fill="#000000">ClueNet IRC</text>
+</g>
+<!-- IRC Relay&#45;&gt;ClueNet IRC -->
+<g id="edge10" class="edge">
+<title>IRC Relay&#45;&gt;ClueNet IRC</title>
+<path fill="none" stroke="#000000" d="M474.3887,-143.8314C474.3887,-136.131 474.3887,-126.9743 474.3887,-118.4166" />
+<polygon fill="#000000" stroke="#000000" points="477.8888,-118.4132 474.3887,-108.4133 470.8888,-118.4133 477.8888,-118.4132" />
+</g>
+<!-- Review Interface -->
+<g id="node8" class="node">
+<title>Review Interface</title>
+<ellipse fill="none" stroke="#000000" cx="337.3887" cy="-234" rx="71.4873" ry="18" />
+<text text-anchor="middle" x="337.3887" y="-230.3" font-family="Times,serif" font-size="14.00" fill="#000000">Review Interface</text>
+</g>
+<!-- Review Interface&#45;&gt;Wikimedia Labs Tools Database -->
+<g id="edge7" class="edge">
+<title>Review Interface&#45;&gt;Wikimedia Labs Tools Database</title>
+<path fill="none" stroke="#000000" d="M294.8921,-219.4297C263.4514,-208.6501 220.2552,-193.84 185.604,-181.9595" />
+<polygon fill="#000000" stroke="#000000" points="186.6687,-178.6246 176.0741,-178.6921 184.3984,-185.2463 186.6687,-178.6246" />
+</g>
+<!-- Review Interface&#45;&gt;Wikimedia API -->
+<g id="edge8" class="edge">
+<title>Review Interface&#45;&gt;Wikimedia API</title>
+<path fill="none" stroke="#000000" d="M338.1457,-215.8314C338.4666,-208.131 338.8481,-198.9743 339.2047,-190.4166" />
+<polygon fill="#000000" stroke="#000000" points="342.702,-190.5503 339.6215,-180.4133 335.7081,-190.2589 342.702,-190.5503" />
+</g>
+<!-- Review Interface&#45;&gt;IRC Relay -->
+<g id="edge9" class="edge">
+<title>Review Interface&#45;&gt;IRC Relay</title>
+<path fill="none" stroke="#000000" d="M368.4761,-217.6621C388.9233,-206.9161 415.7861,-192.7985 437.3413,-181.4702" />
+<polygon fill="#000000" stroke="#000000" points="438.9964,-184.5543 446.2202,-176.8039 435.7399,-178.3579 438.9964,-184.5543" />
+</g>
+<!-- Huggle / External Tools -->
+<g id="node10" class="node">
+<title>Huggle / External Tools</title>
+<ellipse fill="none" stroke="#000000" cx="474.3887" cy="-18" rx="96.3833" ry="18" />
+<text text-anchor="middle" x="474.3887" y="-14.3" font-family="Times,serif" font-size="14.00" fill="#000000">Huggle / External Tools</text>
+</g>
+<!-- ClueNet IRC&#45;&gt;Huggle / External Tools -->
+<g id="edge11" class="edge">
+<title>ClueNet IRC&#45;&gt;Huggle / External Tools</title>
+<path fill="none" stroke="#000000" d="M474.3887,-61.5726C474.3887,-53.1084 474.3887,-44.0593 474.3887,-36.4133" />
+<polygon fill="#000000" stroke="#000000" points="470.8888,-61.8313 474.3887,-71.8314 477.8888,-61.8314 470.8888,-61.8313" />
+</g>
+</g>
+</svg>
+</div>
+
+<p>Critical services for basic bot functionality include:</p>
+
+<ul>
+  <li>Wikipedia API (For downloading changes + reverts)</li>
+  <li>Tools DB (For creating vandalism IDs + recording action)</li>
+  <li>Wikipedia DB Replicas (up to date) (For fetching extra metadata)</li>
+  <li>Wikipedia IRC RC Feed (For the change feed)</li>
+  <li>Main Bot (Processor)</li>
+  <li>Core (For edit scoring)</li>
+</ul>
+
+<h2 id="setup-1">Setup</h2>
+
+<p>The server-side setup, assuming a clean account can be done following the below (locally):</p>
+
+<ul>
+  <li><code>pip install fabric</code></li>
+  <li><code>git clone git@github.com:DamianZaremba/cluebotng.git</code></li>
+  <li><code>cd cluebotng</code></li>
+  <li><code>fab deploy</code></li>
+</ul>
+
+<h3 id="config-files">Config Files</h3>
+
+<p>A number of config files need to be created manually.</p>
+
+<h4 id="cluebotngpasswordonly">~/.cluebotng.password.only</h4>
+
+<pre><code class="language-plain">The Wikipedia ClueBot NG user password
+</code></pre>
+
+<h4 id="appsbotbotcluebot-ngconfigphp">~/apps/bot/bot/cluebot-ng.config.php</h4>
+
+<pre><code class="language-php">&lt;?php
 namespace CluebotNG;
 
 class Config
@@ -45,7 +406,11 @@ class Config
     public static $dry = false;
     public static $sentry_url = null;
 }
-</code></pre> <h4 id=appsreport_interfaceweb-settingsphp>~/apps/report_interface/web-settings.php</h4> <pre><code class="language-php">&lt;?PHP
+</code></pre>
+
+<h4 id="appsreport_interfaceweb-settingsphp">~/apps/report_interface/web-settings.php</h4>
+
+<pre><code class="language-php">&lt;?PHP
 	$dbHost = 'tools-db';
 	$dbUser = 's52585';
 	$dbPass = 'a password that is actually real';
@@ -53,18 +418,172 @@ class Config
 	$rcport = 3333;
 	$recaptcha_pubkey = "something here";
 	$recaptcha_privkey = "something here too";
-</code></pre> <h4 id=appsbotrelay_ircrelay_ircconfjs>~/apps/bot/relay_irc/relay_irc.conf.js</h4> <pre><code class="language-javascript">exports.nick = 'CBNGRelay';
+</code></pre>
+
+<h4 id="appsbotrelay_ircrelay_ircconfjs">~/apps/bot/relay_irc/relay_irc.conf.js</h4>
+
+<pre><code class="language-javascript">exports.nick = 'CBNGRelay';
 exports.server = 'irc.cluenet.org';
 exports.extra = [
     'OPER antiflood This Is Not The One You Are Looking For',
 ];
-</code></pre> <h3 id=re-deploy>Re-Deploy</h3> <p>Now the config files are in place, the bot should actually work.</p> <p>In your local git clone, complete another deploy, to restart everything:</p> <ul> <li><code>fab deploy</code></li> </ul> <h3 id=bot-checks>Bot Checks</h3> <h5 id=first-check-the-job-status>First, check the job status</h5> <pre><code class="language-bash">tools.cluebotng@tools-bastion-03:~$ qstat
+</code></pre>
+
+<h3 id="re-deploy">Re-Deploy</h3>
+
+<p>Now the config files are in place, the bot should actually work.</p>
+
+<p>In your local git clone, complete another deploy, to restart everything:</p>
+
+<ul>
+  <li><code>fab deploy</code></li>
+</ul>
+
+<h3 id="bot-checks">Bot Checks</h3>
+
+<h5 id="first-check-the-job-status">First, check the job status</h5>
+
+<pre><code class="language-bash">tools.cluebotng@tools-bastion-03:~$ qstat
 job-ID  prior   name       user         state submit/start at     queue                          slots ja-task-ID
 -----------------------------------------------------------------------------------------------------------------
 xxxxxxx 0.30159 lighttpd-c tools.cluebo r     03/04/2017 12:48:57 webgrid-lighttpd@tools-webgrid     1
 xxxxxxx 0.30154 cbng_relay tools.cluebo r     03/04/2017 13:32:09 continuous@tools-exec-xxxx.too     1
 xxxxxxx 0.30154 cbng_core  tools.cluebo r     03/04/2017 13:32:11 continuous@tools-exec-xxxx.too     1
 xxxxxxx 0.30092 cbng_bot   tools.cluebo r     03/04/2017 23:56:38 continuous@tools-exec-xxxx.too     1
-</code></pre> <h5 id=next-check-the-bot-logs>Next check the bot logs</h5> <pre><code>tools.cluebotng@tools-bastion-03:~$ tail -f ~/logs/cluebotng-2017-03-05.log
+</code></pre>
+
+<h5 id="next-check-the-bot-logs">Next check the bot logs</h5>
+
+<pre><code>tools.cluebotng@tools-bastion-03:~$ tail -f ~/logs/cluebotng-2017-03-05.log
 cluebotng.INFO: Processing: [[Something]] [...]
-</code></pre> <h5 id=then-check-the-irc-feeds-irccluenetorg>Then check the IRC Feeds (irc.cluenet.org)</h5> <ul> <li><code>#cluebotng-spam</code> - Should have constant messages</li> <li><code>#wikipedia-VAN</code> - Should have a message within 10min</li> </ul> <p>Confirm the bot is also <a href="https://en.wikipedia.org/wiki/Special:Contributions/ClueBot_NG">making edits</a> inline with messages reported in <code>#wikipedia-VAN</code>.</p> <h5 id=finally-check-the-review-interface>Finally, check the review interface</h5> <ul> <li><a href="https://tools.wmflabs.org/cluebotng/?page=List">https://tools.wmflabs.org/cluebotng/?page=List</a> - Should render</li> <li><a href="https://tools.wmflabs.org/cluebotng/?page=View&amp;id=120371">https://tools.wmflabs.org/cluebotng/?page=View&amp;id=120371</a> - Should render</li> <li>Take a recent edit from the <code>#wikipedia-VAN</code> channel and submit it as a reported</li> <li>Check Sign In works (set your test above to invalid, if it looks OK)</li> </ul> <h3 id=general-checks>General Checks</h3> <p>After a couple of hours, check:</p> <ul> <li>check_cluebot3.pl / check_cluebotng.pl are successfully running externally</li> <li>~/mysql_backups/ contains valid database dumps</li> <li>No ‘not running’ emails have been received</li> <li>~/bigbrother.log for restarts</li> <li><a href="https://en.wikipedia.org/wiki/User_talk:ClueBot_Commons">ClueBot Commons</a> For user problems</li> </ul> <h2 id=debugging-1>Debugging</h2> <p>The main bot log provides a good indicator as to the source of problems but has limited data due to the logging volume.</p> <p>It is common to see ‘Failed to get edit data for xxx’, this is only a problem if it’s happening for a large number of changes; normally this is due to delayed replicas, causing the user/page metadata for new users/pages to be non-existent.</p> <p>The relays generally don’t break but may have incorrect entries in the database. The simplest fix is to kill the job and let it re-spawn.</p> <p>The report interface will likely break due to PHP being updated, it will need fixing randomly; there is a motivation to rebuild the interface to include the review functionality as well as OAuth based authentication (<a href="https://phabricator.wikimedia.org/T135323">T135323</a>).</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2017/12/cluebot-wikimedia-labs-setup/";var disqus_url="http://damianzaremba.co.uk/2017/12/cluebot-wikimedia-labs-setup/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<h5 id="then-check-the-irc-feeds-irccluenetorg">Then check the IRC Feeds (irc.cluenet.org)</h5>
+
+<ul>
+  <li><code>#cluebotng-spam</code> - Should have constant messages</li>
+  <li><code>#wikipedia-VAN</code> - Should have a message within 10min</li>
+</ul>
+
+<p>Confirm the bot is also <a href="https://en.wikipedia.org/wiki/Special:Contributions/ClueBot_NG">making edits</a> inline with messages reported in <code>#wikipedia-VAN</code>.</p>
+
+<h5 id="finally-check-the-review-interface">Finally, check the review interface</h5>
+
+<ul>
+  <li><a href="https://tools.wmflabs.org/cluebotng/?page=List">https://tools.wmflabs.org/cluebotng/?page=List</a> - Should render</li>
+  <li><a href="https://tools.wmflabs.org/cluebotng/?page=View&amp;id=120371">https://tools.wmflabs.org/cluebotng/?page=View&amp;id=120371</a> - Should render</li>
+  <li>Take a recent edit from the <code>#wikipedia-VAN</code> channel and submit it as a reported</li>
+  <li>Check Sign In works (set your test above to invalid, if it looks OK)</li>
+</ul>
+
+<h3 id="general-checks">General Checks</h3>
+
+<p>After a couple of hours, check:</p>
+
+<ul>
+  <li>check_cluebot3.pl / check_cluebotng.pl are successfully running externally</li>
+  <li>~/mysql_backups/ contains valid database dumps</li>
+  <li>No ‘not running’ emails have been received</li>
+  <li>~/bigbrother.log for restarts</li>
+  <li><a href="https://en.wikipedia.org/wiki/User_talk:ClueBot_Commons">ClueBot Commons</a> For user problems</li>
+</ul>
+
+<h2 id="debugging-1">Debugging</h2>
+
+<p>The main bot log provides a good indicator as to the source of problems but has limited data due to the logging volume.</p>
+
+<p>It is common to see ‘Failed to get edit data for xxx’, this is only a problem if it’s happening for a large number of changes; normally this is due to delayed replicas, causing the user/page metadata for new users/pages to be non-existent.</p>
+
+<p>The relays generally don’t break but may have incorrect entries in the database. The simplest fix is to kill the job and let it re-spawn.</p>
+
+<p>The report interface will likely break due to PHP being updated, it will need fixing randomly; there is a motivation to rebuild the interface to include the review functionality as well as OAuth based authentication (<a href="https://phabricator.wikimedia.org/T135323">T135323</a>).</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2017/12/cluebot-wikimedia-labs-setup/';
+    var disqus_url = 'http://damianzaremba.co.uk/2017/12/cluebot-wikimedia-labs-setup/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

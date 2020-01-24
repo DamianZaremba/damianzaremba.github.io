@@ -1,1 +1,816 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - A look at traffic encryption options</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />26 Dec 2017</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2017/12/a-look-at-traffic-encryption-options/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li></ul> </div> <div class=entry> <p>Given a post <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">highlighting the cost effectiveness</a> of deploying network taps, it would make sense to look at the other side; encryption.</p> <h1 id=intro>Intro</h1> <p>It is commonly accepted to use TLS when accessing services over the internet, whether they are based on HTTP, SMTP, IMAP, POP, FTP or any number of other protocols.</p> <p>It is also commonly accepted to terminate those TLS connections on the edge, handling all internal communications in plain text. This is for a number of reasons around scalability, performance and trust.</p> <p>As technology stacks have matured, a number of security standards have been created, including those for card handling (PCI DDS); many of these still contain phrasing such as ‘<a href="https://www.pcisecuritystandards.org/pdfs/pci_ssc_quick_guide.pdf">encrypt transmission of cardholder data across open, public networks</a>’, with the definitions being open to interpretation.</p> <p>Pause for a moment and consider if these scenarios are ‘across open, public networks’:</p> <ul> <li>A point to point circuit provided over an external ‘dark fibre’ (DWDM or similar) network</li> <li>A point to point wireless link between 2 buildings provided by a 3rd party</li> <li>Cross connections between 2 suites within a datacenter, via the meet me room</li> </ul> <p>I imagine most people would argue these are private:</p> <ul> <li>All services are dedicated to you</li> <li>Traffic is isolated from other customers</li> <li>You control both ends of the connection</li> </ul> <p>However, there are also risks, as they all pass through physical assets you don’t control:</p> <ul> <li>Traffic interception; it has been widely published that data from the likes of Google has been intercepted and used for profiling activities</li> <li>Network access; As with a physical intrusion to your rack/office, it may be possible to gain network access via a cross-connect, or inter-site link, depending on topology</li> <li>Redundancy; A targeted attack on physical infrastructure could place your business operations at risk</li> </ul> <p>Thankfully, most providers and many ISO standards have well defined physical access controls, which limit the possibilities of the above however that isn’t very effective against a nation-state, or a cyber-based attack on a provider.</p> <p>Many businesses have a wealth of information useful to a nation-state, from habits and preferences to medical or travel data. It might be paranoia until they’re out to get you.</p> <p>Ultimately this comes down to risk management and if you want to be ‘compliant’ or ‘secure’ in regards to your customer’s data.</p> <p>Assuming we want to encrypt data end-to-end, let’s look at the technologies available.</p> <h1 id=tls>TLS</h1> <p>As briefly noted above, the standard for encryption in the public network space is <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a> (TLS).</p> <p>There are multiple implementations of TLS, with 1.2 currently being the standard (1.3 is in draft), the version and associated cryptographic ciphers are usually associated with the support requirements; many older browsers and SSL libraries don’t support the most secure choices.</p> <p>A good starting point is the excellent <a href="https://cipherli.st/">cipherli.st</a> site, highlighting secure configs for most platforms.</p> <p>The results should then be checked, either using <code>openssl s_client</code>, <a href="https://www.ssllabs.com/">ssllabs.com</a> or similar.</p> <p>Generally, user-facing TLS is simple to deploy, with the potential for small compatibility issues (including breaking certain browsers).</p> <p>The direction for <a href="https://security.googleblog.com/2016/09/moving-towards-more-secure-web.html">Google Chrome</a> and others is to start displaying HTTP sites in the same manner as invalid SSL is currently shown (red bars or similar), so it’s highly advisable even if you don’t transmit any ‘sensitive info’ (sensitive here includes tracking data, such as cookies).</p> <p>What about the cost? Platforms such as Lets Encrypt provide free SSL certs, trusted by all major browsers. For dedicated extended validation certificates, a few hundred dollars is a small cost for most online businesses.</p> <h2 id=tls-internally>TLS internally</h2> <p>Historically concerns about the performance of TLS have stunted the deployment internally, modern versions of the libraries combined with the current generations of CPUs mean TLS is not slow! (mostly).</p> <p>The excellent <a href="https://istlsfastyet.com/">istlsfastyet.com</a> goes into detail about the current state of TLS performance. The key takeaway is, when configured correctly, TLS at the scale of Facebook and Google performs fast enough with minimal CPU overhead.</p> <p>Using the most secure cipher suites (ECDHE) are a little more costly, but with mitigations in place (HTTP keepalives, session resumption etc), the performance overhead is negligible.</p> <p>Depending on your environment, you may purchase or use CA-signed certificates as is the case with external traffic however at a certain scale an internal certificate authority makes sense.</p> <p>There is a certain level of complexity in deploying and maintaining a secure internal certificate authority and many tools exist to help with this.</p> <p>Another advantage of an internal CA is being able to use certificate-based authentication for clients, enabling devices to prove their identity.</p> <h1 id=alternatives>Alternatives</h1> <p>Depending on your environment, encrypting all inter-device traffic with TLS may be possible.</p> <p>Given a small load balanced LAMP stack this should be relatively easy:</p> <ul> <li>TLS from the user to the load balancer</li> <li>TLS from the load balancer to the web server</li> <li>TLS from PHP to MySQL</li> </ul> <p>However, the number of services can easily spiral, given the example above we could easily have:</p> <ul> <li>SMTP relays</li> <li>Memcache/Redis caching</li> <li>NFS based storage</li> <li>Monitoring agents</li> </ul> <p>You may also have services which don’t support TLS:</p> <ul> <li>RADIUS</li> <li>Windows Distributed File Shares</li> <li>Access control / CCTV systems designed for closed networks</li> </ul> <p>There are 2 areas to consider here:</p> <ul> <li>Traffic passing over your network (Physical access restrictions in place)</li> <li>Traffic passing over external infrastructure</li> </ul> <p>For the first case:</p> <ul> <li>I strongly suggest to deploy TLS where possible, at worst, it is another layer of defence should a malicious device get into the network.</li> <li>For protocols lacking encryption support, their risk is likely low <ul> <li>If their risk is not low, I’d suggest re-evaluating the technology choice</li> <li>Inline encryption is possible but complicated to scale at this level</li> </ul> </li> </ul> <p>For the second, we have a number of options described below.</p> <h3 id=layer-1-encryption>Layer 1 encryption</h3> <p>There are a number of ‘black box’ solutions, which sit in-line to the network.</p> <p>The general principle is un-encrypted data comes in one end, encrypted data comes out the other; the reverse then happens to give you un-encrypted data on the other end.</p> <div class=graphviz-wrapper> <svg role=img aria-label="layer 1 encryption" width=498pt height=99pt viewBox="0.00 0.00 497.67 99.00"> <title>layer 1 encryption</title> <desc>digraph &quot;layer 1 encryption&quot; { rankdir=LR; subgraph cluster_SiteA { label = &quot;Site A&quot;; color = black; &quot;Router A&quot;; } subgraph cluster_EncryptedNet { label = &quot;Encrypted Network&quot;; color = red; &quot;Device A&quot;; &quot;Device B&quot;; } subgraph cluster_SiteB { label = &quot;Site B&quot;; color = black; &quot;Router B&quot;; } &quot;Router A&quot; -&gt; &quot;Device A&quot; &quot;Device A&quot; -&gt; &quot;Device B&quot; &quot;Device B&quot; -&gt; &quot;Router B&quot; }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 95)"> <title>layer 1 encryption</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-95 493.669,-95 493.669,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster_SiteA</title> <polygon fill=none stroke="#000000" points="8,-8 8,-83 111.0923,-83 111.0923,-8 8,-8"/> <text text-anchor=middle x="59.5461" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site A</text> </g> <g id=clust2 class=cluster> <title>cluster_EncryptedNet</title> <polygon fill=none stroke="#ff0000" points="131.0923,-8 131.0923,-83 359.8766,-83 359.8766,-8 131.0923,-8"/> <text text-anchor=middle x="245.4844" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Network</text> </g> <g id=clust3 class=cluster> <title>cluster_SiteB</title> <polygon fill=none stroke="#000000" points="379.8766,-8 379.8766,-83 481.669,-83 481.669,-8 379.8766,-8"/> <text text-anchor=middle x="430.7728" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site B</text> </g> <g id=node1 class=node> <title>Router A</title> <ellipse fill=none stroke="#000000" cx="59.5461" cy=-34 rx="43.5923" ry=18 /> <text text-anchor=middle x="59.5461" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router A</text> </g> <g id=node2 class=node> <title>Device A</title> <ellipse fill=none stroke="#000000" cx="183.2884" cy=-34 rx="44.393" ry=18 /> <text text-anchor=middle x="183.2884" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Device A</text> </g> <g id=edge1 class=edge> <title>Router A&#45;&gt;Device A</title> <path fill=none stroke="#000000" d="M103.173,-34C111.3848,-34 120.0675,-34 128.5677,-34"/> <polygon fill="#000000" stroke="#000000" points="128.8017,-37.5001 138.8017,-34 128.8016,-30.5001 128.8017,-37.5001"/> </g> <g id=node3 class=node> <title>Device B</title> <ellipse fill=none stroke="#000000" cx="307.6805" cy=-34 rx="44.393" ry=18 /> <text text-anchor=middle x="307.6805" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Device B</text> </g> <g id=edge2 class=edge> <title>Device A&#45;&gt;Device B</title> <path fill=none stroke="#000000" d="M227.4946,-34C235.7359,-34 244.4382,-34 252.9511,-34"/> <polygon fill="#000000" stroke="#000000" points="253.1975,-37.5001 263.1975,-34 253.1974,-30.5001 253.1975,-37.5001"/> </g> <g id=node4 class=node> <title>Router B</title> <ellipse fill=none stroke="#000000" cx="430.7728" cy=-34 rx="42.7926" ry=18 /> <text text-anchor=middle x="430.7728" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router B</text> </g> <g id=edge3 class=edge> <title>Device B&#45;&gt;Router B</title> <path fill=none stroke="#000000" d="M352.1196,-34C360.3446,-34 369.0123,-34 377.4686,-34"/> <polygon fill="#000000" stroke="#000000" points="377.6347,-37.5001 387.6346,-34 377.6346,-30.5001 377.6347,-37.5001"/> </g> </g> </svg> </div> <p>These are generally expensive appliances, licensed by port or bandwidth capability. They are also generally completely closed boxes, operating strictly at layer 1.</p> <p>Deployed across DWDM or similar networks, these devices should ‘just work’ and provide full encryption (layer 1 to 7). They are limited to ‘point to point’ links.</p> <p>A side effect of the point to point encryption is the prevention of unauthorised traffic.</p> <h3 id=ieee-8021ae-macsec>IEEE 802.1AE (MacSec)</h3> <p>A more open and industry standard approach would be to deploy MacSec.</p> <p>MacSec provides encryption of the layer 2 header and up, but leaves the src/dest mac addresses exposed.</p> <p>It operates similar to an Ethernet frame within a layer 2 network, with the packets containing 4 fields</p> <div class=graphviz-wrapper> <svg role=img aria-label="macsec header" width=658pt height=154pt viewBox="0.00 0.00 658.00 154.00"> <title>macsec header</title> <desc>digraph &quot;macsec header&quot; { subgraph cluster { rankdir=LR; height=1.5; &quot;Destination MAC&quot; [shape=square, height=1.5]; &quot;Source MAC&quot; [shape=square, height=1.5]; &quot;Security TAG&quot; [shape=square, height=1.5]; &quot;Encrypted Data&quot; [shape=square, height=1.5]; &quot;ICV&quot; [shape=square, height=1.5]; } }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 150)"> <title>macsec header</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-150 654,-150 654,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster</title> <polygon fill=none stroke="#000000" points="8,-8 8,-138 642,-138 642,-8 8,-8"/> </g> <g id=node1 class=node> <title>Destination MAC</title> <polygon fill=none stroke="#000000" points="634,-130 520,-130 520,-16 634,-16 634,-130"/> <text text-anchor=middle x=577 y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Destination MAC</text> </g> <g id=node2 class=node> <title>Source MAC</title> <polygon fill=none stroke="#000000" points="502,-127 394,-127 394,-19 502,-19 502,-127"/> <text text-anchor=middle x=448 y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Source MAC</text> </g> <g id=node3 class=node> <title>Security TAG</title> <polygon fill=none stroke="#000000" points="376,-127 268,-127 268,-19 376,-19 376,-127"/> <text text-anchor=middle x=322 y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Security TAG</text> </g> <g id=node4 class=node> <title>Encrypted Data</title> <polygon fill=none stroke="#000000" points="250,-127 142,-127 142,-19 250,-19 250,-127"/> <text text-anchor=middle x=196 y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Data</text> </g> <g id=node5 class=node> <title>ICV</title> <polygon fill=none stroke="#000000" points="124,-127 16,-127 16,-19 124,-19 124,-127"/> <text text-anchor=middle x=70 y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">ICV</text> </g> </g> </svg> </div> <p>Any layer 2 data outside of the mac addresses (VLAN tag, LLDP etc) is contained within the encrypted data.</p> <p>The security tag and ICV are used internally for MacSec, with the mac addresses being used for forwarding.</p> <p>There is a hardware dependency associated with MacSec, as the encryption is done in hardware to achieve line rate speeds. This varies between vendors but can be in the form of dedicated line cards or whole products.</p> <p>It is possible to offload the encryption to MacSec capable switches, allowing routers and line cards to remain, with the switch sitting inline.</p> <div class=graphviz-wrapper> <svg role=img aria-label="macsec encryption" width=496pt height=99pt viewBox="0.00 0.00 496.37 99.00"> <title>macsec encryption</title> <desc>digraph &quot;macsec encryption&quot; { rankdir=LR; subgraph cluster_SiteA { label = &quot;Site A&quot;; color = black; &quot;Router A&quot;; } subgraph cluster_EncryptedNet { label = &quot;Encrypted Network&quot;; color = red; &quot;Switch A&quot;; &quot;Switch B&quot;; } subgraph cluster_SiteB { label = &quot;Site B&quot;; color = black; &quot;Router B&quot;; } &quot;Router A&quot; -&gt; &quot;Switch A&quot; &quot;Switch A&quot; -&gt; &quot;Switch B&quot; &quot;Switch B&quot; -&gt; &quot;Router B&quot; }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 95)"> <title>macsec encryption</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-95 492.3691,-95 492.3691,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster_SiteA</title> <polygon fill=none stroke="#000000" points="8,-8 8,-83 111.0923,-83 111.0923,-8 8,-8"/> <text text-anchor=middle x="59.5461" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site A</text> </g> <g id=clust2 class=cluster> <title>cluster_EncryptedNet</title> <polygon fill=none stroke="#ff0000" points="131.0923,-8 131.0923,-83 358.5767,-83 358.5767,-8 131.0923,-8"/> <text text-anchor=middle x="244.8345" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Network</text> </g> <g id=clust3 class=cluster> <title>cluster_SiteB</title> <polygon fill=none stroke="#000000" points="378.5767,-8 378.5767,-83 480.3691,-83 480.3691,-8 378.5767,-8"/> <text text-anchor=middle x="429.4729" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site B</text> </g> <g id=node1 class=node> <title>Router A</title> <ellipse fill=none stroke="#000000" cx="59.5461" cy=-34 rx="43.5923" ry=18 /> <text text-anchor=middle x="59.5461" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router A</text> </g> <g id=node2 class=node> <title>Switch A</title> <ellipse fill=none stroke="#000000" cx="183.2884" cy=-34 rx="44.393" ry=18 /> <text text-anchor=middle x="183.2884" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Switch A</text> </g> <g id=edge1 class=edge> <title>Router A&#45;&gt;Switch A</title> <path fill=none stroke="#000000" d="M103.173,-34C111.3848,-34 120.0675,-34 128.5677,-34"/> <polygon fill="#000000" stroke="#000000" points="128.8017,-37.5001 138.8017,-34 128.8016,-30.5001 128.8017,-37.5001"/> </g> <g id=node3 class=node> <title>Switch B</title> <ellipse fill=none stroke="#000000" cx="307.0306" cy=-34 rx="43.5923" ry=18 /> <text text-anchor=middle x="307.0306" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Switch B</text> </g> <g id=edge2 class=edge> <title>Switch A&#45;&gt;Switch B</title> <path fill=none stroke="#000000" d="M227.6126,-34C235.8954,-34 244.6357,-34 253.1691,-34"/> <polygon fill="#000000" stroke="#000000" points="253.4309,-37.5001 263.4309,-34 253.4309,-30.5001 253.4309,-37.5001"/> </g> <g id=node4 class=node> <title>Router B</title> <ellipse fill=none stroke="#000000" cx="429.4729" cy=-34 rx="42.7926" ry=18 /> <text text-anchor=middle x="429.4729" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router B</text> </g> <g id=edge3 class=edge> <title>Switch B&#45;&gt;Router B</title> <path fill=none stroke="#000000" d="M350.8892,-34C359.085,-34 367.7334,-34 376.1772,-34"/> <polygon fill="#000000" stroke="#000000" points="376.3313,-37.5001 386.3312,-34 376.3312,-30.5001 376.3313,-37.5001"/> </g> </g> </svg> </div> <p>It may not be desirable to put a layer 2 device in your path, though it is likely that the path will already be using BFD or similar to account for any provider interruptions, which don’t result in an interface flap.</p> <p>There are also some implementation considerations:</p> <ul> <li>Additional header size needs to be accounted for in downstream MTUs</li> <li>Certain providers filter layer 2 traffic, they may filter the MacSec control messages!</li> </ul> <p>As with Layer 1 encryption, this prevents unauthorised traffic entering the network, as well as protecting against interception.</p> <h3 id=dmvpn--mesh-vpn>DMVPN / Mesh VPN</h3> <p>It may be desirable in some cases to form a software-based VPN mesh over your existing network, providing encryption between 2 or more points.</p> <p>This could be in the form of a single IPsec tunnel, or a complex hub-spoke DMVPN network. These could be deployed on dedicated devices or end-user devices.</p> <p>For high traffic applications, these approaches are likely not applicable, due to line rate speeds being desirable, but in branch or remote worker applications they can be powerful options in your toolbox.</p> <div class=graphviz-wrapper> <svg role=img aria-label="vpn mesh encryption" width=714pt height=211pt viewBox="0.00 0.00 714.45 211.17"> <title>vpn mesh encryption</title> <desc>digraph &quot;vpn mesh encryption&quot; { rankdir=LR; &quot;Device A&quot; -&gt; &quot;Device B&quot; &quot;Device A&quot; -&gt; &quot;Device C&quot; &quot;Device A&quot; -&gt; &quot;Device D&quot; &quot;Device A&quot; -&gt; &quot;Device E&quot; &quot;Device A&quot; -&gt; &quot;Device F&quot; &quot;Device B&quot; -&gt; &quot;Device C&quot; &quot;Device B&quot; -&gt; &quot;Device D&quot; &quot;Device B&quot; -&gt; &quot;Device E&quot; &quot;Device B&quot; -&gt; &quot;Device F&quot; &quot;Device C&quot; -&gt; &quot;Device D&quot; &quot;Device C&quot; -&gt; &quot;Device E&quot; &quot;Device C&quot; -&gt; &quot;Device F&quot; &quot;Device D&quot; -&gt; &quot;Device E&quot; &quot;Device D&quot; -&gt; &quot;Device F&quot; &quot;Device E&quot; -&gt; &quot;Device F&quot; }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 207.1681)"> <title>vpn mesh encryption</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-207.1681 710.4533,-207.1681 710.4533,4 -4,4"/> <g id=node1 class=node> <title>Device A</title> <ellipse fill=none stroke="#000000" cx="44.1961" cy="-88.1681" rx="44.393" ry=18 /> <text text-anchor=middle x="44.1961" y="-84.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device A</text> </g> <g id=node2 class=node> <title>Device B</title> <ellipse fill=none stroke="#000000" cx="168.5882" cy="-88.1681" rx="44.393" ry=18 /> <text text-anchor=middle x="168.5882" y="-84.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device B</text> </g> <g id=edge1 class=edge> <title>Device A&#45;&gt;Device B</title> <path fill=none stroke="#000000" d="M88.4023,-88.1681C96.6436,-88.1681 105.3459,-88.1681 113.8589,-88.1681"/> <polygon fill="#000000" stroke="#000000" points="114.1052,-91.6682 124.1052,-88.1681 114.1052,-84.6682 114.1052,-91.6682"/> </g> <g id=node3 class=node> <title>Device C</title> <ellipse fill=none stroke="#000000" cx="292.9804" cy="-157.1681" rx="44.393" ry=18 /> <text text-anchor=middle x="292.9804" y="-153.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device C</text> </g> <g id=edge2 class=edge> <title>Device A&#45;&gt;Device C</title> <path fill=none stroke="#000000" d="M77.5619,-100.0719C91.8938,-105.0103 108.8816,-110.6331 124.3922,-115.1681 164.4037,-126.8669 210.3484,-138.1751 244.159,-146.1048"/> <polygon fill="#000000" stroke="#000000" points="243.7091,-149.5936 254.2424,-148.454 245.2974,-142.7762 243.7091,-149.5936"/> </g> <g id=node4 class=node> <title>Device D</title> <ellipse fill=none stroke="#000000" cx="417.3725" cy="-39.1681" rx="44.393" ry=18 /> <text text-anchor=middle x="417.3725" y="-35.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device D</text> </g> <g id=edge3 class=edge> <title>Device A&#45;&gt;Device D</title> <path fill=none stroke="#000000" d="M76.1009,-75.4918C90.6147,-70.231 108.1441,-64.5715 124.3922,-61.1681 206.2226,-44.0277 303.3716,-39.8175 362.6773,-39.0065"/> <polygon fill="#000000" stroke="#000000" points="362.9775,-42.5035 372.9389,-38.8951 362.9015,-35.5039 362.9775,-42.5035"/> </g> <g id=node5 class=node> <title>Device E</title> <ellipse fill=none stroke="#000000" cx="541.1148" cy="-39.1681" rx="43.5923" ry=18 /> <text text-anchor=middle x="541.1148" y="-35.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device E</text> </g> <g id=edge4 class=edge> <title>Device A&#45;&gt;Device E</title> <path fill=none stroke="#000000" d="M67.5218,-72.6867C83.0683,-62.981 104.2697,-50.8891 124.3922,-43.1681 228.8854,-3.0743 261.3641,-9.1023 373.1765,-4.1681 412.4237,-2.4362 423.1239,3.9157 461.5686,-4.1681 476.6577,-7.3409 492.3762,-13.5582 505.8169,-19.8836"/> <polygon fill="#000000" stroke="#000000" points="504.6403,-23.2048 515.1598,-24.4666 507.7232,-16.9202 504.6403,-23.2048"/> </g> <g id=node6 class=node> <title>Device F</title> <ellipse fill=none stroke="#000000" cx="663.5571" cy="-123.1681" rx="42.7926" ry=18 /> <text text-anchor=middle x="663.5571" y="-119.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device F</text> </g> <g id=edge5 class=edge> <title>Device A&#45;&gt;Device F</title> <path fill=none stroke="#000000" d="M63.7266,-104.4009C103.922,-136.1008 199.9557,-203.1681 292.9804,-203.1681 292.9804,-203.1681 292.9804,-203.1681 417.3725,-203.1681 495.7844,-203.1681 581.6702,-166.0062 628.4178,-142.3385"/> <polygon fill="#000000" stroke="#000000" points="630.2206,-145.3469 637.5071,-137.6555 627.0146,-139.1243 630.2206,-145.3469"/> </g> <g id=edge6 class=edge> <title>Device B&#45;&gt;Device C</title> <path fill=none stroke="#000000" d="M194.9686,-102.8013C213.2747,-112.9556 237.8603,-126.5932 257.8279,-137.6691"/> <polygon fill="#000000" stroke="#000000" points="256.1955,-140.766 266.638,-142.5561 259.591,-134.6447 256.1955,-140.766"/> </g> <g id=edge7 class=edge> <title>Device B&#45;&gt;Device D</title> <path fill=none stroke="#000000" d="M208.5597,-80.2954C251.812,-71.7766 320.847,-58.1796 367.59,-48.9732"/> <polygon fill="#000000" stroke="#000000" points="368.3651,-52.3879 377.5002,-47.0213 367.0123,-45.5198 368.3651,-52.3879"/> </g> <g id=edge8 class=edge> <title>Device B&#45;&gt;Device E</title> <path fill=none stroke="#000000" d="M195.7381,-73.9144C234.0272,-54.797 306.6587,-22.1017 373.1765,-12.1681 412.031,-6.3658 422.8079,-5.7692 461.5686,-12.1681 474.7392,-14.3424 488.6607,-18.4135 501.1124,-22.7471"/> <polygon fill="#000000" stroke="#000000" points="500.1468,-26.1201 510.7408,-26.2476 502.5385,-19.5414 500.1468,-26.1201"/> </g> <g id=edge9 class=edge> <title>Device B&#45;&gt;Device F</title> <path fill=none stroke="#000000" d="M212.5134,-91.2742C303.6888,-97.7213 513.1314,-112.5313 611.1603,-119.4631"/> <polygon fill="#000000" stroke="#000000" points="610.917,-122.9545 621.139,-120.1687 611.4108,-115.972 610.917,-122.9545"/> </g> <g id=edge10 class=edge> <title>Device C&#45;&gt;Device D</title> <path fill=none stroke="#000000" d="M307.1674,-140.0871C322.5433,-122.0391 348.236,-93.1973 373.1765,-71.1681 377.1569,-67.6523 381.5135,-64.1418 385.8907,-60.8027"/> <polygon fill="#000000" stroke="#000000" points="388.275,-63.3929 394.2399,-54.6367 384.1165,-57.762 388.275,-63.3929"/> </g> <g id=edge11 class=edge> <title>Device C&#45;&gt;Device E</title> <path fill=none stroke="#000000" d="M321.9302,-143.4011C366.8482,-122.0404 453.3369,-80.9108 503.1882,-57.2041"/> <polygon fill="#000000" stroke="#000000" points="504.8216,-60.303 512.3494,-52.8475 501.8154,-53.9814 504.8216,-60.303"/> </g> <g id=edge12 class=edge> <title>Device C&#45;&gt;Device F</title> <path fill=none stroke="#000000" d="M337.0996,-155.6158C394.3467,-153.2645 497.251,-147.889 584.6609,-137.1681 594.3965,-135.9741 604.7541,-134.3758 614.6526,-132.6864"/> <polygon fill="#000000" stroke="#000000" points="615.5154,-136.0884 624.7563,-130.9062 614.3007,-129.1946 615.5154,-136.0884"/> </g> <g id=edge13 class=edge> <title>Device D&#45;&gt;Device E</title> <path fill=none stroke="#000000" d="M461.6968,-39.1681C469.9796,-39.1681 478.7199,-39.1681 487.2533,-39.1681"/> <polygon fill="#000000" stroke="#000000" points="487.5151,-42.6682 497.5151,-39.1681 487.5151,-35.6682 487.5151,-42.6682"/> </g> <g id=edge14 class=edge> <title>Device D&#45;&gt;Device F</title> <path fill=none stroke="#000000" d="M451.345,-50.7598C495.3997,-65.7916 572.2805,-92.0239 620.4144,-108.4475"/> <polygon fill="#000000" stroke="#000000" points="619.3388,-111.7786 629.9333,-111.6955 621.5993,-105.1536 619.3388,-111.7786"/> </g> <g id=edge15 class=edge> <title>Device E&#45;&gt;Device F</title> <path fill=none stroke="#000000" d="M563.8583,-54.771C583.1877,-68.0317 611.123,-87.1964 632.5086,-101.8677"/> <polygon fill="#000000" stroke="#000000" points="630.7093,-104.8778 640.9354,-107.6488 634.6693,-99.1056 630.7093,-104.8778"/> </g> </g> </svg> </div> <h1 id=summary>Summary</h1> <p>There is not a 1 solution fits all. It is very dependent upon your environment and more specifically the applications within it.</p> <p>My advice is to look at the risk in each area, design an appropriate solution and test it.</p> <p>A targeted approach keeps things simple to start, but personally, I look to provide end-to-end encryption everywhere… trusting no one.</p> <p>If you have no clear areas of risk, start with everywhere you touch the outside world, either via a public interface or provider managed services.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">A look at low-cost tap aggregation</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options/";var disqus_url="http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - A look at traffic encryption options</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />26 Dec 2017</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2017/12/a-look-at-traffic-encryption-options/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/network'>Network</a></li><li><a href='/tag/security'>Security</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>Given a post <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">highlighting the cost effectiveness</a>
+of deploying network taps, it would make sense to look at the other side; encryption.</p>
+
+<h1 id="intro">Intro</h1>
+<p>It is commonly accepted to use TLS when accessing services over the internet, whether
+they are based on HTTP, SMTP, IMAP, POP, FTP or any number of other protocols.</p>
+
+<p>It is also commonly accepted to terminate those TLS connections on the edge,
+handling all internal communications in plain text. This is for a number of reasons around scalability, performance and trust.</p>
+
+<p>As technology stacks have matured, a number of security standards have been created,
+including those for card handling (PCI DDS); many of these still contain phrasing such
+as ‘<a href="https://www.pcisecuritystandards.org/pdfs/pci_ssc_quick_guide.pdf">encrypt transmission of cardholder data across open, public networks</a>’, with the
+definitions being open to interpretation.</p>
+
+<p>Pause for a moment and consider if these scenarios are ‘across open, public networks’:</p>
+
+<ul>
+  <li>A point to point circuit provided over an external ‘dark fibre’ (DWDM or similar) network</li>
+  <li>A point to point wireless link between 2 buildings provided by a 3rd party</li>
+  <li>Cross connections between 2 suites within a datacenter, via the meet me room</li>
+</ul>
+
+<p>I imagine most people would argue these are private:</p>
+
+<ul>
+  <li>All services are dedicated to you</li>
+  <li>Traffic is isolated from other customers</li>
+  <li>You control both ends of the connection</li>
+</ul>
+
+<p>However, there are also risks, as they all pass through physical assets you don’t control:</p>
+
+<ul>
+  <li>Traffic interception; it has been widely published that data from the likes of Google has been intercepted and used for profiling activities</li>
+  <li>Network access; As with a physical intrusion to your rack/office, it may be possible to gain network access via a cross-connect, or inter-site link, depending on topology</li>
+  <li>Redundancy; A targeted attack on physical infrastructure could place your business operations at risk</li>
+</ul>
+
+<p>Thankfully, most providers and many ISO standards have well defined physical access controls,
+which limit the possibilities of the above however that isn’t very effective against a nation-state,
+or a cyber-based attack on a provider.</p>
+
+<p>Many businesses have a wealth of information useful to a nation-state, from habits and preferences
+to medical or travel data. It might be paranoia until they’re out to get you.</p>
+
+<p>Ultimately this comes down to risk management and if you want to be ‘compliant’ or ‘secure’
+in regards to your customer’s data.</p>
+
+<p>Assuming we want to encrypt data end-to-end, let’s look at the technologies available.</p>
+
+<h1 id="tls">TLS</h1>
+<p>As briefly noted above, the standard for encryption in the public network space is
+<a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
+(TLS).</p>
+
+<p>There are multiple implementations of TLS, with 1.2 currently being the standard (1.3 is in draft),
+the version and associated cryptographic ciphers are usually associated with the
+support requirements; many older browsers and SSL libraries don’t support the most
+secure choices.</p>
+
+<p>A good starting point is the excellent <a href="https://cipherli.st/">cipherli.st</a> site,
+highlighting secure configs for most platforms.</p>
+
+<p>The results should then be checked, either using <code>openssl s_client</code>,
+<a href="https://www.ssllabs.com/">ssllabs.com</a> or similar.</p>
+
+<p>Generally, user-facing TLS is simple to deploy, with the potential for
+small compatibility issues (including breaking certain browsers).</p>
+
+<p>The direction for <a href="https://security.googleblog.com/2016/09/moving-towards-more-secure-web.html">Google Chrome</a> and others is to start displaying HTTP sites in
+the same manner as invalid SSL is currently shown (red bars or similar), so it’s
+highly advisable even if you don’t transmit any ‘sensitive info’ (sensitive here
+ includes tracking data, such as cookies).</p>
+
+<p>What about the cost? Platforms such as Lets Encrypt provide free SSL certs,
+trusted by all major browsers. For dedicated extended validation certificates,
+a few hundred dollars is a small cost for most online businesses.</p>
+
+<h2 id="tls-internally">TLS internally</h2>
+
+<p>Historically concerns about the performance of TLS have stunted the deployment internally,
+modern versions of the libraries combined with the current generations of CPUs mean
+TLS is not slow! (mostly).</p>
+
+<p>The excellent <a href="https://istlsfastyet.com/">istlsfastyet.com</a> goes into detail about
+the current state of TLS performance. The key takeaway is, when configured
+correctly, TLS at the scale of Facebook and Google performs fast enough with minimal
+CPU overhead.</p>
+
+<p>Using the most secure cipher suites (ECDHE) are a little more costly, but with mitigations in place
+(HTTP keepalives, session resumption etc), the performance overhead is negligible.</p>
+
+<p>Depending on your environment, you may purchase or use CA-signed certificates
+as is the case with external traffic however at a certain scale an internal
+certificate authority makes sense.</p>
+
+<p>There is a certain level of complexity in deploying and maintaining a secure
+internal certificate authority and many tools exist to help with this.</p>
+
+<p>Another advantage of an internal CA is being able to use certificate-based
+authentication for clients, enabling devices to prove their identity.</p>
+
+<h1 id="alternatives">Alternatives</h1>
+<p>Depending on your environment, encrypting all inter-device traffic with TLS may
+be possible.</p>
+
+<p>Given a small load balanced LAMP stack this should be relatively easy:</p>
+
+<ul>
+  <li>TLS from the user to the load balancer</li>
+  <li>TLS from the load balancer to the web server</li>
+  <li>TLS from PHP to MySQL</li>
+</ul>
+
+<p>However, the number of services can easily spiral, given the example above
+we could easily have:</p>
+
+<ul>
+  <li>SMTP relays</li>
+  <li>Memcache/Redis caching</li>
+  <li>NFS based storage</li>
+  <li>Monitoring agents</li>
+</ul>
+
+<p>You may also have services which don’t support TLS:</p>
+
+<ul>
+  <li>RADIUS</li>
+  <li>Windows Distributed File Shares</li>
+  <li>Access control / CCTV systems designed for closed networks</li>
+</ul>
+
+<p>There are 2 areas to consider here:</p>
+
+<ul>
+  <li>Traffic passing over your network (Physical access restrictions in place)</li>
+  <li>Traffic passing over external infrastructure</li>
+</ul>
+
+<p>For the first case:</p>
+
+<ul>
+  <li>I strongly suggest to deploy TLS where possible, at worst, it is another layer of
+defence should a malicious device get into the network.</li>
+  <li>For protocols lacking encryption support, their risk is likely low
+    <ul>
+      <li>If their risk is not low, I’d suggest re-evaluating the technology choice</li>
+      <li>Inline encryption is possible but complicated to scale at this level</li>
+    </ul>
+  </li>
+</ul>
+
+<p>For the second, we have a number of options described below.</p>
+
+<h3 id="layer-1-encryption">Layer 1 encryption</h3>
+<p>There are a number of ‘black box’ solutions, which sit in-line to the network.</p>
+
+<p>The general principle is un-encrypted data comes in one end, encrypted data comes
+out the other; the reverse then happens to give you un-encrypted data on the other end.</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: layer 1 encryption Pages: 1 -->
+<svg role="img" aria-label="layer 1 encryption" width="498pt" height="99pt" viewBox="0.00 0.00 497.67 99.00">
+<title>layer 1 encryption</title>
+<desc>digraph &quot;layer 1 encryption&quot; {
+
+rankdir=LR;
+subgraph cluster_SiteA {
+  label = &quot;Site A&quot;;
+  color = black;
+  &quot;Router A&quot;;
+}
+subgraph cluster_EncryptedNet {
+  label = &quot;Encrypted Network&quot;;
+  color = red;
+  &quot;Device A&quot;;
+  &quot;Device B&quot;;
+}
+subgraph cluster_SiteB {
+  label = &quot;Site B&quot;;
+  color = black;
+  &quot;Router B&quot;;
+}
+&quot;Router A&quot; -&gt; &quot;Device A&quot;
+&quot;Device A&quot; -&gt; &quot;Device B&quot;
+&quot;Device B&quot; -&gt; &quot;Router B&quot;
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<title>layer 1 encryption</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-95 493.669,-95 493.669,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster_SiteA</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-83 111.0923,-83 111.0923,-8 8,-8" />
+<text text-anchor="middle" x="59.5461" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site A</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_EncryptedNet</title>
+<polygon fill="none" stroke="#ff0000" points="131.0923,-8 131.0923,-83 359.8766,-83 359.8766,-8 131.0923,-8" />
+<text text-anchor="middle" x="245.4844" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Network</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_SiteB</title>
+<polygon fill="none" stroke="#000000" points="379.8766,-8 379.8766,-83 481.669,-83 481.669,-8 379.8766,-8" />
+<text text-anchor="middle" x="430.7728" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site B</text>
+</g>
+<!-- Router A -->
+<g id="node1" class="node">
+<title>Router A</title>
+<ellipse fill="none" stroke="#000000" cx="59.5461" cy="-34" rx="43.5923" ry="18" />
+<text text-anchor="middle" x="59.5461" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router A</text>
+</g>
+<!-- Device A -->
+<g id="node2" class="node">
+<title>Device A</title>
+<ellipse fill="none" stroke="#000000" cx="183.2884" cy="-34" rx="44.393" ry="18" />
+<text text-anchor="middle" x="183.2884" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Device A</text>
+</g>
+<!-- Router A&#45;&gt;Device A -->
+<g id="edge1" class="edge">
+<title>Router A&#45;&gt;Device A</title>
+<path fill="none" stroke="#000000" d="M103.173,-34C111.3848,-34 120.0675,-34 128.5677,-34" />
+<polygon fill="#000000" stroke="#000000" points="128.8017,-37.5001 138.8017,-34 128.8016,-30.5001 128.8017,-37.5001" />
+</g>
+<!-- Device B -->
+<g id="node3" class="node">
+<title>Device B</title>
+<ellipse fill="none" stroke="#000000" cx="307.6805" cy="-34" rx="44.393" ry="18" />
+<text text-anchor="middle" x="307.6805" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Device B</text>
+</g>
+<!-- Device A&#45;&gt;Device B -->
+<g id="edge2" class="edge">
+<title>Device A&#45;&gt;Device B</title>
+<path fill="none" stroke="#000000" d="M227.4946,-34C235.7359,-34 244.4382,-34 252.9511,-34" />
+<polygon fill="#000000" stroke="#000000" points="253.1975,-37.5001 263.1975,-34 253.1974,-30.5001 253.1975,-37.5001" />
+</g>
+<!-- Router B -->
+<g id="node4" class="node">
+<title>Router B</title>
+<ellipse fill="none" stroke="#000000" cx="430.7728" cy="-34" rx="42.7926" ry="18" />
+<text text-anchor="middle" x="430.7728" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router B</text>
+</g>
+<!-- Device B&#45;&gt;Router B -->
+<g id="edge3" class="edge">
+<title>Device B&#45;&gt;Router B</title>
+<path fill="none" stroke="#000000" d="M352.1196,-34C360.3446,-34 369.0123,-34 377.4686,-34" />
+<polygon fill="#000000" stroke="#000000" points="377.6347,-37.5001 387.6346,-34 377.6346,-30.5001 377.6347,-37.5001" />
+</g>
+</g>
+</svg>
+</div>
+
+<p>These are generally expensive appliances, licensed by port or bandwidth capability.
+They are also generally completely closed boxes, operating strictly at layer 1.</p>
+
+<p>Deployed across DWDM or similar networks, these devices should ‘just work’ and provide
+full encryption (layer 1 to 7). They are limited to ‘point to point’ links.</p>
+
+<p>A side effect of the point to point encryption is the prevention of unauthorised traffic.</p>
+
+<h3 id="ieee-8021ae-macsec">IEEE 802.1AE (MacSec)</h3>
+<p>A more open and industry standard approach would be to deploy MacSec.</p>
+
+<p>MacSec provides encryption of the layer 2 header and up, but leaves the src/dest
+mac addresses exposed.</p>
+
+<p>It operates similar to an Ethernet frame within a layer 2 network, with the
+packets containing 4 fields</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: macsec header Pages: 1 -->
+<svg role="img" aria-label="macsec header" width="658pt" height="154pt" viewBox="0.00 0.00 658.00 154.00">
+<title>macsec header</title>
+<desc>digraph &quot;macsec header&quot; {
+
+subgraph cluster {
+  rankdir=LR;
+  height=1.5;
+  &quot;Destination MAC&quot; [shape=square, height=1.5];
+  &quot;Source MAC&quot; [shape=square, height=1.5];
+  &quot;Security TAG&quot; [shape=square, height=1.5];
+  &quot;Encrypted Data&quot; [shape=square, height=1.5];
+  &quot;ICV&quot; [shape=square, height=1.5];
+}
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 150)">
+<title>macsec header</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-150 654,-150 654,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-138 642,-138 642,-8 8,-8" />
+</g>
+<!-- Destination MAC -->
+<g id="node1" class="node">
+<title>Destination MAC</title>
+<polygon fill="none" stroke="#000000" points="634,-130 520,-130 520,-16 634,-16 634,-130" />
+<text text-anchor="middle" x="577" y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Destination MAC</text>
+</g>
+<!-- Source MAC -->
+<g id="node2" class="node">
+<title>Source MAC</title>
+<polygon fill="none" stroke="#000000" points="502,-127 394,-127 394,-19 502,-19 502,-127" />
+<text text-anchor="middle" x="448" y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Source MAC</text>
+</g>
+<!-- Security TAG -->
+<g id="node3" class="node">
+<title>Security TAG</title>
+<polygon fill="none" stroke="#000000" points="376,-127 268,-127 268,-19 376,-19 376,-127" />
+<text text-anchor="middle" x="322" y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Security TAG</text>
+</g>
+<!-- Encrypted Data -->
+<g id="node4" class="node">
+<title>Encrypted Data</title>
+<polygon fill="none" stroke="#000000" points="250,-127 142,-127 142,-19 250,-19 250,-127" />
+<text text-anchor="middle" x="196" y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Data</text>
+</g>
+<!-- ICV -->
+<g id="node5" class="node">
+<title>ICV</title>
+<polygon fill="none" stroke="#000000" points="124,-127 16,-127 16,-19 124,-19 124,-127" />
+<text text-anchor="middle" x="70" y="-69.3" font-family="Times,serif" font-size="14.00" fill="#000000">ICV</text>
+</g>
+</g>
+</svg>
+</div>
+
+<p>Any layer 2 data outside of the mac addresses (VLAN tag, LLDP etc) is contained
+within the encrypted data.</p>
+
+<p>The security tag and ICV are used internally for MacSec, with the mac addresses being
+used for forwarding.</p>
+
+<p>There is a hardware dependency associated with MacSec, as the encryption is done
+in hardware to achieve line rate speeds. This varies between vendors but can
+be in the form of dedicated line cards or whole products.</p>
+
+<p>It is possible to offload the encryption to MacSec capable switches,
+allowing routers and line cards to remain, with the switch sitting inline.</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: macsec encryption Pages: 1 -->
+<svg role="img" aria-label="macsec encryption" width="496pt" height="99pt" viewBox="0.00 0.00 496.37 99.00">
+<title>macsec encryption</title>
+<desc>digraph &quot;macsec encryption&quot; {
+
+rankdir=LR;
+subgraph cluster_SiteA {
+  label = &quot;Site A&quot;;
+  color = black;
+  &quot;Router A&quot;;
+}
+subgraph cluster_EncryptedNet {
+  label = &quot;Encrypted Network&quot;;
+  color = red;
+  &quot;Switch A&quot;;
+  &quot;Switch B&quot;;
+}
+subgraph cluster_SiteB {
+  label = &quot;Site B&quot;;
+  color = black;
+  &quot;Router B&quot;;
+}
+&quot;Router A&quot; -&gt; &quot;Switch A&quot;
+&quot;Switch A&quot; -&gt; &quot;Switch B&quot;
+&quot;Switch B&quot; -&gt; &quot;Router B&quot;
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<title>macsec encryption</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-95 492.3691,-95 492.3691,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster_SiteA</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-83 111.0923,-83 111.0923,-8 8,-8" />
+<text text-anchor="middle" x="59.5461" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site A</text>
+</g>
+<g id="clust2" class="cluster">
+<title>cluster_EncryptedNet</title>
+<polygon fill="none" stroke="#ff0000" points="131.0923,-8 131.0923,-83 358.5767,-83 358.5767,-8 131.0923,-8" />
+<text text-anchor="middle" x="244.8345" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Encrypted Network</text>
+</g>
+<g id="clust3" class="cluster">
+<title>cluster_SiteB</title>
+<polygon fill="none" stroke="#000000" points="378.5767,-8 378.5767,-83 480.3691,-83 480.3691,-8 378.5767,-8" />
+<text text-anchor="middle" x="429.4729" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">Site B</text>
+</g>
+<!-- Router A -->
+<g id="node1" class="node">
+<title>Router A</title>
+<ellipse fill="none" stroke="#000000" cx="59.5461" cy="-34" rx="43.5923" ry="18" />
+<text text-anchor="middle" x="59.5461" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router A</text>
+</g>
+<!-- Switch A -->
+<g id="node2" class="node">
+<title>Switch A</title>
+<ellipse fill="none" stroke="#000000" cx="183.2884" cy="-34" rx="44.393" ry="18" />
+<text text-anchor="middle" x="183.2884" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Switch A</text>
+</g>
+<!-- Router A&#45;&gt;Switch A -->
+<g id="edge1" class="edge">
+<title>Router A&#45;&gt;Switch A</title>
+<path fill="none" stroke="#000000" d="M103.173,-34C111.3848,-34 120.0675,-34 128.5677,-34" />
+<polygon fill="#000000" stroke="#000000" points="128.8017,-37.5001 138.8017,-34 128.8016,-30.5001 128.8017,-37.5001" />
+</g>
+<!-- Switch B -->
+<g id="node3" class="node">
+<title>Switch B</title>
+<ellipse fill="none" stroke="#000000" cx="307.0306" cy="-34" rx="43.5923" ry="18" />
+<text text-anchor="middle" x="307.0306" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Switch B</text>
+</g>
+<!-- Switch A&#45;&gt;Switch B -->
+<g id="edge2" class="edge">
+<title>Switch A&#45;&gt;Switch B</title>
+<path fill="none" stroke="#000000" d="M227.6126,-34C235.8954,-34 244.6357,-34 253.1691,-34" />
+<polygon fill="#000000" stroke="#000000" points="253.4309,-37.5001 263.4309,-34 253.4309,-30.5001 253.4309,-37.5001" />
+</g>
+<!-- Router B -->
+<g id="node4" class="node">
+<title>Router B</title>
+<ellipse fill="none" stroke="#000000" cx="429.4729" cy="-34" rx="42.7926" ry="18" />
+<text text-anchor="middle" x="429.4729" y="-30.3" font-family="Times,serif" font-size="14.00" fill="#000000">Router B</text>
+</g>
+<!-- Switch B&#45;&gt;Router B -->
+<g id="edge3" class="edge">
+<title>Switch B&#45;&gt;Router B</title>
+<path fill="none" stroke="#000000" d="M350.8892,-34C359.085,-34 367.7334,-34 376.1772,-34" />
+<polygon fill="#000000" stroke="#000000" points="376.3313,-37.5001 386.3312,-34 376.3312,-30.5001 376.3313,-37.5001" />
+</g>
+</g>
+</svg>
+</div>
+
+<p>It may not be desirable to put a layer 2 device in your path, though it is
+likely that the path will already be using BFD or similar to account for
+any provider interruptions, which don’t result in an interface flap.</p>
+
+<p>There are also some implementation considerations:</p>
+
+<ul>
+  <li>Additional header size needs to be accounted for in downstream MTUs</li>
+  <li>Certain providers filter layer 2 traffic, they may filter the MacSec control messages!</li>
+</ul>
+
+<p>As with Layer 1 encryption, this prevents unauthorised traffic entering the network, as
+well as protecting against interception.</p>
+
+<h3 id="dmvpn--mesh-vpn">DMVPN / Mesh VPN</h3>
+<p>It may be desirable in some cases to form a software-based VPN mesh over
+your existing network, providing encryption between 2 or more points.</p>
+
+<p>This could be in the form of a single IPsec tunnel, or a complex hub-spoke DMVPN
+network. These could be deployed on dedicated devices or end-user devices.</p>
+
+<p>For high traffic applications, these approaches are likely not applicable, due to
+line rate speeds being desirable, but in branch or remote worker applications
+they can be powerful options in your toolbox.</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: vpn mesh encryption Pages: 1 -->
+<svg role="img" aria-label="vpn mesh encryption" width="714pt" height="211pt" viewBox="0.00 0.00 714.45 211.17">
+<title>vpn mesh encryption</title>
+<desc>digraph &quot;vpn mesh encryption&quot; {
+
+rankdir=LR;
+&quot;Device A&quot; -&gt; &quot;Device B&quot;
+&quot;Device A&quot; -&gt; &quot;Device C&quot;
+&quot;Device A&quot; -&gt; &quot;Device D&quot;
+&quot;Device A&quot; -&gt; &quot;Device E&quot;
+&quot;Device A&quot; -&gt; &quot;Device F&quot;
+
+&quot;Device B&quot; -&gt; &quot;Device C&quot;
+&quot;Device B&quot; -&gt; &quot;Device D&quot;
+&quot;Device B&quot; -&gt; &quot;Device E&quot;
+&quot;Device B&quot; -&gt; &quot;Device F&quot;
+
+&quot;Device C&quot; -&gt; &quot;Device D&quot;
+&quot;Device C&quot; -&gt; &quot;Device E&quot;
+&quot;Device C&quot; -&gt; &quot;Device F&quot;
+
+&quot;Device D&quot; -&gt; &quot;Device E&quot;
+&quot;Device D&quot; -&gt; &quot;Device F&quot;
+
+&quot;Device E&quot; -&gt; &quot;Device F&quot;
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 207.1681)">
+<title>vpn mesh encryption</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-207.1681 710.4533,-207.1681 710.4533,4 -4,4" />
+<!-- Device A -->
+<g id="node1" class="node">
+<title>Device A</title>
+<ellipse fill="none" stroke="#000000" cx="44.1961" cy="-88.1681" rx="44.393" ry="18" />
+<text text-anchor="middle" x="44.1961" y="-84.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device A</text>
+</g>
+<!-- Device B -->
+<g id="node2" class="node">
+<title>Device B</title>
+<ellipse fill="none" stroke="#000000" cx="168.5882" cy="-88.1681" rx="44.393" ry="18" />
+<text text-anchor="middle" x="168.5882" y="-84.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device B</text>
+</g>
+<!-- Device A&#45;&gt;Device B -->
+<g id="edge1" class="edge">
+<title>Device A&#45;&gt;Device B</title>
+<path fill="none" stroke="#000000" d="M88.4023,-88.1681C96.6436,-88.1681 105.3459,-88.1681 113.8589,-88.1681" />
+<polygon fill="#000000" stroke="#000000" points="114.1052,-91.6682 124.1052,-88.1681 114.1052,-84.6682 114.1052,-91.6682" />
+</g>
+<!-- Device C -->
+<g id="node3" class="node">
+<title>Device C</title>
+<ellipse fill="none" stroke="#000000" cx="292.9804" cy="-157.1681" rx="44.393" ry="18" />
+<text text-anchor="middle" x="292.9804" y="-153.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device C</text>
+</g>
+<!-- Device A&#45;&gt;Device C -->
+<g id="edge2" class="edge">
+<title>Device A&#45;&gt;Device C</title>
+<path fill="none" stroke="#000000" d="M77.5619,-100.0719C91.8938,-105.0103 108.8816,-110.6331 124.3922,-115.1681 164.4037,-126.8669 210.3484,-138.1751 244.159,-146.1048" />
+<polygon fill="#000000" stroke="#000000" points="243.7091,-149.5936 254.2424,-148.454 245.2974,-142.7762 243.7091,-149.5936" />
+</g>
+<!-- Device D -->
+<g id="node4" class="node">
+<title>Device D</title>
+<ellipse fill="none" stroke="#000000" cx="417.3725" cy="-39.1681" rx="44.393" ry="18" />
+<text text-anchor="middle" x="417.3725" y="-35.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device D</text>
+</g>
+<!-- Device A&#45;&gt;Device D -->
+<g id="edge3" class="edge">
+<title>Device A&#45;&gt;Device D</title>
+<path fill="none" stroke="#000000" d="M76.1009,-75.4918C90.6147,-70.231 108.1441,-64.5715 124.3922,-61.1681 206.2226,-44.0277 303.3716,-39.8175 362.6773,-39.0065" />
+<polygon fill="#000000" stroke="#000000" points="362.9775,-42.5035 372.9389,-38.8951 362.9015,-35.5039 362.9775,-42.5035" />
+</g>
+<!-- Device E -->
+<g id="node5" class="node">
+<title>Device E</title>
+<ellipse fill="none" stroke="#000000" cx="541.1148" cy="-39.1681" rx="43.5923" ry="18" />
+<text text-anchor="middle" x="541.1148" y="-35.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device E</text>
+</g>
+<!-- Device A&#45;&gt;Device E -->
+<g id="edge4" class="edge">
+<title>Device A&#45;&gt;Device E</title>
+<path fill="none" stroke="#000000" d="M67.5218,-72.6867C83.0683,-62.981 104.2697,-50.8891 124.3922,-43.1681 228.8854,-3.0743 261.3641,-9.1023 373.1765,-4.1681 412.4237,-2.4362 423.1239,3.9157 461.5686,-4.1681 476.6577,-7.3409 492.3762,-13.5582 505.8169,-19.8836" />
+<polygon fill="#000000" stroke="#000000" points="504.6403,-23.2048 515.1598,-24.4666 507.7232,-16.9202 504.6403,-23.2048" />
+</g>
+<!-- Device F -->
+<g id="node6" class="node">
+<title>Device F</title>
+<ellipse fill="none" stroke="#000000" cx="663.5571" cy="-123.1681" rx="42.7926" ry="18" />
+<text text-anchor="middle" x="663.5571" y="-119.4681" font-family="Times,serif" font-size="14.00" fill="#000000">Device F</text>
+</g>
+<!-- Device A&#45;&gt;Device F -->
+<g id="edge5" class="edge">
+<title>Device A&#45;&gt;Device F</title>
+<path fill="none" stroke="#000000" d="M63.7266,-104.4009C103.922,-136.1008 199.9557,-203.1681 292.9804,-203.1681 292.9804,-203.1681 292.9804,-203.1681 417.3725,-203.1681 495.7844,-203.1681 581.6702,-166.0062 628.4178,-142.3385" />
+<polygon fill="#000000" stroke="#000000" points="630.2206,-145.3469 637.5071,-137.6555 627.0146,-139.1243 630.2206,-145.3469" />
+</g>
+<!-- Device B&#45;&gt;Device C -->
+<g id="edge6" class="edge">
+<title>Device B&#45;&gt;Device C</title>
+<path fill="none" stroke="#000000" d="M194.9686,-102.8013C213.2747,-112.9556 237.8603,-126.5932 257.8279,-137.6691" />
+<polygon fill="#000000" stroke="#000000" points="256.1955,-140.766 266.638,-142.5561 259.591,-134.6447 256.1955,-140.766" />
+</g>
+<!-- Device B&#45;&gt;Device D -->
+<g id="edge7" class="edge">
+<title>Device B&#45;&gt;Device D</title>
+<path fill="none" stroke="#000000" d="M208.5597,-80.2954C251.812,-71.7766 320.847,-58.1796 367.59,-48.9732" />
+<polygon fill="#000000" stroke="#000000" points="368.3651,-52.3879 377.5002,-47.0213 367.0123,-45.5198 368.3651,-52.3879" />
+</g>
+<!-- Device B&#45;&gt;Device E -->
+<g id="edge8" class="edge">
+<title>Device B&#45;&gt;Device E</title>
+<path fill="none" stroke="#000000" d="M195.7381,-73.9144C234.0272,-54.797 306.6587,-22.1017 373.1765,-12.1681 412.031,-6.3658 422.8079,-5.7692 461.5686,-12.1681 474.7392,-14.3424 488.6607,-18.4135 501.1124,-22.7471" />
+<polygon fill="#000000" stroke="#000000" points="500.1468,-26.1201 510.7408,-26.2476 502.5385,-19.5414 500.1468,-26.1201" />
+</g>
+<!-- Device B&#45;&gt;Device F -->
+<g id="edge9" class="edge">
+<title>Device B&#45;&gt;Device F</title>
+<path fill="none" stroke="#000000" d="M212.5134,-91.2742C303.6888,-97.7213 513.1314,-112.5313 611.1603,-119.4631" />
+<polygon fill="#000000" stroke="#000000" points="610.917,-122.9545 621.139,-120.1687 611.4108,-115.972 610.917,-122.9545" />
+</g>
+<!-- Device C&#45;&gt;Device D -->
+<g id="edge10" class="edge">
+<title>Device C&#45;&gt;Device D</title>
+<path fill="none" stroke="#000000" d="M307.1674,-140.0871C322.5433,-122.0391 348.236,-93.1973 373.1765,-71.1681 377.1569,-67.6523 381.5135,-64.1418 385.8907,-60.8027" />
+<polygon fill="#000000" stroke="#000000" points="388.275,-63.3929 394.2399,-54.6367 384.1165,-57.762 388.275,-63.3929" />
+</g>
+<!-- Device C&#45;&gt;Device E -->
+<g id="edge11" class="edge">
+<title>Device C&#45;&gt;Device E</title>
+<path fill="none" stroke="#000000" d="M321.9302,-143.4011C366.8482,-122.0404 453.3369,-80.9108 503.1882,-57.2041" />
+<polygon fill="#000000" stroke="#000000" points="504.8216,-60.303 512.3494,-52.8475 501.8154,-53.9814 504.8216,-60.303" />
+</g>
+<!-- Device C&#45;&gt;Device F -->
+<g id="edge12" class="edge">
+<title>Device C&#45;&gt;Device F</title>
+<path fill="none" stroke="#000000" d="M337.0996,-155.6158C394.3467,-153.2645 497.251,-147.889 584.6609,-137.1681 594.3965,-135.9741 604.7541,-134.3758 614.6526,-132.6864" />
+<polygon fill="#000000" stroke="#000000" points="615.5154,-136.0884 624.7563,-130.9062 614.3007,-129.1946 615.5154,-136.0884" />
+</g>
+<!-- Device D&#45;&gt;Device E -->
+<g id="edge13" class="edge">
+<title>Device D&#45;&gt;Device E</title>
+<path fill="none" stroke="#000000" d="M461.6968,-39.1681C469.9796,-39.1681 478.7199,-39.1681 487.2533,-39.1681" />
+<polygon fill="#000000" stroke="#000000" points="487.5151,-42.6682 497.5151,-39.1681 487.5151,-35.6682 487.5151,-42.6682" />
+</g>
+<!-- Device D&#45;&gt;Device F -->
+<g id="edge14" class="edge">
+<title>Device D&#45;&gt;Device F</title>
+<path fill="none" stroke="#000000" d="M451.345,-50.7598C495.3997,-65.7916 572.2805,-92.0239 620.4144,-108.4475" />
+<polygon fill="#000000" stroke="#000000" points="619.3388,-111.7786 629.9333,-111.6955 621.5993,-105.1536 619.3388,-111.7786" />
+</g>
+<!-- Device E&#45;&gt;Device F -->
+<g id="edge15" class="edge">
+<title>Device E&#45;&gt;Device F</title>
+<path fill="none" stroke="#000000" d="M563.8583,-54.771C583.1877,-68.0317 611.123,-87.1964 632.5086,-101.8677" />
+<polygon fill="#000000" stroke="#000000" points="630.7093,-104.8778 640.9354,-107.6488 634.6693,-99.1056 630.7093,-104.8778" />
+</g>
+</g>
+</svg>
+</div>
+
+<h1 id="summary">Summary</h1>
+<p>There is not a 1 solution fits all. It is very dependent upon your
+environment and more specifically the applications within it.</p>
+
+<p>My advice is to look at the risk in each area, design an appropriate solution and
+test it.</p>
+
+<p>A targeted approach keeps things simple to start, but personally, I look to
+provide end-to-end encryption everywhere… trusting no one.</p>
+
+<p>If you have no clear areas of risk, start with everywhere you touch the outside
+world, either via a public interface or provider managed services.</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">A look at low-cost tap aggregation</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options/';
+    var disqus_url = 'http://damianzaremba.co.uk/2017/12/a-look-at-traffic-encryption-options/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

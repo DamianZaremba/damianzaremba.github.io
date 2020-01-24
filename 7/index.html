@@ -1,4 +1,93 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/">Getting rid of cPanel IP Check errors</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/error'>Error</a></li><li><a href='/tag/ipcheck'>Ipcheck</a></li></ul> </div> <div class=entry> <p>On Linux servers behind NAT you will start getting emails warning that the DNS setup is broken.</p> <p>cPanel states that the panel does not work behind NAT and the boxes need <strong>public</strong> ip addresses.</p> <p>It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn’t recommend it, sometimes you have no choice.</p> <p>The email you get though is something like the following:</p> <pre><code class="language-text">[ipcheck] Problem with DNS setup on myserver.local
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - Blog</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Damian Zaremba's Blog" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/">Getting rid of cPanel IP Check errors</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/getting-rid-of-cpanel-ip-check-errors/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/error'>Error</a></li><li><a href='/tag/ipcheck'>Ipcheck</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>On Linux servers behind NAT you will start getting emails warning that the DNS setup is broken.</p>
+
+<p>cPanel states that the panel does not work behind NAT and the boxes need <strong>public</strong> ip addresses.</p>
+
+<p>It seems that apart from this warning the panel and services function fine behind NAT (as expected) and while I wouldn’t recommend it, sometimes you have no choice.</p>
+
+<p>The email you get though is something like the following:</p>
+
+<pre><code class="language-text">[ipcheck] Problem with DNS setup on myserver.local
 
 IMPORTANT: Do not ignore this email.
 
@@ -7,23 +96,239 @@ Please be sure to correct /etc/hosts as well as the 'A' entry in zone file for t
 
 Some are all of these problems can be caused by /etc/resolv.conf being setup incorrectly.
 Please check this file if you believe everything else is correct.
-</code></pre> <p>The best way I find of “fixing” this is to just disable the “Ip address dns check” option in the contact manager.</p> <p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul> </div> <div class=entry> <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p> <p>On a RHEL system perform the following:</p> <ol> <li>pecl uninstall</li> <li>yum remove php-devel.i386</li> <li>yum install php-devel.x86_64</li> <li>pecl install</li> </ol> <p>Any further modules will now be 64bit.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/fixing-iptables-for-passive-ftp/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/firewall'>Firewall</a></li><li><a href='/tag/ftp'>Ftp</a></li><li><a href='/tag/iptables'>Iptables</a></li><li><a href='/tag/passive-ftp'>Passive ftp</a></li></ul> </div> <div class=entry> <p>To make passive FTP work with iptables you need to enable the “ip_conntrack_ftp” module. This is done by editing the /etc/sysconfig/iptables-config and changing</p> <pre><code class="language-text">IPTABLES_MODULES=""
-</code></pre> <p>To include the ip_conntrack_ftp module, like so:</p> <pre><code class="language-text">IPTABLES_MODULES="ip_conntrack_ftp"
-</code></pre> <p>Once this is done, restart iptables and it should play nicely with passive FTP.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul> </div> <div class=entry> <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p> <p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p> <p>An example router:</p> <pre><code class="language-text">myrouter:
+</code></pre>
+
+<p>The best way I find of “fixing” this is to just disable the “Ip address dns check” option in the contact manager.</p>
+
+<p>You could alternatively comment out the check in /scripts/maintenance, however this will be lost in updates.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/force-pecl-to-install-64bit-modules/">Force PECL to install 64bit modules</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/force-pecl-to-install-64bit-modules/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/pecl'>Pecl</a></li><li><a href='/tag/php'>Php</a></li><li><a href='/tag/x64'>X64</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To ensure PECL installs 64bit modules you need to install the 64bit php-devel package.</p>
+
+<p>On a RHEL system perform the following:</p>
+
+<ol>
+  <li>pecl uninstall</li>
+  <li>yum remove php-devel.i386</li>
+  <li>yum install php-devel.x86_64</li>
+  <li>pecl install</li>
+</ol>
+
+<p>Any further modules will now be 64bit.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/fixing-iptables-for-passive-ftp/">Fixing iptables for passive FTP</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/fixing-iptables-for-passive-ftp/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/firewall'>Firewall</a></li><li><a href='/tag/ftp'>Ftp</a></li><li><a href='/tag/iptables'>Iptables</a></li><li><a href='/tag/passive-ftp'>Passive ftp</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To make passive FTP work with iptables you need to enable the “ip_conntrack_ftp” module. This is done by editing the /etc/sysconfig/iptables-config and changing</p>
+
+<pre><code class="language-text">IPTABLES_MODULES=""
+</code></pre>
+
+<p>To include the ip_conntrack_ftp module, like so:</p>
+
+<pre><code class="language-text">IPTABLES_MODULES="ip_conntrack_ftp"
+</code></pre>
+
+<p>Once this is done, restart iptables and it should play nicely with passive FTP.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/">Exim SMTP with multiple IPs and different HELO identifiers</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/exim-smtp-with-multiple-ips-and-different-helo-identifiers/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/software'>Software</a></li><li><a href='/tag/email'>Email</a></li><li><a href='/tag/helo'>Helo</a></li><li><a href='/tag/multiple-ips'>Multiple ips</a></li><li><a href='/tag/shared-server'>Shared server</a></li><li><a href='/tag/smtp'>Smtp</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To enable different helo commands on multiple IPs we need to utilize the Exim router and transport settings, these are available in Exim 4+.</p>
+
+<p>The first thing we need to create is a custom Router, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch15.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch17.html">here</a>.</p>
+
+<p>An example router:</p>
+
+<pre><code class="language-text">myrouter:
  driver = dnslookup
  senders = *@mydomain.com, *@*.mydomain.com
  transport = mytransport
-</code></pre> <p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p> <p>The transport option is a reference to your custom transport (see below).</p> <p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p> <p>An example transport is:</p> <pre><code class="language-text">mytransport:
+</code></pre>
+
+<p>The senders option is a CSV list of addresses to match in the From header. These can contain regex which makes matching whole domains really easy.</p>
+
+<p>The transport option is a reference to your custom transport (see below).</p>
+
+<p>Next we need to create a custom Transport, all the options are listed <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch24.html">here</a> and <a href="http://www.exim.org/exim-html-current/doc/html/spec_html/ch30.html">here</a>.</p>
+
+<p>An example transport is:</p>
+
+<pre><code class="language-text">mytransport:
  driver = smtp
  interface = 192.168.0.1
  helo_data = mail.mydomain.com
-</code></pre> <p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p> <p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul> </div> <div class=entry> <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p> <p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don’t even header check what is running, they just assume based on IANA assignments what is running.</p> <p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p> <p>If the PCI scanner can’t access the port it can’t complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p> <p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p> <p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p> <p>In the httpd.conf (or just the SSL vhosts) add the following:</p> <pre><code class="language-text">SSLProtocol -ALL +SSLv3 +TLSv1
+</code></pre>
+
+<p>The interface setting is the IP address this transport should be used on and the helo_data is the command to send.</p>
+
+<p>This makes Exim an awesome platform for shared mail servers. It is very simple to offer whitelisting and protection against spammers.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/common-pci-compliance-issues-cpanel/">Common PCI compliance issues - cPanel</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/common-pci-compliance-issues-cpanel/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/cpanel'>Cpanel</a></li><li><a href='/tag/exim'>Exim</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/compliance'>Compliance</a></li><li><a href='/tag/hardening'>Hardening</a></li><li><a href='/tag/pci'>Pci</a></li><li><a href='/tag/security'>Security</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>It is quite common for companies running cPanel to attempt to gain PCI compliance. Here are a few common things to do before submitting a scan request.</p>
+
+<p>1) Setup a firewall - PCI love to moan about ports that are not secure. Sometimes they don’t even header check what is running, they just assume based on IANA assignments what is running.</p>
+
+<p>For ports that ARE secure but PCI refuse to believe (self signed certs, cPanel/WHM ports) etc there is a quick and dirty solution. Restrict access to those ports from your office IP.</p>
+
+<p>If the PCI scanner can’t access the port it can’t complain. Also fixes any real security issue - who wants to leave a panel that uses system logins open to the public!</p>
+
+<p>Make sure things like MySQL are blocked off - yes, they have ACLs but the scanner is like a nazi at a blond, jewish party.</p>
+
+<p>2) Fix SSL by disabling v2 and some weaker encryption methods.</p>
+
+<p>In the httpd.conf (or just the SSL vhosts) add the following:</p>
+
+<pre><code class="language-text">SSLProtocol -ALL +SSLv3 +TLSv1
 SSLCipherSuite ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM
-</code></pre> <p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p> <pre><code class="language-text">TLS_CIPHER_LIST="ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH"
-</code></pre> <p>In the exim.conf file add the following:</p> <pre><code class="language-text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
-</code></pre> <p>3) Update the server (you should be doing this already).</p> <pre><code class="language-bash">/scripts/upcp
+</code></pre>
+
+<p>In the /usr/lib/courier-imap/etc/pop3d-ssl and /usr/lib/courier-imap/etc/imapd-ssl files add the following:</p>
+
+<pre><code class="language-text">TLS_CIPHER_LIST="ALL:!SSLv2:!ADH:!NULL:!EXPORT:!DES:!LOW:@STRENGTH"
+</code></pre>
+
+<p>In the exim.conf file add the following:</p>
+
+<pre><code class="language-text">tls_require_ciphers = ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM:!SSLv2
+</code></pre>
+
+<p>3) Update the server (you should be doing this already).</p>
+
+<pre><code class="language-bash">/scripts/upcp
 yum update
-</code></pre> <p>4) Disable mod_userdir. You can disable this in WHM under Security -&gt; Apache -&gt; mod_userdir tweak.</p> <p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p> <pre><code class="language-text">ServerSignature Off
+</code></pre>
+
+<p>4) Disable mod_userdir.
+You can disable this in WHM under Security -&gt; Apache -&gt; mod_userdir tweak.</p>
+
+<p>5) Tell apache to reveal nothing much about its self. In httpd.conf add the following:</p>
+
+<pre><code class="language-text">ServerSignature Off
 ServerTokens Prod
 FileETag None
-</code></pre> <p>Also disable the TRACE method. To do this go into WHM -&gt; Service configuration -&gt; Apache -&gt; Global configuration and set TraceEnable to off.</p> <p>Notes: Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p> <p>You should take some major steps to harden the server against local users as well as remote attacks.</p> </div> </article> <nav id=page_nav> <a href="/6/" class=prev>&laquo; Previous Page</a> <a href="/8/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p>Also disable the TRACE method. To do this go into WHM -&gt; Service configuration -&gt; Apache -&gt; Global configuration and set TraceEnable to off.</p>
+
+<p>Notes:
+Passing a PCI scan does not mean your server is secure. It means you have passed the very small set of tests they have available.</p>
+
+<p>You should take some major steps to harden the server against local users as well as remote attacks.</p>
+
+        </div>
+    </article>
+    
+
+
+
+<nav id="page_nav">
+    
+    
+    <a href="/6/" class="prev">&laquo; Previous Page</a>
+    
+    
+
+    
+    <a href="/8/" class="next">Next Page &raquo;</a>
+    
+</nav>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

@@ -1,13 +1,211 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Blog</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=description content="Damian Zaremba's Blog"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2011/08/check-for-cve-fixs/">Check for CVE fixs</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/check-for-cve-fixs/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cve'>Cve</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/rpm'>Rpm</a></li></ul> </div> <div class=entry> <p>To check if a CVE has been patched on a RHEL based system perform the following.</p> <p>First, get the real package name:</p> <pre><code class="language-bash">rpm -qa | grep &lt;package&gt;
-</code></pre> <p>Now check the package change log for CVE patches:</p> <pre><code class="language-bash">rpm -q &lt;package&gt; --changelog | grep &lt;cve number&gt;
-</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/apache-segmentation-fault-debugging/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/core-dumps'>Core dumps</a></li><li><a href='/tag/segfault'>Segfault</a></li></ul> </div> <div class=entry> <p>Sometimes you will see lines like this in the Apache error log:</p> <pre><code class="language-text">[notice] child pid 5 exit signal Segmentation fault (11)
-</code></pre> <p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p> <p>By default apache won’t give you any more info than this. To get core dumps you will need to do the following.</p> <ol> <li>Enable system coredumps for the apache user. In /etc/security/limits.conf ensure the following line is present:</li> </ol> <pre><code class="language-text">apache soft core 10000
-</code></pre> <ol> <li>Tell apache what directory to put dumps into, do this with the following config line:</li> </ol> <pre><code class="language-text">CoreDumpDirectory /var/apache/coredumps/
-</code></pre> <ol> <li> <p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p> </li> <li> <p>Restart apache and wait for a segfault.</p> </li> </ol> <p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p> <p>To debug these you will need to understand system calls and have some general debugging experience when it comes to executables.</p> <p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p> <pre><code class="language-text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
-</code></pre> <p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/apache-process-id/">Apache process ID</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />23 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/apache-process-id/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/logformat'>Logformat</a></li><li><a href='/tag/process'>Process</a></li></ul> </div> <div class=entry> <p>Sometimes you need to know the Apache PID when trying to track down segfaults or CPU usage issues.</p> <p>There is a very simple way to do this by altering your LogFormat, a command format to have is the CLF (common log format):</p> <pre><code class="language-text">%h %l %u %t \"%r\" %&gt;s %b
-</code></pre> <p>To enable logging the pid just add the %P var like so:</p> <pre><code class="language-text">[%P] %h %l %u %t \"%r\" %&gt;s %b
-</code></pre> </div> </article> <article class=post> <h1 class=title><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />18 Aug 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul> </div> <div class=entry> <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too). ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn’t getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.</p> <p>After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).</p> <p>Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn’t! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!</p> <p>A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don’t even document that you can set the IPRESOLVE option, but you can! Yay for php…</p> <p>The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:</p> <pre><code class="language-php">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
-</code></pre> <p>My test script in a broken state is:</p> <pre><code class="language-php">&lt;?php
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - Blog</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="description" content="Damian Zaremba's Blog" />
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/check-for-cve-fixs/">Check for CVE fixs</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/check-for-cve-fixs/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/cve'>Cve</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/rpm'>Rpm</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>To check if a CVE has been patched on a RHEL based system perform the following.</p>
+
+<p>First, get the real package name:</p>
+
+<pre><code class="language-bash">rpm -qa | grep &lt;package&gt;
+</code></pre>
+
+<p>Now check the package change log for CVE patches:</p>
+
+<pre><code class="language-bash">rpm -q &lt;package&gt; --changelog | grep &lt;cve number&gt;
+</code></pre>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/apache-segmentation-fault-debugging/">Apache segmentation fault debugging</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/apache-segmentation-fault-debugging/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/core-dumps'>Core dumps</a></li><li><a href='/tag/segfault'>Segfault</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Sometimes you will see lines like this in the Apache error log:</p>
+
+<pre><code class="language-text">[notice] child pid 5 exit signal Segmentation fault (11)
+</code></pre>
+
+<p>This means for some reason the child thread/fork has segfaulted when trying to process the request.</p>
+
+<p>By default apache won’t give you any more info than this. To get core dumps you will need to do the following.</p>
+
+<ol>
+  <li>Enable system coredumps for the apache user.
+In /etc/security/limits.conf ensure the following line is present:</li>
+</ol>
+
+<pre><code class="language-text">apache soft core 10000
+</code></pre>
+
+<ol>
+  <li>Tell apache what directory to put dumps into, do this with the following config line:</li>
+</ol>
+
+<pre><code class="language-text">CoreDumpDirectory /var/apache/coredumps/
+</code></pre>
+
+<ol>
+  <li>
+    <p>Ensure the dump directory is writeable by the apache user (if not then you will get no dumps!).</p>
+  </li>
+  <li>
+    <p>Restart apache and wait for a segfault.</p>
+  </li>
+</ol>
+
+<p>Now if you look in your specified CoreDumpDirectory you should see a number of .dump files.</p>
+
+<p>To debug these you will need to understand system calls and have some general debugging experience when it comes to executables.</p>
+
+<p>An example of how to load up the core dump into a debugger (gdb) is as follows:</p>
+
+<pre><code class="language-text">gdb /usr/sbin/httpd -c /var/apache/coredumps/somefile.dump
+</code></pre>
+
+<p>Some genreal tips on how to use a debugger for looking at Apache dumps can be found on <a href="http://httpd.apache.org/dev/debugging.html">their website</a>.</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/apache-process-id/">Apache process ID</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />23 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/apache-process-id/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/knowledge-base'>Knowledge base</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/apache'>Apache</a></li><li><a href='/tag/logformat'>Logformat</a></li><li><a href='/tag/process'>Process</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>Sometimes you need to know the Apache PID when trying to track down segfaults or CPU usage issues.</p>
+
+<p>There is a very simple way to do this by altering your LogFormat, a command format to have is the CLF (common log format):</p>
+
+<pre><code class="language-text">%h %l %u %t \"%r\" %&gt;s %b
+</code></pre>
+
+<p>To enable logging the pid just add the %P var like so:</p>
+
+<pre><code class="language-text">[%P] %h %l %u %t \"%r\" %&gt;s %b
+</code></pre>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/08/php-curl-dual-stack-issue/">PHP CURL dual stack issue</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />18 Aug 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/08/php-curl-dual-stack-issue/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/linux'>Linux</a></li><li><a href='/tag/curl'>Curl</a></li><li><a href='/tag/php'>Php</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>I had a slightly strange issue this morning with PHP and curl (multi_curl actually but it affects curl too).
+ClueBot NG was returning API errors all over the place, after a quick look though the main code it appeared that the data from the toolserver API wasn’t getting returned properly. Trying to get the headers from the curl handler went no where, everything was returning back empty or NULL.</p>
+
+<p>After testing the code on a different machine and it working fine I started to look at the URL that was being requested, a quick curl (on the command line) found that it hung. Off I went to look at its DNS entries and realised the tunnel on the server had dropped again (really need to get the server admin to move the tunnel somewhere more stable).</p>
+
+<p>Now you would expect that if you cannot get traffic out on IPv6 that CURL would fall back to IPv4, it appears that it doesn’t! What actually happens is it sits trying IPv6 until the connection timeout is hit then, showing no warning/error returns back NULL data. Yay for CURL!</p>
+
+<p>A quick fix (until the datacenter gets native IPv6) is to force CURL to use ipv4 when resolving domain names. Now anyone that has looked at developing things in C with CURL will know this is really easy, however the PHP bindings don’t even document that you can set the IPRESOLVE option, but you can! Yay for php…</p>
+
+<p>The option is CURLOPT_IPRESOLVE and the value is either CURL_IPRESOLVE_V4, CURL_IPRESOLVE_V6 or CURL_IPRESOLVE_WHATEVER. To force IPv4 just use:</p>
+
+<pre><code class="language-php">curl_setopt( $ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
+</code></pre>
+
+<p>My test script in a broken state is:</p>
+
+<pre><code class="language-php">&lt;?php
  $ch = curl_init();
  curl_setopt( $ch, CURLOPT_USERAGENT, 'ClueBot/2.0' );
  if( isset( $proxyhost ) and isset( $proxyport ) and $proxyport != null and $proxyhost != null ) {
@@ -27,7 +225,11 @@
 
 var_dump( curl_exec( $ch ) );
 ?&gt;
-</code></pre> <p>And the test script in the fixed status is:</p> <pre><code class="language-php">&lt;?php
+</code></pre>
+
+<p>And the test script in the fixed status is:</p>
+
+<pre><code class="language-php">&lt;?php
  $ch = curl_init();
  curl_setopt( $ch, CURLOPT_USERAGENT, 'ClueBot/2.0' );
  if( isset( $proxyhost ) and isset( $proxyport ) and $proxyport != null and $proxyhost != null ) {
@@ -48,7 +250,29 @@ var_dump( curl_exec( $ch ) );
 
 var_dump( curl_exec( $ch ) );
 ?&gt;
-</code></pre> <p>Simples!</p> </div> </article> <article class=post> <h1 class=title><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />10 Jul 2011</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul> </div> <div class=entry> <p>In my kickstart files I “cheat” on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p> <p>To do this I use the following in my kickstarts:</p> <pre><code class="language-text">%include /tmp/partinfo
+</code></pre>
+
+<p>Simples!</p>
+
+        </div>
+    </article>
+    
+    <article class="post">
+        <h1 class="title"><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/">Centos 6.0 kickstart partitioning issue</a></h1>
+        <div class="meta">
+            <span><img src="/assests/images/date.png" title="Date" alt="Date" />10 Jul 2011</span>
+            <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2011/07/centos-6-0-kickstart-partitioning-issue/#disqus_thread">Comments</a></span>
+            
+                <ul class="categories">
+                <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/anaconda'>Anaconda</a></li><li><a href='/tag/kickstart'>Kickstart</a></li></ul>
+            
+        </div>
+        <div class="entry">
+            <p>In my kickstart files I “cheat” on disk sizes and let them grow automatically rather than figuring out the size, setting it then having to manually expand it later.</p>
+
+<p>To do this I use the following in my kickstarts:</p>
+
+<pre><code class="language-text">%include /tmp/partinfo
 
 %pre
 # Get disks
@@ -65,4 +289,85 @@ volgroup VolGroup00 --pesize=32768 pv.2
 logvol / --fstype ext4 --name=LogVol00 --vgname=VolGroup00 --size=1024 --grow
 logvol swap --fstype swap --name=LogVol01 --vgname=VolGroup00 --size=512 --grow --maxsize=1024
 EOF
-</code></pre> <p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p> <p>Now the issue I had with Centos6 was an error getting throw by Anaconda “Partition requires a size specification”.</p> <p>It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).</p> <p>The simplest way to fix this is just to make –size=1 (lets face it, your minimum partition size isn’t going to be smaller 1mb!).</p> <p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p> <p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p> </div> </article> <nav id=page_nav> <a href="/7/" class=prev>&laquo; Previous Page</a> <a href="/9/" class=next>Next Page &raquo;</a> </nav> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p>Basically in the pre section of the kickstart I write out the disk partition stuff using some bash/list-harddrives into a file. This is then included in the main body of the kickstart (due to the pre code being run before the main stuff this works fine).</p>
+
+<p>Now the issue I had with Centos6 was an error getting throw by Anaconda “Partition requires a size specification”.</p>
+
+<p>It looks like this is caused by a change in the kickstart script which checks if the size is set (pd.size = None was changed to not self.size).</p>
+
+<p>The simplest way to fix this is just to make –size=1 (lets face it, your minimum partition size isn’t going to be smaller 1mb!).</p>
+
+<p>Apart from some other little things like removing the editors, text-internet etc groups out of the kickstart file and downloading the new vmlinuz/initrd.img files everything worked fine first time.</p>
+
+<p>Now to wait for the mirror to finish syncing so I can get some fast installs going (=</p>
+
+        </div>
+    </article>
+    
+
+
+
+<nav id="page_nav">
+    
+    
+    <a href="/7/" class="prev">&laquo; Previous Page</a>
+    
+    
+
+    
+    <a href="/9/" class="next">Next Page &raquo;</a>
+    
+</nav>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

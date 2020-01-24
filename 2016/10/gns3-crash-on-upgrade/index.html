@@ -1,4 +1,104 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - GNS3 crash after upgrade</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2016/10/gns3-crash-on-upgrade/">GNS3 crash after upgrade</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />19 Oct 2016</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2016/10/gns3-crash-on-upgrade/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li></ul> </div> <div class=entry> <p>Recently I upgraded the GNS3 version on my Macbook and afterwards, immediately after trying to open the app it would close.</p> <p>Attempting to start the processes on the command line revealed some additional information:</p> <ul> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3server</code> was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3shell</code> also was working as expected</li> <li><code>/Applications/GNS3.app/Contents/MacOS/gns3</code> was crashing with <code>ImportError: No module named 'gns3.main'</code></li> <li><code>/Applications/GNS3.app/Contents/MacOS/Python</code> was not executable</li> </ul> <p>Having also recently updated <a href="http://brew.sh/">homebrew</a> and upon deciding to google the error, a good 30min was wasted tracking down possible python path issues.</p> <p>As it turns out, GNS3 on OSX is built using <a href="https://cx-freeze.readthedocs.io/en/latest/">cx_Freeze</a>, ensuring there are minimal dependencies on the system.</p> <p>So, what is the problem? To find that out, lets look at the full output:</p> <pre><code class="language-bash">m00m00:~ damian$ /Applications/GNS3.app/Contents/MacOS/gns3
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - GNS3 crash after upgrade</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2016/10/gns3-crash-on-upgrade/">GNS3 crash after upgrade</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />19 Oct 2016</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2016/10/gns3-crash-on-upgrade/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/foss'>FOSS</a></li><li><a href='/tag/general'>General</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/python'>Python</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>Recently I upgraded the GNS3 version on my Macbook and afterwards,
+immediately after trying to open the app it would close.</p>
+
+<p>Attempting to start the processes on the command line revealed some
+additional information:</p>
+
+<ul>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3server</code> was working as expected</li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3shell</code> also was working as expected</li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/gns3</code> was crashing with <code>ImportError: No module named 'gns3.main'</code></li>
+  <li><code>/Applications/GNS3.app/Contents/MacOS/Python</code> was not executable</li>
+</ul>
+
+<p>Having also recently updated <a href="http://brew.sh/">homebrew</a> and upon deciding to google the error,
+a good 30min was wasted tracking down possible python path issues.</p>
+
+<p>As it turns out, GNS3 on OSX is built using <a href="https://cx-freeze.readthedocs.io/en/latest/">cx_Freeze</a>,
+ensuring there are minimal dependencies on the system.</p>
+
+<p>So, what is the problem? To find that out, lets look at the full output:</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ /Applications/GNS3.app/Contents/MacOS/gns3
 Application frozen with cx_Freeze
 GNS3 GUI version 1.5.2
 Copyright (c) 2007-2016 GNS3 Technologies Inc.
@@ -33,7 +133,15 @@ Traceback (most recent call last):
   File "./gns3-gui/gns3/servers.py", line 277, in _saveSettings
   File "./gns3-gui/gns3/servers.py", line 277, in &lt;listcomp&gt;
 KeyError: 'url'
-</code></pre> <p>As it turns out, the issue appears to be in loading the config file.</p> <p>There is no ‘url’ key within the config file I have on disk, so let’s remove it and try again.</p> <p>Same problem, <a href="https://linux.die.net/man/1/strace">strace</a>…err <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> to the rescue!</p> <pre><code class="language-bash">m00m00:~ damian$ sudo dtruss /Applications/GNS3.app/Contents/MacOS/gns3
+</code></pre>
+
+<p>As it turns out, the issue appears to be in loading the config file.</p>
+
+<p>There is no ‘url’ key within the config file I have on disk, so let’s remove it and try again.</p>
+
+<p>Same problem, <a href="https://linux.die.net/man/1/strace">strace</a>…err <a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/dtruss.1m.html">dtruss</a> to the rescue!</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ sudo dtruss /Applications/GNS3.app/Contents/MacOS/gns3
 
 Application frozen with cx_Freeze
 GNS3 GUI version 1.5.2
@@ -41,11 +149,119 @@ Copyright (c) 2007-2016 GNS3 Technologies Inc.
 [....]
 stat64("/Users/damian/.config/GNS3/GNS3.ini\0", 0x7FFF57315A68, 0x0)                = 0 0
 [....]
-</code></pre> <p>As some of you may have noticed in the stacktrace, the config that is being correctly saved is <code>/Users/damian/.config/GNS3/gns3_gui.conf</code>, yet we’re loading <code>/Users/damian/.config/GNS3/GNS3.ini</code>.</p> <p>We have 2 configs?</p> <pre><code class="language-bash">m00m00:~ damian$ ls /Users/damian/.config/GNS3/
+</code></pre>
+
+<p>As some of you may have noticed in the stacktrace, the config that is being correctly saved is <code>/Users/damian/.config/GNS3/gns3_gui.conf</code>, yet we’re loading <code>/Users/damian/.config/GNS3/GNS3.ini</code>.</p>
+
+<p>We have 2 configs?</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ ls /Users/damian/.config/GNS3/
 GNS3.ini          base_configs/     exceptions.log    gns3_gui.log      gns3_server.log
 GNS3_client.log   exception.log     gns3_gui.conf     gns3_server.conf
 m00m00:~ damian$ ls /Users/damian/.config/GNS3/
 gns3_gui.conf        gns3_gui.pid        gns3_server.log
 gns3_gui.log        gns3_server.conf
-</code></pre> <p><img src="http://weknowmemes.com/wp-content/uploads/2011/12/i-have-no-memory-of-this-place.jpg" alt=""/></p> <p>Let’s clear up these old config entries and start with a clean setup</p> <pre><code class="language-bash">m00m00:~ damian$ rm -rf ~/.config/gns3.net ~/.config/GNS3
-</code></pre> <p>And it works!</p> <p>Perhaps this was handled in an intermediary release I missed, but it comes across as a pretty poor compatibility issue, especially considering the error only being visible on the command line.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2016/10/gns3-crash-on-upgrade/";var disqus_url="http://damianzaremba.co.uk/2016/10/gns3-crash-on-upgrade/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p><img src="http://weknowmemes.com/wp-content/uploads/2011/12/i-have-no-memory-of-this-place.jpg" alt="" /></p>
+
+<p>Let’s clear up these old config entries and start with a clean setup</p>
+
+<pre><code class="language-bash">m00m00:~ damian$ rm -rf ~/.config/gns3.net ~/.config/GNS3
+</code></pre>
+
+<p>And it works!</p>
+
+<p>Perhaps this was handled in an intermediary release I missed,
+but it comes across as a pretty poor compatibility issue, especially considering
+the error only being visible on the command line.</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2016/10/gns3-crash-on-upgrade/';
+    var disqus_url = 'http://damianzaremba.co.uk/2016/10/gns3-crash-on-upgrade/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>

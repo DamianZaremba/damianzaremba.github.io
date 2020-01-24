@@ -1,4 +1,464 @@
-<!DOCTYPE html> <html lang=en> <head> <title>Damian Zaremba - Decoding Arista EtherType headers with gopacket</title> <meta charset=utf-8> <meta http-equiv=X-UA-Compatible content="IE=edge"> <meta name=viewport content="width=device-width, initial-scale=1"> <meta http-equiv=Content-Type content="text/html; charset=UTF-8"/> <meta name=google-site-verification content=qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo /> <meta name=author content="Damian Zaremba"/> <link rel=alternate type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba"/> <meta name=robots content=INDEX /> <meta name=robots content=FOLLOW /> <meta name=robots content="INDEX,FOLLOW"/> <link href="/assests/css/bootstrap.min.css" rel=stylesheet> <link href="/assests/css/main.css" rel=stylesheet> </head> <body> <nav class="navbar navbar-default navbar-fixed-top"> <div class=container> <div class=navbar-header> <button type=button class="navbar-toggle collapsed" data-toggle=collapse data-target="#navbar" aria-expanded=false aria-controls=navbar> <span class=sr-only>Toggle navigation</span> <span class=icon-bar></span> <span class=icon-bar></span> <span class=icon-bar></span> </button> <a class=navbar-brand href="/">Damian Zaremba</a> </div> <div id=navbar class="navbar-collapse collapse"> <ul class="nav navbar-nav"> <li class=active><a href="/">Blog</a></li> <li class=""><a href="/about/">About</a></li> <li class=""><a href="/cv/">CV</a></li> <li class=""><a href="/archive/">Archive</a></li> <li class=""><a href="/projects/">Projects</a></li> </ul> <div class="social-icons navbar-right visible-md visible-lg"> <a href="https://twitter.com/DamianZaremba"> <img class=twitter src="/assests/images/twitter.png" alt=Twitter /> </a> <a href="https://github.com/DamianZaremba"> <img class=github src="/assests/images/github.png" alt=GitHub /> </a> <a href="https://feeds.feedburner.com/DamianZaremba"> <img class=rss src="/assests/images/rss.png" alt=RSS /> </a> </div> </div> </div> </nav> <div class=container> <article class=post> <h1 class=title><a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></h1> <div class=meta> <span><img src="/assests/images/date.png" title=Date alt=Date />27 Dec 2017</span> <span><img src="/assests/images/comments.png" title=Content alt=Content /><a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/#disqus_thread">Comments</a></span> <ul class=categories> <li><a href='/tag/network'>Network</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/go'>Go</a></li></ul> </div> <div class=entry> <p>As we <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">previously discussed</a>, using cheap switches to aggregate multiple tap sources gives you a lot of power.</p> <p>However, given the multiple feeds, how can you measure timing information accurately 1 hop away?</p> <p>Using hardware time stamping provides a highly accurate record of when packets were processed by devices, making it perfect for TAP aggregation.</p> <h2 id=revisiting-the-7150-platform>Revisiting the 7150 platform</h2> <p>On the 7150 series hardware, time stamping is supported at line-rate using PTP.</p> <p>You have two options for timestamp placement;</p> <ul> <li>Replacement of the FCS (<code>mac timestamp replace-fcs</code>):</li> </ul> <div class=graphviz-wrapper> <svg role=img aria-label="7150 timestamp replace fcs" width=526pt height=148pt viewBox="0.00 0.00 526.00 148.00"> <title>7150 timestamp replace fcs</title> <desc>digraph &quot;7150 timestamp replace fcs&quot; { subgraph cluster { rankdir=LR; height=1.5; &quot;Timestamp&quot; [shape=square, height=1.5]; &quot;Payload&quot; [shape=square, height=1.5]; &quot;IP Header&quot; [shape=square, height=1.5]; &quot;Ethernet Header&quot; [shape=square, height=1.5]; } }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 144)"> <title>7150 timestamp replace fcs</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-144 522,-144 522,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster</title> <polygon fill=none stroke="#000000" points="8,-8 8,-132 510,-132 510,-8 8,-8"/> </g> <g id=node1 class=node> <title>Timestamp</title> <polygon fill=none stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124"/> <text text-anchor=middle x=448 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text> </g> <g id=node2 class=node> <title>Payload</title> <polygon fill=none stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124"/> <text text-anchor=middle x=322 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text> </g> <g id=node3 class=node> <title>IP Header</title> <polygon fill=none stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124"/> <text text-anchor=middle x=196 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">IP Header</text> </g> <g id=node4 class=node> <title>Ethernet Header</title> <polygon fill=none stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124"/> <text text-anchor=middle x=70 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Ethernet Header</text> </g> </g> </svg> </div> <ul> <li>Appending of the timestamp (<code>mac timestamp before-fcs</code>):</li> </ul> <div class=graphviz-wrapper> <svg role=img aria-label="7150 timestamp append" width=652pt height=148pt viewBox="0.00 0.00 652.00 148.00"> <title>7150 timestamp append</title> <desc>digraph &quot;7150 timestamp append&quot; { subgraph cluster { rankdir=LR; height=1.5; &quot;FCS&quot; [shape=square, height=1.5]; &quot;Timestamp&quot; [shape=square, height=1.5]; &quot;Payload&quot; [shape=square, height=1.5]; &quot;IP Header&quot; [shape=square, height=1.5]; &quot;Ethernet Header&quot; [shape=square, height=1.5]; } }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 144)"> <title>7150 timestamp append</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-144 648,-144 648,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster</title> <polygon fill=none stroke="#000000" points="8,-8 8,-132 636,-132 636,-8 8,-8"/> </g> <g id=node1 class=node> <title>FCS</title> <polygon fill=none stroke="#000000" points="628,-124 520,-124 520,-16 628,-16 628,-124"/> <text text-anchor=middle x=574 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text> </g> <g id=node2 class=node> <title>Timestamp</title> <polygon fill=none stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124"/> <text text-anchor=middle x=448 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text> </g> <g id=node3 class=node> <title>Payload</title> <polygon fill=none stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124"/> <text text-anchor=middle x=322 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text> </g> <g id=node4 class=node> <title>IP Header</title> <polygon fill=none stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124"/> <text text-anchor=middle x=196 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">IP Header</text> </g> <g id=node5 class=node> <title>Ethernet Header</title> <polygon fill=none stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124"/> <text text-anchor=middle x=70 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Ethernet Header</text> </g> </g> </svg> </div> <p>The implementation of this is a little ‘quirky’.</p> <p>Looking at the <code>Timestamp</code> value alone will not help you as it’s an internal ASIC counter on the switch, essentially providing the lower half of the timestamp.</p> <p>To calculate the actual (Unix based) timestamp, another keyframe packet has to be processed and tracked (every ~6 seconds); providing the first half of the timestamp.</p> <p>While possible to implement, the imposed state and skew calculations is a little unappealing.</p> <h2 id=a-look-into-the-7500er7280er-series>A look into the 7500{E,R}/7280{E,R} series</h2> <p>On the newer platforms, Arista has moved away from using the keyframe setup and introduced a custom EtherType. Again, using hardware time stamping at line-rate &amp; supporting PTP.</p> <p>There is 3 possible time stamping modes on the 7500{E,R} &amp; 7280{E,R} series switches:</p> <ul> <li>64-bit header timestamp; i.e., encapsulated in the L2 header</li> <li>48-bit header timestamp; i.e., encapsulated in the L2 header</li> <li>48-bit timestamp that replaces the Source MAC</li> </ul> <p>We will focus on the first 2 options that use a customer EtherType inside the layer 2 header.</p> <p><em>Note: All timestamps are captured upon packet ingress and stamped on packet egress.</em></p> <h3 id=a-look-into-the-packet-format>A look into the packet format</h3> <p>Let’s compare a normal ethernet header:</p> <div class=graphviz-wrapper> <svg role=img aria-label="ethernet header" width=652pt height=148pt viewBox="0.00 0.00 652.00 148.00"> <title>ethernet header</title> <desc>digraph &quot;ethernet header&quot; { subgraph cluster { rankdir=LR; height=1.5; &quot;FCS&quot; [shape=square, height=1.5]; &quot;Payload&quot; [shape=square, height=1.5]; &quot;Length/Type&quot; [shape=square, height=1.5]; &quot;Src Address&quot; [shape=square, height=1.5]; &quot;Dst Address&quot; [shape=square, height=1.5]; } }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 144)"> <title>ethernet header</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-144 648,-144 648,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster</title> <polygon fill=none stroke="#000000" points="8,-8 8,-132 636,-132 636,-8 8,-8"/> </g> <g id=node1 class=node> <title>FCS</title> <polygon fill=none stroke="#000000" points="628,-124 520,-124 520,-16 628,-16 628,-124"/> <text text-anchor=middle x=574 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text> </g> <g id=node2 class=node> <title>Payload</title> <polygon fill=none stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124"/> <text text-anchor=middle x=448 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text> </g> <g id=node3 class=node> <title>Length/Type</title> <polygon fill=none stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124"/> <text text-anchor=middle x=322 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Length/Type</text> </g> <g id=node4 class=node> <title>Src Address</title> <polygon fill=none stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124"/> <text text-anchor=middle x=196 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Src Address</text> </g> <g id=node5 class=node> <title>Dst Address</title> <polygon fill=none stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124"/> <text text-anchor=middle x=70 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Dst Address</text> </g> </g> </svg> </div> <p>To one with the customer EtherType inserted:</p> <div class=graphviz-wrapper> <svg role=img aria-label="ethernet header extended" width=1090pt height=148pt viewBox="0.00 0.00 1090.00 148.00"> <title>ethernet header extended</title> <desc>digraph &quot;ethernet header extended&quot; { subgraph cluster { rankdir=LR; height=1.5; &quot;FCS&quot; [shape=square, height=1.5]; &quot;Payload&quot; [shape=square, height=1.5]; &quot;Length/Type&quot; [shape=square, height=1.5]; &quot;Timestamp&quot; [shape=square, height=1.2]; &quot;Version&quot; [shape=square, height=1.2]; &quot;Sub-Type&quot; [shape=square, height=1.2]; &quot;EtherType&quot; [shape=square, height=1.5]; &quot;Src Address&quot; [shape=square, height=1.5]; &quot;Dst Address&quot; [shape=square, height=1.5]; } }</desc> <g id=graph0 class=graph transform="scale(1 1) rotate(0) translate(4 144)"> <title>ethernet header extended</title> <polygon fill="#ffffff" stroke=transparent points="-4,4 -4,-144 1086,-144 1086,4 -4,4"/> <g id=clust1 class=cluster> <title>cluster</title> <polygon fill=none stroke="#000000" points="8,-8 8,-132 1074,-132 1074,-8 8,-8"/> </g> <g id=node1 class=node> <title>FCS</title> <polygon fill=none stroke="#000000" points="1066,-124 958,-124 958,-16 1066,-16 1066,-124"/> <text text-anchor=middle x=1012 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text> </g> <g id=node2 class=node> <title>Payload</title> <polygon fill=none stroke="#000000" points="940,-124 832,-124 832,-16 940,-16 940,-124"/> <text text-anchor=middle x=886 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text> </g> <g id=node3 class=node> <title>Length/Type</title> <polygon fill=none stroke="#000000" points="814,-124 706,-124 706,-16 814,-16 814,-124"/> <text text-anchor=middle x=760 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Length/Type</text> </g> <g id=node4 class=node> <title>Timestamp</title> <polygon fill=none stroke="#000000" points="688,-113 602,-113 602,-27 688,-27 688,-113"/> <text text-anchor=middle x=645 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text> </g> <g id=node5 class=node> <title>Version</title> <polygon fill=none stroke="#000000" points="584,-113 498,-113 498,-27 584,-27 584,-113"/> <text text-anchor=middle x=541 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Version</text> </g> <g id=node6 class=node> <title>Sub&#45;Type</title> <polygon fill=none stroke="#000000" points="480,-113 394,-113 394,-27 480,-27 480,-113"/> <text text-anchor=middle x=437 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Sub&#45;Type</text> </g> <g id=node7 class=node> <title>EtherType</title> <polygon fill=none stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124"/> <text text-anchor=middle x=322 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">EtherType</text> </g> <g id=node8 class=node> <title>Src Address</title> <polygon fill=none stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124"/> <text text-anchor=middle x=196 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Src Address</text> </g> <g id=node9 class=node> <title>Dst Address</title> <polygon fill=none stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124"/> <text text-anchor=middle x=70 y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Dst Address</text> </g> </g> </svg> </div> <p><em>Note: .1q payloads are also supported, with the EtherType coming after the Source Address</em></p> <p>As you can see an extra 4 fields have been inserted into the header;</p> <ul> <li>EtherType - 0xD28B - An identifier for AristaEtherType</li> <li>Protocol sub-type - 0x1 - A sub-identifier for the AristaEtherType</li> <li>Version - 0x10 or 0x20 - An identifier for either 64bit or 48bit</li> <li>Timestamp - An IEEE 1588 time of day format</li> </ul> <p>The timestamp is either 32 bits (seconds) followed by 32 bits (nanoseconds) or 16 bits (seconds) followed by 32 bits (nanoseconds) depending on the 64 or 48bit mode.</p> <h4 id=configuration>Configuration</h4> <p>Enabling hardware timestamping on the platform is rather simple;</p> <ul> <li><code>mac timestamp header</code> enables timestamping on tool ports</li> <li><code>mac timestamp header format &lt;64bit | 48bit&gt;</code> sets the format of the timestamp</li> <li><code>mac timestamp replace source-mac</code> enables replacing the source mac address with the timestamp</li> </ul> <p>There are some limitations to the time stamping support, notably;</p> <ul> <li>Timestamping is done after packet processing, resulting in ~10ns of delay</li> <li>64bit timestamps may rollover inconsistency every 4 seconds causing jumps between packets</li> </ul> <h3 id=decoding-the-packets>Decoding the packets</h3> <p>Now we’ve changed the Ethernet header, it requires a specific decoder to be able to process.</p> <p>Without a specific decoder, it is no longer a valid Ethernet header as Length field contains a meaningless value.</p> <p>Arista <a href="https://eos.arista.com/analyzing-packet-header-timestamps-in-wireshark/">provides</a> an LUA extension for Wireshark for this purpose.</p> <h2 id=decoding-custom-ethertypes-in-gopacket>Decoding custom EtherTypes in gopacket</h2> <p><a href="https://github.com/google/gopacket">gopacket</a> has a very useful pcap interface, making it very easy to process data collected from TAP infrastructure.</p> <p>Investigating the structure, it made sense to implement a custom <a href="https://godoc.org/github.com/google/gopacket/layers">layer</a> to handle our EtherType.</p> <p>After some experimentation, while this provided decoding of the timestamp data, it prevented further processing of the packets, resulting in the IP layer being inaccessible; this was complicated due to our now invalid Ethernet header.</p> <p>A simple solution of extending the built-in <a href="https://godoc.org/github.com/google/gopacket/layers#EthernetType">EthernetType</a> was called for.</p> <pre><code class="language-go">// Copyright 2012 Google, Inc. All rights reserved.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Damian Zaremba - Decoding Arista EtherType headers with gopacket</title>
+
+    <!-- General meta data -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <meta name="google-site-verification" content="qykIg-4DghoGe78ET4eRjKG1cx6n3gXvu4jF0FvcwRo" />
+    <meta name="author" content="Damian Zaremba" />
+    <link rel="alternate" type="application/rss+xml" title="Damian Zaremba's Blog" href="http://feeds.feedburner.com/DamianZaremba" />
+
+    <!-- Robot meta data -->
+    <meta name="robots" content="INDEX" />
+    <meta name="robots" content="FOLLOW" />
+    <meta name="robots" content="INDEX,FOLLOW" />
+
+    <!-- CSS files -->
+    <link href="/assests/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assests/css/main.css" rel="stylesheet">
+
+    <!--
+    RIPA NOTICE: No consent is given for the interception of this page transmission
+    -->
+  </head>
+  <body>
+
+    <!-- Header -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Damian Zaremba</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Blog</a></li>
+            <li class=""><a href="/about/">About</a></li>
+            <li class=""><a href="/cv/">CV</a></li>
+            <li class=""><a href="/archive/">Archive</a></li>
+            <li class=""><a href="/projects/">Projects</a></li>
+          </ul>
+
+          <div class="social-icons navbar-right visible-md visible-lg">
+            <a href="https://twitter.com/DamianZaremba">
+              <img class="twitter" src="/assests/images/twitter.png" alt="Twitter" />
+            </a>
+            <a href="https://github.com/DamianZaremba">
+              <img class="github" src="/assests/images/github.png" alt="GitHub" />
+            </a>
+            <a href="https://feeds.feedburner.com/DamianZaremba">
+              <img class="rss" src="/assests/images/rss.png" alt="RSS" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="container">
+<article class="post">
+    <h1 class="title"><a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/">Decoding Arista EtherType headers with gopacket</a></h1>
+    <div class="meta">
+        <span><img src="/assests/images/date.png" title="Date" alt="Date" />27 Dec 2017</span>
+        <span><img src="/assests/images/comments.png" title="Content" alt="Content" /><a href="/2017/12/decoding-arista-ethertype-headers-with-gopacket/#disqus_thread">Comments</a></span>
+        
+            <ul class="categories">
+            <li><a href='/tag/network'>Network</a></li><li><a href='/tag/how-to'>How-to</a></li><li><a href='/tag/go'>Go</a></li></ul>
+        
+    </div>
+    <div class="entry">
+        <p>As we <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">previously discussed</a>,
+using cheap switches to aggregate multiple tap sources gives you a lot of power.</p>
+
+<p>However, given the multiple feeds, how can you measure timing information accurately 1 hop away?</p>
+
+<p>Using hardware time stamping provides a highly accurate record of when packets
+were processed by devices, making it perfect for TAP aggregation.</p>
+
+<h2 id="revisiting-the-7150-platform">Revisiting the 7150 platform</h2>
+
+<p>On the 7150 series hardware, time stamping is supported at line-rate using PTP.</p>
+
+<p>You have two options for timestamp placement;</p>
+
+<ul>
+  <li>Replacement of the FCS (<code>mac timestamp replace-fcs</code>):</li>
+</ul>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: 7150 timestamp replace fcs Pages: 1 -->
+<svg role="img" aria-label="7150 timestamp replace fcs" width="526pt" height="148pt" viewBox="0.00 0.00 526.00 148.00">
+<title>7150 timestamp replace fcs</title>
+<desc>digraph &quot;7150 timestamp replace fcs&quot; {
+
+subgraph cluster {
+  rankdir=LR;
+  height=1.5;
+  &quot;Timestamp&quot; [shape=square, height=1.5];
+  &quot;Payload&quot; [shape=square, height=1.5];
+  &quot;IP Header&quot; [shape=square, height=1.5];
+  &quot;Ethernet Header&quot; [shape=square, height=1.5];
+}
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 144)">
+<title>7150 timestamp replace fcs</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-144 522,-144 522,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-132 510,-132 510,-8 8,-8" />
+</g>
+<!-- Timestamp -->
+<g id="node1" class="node">
+<title>Timestamp</title>
+<polygon fill="none" stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124" />
+<text text-anchor="middle" x="448" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text>
+</g>
+<!-- Payload -->
+<g id="node2" class="node">
+<title>Payload</title>
+<polygon fill="none" stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124" />
+<text text-anchor="middle" x="322" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text>
+</g>
+<!-- IP Header -->
+<g id="node3" class="node">
+<title>IP Header</title>
+<polygon fill="none" stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124" />
+<text text-anchor="middle" x="196" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">IP Header</text>
+</g>
+<!-- Ethernet Header -->
+<g id="node4" class="node">
+<title>Ethernet Header</title>
+<polygon fill="none" stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124" />
+<text text-anchor="middle" x="70" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Ethernet Header</text>
+</g>
+</g>
+</svg>
+</div>
+
+<ul>
+  <li>Appending of the timestamp (<code>mac timestamp before-fcs</code>):</li>
+</ul>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: 7150 timestamp append Pages: 1 -->
+<svg role="img" aria-label="7150 timestamp append" width="652pt" height="148pt" viewBox="0.00 0.00 652.00 148.00">
+<title>7150 timestamp append</title>
+<desc>digraph &quot;7150 timestamp append&quot; {
+
+subgraph cluster {
+  rankdir=LR;
+  height=1.5;
+  &quot;FCS&quot; [shape=square, height=1.5];
+  &quot;Timestamp&quot; [shape=square, height=1.5];
+  &quot;Payload&quot; [shape=square, height=1.5];
+  &quot;IP Header&quot; [shape=square, height=1.5];
+  &quot;Ethernet Header&quot; [shape=square, height=1.5];
+}
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 144)">
+<title>7150 timestamp append</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-144 648,-144 648,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-132 636,-132 636,-8 8,-8" />
+</g>
+<!-- FCS -->
+<g id="node1" class="node">
+<title>FCS</title>
+<polygon fill="none" stroke="#000000" points="628,-124 520,-124 520,-16 628,-16 628,-124" />
+<text text-anchor="middle" x="574" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text>
+</g>
+<!-- Timestamp -->
+<g id="node2" class="node">
+<title>Timestamp</title>
+<polygon fill="none" stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124" />
+<text text-anchor="middle" x="448" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text>
+</g>
+<!-- Payload -->
+<g id="node3" class="node">
+<title>Payload</title>
+<polygon fill="none" stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124" />
+<text text-anchor="middle" x="322" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text>
+</g>
+<!-- IP Header -->
+<g id="node4" class="node">
+<title>IP Header</title>
+<polygon fill="none" stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124" />
+<text text-anchor="middle" x="196" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">IP Header</text>
+</g>
+<!-- Ethernet Header -->
+<g id="node5" class="node">
+<title>Ethernet Header</title>
+<polygon fill="none" stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124" />
+<text text-anchor="middle" x="70" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Ethernet Header</text>
+</g>
+</g>
+</svg>
+</div>
+
+<p>The implementation of this is a little ‘quirky’.</p>
+
+<p>Looking at the <code>Timestamp</code> value alone will not help you as it’s an internal
+ASIC counter on the switch, essentially providing the lower half of the timestamp.</p>
+
+<p>To calculate the actual (Unix based) timestamp, another keyframe packet has
+to be processed and tracked (every ~6 seconds); providing the first half of the timestamp.</p>
+
+<p>While possible to implement, the imposed state and skew calculations is a little unappealing.</p>
+
+<h2 id="a-look-into-the-7500er7280er-series">A look into the 7500{E,R}/7280{E,R} series</h2>
+
+<p>On the newer platforms, Arista has moved away from using the keyframe setup and
+introduced a custom EtherType. Again, using hardware time stamping at line-rate &amp; supporting PTP.</p>
+
+<p>There is 3 possible time stamping modes on the 7500{E,R} &amp; 7280{E,R} series switches:</p>
+
+<ul>
+  <li>64-bit header timestamp; i.e., encapsulated in the L2 header</li>
+  <li>48-bit header timestamp; i.e., encapsulated in the L2 header</li>
+  <li>48-bit timestamp that replaces the Source MAC</li>
+</ul>
+
+<p>We will focus on the first 2 options that use a customer EtherType inside the layer 2 header.</p>
+
+<p><em>Note: All timestamps are captured upon packet ingress and stamped on packet egress.</em></p>
+
+<h3 id="a-look-into-the-packet-format">A look into the packet format</h3>
+
+<p>Let’s compare a normal ethernet header:</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: ethernet header Pages: 1 -->
+<svg role="img" aria-label="ethernet header" width="652pt" height="148pt" viewBox="0.00 0.00 652.00 148.00">
+<title>ethernet header</title>
+<desc>digraph &quot;ethernet header&quot; {
+
+subgraph cluster {
+  rankdir=LR;
+  height=1.5;
+  &quot;FCS&quot; [shape=square, height=1.5];
+  &quot;Payload&quot; [shape=square, height=1.5];
+  &quot;Length/Type&quot; [shape=square, height=1.5];
+  &quot;Src Address&quot; [shape=square, height=1.5];
+  &quot;Dst Address&quot; [shape=square, height=1.5];
+}
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 144)">
+<title>ethernet header</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-144 648,-144 648,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-132 636,-132 636,-8 8,-8" />
+</g>
+<!-- FCS -->
+<g id="node1" class="node">
+<title>FCS</title>
+<polygon fill="none" stroke="#000000" points="628,-124 520,-124 520,-16 628,-16 628,-124" />
+<text text-anchor="middle" x="574" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text>
+</g>
+<!-- Payload -->
+<g id="node2" class="node">
+<title>Payload</title>
+<polygon fill="none" stroke="#000000" points="502,-124 394,-124 394,-16 502,-16 502,-124" />
+<text text-anchor="middle" x="448" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text>
+</g>
+<!-- Length/Type -->
+<g id="node3" class="node">
+<title>Length/Type</title>
+<polygon fill="none" stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124" />
+<text text-anchor="middle" x="322" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Length/Type</text>
+</g>
+<!-- Src Address -->
+<g id="node4" class="node">
+<title>Src Address</title>
+<polygon fill="none" stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124" />
+<text text-anchor="middle" x="196" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Src Address</text>
+</g>
+<!-- Dst Address -->
+<g id="node5" class="node">
+<title>Dst Address</title>
+<polygon fill="none" stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124" />
+<text text-anchor="middle" x="70" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Dst Address</text>
+</g>
+</g>
+</svg>
+</div>
+
+<p>To one with the customer EtherType inserted:</p>
+
+<div class="graphviz-wrapper">
+
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: ethernet header extended Pages: 1 -->
+<svg role="img" aria-label="ethernet header extended" width="1090pt" height="148pt" viewBox="0.00 0.00 1090.00 148.00">
+<title>ethernet header extended</title>
+<desc>digraph &quot;ethernet header extended&quot; {
+
+subgraph cluster {
+  rankdir=LR;
+  height=1.5;
+  &quot;FCS&quot; [shape=square, height=1.5];
+  &quot;Payload&quot; [shape=square, height=1.5];
+  &quot;Length/Type&quot; [shape=square, height=1.5];
+  &quot;Timestamp&quot; [shape=square, height=1.2];
+  &quot;Version&quot; [shape=square, height=1.2];
+  &quot;Sub-Type&quot; [shape=square, height=1.2];
+  &quot;EtherType&quot; [shape=square, height=1.5];
+  &quot;Src Address&quot; [shape=square, height=1.5];
+  &quot;Dst Address&quot; [shape=square, height=1.5];
+}
+
+}</desc>
+
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 144)">
+<title>ethernet header extended</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-144 1086,-144 1086,4 -4,4" />
+<g id="clust1" class="cluster">
+<title>cluster</title>
+<polygon fill="none" stroke="#000000" points="8,-8 8,-132 1074,-132 1074,-8 8,-8" />
+</g>
+<!-- FCS -->
+<g id="node1" class="node">
+<title>FCS</title>
+<polygon fill="none" stroke="#000000" points="1066,-124 958,-124 958,-16 1066,-16 1066,-124" />
+<text text-anchor="middle" x="1012" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">FCS</text>
+</g>
+<!-- Payload -->
+<g id="node2" class="node">
+<title>Payload</title>
+<polygon fill="none" stroke="#000000" points="940,-124 832,-124 832,-16 940,-16 940,-124" />
+<text text-anchor="middle" x="886" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Payload</text>
+</g>
+<!-- Length/Type -->
+<g id="node3" class="node">
+<title>Length/Type</title>
+<polygon fill="none" stroke="#000000" points="814,-124 706,-124 706,-16 814,-16 814,-124" />
+<text text-anchor="middle" x="760" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Length/Type</text>
+</g>
+<!-- Timestamp -->
+<g id="node4" class="node">
+<title>Timestamp</title>
+<polygon fill="none" stroke="#000000" points="688,-113 602,-113 602,-27 688,-27 688,-113" />
+<text text-anchor="middle" x="645" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Timestamp</text>
+</g>
+<!-- Version -->
+<g id="node5" class="node">
+<title>Version</title>
+<polygon fill="none" stroke="#000000" points="584,-113 498,-113 498,-27 584,-27 584,-113" />
+<text text-anchor="middle" x="541" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Version</text>
+</g>
+<!-- Sub&#45;Type -->
+<g id="node6" class="node">
+<title>Sub&#45;Type</title>
+<polygon fill="none" stroke="#000000" points="480,-113 394,-113 394,-27 480,-27 480,-113" />
+<text text-anchor="middle" x="437" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Sub&#45;Type</text>
+</g>
+<!-- EtherType -->
+<g id="node7" class="node">
+<title>EtherType</title>
+<polygon fill="none" stroke="#000000" points="376,-124 268,-124 268,-16 376,-16 376,-124" />
+<text text-anchor="middle" x="322" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">EtherType</text>
+</g>
+<!-- Src Address -->
+<g id="node8" class="node">
+<title>Src Address</title>
+<polygon fill="none" stroke="#000000" points="250,-124 142,-124 142,-16 250,-16 250,-124" />
+<text text-anchor="middle" x="196" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Src Address</text>
+</g>
+<!-- Dst Address -->
+<g id="node9" class="node">
+<title>Dst Address</title>
+<polygon fill="none" stroke="#000000" points="124,-124 16,-124 16,-16 124,-16 124,-124" />
+<text text-anchor="middle" x="70" y="-66.3" font-family="Times,serif" font-size="14.00" fill="#000000">Dst Address</text>
+</g>
+</g>
+</svg>
+</div>
+
+<p><em>Note: .1q payloads are also supported, with the EtherType coming after the Source Address</em></p>
+
+<p>As you can see an extra 4 fields have been inserted into the header;</p>
+
+<ul>
+  <li>EtherType - 0xD28B - An identifier for AristaEtherType</li>
+  <li>Protocol sub-type - 0x1 - A sub-identifier for the AristaEtherType</li>
+  <li>Version - 0x10 or 0x20 - An identifier for either 64bit or 48bit</li>
+  <li>Timestamp - An IEEE 1588 time of day format</li>
+</ul>
+
+<p>The timestamp is either 32 bits (seconds) followed by 32 bits (nanoseconds) or
+16 bits (seconds) followed by 32 bits (nanoseconds) depending on the 64 or 48bit mode.</p>
+
+<h4 id="configuration">Configuration</h4>
+
+<p>Enabling hardware timestamping on the platform is rather simple;</p>
+
+<ul>
+  <li><code>mac timestamp header</code> enables timestamping on tool ports</li>
+  <li><code>mac timestamp header format &lt;64bit | 48bit&gt;</code> sets the format of the timestamp</li>
+  <li><code>mac timestamp replace source-mac</code> enables replacing the source mac address with the timestamp</li>
+</ul>
+
+<p>There are some limitations to the time stamping support, notably;</p>
+
+<ul>
+  <li>Timestamping is done after packet processing, resulting in ~10ns of delay</li>
+  <li>64bit timestamps may rollover inconsistency every 4 seconds causing jumps between packets</li>
+</ul>
+
+<h3 id="decoding-the-packets">Decoding the packets</h3>
+
+<p>Now we’ve changed the Ethernet header, it requires a specific decoder to be able to process.</p>
+
+<p>Without a specific decoder, it is no longer a valid Ethernet header as Length field
+contains a meaningless value.</p>
+
+<p>Arista <a href="https://eos.arista.com/analyzing-packet-header-timestamps-in-wireshark/">provides</a> an
+LUA extension for Wireshark for this purpose.</p>
+
+<h2 id="decoding-custom-ethertypes-in-gopacket">Decoding custom EtherTypes in gopacket</h2>
+<p><a href="https://github.com/google/gopacket">gopacket</a> has a very useful pcap interface,
+making it very easy to process data collected from TAP infrastructure.</p>
+
+<p>Investigating the structure, it made sense to implement a custom
+<a href="https://godoc.org/github.com/google/gopacket/layers">layer</a> to handle
+our EtherType.</p>
+
+<p>After some experimentation, while this provided decoding of the timestamp data,
+it prevented further processing of the packets, resulting in the IP layer
+being inaccessible; this was complicated due to our now invalid Ethernet header.</p>
+
+<p>A simple solution of extending the built-in
+<a href="https://godoc.org/github.com/google/gopacket/layers#EthernetType">EthernetType</a>
+was called for.</p>
+
+<pre><code class="language-go">// Copyright 2012 Google, Inc. All rights reserved.
 // Copyright 2009-2011 Andreas Krennmair. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license
@@ -94,7 +554,12 @@ func DecodeAristaExtendedEthernet(data []byte, p gopacket.PacketBuilder) error {
 	p.SetLinkLayer(eth)
 	return p.NextDecoder(eth.EthernetType)
 }
-</code></pre> <p>Now we have the custom decoder, we just need to register it with gopacket. This makes gopacket use our decoder implementation rather than the built-in Ethernet one.</p> <pre><code class="language-go">import (
+</code></pre>
+
+<p>Now we have the custom decoder, we just need to register it with gopacket.
+This makes gopacket use our decoder implementation rather than the built-in Ethernet one.</p>
+
+<pre><code class="language-go">import (
 	"github.com/google/gopacket/layers"
 )
 
@@ -104,7 +569,11 @@ func init() {
     Name:       "AristaExtendedEthernet",
   }
 }
-</code></pre> <p>The custom fields are now accessible on the Ethernet layer, alongside the other fields.</p> <pre><code class="language-go">layer := packet.Layer(layers.LayerTypeEthernet)
+</code></pre>
+
+<p>The custom fields are now accessible on the Ethernet layer, alongside the other fields.</p>
+
+<pre><code class="language-go">layer := packet.Layer(layers.LayerTypeEthernet)
 if layer != nil {
   ethernetLayer := layer.(*decoder.AristaExtendedEthernet)
   if ethernetLayer.AristaEtherType.ProtocolSubType != 0 {
@@ -116,4 +585,102 @@ if layer != nil {
     }
   }
 }
-</code></pre> <p>A similar decoder has been successfully tested with 500k/s packets per second.</p> <h2 id=summary>Summary</h2> <p>Using standard protocols and cheap hardware we can build powerful performance analysis applications.</p> <p>This work was inspired by <a href="https://github.com/REANNZ/ruru">Ruru</a>, providing the foundations for performance monitoring and insights of heavily asymmetric &amp; distributed traffic flows.</p> </div> </article> <section id=related> <h2>Related posts</h2> <ul id=related_posts> <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li> <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li> <li>&raquo; <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">A look at low-cost tap aggregation</a></li> </ul> </section> <section id=comment> <h2>Comments</h2> <div id=disqus_thread aria-live=polite> <noscript>Please enable JavaScript to view the comments</noscript> </div> </section> <script type="text/javascript">var disqus_identifier="http://damianzaremba.co.uk/2017/12/decoding-arista-ethertype-headers-with-gopacket/";var disqus_url="http://damianzaremba.co.uk/2017/12/decoding-arista-ethertype-headers-with-gopacket/";(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="http://damianzaremba.disqus.com/embed.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> </div> <footer class=footer> <div class=container> <p class=text-muted>Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p> <ul id=ads> <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li> <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li> <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li> </ul> </div> </footer> <script src="/assests/js/jquery.min.js"></script> <script src="/assests/js/bootstrap.min.js"></script> <script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_require","inpage_linkid","//www.google-analytics.com/plugins/ga/inpage_linkid.js"]);_gaq.push(["_setAccount","UA-11817192-1"]);_gaq.push(["_setDomainName","damianzaremba.co.uk"]);_gaq.push(["_trackPageview"]);(function(){var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="//stats.g.doubleclick.net/dc.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})();(function(){var a=document.createElement("script");a.type="text/javascript";a.async=true;a.src="//damianzaremba.disqus.com/count.js";(document.getElementsByTagName("head")[0]||document.getElementsByTagName("body")[0]).appendChild(a)}());</script> <!--[if lt IE 9]><script src="/assests/js/html5shiv.min.js"></script> <script src="/assests/js/respond.min.js"></script><![endif]--> </body> </html>
+</code></pre>
+
+<p>A similar decoder has been successfully tested with 500k/s packets per second.</p>
+
+<h2 id="summary">Summary</h2>
+<p>Using standard protocols and cheap hardware we can build powerful performance analysis applications.</p>
+
+<p>This work was inspired by <a href="https://github.com/REANNZ/ruru">Ruru</a>, providing the foundations for
+performance monitoring and insights of heavily asymmetric &amp; distributed traffic flows.</p>
+
+    </div>
+</article>
+
+
+<section id="related">
+    <h2>Related posts</h2>
+    <ul id="related_posts">
+    
+        <li>&raquo; <a href="/2017/12/decoding-ipfix-options-using-go/">Decoding IPFIX options using Go</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-traffic-encryption-options/">A look at traffic encryption options</a></li>
+    
+        <li>&raquo; <a href="/2017/12/a-look-at-low-cost-tap-aggregation/">A look at low-cost tap aggregation</a></li>
+    
+    </ul>
+</section>
+
+
+
+<section id="comment">
+    <h2>Comments</h2>
+    <div id="disqus_thread" aria-live="polite">
+        <noscript>Please enable JavaScript to view the comments</noscript>
+    </div>
+</section>
+
+<script type="text/javascript">
+    var disqus_identifier = 'http://damianzaremba.co.uk/2017/12/decoding-arista-ethertype-headers-with-gopacket/';
+    var disqus_url = 'http://damianzaremba.co.uk/2017/12/decoding-arista-ethertype-headers-with-gopacket/';
+
+    (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = 'http://damianzaremba.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Copyright 2009-2020 <a href="http://damianzaremba.co.uk">Damian Zaremba</a></p>
+        <ul id="ads">
+          <li>Need error tracking? Try <a href="https://getsentry.com/signup/r_D0ZW/">Sentry</a></li>
+          <li>Need cloud instances? Jump on <a href="http://www.bigv.io">BigV</a></li>
+          <li>Want my website? <a href="https://github.com/DamianZaremba/damianzaremba.co.uk/">Source</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- JS scripts -->
+    <script src="/assests/js/jquery.min.js"></script>
+    <script src="/assests/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_require', 'inpage_linkid', '//www.google-analytics.com/plugins/ga/inpage_linkid.js']);
+      _gaq.push(['_setAccount', 'UA-11817192-1']);
+      _gaq.push(['_setDomainName', 'damianzaremba.co.uk']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = '//stats.g.doubleclick.net/dc.js'
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
+
+      (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//damianzaremba.disqus.com/count.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }());
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="/assests/js/html5shiv.min.js"></script>
+      <script src="/assests/js/respond.min.js"></script>
+    <![endif]-->
+  </body>
+</html>
